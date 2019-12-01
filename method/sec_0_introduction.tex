@@ -1,0 +1,43 @@
+\section{Introduction}
+
+- Model data
+multiple data formats in weather data
+GRIB WRF model, out netCDF
+netCDF to CSV then feed to HEC-HMS, out CSV
+CSV + Rain cell Grid to FLO2D, out water level Grid ASCII files
+ASCII files to ArcGIS create Raster files, then use t LOSS Estimation
+
+- Observed data
+Automated weather station sending data in higher frequent intervals via HTTP protocol
+Automated water level stations send data in higher frequency
+
+Other than above there are many data formats using for handling data based on devices and standards which are using. Also for data modeling, it needs to convert the data into model compatible data format, then after successfully run the model it needs to collect data from the model output data formats.
+
+- Timeseries
+A timeseries is simply a series of data points ordered in time. In weather domain, it interest in timeseries in perspective of observations to forecasting.
+Each timeseries, the data points can be form in different formats as well.
+- Scalar - 0D
+- Vector - 1D
+- Grid - 2D
+- Polygon - 2D
+
+WDIAS is focus on handling Scalar, Vector and Grid data timeseries via the thesis. But the system is capable of extending to handle polygon timeseries as well.
+
+- Base of WDIAS architecture
+The base of WDIAS architecture origins based on attributes of a timeseries. There are many attributes to differentiate timeseries one from another. But following can be consider as key attributes to uniquely identify a timeseries from another.
+- Module - module that generate the timeseries
+- Value Type - Scalar, Vector, Grid, Polygon
+- Location 
+- Parameter - measuring parameter of timeseries
+- Timeseries type
+  - sources - External, Simulated
+  - category - Historical, forecast
+- Time step
+
+- Key components of the system
+- Integration
+System should be able to store data from multiple sources which come in different formats
+- Assimilation
+System should be able to provide functionalities for pre-possessing data and validating before using. 
+- Dissemination
+System should be able to export data in different data formats
