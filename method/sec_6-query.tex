@@ -2,20 +2,135 @@
 
 As described in \ref{sub:mongodb}, adapter-query is primarily using for support Geo-spatial queries. Other than that, as the primary service for searching for timeseries, it also supports for retrieval of timeseries metadata for external queries as well.
 
-\subsubsection{Timeseries Metadata}
+\subsection{Timeseries Metadata}
+Get timeseries metadata by timeseriesID.
 \begin{lstlisting}
-GET <HOST_NAME>/metadata/timeseries/<TIMESERIES_ID>
+    GET <HOST_NAME>/metadata/timeseries/<TIMESERIES_ID>
+\end{lstlisting}
+Search for timeseries metadata with key attributes of the timeseries.
+\begin{lstlisting}
+    GET <HOST_NAME>/metadata/timeseries?<QUERY_STRING>
+\end{lstlisting}
+QUERY\_STRING can be consist of zero to multiple parameters. Multiple query parameters are separated by the ampersand, "\&".
+\begin{itemize}
+    \item moduleId(Optional) - E.g. HEC-HMS
+    \item valueType(Optional) - E.g. Scalar
+    \item parameterId(Optional) - E.g. O.Precipitation
+    \item locationId(Optional) - E.g. wdias\_hanwella
+    \item timeseriesType(Optional) - E.g. ExternalHistorical
+    \item timeStepId(Optional) - E.g. each\_15\_min
+\end{itemize}
+For the moment, query are only support by strict matching with above parameter values.
+
+\subsection{Timeseries Geo Queries}
+
+\subsubsection{Query Locations within Area}
+Using following API endpoint, it is possible to query the locations which are exists within the area provided by the geoJson data in the JSON payload.
+\begin{lstlisting}
+    POST <HOST_NAME>/query/location
+    JSON Body:
+    {
+        "geoJson": {
+            "type": "Polygon",
+            "coordinates": [
+                [
+                    [
+                        <longitude>,
+                        <latitude>
+                    ],
+                    ...
+                ]
+            ]
+        }
+    }
 \end{lstlisting}
 
+\subsubsection{Query parameters in Locations}
+Using the following API endpoint, it is possible to query the parameters stored against given locations. Location IDs should be provide as list of JSON payload.
 \begin{lstlisting}
-GET <HOST_NAME>/metadata/timeseries?<QUERY_STRING>
-QUERY_STRING can be consist of zero to many 
-moduleId(Optional) HEC-HMS
-valueType(Optional) Scalar
-parameterId(Optional) O.Precipitation
-locationId(Optional) wdias_hanwella
-timeseriesType(Optional) ExternalHistorical
-timeStepId(Optional) each_15_min
+    POST <HOST_NAME>/query/parameter
+    JSON Body:
+    ["<locationId1>", ...]
 \end{lstlisting}
 
-\subsubsection{Timeseries Geo Queries}
+\subsubsection{Query Timeseries by Location}
+Using the following API endpoint, it is possible to query the timeseries metadata for a given location.
+\begin{lstlisting}
+    POST <HOST_NAME>/query/timeseries
+    JSON Body:
+    {
+        "location": "<LOCATION_ID>"
+    }
+\end{lstlisting}
+
+\subsubsection{Query Timeseries by Locations}
+Using the following API endpoint, it is possible to query the timeseries metadata for a given location set. Location IDs should be provide as list in the locations field.
+\begin{lstlisting}
+    POST <HOST_NAME>/query/timeseries
+    JSON Body:
+    {
+        "locations": ["LOCATION_ID", ...]
+    }
+\end{lstlisting}
+
+\subsubsection{Query Timeseries by Parameter}
+Using the following API endpoint, it is possible to query the timeseries metadata by parameter for given location/locations.
+\begin{lstlisting}
+    POST <HOST_NAME>/query/timeseries
+    JSON Body:
+    {
+        "locations": [""],
+        "parameter": ""
+    }
+\end{lstlisting}
+
+\subsubsection{Query Timeseries in Area}
+Using the following API endpoint, it is possible to query the timeseries metadata within a given area. This operation uses geoWithin \acrshort{mongodb} operator for the simplicity.
+\begin{lstlisting}
+    POST <HOST_NAME>/query/timeseries
+    JSON Body:
+    {
+        "geoJson": {
+            "type": "Polygon",
+            "coordinates": [
+                [
+                    [
+                        <longitude>,
+                        <latitude>
+                    ],
+                    ...
+                ]
+            ]
+        }
+    }
+\end{lstlisting}
+
+\subsubsection{Query Timeseries in Area by Parameter}
+Using the following API endpoint, it is possible to query the timeseries metadata within a given area for given parameter. This is an extension to the above endpoint.
+\begin{lstlisting}
+    POST <HOST_NAME>/query/timeseries
+    JSON Body:
+    {
+        "geoJson": {
+            "type": "Polygon",
+            "coordinates": [
+                [
+                    [
+                        <longitude>,
+                        <latitude>
+                    ],
+                    ...
+                ]
+            ]
+        },
+        "parameter": "<PARAMETER_ID>"
+    }
+\end{lstlisting}
+
+\subsubsection{Query All Timeseries}
+Send a request with empty JSON body will respond with all the timeseries.
+\begin{lstlisting}
+    POST <HOST_NAME>/query/timeseries
+    JSON Body:
+    {}
+\end{lstlisting}
