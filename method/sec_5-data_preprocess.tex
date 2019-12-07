@@ -99,5 +99,26 @@ In the WDIAS, it is possible to create new trigger for an extension via POST req
 \end{itemize}
 
 \subsubsection{Extension Handler}
+Extension Handler is responsible for triggering the correct Extension with metadata when there is any change on subscribed extension trigger's OnChange timeseries.
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{method/data_preprocess/validation.jpg}
+    \caption{Extension Handler}
+    \label{fig:extension_handler}
+\end{figure}
+
+In further elaboration, when new data imported into one of adapter-scalar or adapter-vector, those notify the extension-handler. Then extension handler check whether there is any extension subscribed for particular timeseries, and trigger it via triggering an event on particular extensions.
+
+In order to improve the performance of matching triggers against a timeseries, the WDIAS added two mechanisms. For the separation of service responsibilities, those functionalities reside in the adapter-extension and expose via an endpoint.
+First, other than storing extension metadata in MySQL instance of adapter-extension, it also store the data in reverse lookup table called triggers. Using this reverse lookup table, for a given trigger\_type and timeseries, it can retrieve the extensions which are part of given timeseries. Thus the response which is received by the 
+extension-handler only contains the extensions to be triggered. No additional filtering need to be done at the extension-handler service.
+Second, cache the resulting trigger\_type and timeseries data in \acrshort{redis} database for fast access and avoid too much queries on \acrshort{mysql} database.
 
 \subsubsection{Extension Scheduler}
+Extension Handler is responsible for triggering the correct Extension with metadata at given time which is provided at the creation on extension trigger's with the value of OnTime cronjob string value.
+
+In order to improve the performance of triggering cronjobs at given time schedules, the WDIAS added few optimization mechanisms.
+Same as for extension-handler, the adapter-extension expose an endpoint to retrieve extension metadata grouped by cronjob time. Then use \acrshort{go} to implement the extension-handler to fast processing the extensions. After retrieve extension which are grouped by cronjob time; within the extension-handler, it schedules programatic cronjobs to trigger at given times. When each cronjob triggers at given time, it also contains the extensions to be triggered. Fetching extension data and creating cronjobs occur with long period of time in order to avoid heavy overhead.
+When a new extension trigger created, those data push into a \acrshort{redis} List. Then pulling from the extension-handler in regular time intervals and create new cronjobs for mentioned cronjob time.
+As mentioned above, in order to avoid the expansion of the programmatic cronjob list which are created for new extension triggers, all cronjobs fetch again in long period of time and flush the previously scheduled cronjobs.
+The extension-handler should be run as a single entity for the atrocity, in order to avoid triggering same extension twice.

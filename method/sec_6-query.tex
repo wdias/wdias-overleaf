@@ -1,6 +1,21 @@
 \section{Query Timeseries}
 
-- Explain adapter query
-How MongoDB is using for Geo Spatial search.
+As described in \ref{sub:mongodb}, adapter-query is primarily using for support Geo-spatial queries. Other than that, as the primary service for searching for timeseries, it also supports for retrieval of timeseries metadata for external queries as well.
 
-<Search API>
+\subsubsection{Timeseries Metadata}
+\begin{lstlisting}
+GET <HOST_NAME>/metadata/timeseries/<TIMESERIES_ID>
+\end{lstlisting}
+
+\begin{lstlisting}
+GET <HOST_NAME>/metadata/timeseries?<QUERY_STRING>
+QUERY_STRING can be consist of zero to many 
+moduleId(Optional) HEC-HMS
+valueType(Optional) Scalar
+parameterId(Optional) O.Precipitation
+locationId(Optional) wdias_hanwella
+timeseriesType(Optional) ExternalHistorical
+timeStepId(Optional) each_15_min
+\end{lstlisting}
+
+\subsubsection{Timeseries Geo Queries}

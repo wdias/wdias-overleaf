@@ -2,6 +2,7 @@
  
 The database structure of WDIAS mainly depends on the key attributes of the timeseries. A brief summary of possible value for timeseries can be describe as below;
 
+\subsection{Timeseries Key Attributes}
 - Module ID
   String field which describe the source of the data generated. Example of hec-hms, flow2d, weather-station etc
 - Value Type
@@ -91,7 +92,7 @@ Given that, a timeseries can uniquely indentify by moduleId, valueType, paramete
 WDIAS is using a hierarchical database, with following the concept of Database per Service which is described in the \ref{micro_database_per_service}.
 Following chapters described the usage of databases in WDIAS and reason behind the selection.
 
-- MySQL
+\subsection{MySQL}
 Relational Database Management System (RDBMS).
 SQL database has fewer version of open source and it is also possible to gain better performance with commercial versions. 
 Since WDIAS scope is to using open source tools, it is using MySQL as persistent database for storing timeseries metadata described above.
@@ -101,7 +102,7 @@ MySQL is used only for these services, those will only keep the consistency of t
 \ref{db_struct_redis} instance is using for caching the data from MySQL, since the MySQL database instances, itself not going to get much load.
 Other than MySQL, there are many open source databases can be used to replace the same functionality.
 
-- InfluxDB \cite{influxdbInfluxDBDocumentation}
+\subsection{InfluxDB} \cite{influxdbInfluxDBDocumentation}
 Open timeseries DB with MIT license
 Support SQL-Like query language
 Clustering available with a commercial version
@@ -114,14 +115,16 @@ Two instance of InfluxDB is using in the WDIAS system by adapter-scalar and adap
 But further, it split into two services, refering to the \ref{micro_z_axis_scaling} data is partitioned among few servers based on valueType key attribute of timeseries.
 Which also conclude the concept of splitting into more services based on other key attributes such as timeseriesType, if further performance required.
 
-- NetCDF \cite{unidataUnidataNetCDF}
+\subsection{netCDF} \cite{unidataUnidataNetCDF}
+\label{sub:netcdf}
 Network Common Data Form
 Self-describing, machine-independent data formats that support creation, access, and sharing of array-oriented scientific data
 Support parallel file access
 NetCDF is widely using in sciencetific domain due to it's capability of storing data in multi dementions easily and flexibility with storing many of the sciencetific data.
 Python wrapper for NetCDF-C library using in the WDIAS system, and use by adapter-grid service.
 
-- MongoDB
+\subsection{MongoDB}
+\label{sub:mongodb}
   MongoDB is a general purpose, document-based, distributed database
   Supports query operations on geo-spatial data \cite{mongodbMongoDBManual}
   Clustering and Sharding available for scalability and reliability
@@ -130,9 +133,10 @@ If metadata not present in the adapter-query, if fetch data from the adapter-met
 it trigger an event to adapter-query to index the new timeseries.
 \ref{micro_y_axis_scaling} concept is using here by splitting into the multiple services based on the functionality and scale the system.
 
-- Redis \cite{redisRedisDocumentation}
-  Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache.
+\subsection{Redis}
+\label{sub:redis}
+  Redis\cite{redisRedisDocumentation} is an open source (BSD licensed), in-memory data structure store, used as a database, cache.
   Clustering is available for scalability
 Redis uses as in-memory caching for fast access of repreative access data in adapter-metadata and adapter-extension.
 Other than that, adapter-status uses Redis as key value pair store for getting the status for async handling requests such as storing Grid data.
-In adapter-extension uses Redis's Publisher Subscriber capabilities in order to create a cron job in extension-scheduler when new extension create on \ref{data_preprocess}
+In adapter-extension uses Redis's Publisher Subscriber capabilities in order to create a cron job in extension-scheduler when new extension create on \ref{se:data_preprocess}
