@@ -1,18 +1,59 @@
 \section{Test Plan}
+The system consists of three modules in functionality perspective of interacting with the \acrshort{wdias}.
+\begin{enumerate}
+    \item Import modules
+    \item Export modules
+    \item Extension modules
+\end{enumerate}
+Other than above, adapter modules act as the core modules and the base of the system. Also query modules allow the users to query for the timeseries
+based on the metadata, and enable performing Geo based queries based on the locations.
 
-1. Test Setup to create timeseries in 1hr, 5min and 1min intervals and create metadata of the timeseries
-2. Import Timeseries
-  - Plan for test run of 1 hour. In each test run change the request size from 1hr, 5min to 1min. (total 3 hours)
-  - Have mixture of data: Scalar - 70%(max 2100 requests), Vector (Multi-Scalar) - 20% (max 600 requests), Grid - 10% (max 300 requests)
-3. Extensions
-  - Create Extensions for /Aggregation\_Accumulative, /Interpolation Linear, /Validation Missing Values (OnChange and OnTime)
-  - 1 hour of test run. Just for 1min data. (total 1 hours)
-  - Do with Import Timeseries with error data which will go through extensions.
-4. Export Timeseries
-  - 1 hour test run. Change request size from 1hr, 5min to 1min. (total 3 hours)
-  - Have mixture of data: Scalar - 70%, Vector (Multi-Scalar) - 20%, Grid - 10% (Use the Imported - - - Data before and verify against Extensions)
-5. Import + Extension + Export + Timeseries Queries
-  - 1 hour test run. Change with request size from 1hr, 5min to 1min. (total 3 hours)
+The test plan is to perform the load test on each above module as separate entity in order to analyse the individual module scalability.
+Then perform load testing on whole system, and analyse the scalability in the system. There are two variables that can vary while doing the performance testing.
+\begin{enumerate}
+    \item Number of requests that can handle at a given time (\acrfull{rps})
+    \item Request size
+\end{enumerate}
+A timeseries is a series of data points in time order. The system may receive the data points in multiple requests.
+The request size can vary based on the use case from one data point to multiple data points. As few examples;
+\begin{itemize}
+    \item A weather station may send current water level in a regular period of 1 minute. In such case, it always comes as a request with one data point with higher frequency.
+    \item Due to resource issue such as batteries, a weather station can collect data points for a given period of time and send as a batch. Another example would be,
+A weather station can collect the precipitation at each 5 minute period and send all the data in 1 hour intervals.
+    \item The forecast precipitation data from \acrshort{wrf} model can be extract for a day in one hour interval and store in the system.
+\end{itemize}
+
+As a upper limit of such scenarios while designing the performance testing, it uses following;
+\begin{itemize}
+    \item Hourly (24 data points) 
+    \item Every 30 minutes (48 data points)
+    \item Every 5 minutes (288 data points) - One request is equivalent to a data points send by a weather station in 5 minutes interval for a whole day
+\end{itemize}
+
+Following are the test cases which are planned to perform;
+\begin{enumerate}
+    \item Test Setup to create timeseries in 1hr, 30min and 5min intervals and create metadata of the timeseries
+    \item Import Timeseries
+    \begin{itemize}
+        \item Plan for test run of 30 minutes. In each test run change the request size from 1hr, 30min and 5min. (total 1.5 hours)
+        \item Have mixture of data: Scalar - 70%(max 210 requests), Vector (Multi-Scalar) - 20% (max 60 requests), Grid - 10% (max 30 requests)
+    \end{itemize}
+    \item Extensions
+    \begin{itemize}
+        \item Create Extensions for /Aggregation\_Accumulative, /Interpolation Linear, /Validation Missing Values (OnChange and OnTime)
+        \item 30min of test run. Just for 5min data. (total 0.5 hours)
+        \item Do with Import Timeseries with error data which will go through extensions.
+    \end{itemize}
+    \item Export Timeseries
+    \begin{itemize}
+        \item 30min test run. Change request size from 1hr, 30min and 5min. (total 1.5 hours)
+        \item Have mixture of data: Scalar - 70%, Vector (Multi-Scalar) - 20%, Grid - 10% (Use the Imported - Data before and verify against Extensions)
+    \end{itemize}
+    \item Import + Extension + Export + Timeseries Queries (All)
+    \begin{itemize}
+        \item 30min test run. Change with request size from 1hr, 30min and 5min. (total 1.5 hours)
+    \end{itemize}
+\end{enumerate}
 
 Throughput
 Latency
