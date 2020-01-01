@@ -18,8 +18,8 @@ The database structure of WDIAS mainly depends on the key attributes of the time
         "lon": 80.08166667
     }
   \end{lstlisting}
-  - Regualr Grid locations - Contains a name which is human readable. The grid presents by deviding into equal size cells. Thus, it need the number of rows and columns. 
-  And the location of the firt cell and the width and height of it.
+  - Regular Grid locations - Contains a name which is human readable. The grid presents by dividing into equal size cells. Thus, it need the number of rows and columns. 
+  And the location of the first cell and the width and height of it.
   \begin{lstlisting}[language=Python]
       {
         "locationId": "wdias_kelani_basin",
@@ -37,7 +37,7 @@ The database structure of WDIAS mainly depends on the key attributes of the time
         }
     }
 \end{lstlisting}
-  - Irregualr Grid locations (endpoints are available with in the WDIAS system, but skipped since it is out of the interest of the scope.)
+  - Irregular Grid locations (endpoints are available with in the WDIAS system, but skipped since it is out of the interest of the scope.)
 
 - Parameter - Parameter describe the variable measuring against a location. All parameters ahve a unique String identifier called as parameterId. A parameter can be use in multiple locations.
 While defining a parameter, there are three required fields which need to be provided such as variable, unit and parametertype.

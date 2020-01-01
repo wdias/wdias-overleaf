@@ -23,6 +23,14 @@ A weather station can collect the precipitation at each 5 minute period and send
     \item The forecast precipitation data from \acrshort{wrf} model can be extract for a day in one hour interval and store in the system.
 \end{itemize}
 
+The percentage of each data type can be vary depend on the situation. But most of the applications collect many data from the weather stations in order to correct and validate the models data. These weather stations can send the data in different frequencies with different parameters such as precipitation, temperature, humidity, wind direction etc.
+Most of these are scalar data. Parameters such as wind direct are vector data which has less percentage compared to scalar data. On other side, most of the grid data generate from models and simulations. Those produce in less frequency due to cost of the computer resource to produce results. After considering those factor, it is logical to come with following percentages;
+\begin{itemize}
+    \item Scalar - 70\%
+    \item Vector - 20\%
+    \item Grid - 10\%
+\end{itemize}
+
 As a upper limit of such scenarios while designing the performance testing, it uses following;
 \begin{itemize}
     \item Hourly (24 data points) 
@@ -30,13 +38,13 @@ As a upper limit of such scenarios while designing the performance testing, it u
     \item Every 5 minutes (288 data points) - One request is equivalent to a data points send by a weather station in 5 minutes interval for a whole day
 \end{itemize}
 
-Following are the test cases which are planned to perform;
+Following are the test cases which are planned to performance test cases;
 \begin{enumerate}
     \item Test Setup to create timeseries in 1hr, 30min and 5min intervals and create metadata of the timeseries
     \item Import Timeseries
     \begin{itemize}
         \item Plan for test run of 30 minutes. In each test run change the request size from 1hr, 30min and 5min. (total 1.5 hours)
-        \item Have mixture of data: Scalar - 70%(max 210 requests), Vector (Multi-Scalar) - 20% (max 60 requests), Grid - 10% (max 30 requests)
+        \item Have mixture of data: Scalar - 70\%(max 210 requests), Vector (Multi-Scalar) - 20\% (max 60 requests), Grid - 10\% (max 30 requests)
     \end{itemize}
     \item Extensions
     \begin{itemize}
@@ -47,7 +55,7 @@ Following are the test cases which are planned to perform;
     \item Export Timeseries
     \begin{itemize}
         \item 30min test run. Change request size from 1hr, 30min and 5min. (total 1.5 hours)
-        \item Have mixture of data: Scalar - 70%, Vector (Multi-Scalar) - 20%, Grid - 10% (Use the Imported - Data before and verify against Extensions)
+        \item Have mixture of data: Scalar - 70\%, Vector (Multi-Scalar) - 20\%, Grid - 10\% (Use the Imported - Data before and verify against Extensions)
     \end{itemize}
     \item Import + Extension + Export + Timeseries Queries (All)
     \begin{itemize}
@@ -55,7 +63,10 @@ Following are the test cases which are planned to perform;
     \end{itemize}
 \end{enumerate}
 
-Throughput
-Latency
-Resource Utilization
-Auto Scaling
+While performance analysis following metrics are use to measure the performance of the system.
+\begin{itemize}
+    \item Throughput
+    \item Latency
+    \item Resource Utilization
+    \item Auto Scaling
+\end{itemize}
