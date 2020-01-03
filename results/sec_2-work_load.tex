@@ -11,7 +11,7 @@ During the performance test, it creates 1000 timeseries and keep adding data aga
 
 For grid data, it uses static 100 grid locations which based on how is \acrshort{api} exposed. Since grid locations have different metadata structure as described in \ref{se:db_struct}, those data handle separately. But the locationId of grid and scalar data types have the same effect when define a timeseries.
 
-> Then using those, create timeseries metadata (how it assure 10% of Grid data)
+== Then using those, create timeseries metadata (how it assure 10% of Grid data)
 In the \acrshort{jmeter} Best Practices, \say{If your test needs large amounts of data - particularly if it needs to be \emph{randomised} create the test data in a file that can be read with CSV Data set. This avoids wasting resources at run-time. jmeter best practices lean\_mean}. Rather providing the randomness in run time, the timeseries stored with the random order which satisfy the percentage of 70\% Scalar, 20\% Vector and 10\% Grid as mentioned in \ref{se:test_plan}.
 Before running the test cases, it generate the metadata for timeseries and write into a CSV file which is shared among the threads in the \acrshort{jmeter}. This is occurred in the setup phase of the test cases. The metadata CSV file arrange in a way that within each 10 lines, 7 lines are Scalar timeseries, 2 lines are Vector timeseries, and 1 line is a Grid timeseries.
 
@@ -25,18 +25,18 @@ Set ROOT_DIR=~/wdias/wdias-performance-test
     - COMMAND: help | extract | prepare | cleanup | populate
   e.g.
   setup_precipitation.sh prepare
-    Segregate single file data into multiple files based on date. And Separate into main dirs of 15min, 30min, 60min and create tar files
+    Segregate single file data into multiple files based on date. And Separate into main directories of 15min, 30min, 60min and create tar files
   setup_precipitation.sh extract
     Extract the tar files into 15min, 30min and 60min
   setup_precipitation.sh cleanup
-    Clean up extracted dirs
+    Clean up extracted directories
 \end{lstlisting}
 When preparing the data, it create three set of data based on the time interval such as hourly (60min), 30min, and 15min data with modifying the replicated data.
 This will reduce the overhead in performance testing and increase the performance itself.
 Extract function use while creating the containers, and extract the data into the container. This reduce the context loading while creating the container images.
 While performing the load testing, \acrshort{jmeter} keep update a date counter, and create over the one month data. At the end of current month, the date counter advance to the next month. But data is repeat using from the beginning. In order to provide more randomness, it switch over five locations as well. The JSR223 scripts were written in a generic way such that is possible to tweak and use if there are more location data available.
 
-> Then how water level data for Grid time series created
+== Then how water level data for Grid time series created
 Almost similar to how was the precipitation data proceed, the water level are prepared for Grid data. One exception with Grid data during this test cases was, the maximum time step is 30min, instead of 15min due to larger size of the data. But the \acrshort{wdias} is capable of supporting such request. The main purpose of the \acrshort{wdias} is to provide a extensible architecture framework, during the performance testing it is not much consider about scaling the Grid data handling as it using \acrshort{netCDF}, and it is another domain with an attraction up to some extend.
 
 \begin{lstlisting}[language=sh, caption=Water level Data Preparation]
@@ -55,11 +55,11 @@ Set ROOT_DIR=~/wdias/wdias-performance-test
 The water level also contains the real data for one month of period, and \emph{setup\_waterlevel.sh} script provide the functionality of prepare, cleanup and extract.
 Also it reset and repeat reading from the beginning when the \acrshort{jmeter} date counter keep increasing.
 
-> Talk about the test test up - JMeter
- -> mentioned distributed setup test data collect issue and continue with one server coz it can support what is required
+== Talk about the test test up - JMeter
+=== mentioned distributed setup test data collect issue and continue with one server coz it can support what is required
 \subsection{Experimental Setup}
 In order to create higher work load using the \acrshort{jmeter}, it has Distributed Testing feature. It is using the master slave approach and it allowed to handle all the test cases via single instance, rather handling separate instances. But it has following limitation;
-\say{Note: The same test plan is run by all the servers. JMeter does not distribute the load between servers, each runs the full test plan. So if you set 1000 Threads and have 6 JMeter server, you end up injecting 6000 Threads.}
+\say{Note: The same test plan is run by all the servers. JMeter does not distribute the load between servers, each runs the full test plan. So if you set 1000 Threads and have 6 JMeter server, you end up injecting 6000 Threads}. When test cases runs with \acrshort{jmeter} Distributed mode, the server node trigger same copy of test case on configured slave nodes parallel. At the end of the test cases, it gather results into the master node.
 
 \begin{figure}[htp]
     \centering
@@ -67,47 +67,117 @@ In order to create higher work load using the \acrshort{jmeter}, it has Distribu
     \caption{Experimental Setup with JMeter}
     \label{fi:experimental_setup}
 \end{figure}
+
+== Talk about Stepping timer with concurrent thread group
+When implementing load test cases with \acrshort{jmeter}, it uses threads to simulate the users. The root component of a test create is a thread group. There are different kind of thread groups are available such as Thread Group (Basic thread group), Arrivals Thread Group, Free Form Arrivals Thread Group, Stepping Thread Group, Concurrency Thread Group and Ultimate Thread Group etc.
+
+TODO
+\subsubsection{closed vs. open workload models} \cite{Haggett1998AnWales}
+\begin{itemize}
+    \item \emph{closed system model} a new request is only triggered by the completion of a previous request, following by a think time. System has negative feedback that makes it impossible to bury-out the service, so users wait for the responses before making new requests.
+    \item \emph{open system model} new requests arrival independently of completions, e.g. according to a stochastic process or fixed trace. System has no negative feedback.
+\end{itemize}
+While implementing the test cases for \acrshort{wdias}, it uses Concurrency Thread Group with Throughput Shaping Timer because of it support the open workload approach.
+Using other thread groups, it required to find exact number of threads and timer delays that produce desired number of requests per second (RPS) to server. Which is known as the \emph{closed workload}.
+With using Throughput Shaping Timer, it only need to configure the \acrfull{rps}. When combine this \acrshort{jmeter} plugin with Concurrency Thread Group using Schedule Feedback Function to dynamically maintain thread count required to achieve target RPS \cite{Haggett1998AnWales} TODO.
+
+== Add screenshot of jmeter setup
+The test plans mentioned in \ref{se:test_plan} are implemented via the \acrshort{jmeter}. The \ref{fi:wdias_performance_test} shows the overall figure of all the test cases.
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=1\textwidth]{method/microservice/microservice_architecture-handle_on_async-v3.jpg}
-    \caption{Weather Data Integration and Assimilation System Architecture for Handle Request Asynchronously}
-    \label{fi:wdias_micro_async}
+    \includegraphics[width=0.6\textwidth]{results/work_load/wdias_performance_test.png}
+    \caption{WDIAS Performance Test Cases}
+    \label{fi:wdias_performance_test}
+\end{figure}
+In the first step of the plan consist of setting up the timeseries metadata. At the same time, it creates the timeseries entry in the \acrshort{wdias} system as well as shown in the \ref{fi:test_create_timeseries}.
+By creating the timeseries before help to reduce the overhead during the performance testing, and cause to more accurate \acrshort{rps} at the run time.
+Otherwise \acrshort{jmeter} need to allocate another set of threads for timeseries creation. Since the test cases insert data again set of timeseries, most of the time it about retrieving the timeseries metadata, rather creation a new timeseries in the \acrshort{wdias} system.
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{results/work_load/test_create_timeseries.png}
+    \caption{WDIAS Performance Test - Create timeseries}
+    \label{fi:test_create_timeseries}
+\end{figure}
+The \ref{fi:test_all_cases} shows the test cases of other steps of Import, Extensions, Export and combination of All of them as per the detail steps in \ref{se:test_plan}.
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{results/work_load/test_all_cases.png}
+    \caption{WDIAS Performance Test - Import, Export, Extension and Query test cases}
+    \label{fi:test_all_cases}
+\end{figure}
+Following test case \ref{fi:test_query_timeseries} for intensively test the query timeseries features.
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{results/work_load/test_query_timeseries.png}
+    \caption{WDIAS Performance Test - Query Timeseries}
+    \label{fi:test_query_timeseries}
+\end{figure}
+In the \ref{fi:test_prod_throughtput_shaping_timer} shows the Throughput Shaping Timer configurations for the All test case.
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{results/work_load/test_prod_throughtput_shaping_timer.png}
+    \caption{WDIAS Performance Test - Throughput Shaping Timer Graph}
+    \label{fi:test_prod_throughtput_shaping_timer}
 \end{figure}
 
-> Talk about Stepping timer with concurrent thread group
+== talk about how test cases are enabled
+With the above \acrshort{jmeter} test case setup, it need to enable each test case separately and before running via the command line in the server. In order to do it in much efficient way, a scripting tool has implemented, and accessible with the code base \cite{Haggett1998AnWales} as \emph{test-dev} TODO.
+\begin{lstlisting}[language=sh, caption=Performance Test Help]
+-h | --help: Usage
+  test-dev enable <MODULE>
+    - MODULE: import(i) | export(e) | extension(x) | all(a)
 
+  test-dev run <REQ_SIZE>
+    First need to enable module that need to be run
+    - REQ_SIZE: 24(1) | 288(2) | 1440(3)
+    NOTE: Modify test.conf as necessary
+    e.g.
+    test-dev run 24
+    or
+    test-dev run 1
 
-> Add screenshot of jmeter setup
-> Add prod req graph
-> talk about how test cases are enabled
-> talk about test plans can run
+  test-dev once <REQ_SIZE> <SEARCH_PHASE>
+    This will enable the test case first. Then run the test case, and at the end disable and exit.
+    - SEARCH_PHASE: Thread Group level name that matches
+    e.g.
+    test-dev once 24 CreateExtensions
+    or
+    test-dev once 1 CreateExtensions
+
+  test-dev disable <MODULE>
+    - MODULE: import(i) | export(e) | extension(x) | all(a)
+\end{lstlisting}
+
+== talk about test plans can run
+As per the usage description of test-dev, it has the features of enable a test case, disable a test case, and run the test case while enabled.
+Another wrapper was implemented around the test-dev as \emph{test-plan.sh} which is also available with the code base \cite{Haggett1998AnWales} TODO.
 \begin{lstlisting}[language=sh, caption=Test Plan Help]
 -h | --help: Usage
     <ROOT_DIR> <COMMAND> <REQ_SIZE>
+    - COMMAND: setup | import | create_extension | extension | export | all | query
     - REQ_SIZE (optional): 24(1) | 288(2) | 1044(3)
   NOTE: Modify test.conf as necessary
   e.g.
-  test_plan.sh ~/wdias/wdias-performance-test run
   test_plan.sh ~/wdias/wdias-performance-test run 2
-  - Run all the steps in order of setup, import, 
-    create_extension, extension, export, all, query
+  - Run all the steps in order of setup, import, create_extension, extension, export, all, query
+  test_plan.sh ~/wdias/wdias-performance-test run
+  - Run all steps for all REQ_SIZE
 
   test_plan.sh ~/wdias/wdias-performance-test setup
   test_plan.sh ~/wdias/wdias-performance-test import 24
-  test_plan.sh ~/wdias/wdias-performance-test create_extension 24
-  test_plan.sh ~/wdias/wdias-performance-test extension 24
-  test_plan.sh ~/wdias/wdias-performance-test export 24
   test_plan.sh ~/wdias/wdias-performance-test all 24
-  test_plan.sh ~/wdias/wdias-performance-test query 24
 
   Distributed Mode
   SERVER_IPS=<IP1,IP2...> test_plan.sh ~/wdias/wdias-performance-test run
-
 \end{lstlisting}
+It allows to run particular test plan which are described in \ref{se:test_plan}. Also possible to run the all the test plans in order with given \emph{REQ\_SIZE} or for all the \emph{REQ\_SIZE}.
 
-> JMeter performance tuning
-  Use CSV files rather Random generates
-  Use JSR223 scripts with Grrovy
-  Using Stepping Timer
-  
+\subsubsection{JMeter performance tuning}
+\begin{itemize}
+    \item Use CSV files rather Random number generation
+    \item Use JSR223 scripts with Groovy for data processing for test cases
+    \item Using Throughput Shaping Timer in order to get more accurate \acrshort{rps}
+\end{itemize}
+
+\subsection{System Configuration}
 
