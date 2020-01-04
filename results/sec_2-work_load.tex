@@ -13,10 +13,10 @@ For grid data, it uses static 100 grid locations which based on how is \acrshort
 
 == Then using those, create timeseries metadata (how it assure 10% of Grid data)
 In the \acrshort{jmeter} Best Practices, \say{If your test needs large amounts of data - particularly if it needs to be \emph{randomised} create the test data in a file that can be read with CSV Data set. This avoids wasting resources at run-time. jmeter best practices lean\_mean}. Rather providing the randomness in run time, the timeseries stored with the random order which satisfy the percentage of 70\% Scalar, 20\% Vector and 10\% Grid as mentioned in \ref{se:test_plan}.
-Before running the test cases, it generate the metadata for timeseries and write into a CSV file which is shared among the threads in the \acrshort{jmeter}. This is occurred in the setup phase of the test cases. The metadata CSV file arrange in a way that within each 10 lines, 7 lines are Scalar timeseries, 2 lines are Vector timeseries, and 1 line is a Grid timeseries.
+Before running the test cases, it generate the metadata for timeseries and write into a CSV file which is shared among the threads in the \acrshort{jmeter}. This occurs in the setup phase of the test cases. The metadata CSV file arrange in a way that within each 10 lines, 7 lines are Scalar timeseries, 2 lines are Vector timeseries, and 1 line is a Grid timeseries.
 
 == Then how precipitation data for each time period created
-The system is capable of storing any numeric value up to 3 decimal points. It does not make any different based on the parameter type whether it is the precipitation or the temperature. Thus during the performance testing, \acrshort{jmeter} is using real precipitation data from \acrshort{curw}. One month period of data for five weather stations have been using for prepare the test data. The script to cleanup and prepare the precipitation data is available as \emph{setup\_precipitation.sh} in wdias-performance.
+The system is capable of storing any numeric value up to 3 decimal points. It does not make any different based on the parameter type whether it is the precipitation or the temperature. Thus during the performance testing, \acrshort{jmeter} uses real precipitation data from \acrshort{curw}. One month period of data for five weather stations have been using for prepare the test data. The script to cleanup and prepare the precipitation data is available as \emph{setup\_precipitation.sh} in wdias-performance.
 
 \begin{lstlisting}[language=sh, caption=Precipitation Data Preparation]
 Set ROOT_DIR=~/wdias/wdias-performance-test
@@ -58,8 +58,8 @@ Also it reset and repeat reading from the beginning when the \acrshort{jmeter} d
 == Talk about the test test up - JMeter
 === mentioned distributed setup test data collect issue and continue with one server coz it can support what is required
 \subsection{Experimental Setup}
-In order to create higher work load using the \acrshort{jmeter}, it has Distributed Testing feature. It is using the master slave approach and it allowed to handle all the test cases via single instance, rather handling separate instances. But it has following limitation;
-\say{Note: The same test plan is run by all the servers. JMeter does not distribute the load between servers, each runs the full test plan. So if you set 1000 Threads and have 6 JMeter server, you end up injecting 6000 Threads}. When test cases runs with \acrshort{jmeter} Distributed mode, the server node trigger same copy of test case on configured slave nodes parallel. At the end of the test cases, it gather results into the master node.
+In order to create higher work load using the \acrshort{jmeter}, it has Distributed Testing feature. It uses the master slave approach and it allowed to handle all the test cases via single instance, rather handling separate instances. But it has following limitation;
+\say{Note: The same test plan runs by all the servers. JMeter does not distribute the load between servers, each runs the full test plan. So if you set 1000 Threads and have 6 JMeter server, you end up injecting 6000 Threads}. When test cases runs with \acrshort{jmeter} Distributed mode, the server node trigger same copy of test case on configured slave nodes parallel. At the end of the test cases, it gather results into the master node.
 
 \begin{figure}[htp]
     \centering
@@ -83,36 +83,45 @@ With using Throughput Shaping Timer, it only need to configure the \acrfull{rps}
 
 == Add screenshot of jmeter setup
 The test plans mentioned in \ref{se:test_plan} are implemented via the \acrshort{jmeter}. The \ref{fi:wdias_performance_test} shows the overall figure of all the test cases.
+
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.6\textwidth]{results/work_load/wdias_performance_test.png}
     \caption{WDIAS Performance Test Cases}
     \label{fi:wdias_performance_test}
 \end{figure}
+
 In the first step of the plan consist of setting up the timeseries metadata. At the same time, it creates the timeseries entry in the \acrshort{wdias} system as well as shown in the \ref{fi:test_create_timeseries}.
 By creating the timeseries before help to reduce the overhead during the performance testing, and cause to more accurate \acrshort{rps} at the run time.
 Otherwise \acrshort{jmeter} need to allocate another set of threads for timeseries creation. Since the test cases insert data again set of timeseries, most of the time it about retrieving the timeseries metadata, rather creation a new timeseries in the \acrshort{wdias} system.
+
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.6\textwidth]{results/work_load/test_create_timeseries.png}
     \caption{WDIAS Performance Test - Create timeseries}
     \label{fi:test_create_timeseries}
 \end{figure}
+
 The \ref{fi:test_all_cases} shows the test cases of other steps of Import, Extensions, Export and combination of All of them as per the detail steps in \ref{se:test_plan}.
+
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.6\textwidth]{results/work_load/test_all_cases.png}
     \caption{WDIAS Performance Test - Import, Export, Extension and Query test cases}
     \label{fi:test_all_cases}
 \end{figure}
+
 Following test case \ref{fi:test_query_timeseries} for intensively test the query timeseries features.
+
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.6\textwidth]{results/work_load/test_query_timeseries.png}
     \caption{WDIAS Performance Test - Query Timeseries}
     \label{fi:test_query_timeseries}
 \end{figure}
+
 In the \ref{fi:test_prod_throughtput_shaping_timer} shows the Throughput Shaping Timer configurations for the All test case.
+
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.6\textwidth]{results/work_load/test_prod_throughtput_shaping_timer.png}
@@ -122,6 +131,7 @@ In the \ref{fi:test_prod_throughtput_shaping_timer} shows the Throughput Shaping
 
 == talk about how test cases are enabled
 With the above \acrshort{jmeter} test case setup, it need to enable each test case separately and before running via the command line in the server. In order to do it in much efficient way, a scripting tool has implemented, and accessible with the code base \cite{Haggett1998AnWales} as \emph{test-dev} TODO.
+
 \begin{lstlisting}[language=sh, caption=Performance Test Help]
 -h | --help: Usage
   test-dev enable <MODULE>
@@ -151,6 +161,7 @@ With the above \acrshort{jmeter} test case setup, it need to enable each test ca
 == talk about test plans can run
 As per the usage description of test-dev, it has the features of enable a test case, disable a test case, and run the test case while enabled.
 Another wrapper was implemented around the test-dev as \emph{test-plan.sh} which is also available with the code base \cite{Haggett1998AnWales} TODO.
+
 \begin{lstlisting}[language=sh, caption=Test Plan Help]
 -h | --help: Usage
     <ROOT_DIR> <COMMAND> <REQ_SIZE>
@@ -170,6 +181,7 @@ Another wrapper was implemented around the test-dev as \emph{test-plan.sh} which
   Distributed Mode
   SERVER_IPS=<IP1,IP2...> test_plan.sh ~/wdias/wdias-performance-test run
 \end{lstlisting}
+
 It allows to run particular test plan which are described in \ref{se:test_plan}. Also possible to run the all the test plans in order with given \emph{REQ\_SIZE} or for all the \emph{REQ\_SIZE}.
 
 \subsubsection{JMeter performance tuning}
@@ -180,4 +192,38 @@ It allows to run particular test plan which are described in \ref{se:test_plan}.
 \end{itemize}
 
 \subsection{System Configuration}
+As described in the \ref{se:microservice}, the \acrshort{wdias} is mainly focus on microservice architecture and implemented on top of kubernetes. \acrfull{k8s} is an open-source system for automating deployment, scaling, and management of containerized applications. For the performance study uses \acrfull{eks}. There are many \acrshort{k8s} solutions available such as GCP, Azure, Digital Ocean etc on the cloud.
 
+A detailed description of setting up the \acrshort{eks} available as \cite{KarunarathneWdias/Amazon_EKS.md:EKS} within the main repository of the \acrshort{wdias}.
+\acrshort{k8s} is a planet scaling tool \cite{LinuxFoundationProduction-GradeKubernetes}, and users can tweak the configuration to run the \acrshort{wdias} as per the required level of load on the system. During the performance test of the \acrshort{wdias}, it uses maximum of 300 \acrshort{rps} with providing to the system with increasing load, and monitor the auto scalability of the system with measuring other performance parameters mentioned in the \ref{se:test_plan}.
+
+\begin{table}[]
+\begin{tabular}{lccccl}
+\hline
+\multicolumn{1}{c}{\textbf{Node Label}} & \textbf{vCPU} & \textbf{RAM (GB)} & \textbf{Storage (GB)} & \textbf{Quantity} & \multicolumn{1}{c}{\textbf{EC2 Name}} \\ \hline
+core & 16 & 32 & 15 & 1 & c5.4xlarge \\
+grid & 8 & 16 & 25 & 1 & c5.2xlarge \\
+scalar & 8 & 16 & 20 & 1 & c5.2xlarge \\
+test & 4 & 10.5 & 5 & 1 & c5n.xlarge \\ \hline
+\end{tabular}
+\caption{\acrshort{eks} nodes}
+\label{tab:aws_eks_nodes}
+\end{table}
+
+The \acrshort{wdias} uses the Helm \cite{CNCFHelmDocs} which is a package manager for \acrshort{k8s}. Each microservice within the system deploy and maintain as a helm chart, and the Helm Charts \cite{KarunarathneWdias-helm-charts:Deployments} can be found within the code base. For the databases, it uses the official helm charts.
+
+\subsubsection{Performance Tuning}
+In order to get better performance using the available resources, it is possible to schedule each microservice into a predefined set of nodes. There are few ways to do in the \acrshort{k8s};
+\begin{itemize}
+    \item \emph{nodeSelector} - Hard rules match for node schedule. If not match, pods will not schedule.
+    \item \emph{node Affinity and Anti-Affinity} - Soft rules for node schedule. Based on the rules, pods will schedule on most appropriate node.
+    \item \emph{Taints and Tolerations} - Opposite of nodeSelector, repel mismatching pods away from the nodes.
+\end{itemize}
+Users can use one of above features to fine-tune the \acrshort{wdias} to perform better. For the moment, \acrshort{wdias} helm charts uses node Affinity in order to use the same charts within local setup with one node and work the same charts on a \acrshort{k8s} cluster with multiple nodes. Pods are assigned to the nodes \ref{tab:aws_eks_nodes} based on the node label as below;
+\begin{itemize}
+    \item \emph{core}: metadata, extensions, query, status and extension services
+    \item \emph{grid}: grid adapter, import and export grid data
+    \item \emph{scalar}: scalar and vector adapters, import and export of same data types
+    \item \emph{test}: jmeter and metric server
+\end{itemize}
+The databases uses for data consistency and performance in storage optimization with search capabilities. But because of that, it only possible to run one instance of those. In the \acrshort{wdias}, the MySQL and MongoDb are not getting higher load as adapter databases such as InfluxDB for scalar and vector data types, and netCDF for grid data type. In order to keep up with the pace, those microservice pods are assign to dedicated nodes in order to increase the performance of inter-service communication.
