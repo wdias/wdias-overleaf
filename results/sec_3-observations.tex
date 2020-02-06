@@ -1,3 +1,218 @@
 \section{Observations}
 
+\subsection{Full work load test}
 
+\subsubsection{Test with hourly (24) data}
+\begin{table}[]
+\begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
+\hline
+Label & \# Samples & Avg & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
+Insert Timeseries & 71826 & 28 & 13 & 2773 & 31 & 58.74 & 0.00\% & 40.5 \\ \hline
+Retrieve Timeseries & 71796 & 8 & 7 & 242 & 10 & 4.18 & 0.00\% & 40.7 \\ \hline
+Insert Grid & 7982 & 23 & 21 & 126 & 26 & 4.23 & 0.06\% & 4.5 \\ \hline
+Retrieve Grid & 7979 & 68 & 59 & 238 & 75 & 10.11 & 0.00\% & 4.5 \\ \hline
+Query: Location & 71804 & 3 & 2 & 109 & 3 & 1.52 & 0.00\% & 40.5 \\ \hline
+\textbf{TOTAL} & 311182 & 127 & 0 & 2773 & 503 & 207.80 & 0.00\% & 175.4 \\ \hline
+\end{tabulary}
+\caption{Throughput and Latency of All test cases with 60min data}
+\label{tab:obs_all_60_min_summary}
+\end{table}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_60m_transaction_throughtput_vs_threads.png}
+    \caption{Performance All Test 60 minutes - Transaction Throughput vs Threads}
+    \label{fi:test_obs_all_60m_throughtput}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_60m_response_times_percentiles.png}
+    \caption{Performance All Test 60 minutes - Response times Percentiles}
+    \label{fi:test_obs_all_60m_latency_percentile}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_60m_res_latencies_against_hits.png}
+    \caption{Performance All Test 60 minutes - Latency against server hits}
+    \label{fi:test_obs_all_60m_latency}
+\end{figure}
+
+\subsubsection{Test with 30min (48) data}
+\begin{table}[]
+\begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
+\hline
+Label & \# Samples & Average & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
+Insert Timeseries & 71759 & 29 & 14 & 1699 & 32 & 50.97 & 0.00\% & 40.5 \\ \hline
+Retrieve Timeseries & 71730 & 9 & 7 & 1033 & 10 & 6.04 & 0.00\% & 40.6 \\ \hline
+Insert Grid & 7972 & 44 & 40 & 162 & 49 & 8.17 & 0.08\% & 4.5 \\ \hline
+Retrieve Grid & 7971 & 81 & 67 & 284 & 93 & 15.15 & 0.00\% & 4.5 \\ \hline
+Query: Location & 71734 & 3 & 2 & 110 & 3 & 1.90 & 0.00\% & 40.5 \\ \hline
+TOTAL & 310878 & 129 & 0 & 1699 & 503 & 207.10 & 0.00\% & 175.3 \\ \hline
+\end{tabulary}
+\caption{Throughput and Latency of All test cases with 30min data}
+\label{tab:obs_all_30_min_summary}
+\end{table}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_30m_transaction_throughtput_vs_threads.png}
+    \caption{Performance All Test 30 minutes - Transaction Throughput vs Threads}
+    \label{fi:test_obs_all_30m_throughtput}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_30m_response_times_percentiles.png}
+    \caption{Performance All Test 30 minutes - Response times Percentiles}
+    \label{fi:test_obs_all_30m_latency_percentile}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_30m_res_latencies_against_hits.png}
+    \caption{Performance All Test 30 minutes - Latency against server hits}
+    \label{fi:test_obs_all_30m_latency}
+\end{figure}
+
+\subsubsection{Test with 15min (96) data}
+\begin{table}[]
+\begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
+\hline
+Label & \# Samples & Average & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
+Insert Timeseries & 71775 & 30 & 12 & 1719 & 41 & 51.71 & 0.00\% & 40.5 \\ \hline
+Query: Location & 71749 & 3 & 2 & 130 & 4 & 2.32 & 0.00\% & 40.5 \\ \hline
+Insert Grid & 7975 & 91 & 77 & 279 & 112 & 19.58 & 1.42\% & 4.5 \\ \hline
+Retrieve Timeseries & 71736 & 23 & 8 & 1623 & 32 & 50.18 & 0.00\% & 40.6 \\ \hline
+Retrieve Grid & 7972 & 118 & 80 & 876 & 165 & 56.15 & 0.00\% & 4.5 \\ \hline
+\textbf{TOTAL} & 310934 & 134 & 0 & 1719 & 503 & 206.40 & 0.04\% & 175.4 \\ \hline
+\end{tabulary}
+\caption{Throughput and Latency of All test cases with 15min data}
+\label{tab:obs_all_15_min_summary}
+\end{table}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_15m_transaction_throughtput_vs_threads.png}
+    \caption{Performance Test - Transaction Throughput vs Threads}
+    \label{fi:test_obs_all_15m_throughtput}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_15m_response_times_percentiles.png}
+    \caption{Performance Test - Response times Percentiles}
+    \label{fi:test_obs_all_15m_latency_percentile}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_15m_res_latencies_against_hits.png}
+    \caption{Performance Test - Latency against server hits}
+    \label{fi:test_obs_all_15m_latency}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_15m_resource_utilization.png}
+    \caption{Performance Test - Resource Utilization}
+    \label{fi:test_obs_all_15m_resources}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_15m_resource_pods.png}
+    \caption{Performance Test - Number of Active pods}
+    \label{fi:test_obs_all_15m_pods}
+\end{figure}
+
+
+\subsubsection{Load test with \acrfull{k8s} auto pod scaling}
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/all_auto/obs_all_auto_15m_import_export_res.png}
+    \caption{Performance All Test 15min Interval - Auto Scaling Resource Usage of Import and Export Modules }
+    \label{fi:obs_all_auto_15m_import_export_res}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/all_auto/obs_all_auto_15m_import_grid_pod.png}
+    \caption{Performance All Test 15min Interval - Auto Scaling Import ASCII Grid Number of Pods Over Time }
+    \label{fi:obs_all_auto_15m_import_grid_pod}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/all_auto/obs_all_auto_15m_adapter_dbs_res.png}
+    \caption{Performance All Test 15min Interval - Auto Scaling Resource Usage of Database Adapters }
+    \label{fi:obs_all_auto_15m_adapter_dbs_res}
+\end{figure}
+
+
+\subsection{Import module load test}
+\begin{table}[]
+\begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
+\hline
+Label & \# Samples & Average & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
+Insert Timeseries & 91345 & 212 & 15 & 5288 & 241 & 556.05 & 0.01\% & 123.4 \\ \hline
+Insert Grid Timeseries & 10189 & 108 & 76 & 330 & 148 & 30.98 & 0.00\% & 13.8 \\ \hline
+\textbf{TOTAL} & 101534 & 202 & 15 & 5288 & 212 & 528.43 & 0.01\% & 137.2 \\ \hline
+\end{tabulary}
+\caption{Throughput and Latency of Import test cases with 15min data}
+\label{tab:obs_import_15_min_summary}
+\end{table}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/import/obs_import_15m_transaction_throughtput_vs_threads.png}
+    \caption{Performance Import Test 15 minutes Interval - Transaction Throughput vs Threads}
+    \label{fi:test_obs_import_15m_throughtput}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/import/obs_import_15m_res_latencies_against_hits.png}
+    \caption{Performance Import Test 15 minutes Interval - Latency against server hits}
+    \label{fi:test_obs_import_15m_latency}
+\end{figure}
+
+\subsection{Export module load test}
+Need to redo just after the import
+\begin{table}[]
+\begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
+\hline
+Label & \# Samples & Average & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
+Retrieve Timeseries & 136310 & 9 & 7 & 287 & 11 & 6.37 & 0.00\% & 156.1 \\ \hline
+Retrieve Grid Timeseries & 15147 & 265 & 10 & 4044 & 488 & 691.69 & 46.36\% & 17.4 \\ \hline
+\textbf{TOTAL} & 151457 & 35 & 7 & 4044 & 13 & 231.92 & 4.64\% & 173.4 \\ \hline
+\end{tabulary}
+\caption{Throughput and Latency of Export test cases with 15min data}
+\label{tab:obs_export_15_min_summary}
+\end{table}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/export/obs_export_15m_transaction_throughtput_vs_threads.png}
+    \caption{Performance Export Test 15 minutes Interval - Transaction Throughput vs Threads}
+    \label{fi:test_obs_export_15m_throughtput}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/export/obs_export_15m_res_latencies_against_hits.png}
+    \caption{Performance Export Test 15 minutes Interval - Latency against server hits}
+    \label{fi:test_obs_export_15m_latency}
+\end{figure}
+
+\subsection{Extension module load test}
+
+\subsection{Query module load test}
+
+\subsection{Compare with other systems}
+
+Throughput
+Latency
+Resource Utilization
+Auto Scaling/Scalability

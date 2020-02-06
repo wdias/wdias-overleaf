@@ -219,6 +219,9 @@ In order to get better performance using the available resources, it is possible
     \item \emph{node Affinity and Anti-Affinity} - Soft rules for node schedule. Based on the rules, pods will schedule on most appropriate node.
     \item \emph{Taints and Tolerations} - Opposite of nodeSelector, repel mismatching pods away from the nodes.
 \end{itemize}
+
+- e.g., diagram indicating the nodes and their connectivity (load generator, target, storage, etc.), Then briefly describe the diagram.
+
 Users can use one of above features to fine-tune the \acrshort{wdias} to perform better. For the moment, \acrshort{wdias} helm charts uses node Affinity in order to use the same charts within local setup with one node and work the same charts on a \acrshort{k8s} cluster with multiple nodes. Pods are assigned to the nodes \ref{tab:aws_eks_nodes} based on the node label as below;
 \begin{itemize}
     \item \emph{core}: metadata, extensions, query, status and extension services
