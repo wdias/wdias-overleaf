@@ -3,6 +3,7 @@
 The database structure of WDIAS mainly depends on the key attributes of the timeseries. A brief summary of possible value for timeseries can be describe as below;
 
 \subsection{Timeseries Key Attributes}
+\label{sub:timeseries_key_attributes}
 - Module ID
   String field which describe the source of the data generated. Example of hec-hms, flow2d, weather-station etc
 - Value Type
@@ -93,6 +94,7 @@ WDIAS is using a hierarchical database, with following the concept of Database p
 Following chapters described the usage of databases in WDIAS and reason behind the selection.
 
 \subsection{MySQL}
+\label{sub:mysql}
 Relational Database Management System (RDBMS).
 SQL database has fewer version of open source and it is also possible to gain better performance with commercial versions. 
 Since WDIAS scope is to using open source tools, it is using MySQL as persistent database for storing timeseries metadata described above.
@@ -103,6 +105,7 @@ MySQL is used only for these services, those will only keep the consistency of t
 Other than MySQL, there are many open source databases can be used to replace the same functionality.
 
 \subsection{InfluxDB} \cite{influxdbInfluxDBDocumentation}
+\label{sub:influxdb}
 Open timeseries DB with MIT license
 Support SQL-Like query language
 Clustering available with a commercial version
