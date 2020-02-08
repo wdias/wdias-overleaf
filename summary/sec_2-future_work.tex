@@ -21,8 +21,8 @@ Because of this issue, the \acrshort{wdias} test plans further improved by remov
 As further described in \ref{se:conclusion}, it is possible to increase the performance of these bottlenecks much higher such as using \acrshort{influxdb} Commercial cluster support for high availability or horizontal scaling of \acrshort{influxdb}. With \acrshort{influxdb} cluster, it is possible to run multiple pods of adapter-scalar and adapter-vector for support more server hits per second.
 Other than that, the \acrshort{wdias} performance can improve via partitioning the timeseries key space into multiple \acrshort{influxdb} instances. The adapter-scalar or adapter-vector can improve to plug multiple instance of \acrshort{influxdb} instances by changing the configurations. As an example, based on the key attribute \ref{sub:timeseries_key_attributes} Timeseries Type, the adapter-scalar can connect to four instance of \acrshort{influxdb} instances such as  External Historical, External Forecast, Simulated Historical, and Simulated Forecast etc.
 
-\paragraph{Add Alerting extension modules}
+\paragraph{Alerting extension modules}
 At the moment, extensions only support On Change and On Time events. But it will be good to have event trigger support based on reconfigured alert level.
 
-\paragraph{Add Publisher Subscriber extension modules}
-The \acrshort{wdias} better to be capable of triggering external systems based on the events such as webhooks.
+\paragraph{Publisher Subscriber extension modules}
+The \acrshort{wdias} better to be capable of triggering external systems based on the events such as web hooks.
