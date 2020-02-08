@@ -1,0 +1,63 @@
+\subsection{Import module load test}
+\label{subse:obs_test_plan_import_15min}
+\begin{table}[]
+\begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
+\hline
+Label & \# Samples & Average & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
+Insert Timeseries & 91345 & 212 & 15 & 5288 & 241 & 556.05 & 0.01\% & 123.4 \\ \hline
+Insert Grid Timeseries & 10189 & 108 & 76 & 330 & 148 & 30.98 & 0.00\% & 13.8 \\ \hline
+\textbf{TOTAL} & 101534 & 202 & 15 & 5288 & 212 & 528.43 & 0.01\% & 137.2 \\ \hline
+\end{tabulary}
+\caption{Throughput and Latency of Import test cases with 15min data}
+\label{tab:obs_import_15_min_summary}
+\end{table}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/import/obs_import_15m_transaction_throughtput_vs_threads.png}
+    \caption{Performance Import Test 15 minutes Interval - Transaction Throughput vs Threads}
+    \label{fi:test_obs_import_15m_throughtput}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/import/obs_import_15m_res_latencies_against_hits.png}
+    \caption{Performance Import Test 15 minutes Interval - Latency against server hits}
+    \label{fi:test_obs_import_15m_latency}
+\end{figure}
+
+
+
+\subsection{Export module load test}
+\label{subse:obs_test_plan_export_15min}
+Need to redo just after the import
+\begin{table}[]
+\begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
+\hline
+Label & \# Samples & Average & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
+Retrieve Timeseries & 136310 & 9 & 7 & 287 & 11 & 6.37 & 0.00\% & 156.1 \\ \hline
+Retrieve Grid Timeseries & 15147 & 265 & 10 & 4044 & 488 & 691.69 & 46.36\% & 17.4 \\ \hline
+\textbf{TOTAL} & 151457 & 35 & 7 & 4044 & 13 & 231.92 & 4.64\% & 173.4 \\ \hline
+\end{tabulary}
+\caption{Throughput and Latency of Export test cases with 15min data}
+\label{tab:obs_export_15_min_summary}
+\end{table}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/export/obs_export_15m_transaction_throughtput_vs_threads.png}
+    \caption{Performance Export Test 15 minutes Interval - Transaction Throughput vs Threads}
+    \label{fi:test_obs_export_15m_throughtput}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/export/obs_export_15m_res_latencies_against_hits.png}
+    \caption{Performance Export Test 15 minutes Interval - Latency against server hits}
+    \label{fi:test_obs_export_15m_latency}
+\end{figure}
+
+
+
+\subsection{Extension module load test}
+\label{subse:obs_test_plan_extension_15min}

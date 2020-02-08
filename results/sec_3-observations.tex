@@ -151,7 +151,7 @@ Other than that, this test plan runs with enabling \acrshort{k8s} Auto Scaling f
 \begin{table}[]
 \begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
 \hline
-Label & \# Samples & Average & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
+Label & Samples & Avg & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
 Insert Timeseries & 71727 & 34 & 13 & 1777 & 27 & 118.78 & 0.00\% & 40.5 \\ \hline
 Retrieve Timeseries & 71693 & 7 & 5 & 1608 & 9 & 18.72 & 0.00\% & 40.5 \\ \hline
 Insert Grid & 7968 & 87 & 77 & 233 & 98 & 14.07 & 0.18\% & 4.5 \\ \hline
@@ -162,7 +162,7 @@ Query: Location & 71704 & 1 & 0 & 203 & 2 & 2.05 & 0.00\% & 40.5 \\ \hline
 \caption{Throughput and Latency of All test cases with 15min data while enabled \acrshort{k8s} Auto Scaling}
 \label{tab:obs_all_auto_15_min_summary}
 \end{table}
-\ref{tab:obs_all_auto_15_min_summary} shows the response latency summary details and \acrshort{rps} as same as explained in \ref{subse:obs_all_15_min_summary}.
+\ref{tab:obs_all_auto_15_min_summary} shows the response latency summary details and \acrshort{rps} as same as explained in \ref{subse:obs_test_plan_all_15min}.
 During this test plan. the main focus on the auto scaling enabled microservice. As per the insert grid latency in the \ref{tab:obs_all_auto_15_min_summary}, the average insert latency is reduced from 91ms to 87ms. Also error percentage reduced from 1.42\% to 0.18\%. Standard deviation reduced from 19.58 to 14.07 which means the latency is much closer to the average latency. These improvements in insert Grid timeseries data seems to affect on out put of retrieve Grid timeseries data as well.
 
 \begin{figure}[htp]
@@ -211,68 +211,49 @@ As the graph shows, 3 pods scheduled at the initial as per the configuration of 
 \ref{fi:obs_all_auto_15m_adapter_dbs_res} shows the resource utilization of database adapters in the \acrshort{wdias}.
 
 
-\subsection{Import module load test}
-\begin{table}[]
-\begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
-\hline
-Label & \# Samples & Average & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
-Insert Timeseries & 91345 & 212 & 15 & 5288 & 241 & 556.05 & 0.01\% & 123.4 \\ \hline
-Insert Grid Timeseries & 10189 & 108 & 76 & 330 & 148 & 30.98 & 0.00\% & 13.8 \\ \hline
-\textbf{TOTAL} & 101534 & 202 & 15 & 5288 & 212 & 528.43 & 0.01\% & 137.2 \\ \hline
-\end{tabulary}
-\caption{Throughput and Latency of Import test cases with 15min data}
-\label{tab:obs_import_15_min_summary}
-\end{table}
-
-\begin{figure}[htp]
-    \centering
-    \includegraphics[width=0.8\textwidth]{results/obs/import/obs_import_15m_transaction_throughtput_vs_threads.png}
-    \caption{Performance Import Test 15 minutes Interval - Transaction Throughput vs Threads}
-    \label{fi:test_obs_import_15m_throughtput}
-\end{figure}
-
-\begin{figure}[htp]
-    \centering
-    \includegraphics[width=0.8\textwidth]{results/obs/import/obs_import_15m_res_latencies_against_hits.png}
-    \caption{Performance Import Test 15 minutes Interval - Latency against server hits}
-    \label{fi:test_obs_import_15m_latency}
-\end{figure}
-
-
-
-\subsection{Export module load test}
-Need to redo just after the import
-\begin{table}[]
-\begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
-\hline
-Label & \# Samples & Average & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
-Retrieve Timeseries & 136310 & 9 & 7 & 287 & 11 & 6.37 & 0.00\% & 156.1 \\ \hline
-Retrieve Grid Timeseries & 15147 & 265 & 10 & 4044 & 488 & 691.69 & 46.36\% & 17.4 \\ \hline
-\textbf{TOTAL} & 151457 & 35 & 7 & 4044 & 13 & 231.92 & 4.64\% & 173.4 \\ \hline
-\end{tabulary}
-\caption{Throughput and Latency of Export test cases with 15min data}
-\label{tab:obs_export_15_min_summary}
-\end{table}
-
-\begin{figure}[htp]
-    \centering
-    \includegraphics[width=0.8\textwidth]{results/obs/export/obs_export_15m_transaction_throughtput_vs_threads.png}
-    \caption{Performance Export Test 15 minutes Interval - Transaction Throughput vs Threads}
-    \label{fi:test_obs_export_15m_throughtput}
-\end{figure}
-
-\begin{figure}[htp]
-    \centering
-    \includegraphics[width=0.8\textwidth]{results/obs/export/obs_export_15m_res_latencies_against_hits.png}
-    \caption{Performance Export Test 15 minutes Interval - Latency against server hits}
-    \label{fi:test_obs_export_15m_latency}
-\end{figure}
-
-
-
-\subsection{Extension module load test}
-
-
-
 \subsection{Query module load test}
+\label{subse:obs_test_plan_query_15min}
+This section \ref{subse:obs_test_plan_query_15min} discussed about the Query test plan performance. It performs multiple information retrieval queries such as query over locations, parameters and timeseries etc which are described over \ref{se:query}. It performed approximately 123k of sample requests.
+Query test plan perform over 5 minutes of time period, and with a higher number of requests than other test plan with a peak of 600 hits per seconds.
 
+\begin{table}[]
+\begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
+\hline
+Label & Samples & Avg & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
+* → Locations & 11462 & 992 & 5 & 17569 & 1740 & 704.67 & 0.00\% & 38.3 \\ \hline
+Area → Locations & 11390 & 599 & 2 & 16755 & 1047 & 514.68 & 0.00\% & 38.1 \\ \hline
+Location → Parameters & 11350 & 666 & 1 & 16821 & 1179 & 632.86 & 0.00\% & 38.0 \\ \hline
+Locations → Parameters & 11305 & 659 & 1 & 17459 & 1149 & 678.55 & 0.00\% & 37.8 \\ \hline
+Location → Timeseries & 11269 & 647 & 2 & 32693 & 1102 & 746.51 & 0.00\% & 37.7 \\ \hline
+Locations → Timeseries & 11237 & 669 & 1 & 32651 & 1162 & 889.18 & 0.00\% & 37.6 \\ \hline
+Locations, Parameter → Timeseries & 11192 & 662 & 2 & 32806 & 1152 & 789.49 & 0.00\% & 37.4 \\ \hline
+Area → Timeseries & 11135 & 820 & 2 & 33235 & 1461 & 877.68 & 0.00\% & 37.3 \\ \hline
+Area, Parameter → Timeseries & 11084 & 864 & 1 & 16699 & 1584 & 751.00 & 0.00\% & 37.1 \\ \hline
+*, Parameter → Timeseries & 11011 & 696 & 2 & 16689 & 1216 & 693.33 & 0.00\% & 36.8 \\ \hline
+* → Timeseries & 10968 & 1473 & 24 & 18283 & 2467 & 912.45 & 0.00\% & 36.7 \\ \hline
+\textbf{TOTAL} & 123403 & 794 & 1 & 33235 & 1536 & 789.76 & 0.00\% & 412.6 \\ \hline
+\end{tabulary}
+\caption{Throughput and Latency of Query test cases with 15min data}
+\label{tab:obs_query_15_min_summary}
+\end{table}
+\ref{tab:obs_query_15_min_summary} shows the response latency summary details. The average latency is much higher than the minimum value. Also it reported higher maximum values as well. Standard deviation showed as quiet higher value which means the response latency values are not closer to the average value. Noticeably, it does not reported any errors, which means all the requests successfully process.
+The throughput for each test case is much higher and similar to all the requests. This is happening since all of these requests are handle via the adapter-query, it depends on the \acrshort{mongodb} database performance.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/query/obs_query_5m_latency_over_time.png}
+    \caption{Performance Query Test over 5 minutes - Response Latency over Time}
+    \label{fi:test_obs_query_5m_response_latency}
+\end{figure}
+\ref{fi:test_obs_query_5m_response_latency} shows the response latency over time for the query test plan. When the number of request get higher, the latency also get increased. That means adapter-query is not very much scalable with the current configurations.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/query/obs_query_5m_response_times_vs_threads.png}
+    \caption{Performance Query Test over 5 minutes - Response Latency Times vs Threads}
+    \label{fi:test_obs_query_5m_response_times_vs_threads}
+\end{figure}
+\ref{fi:test_obs_query_5m_response_times_vs_threads} shows the response latency against number of active threads for the query test plan. When the number of server hits get higher, the latency also get increased. That means adapter-query is not very much scalable with the current configurations.
+
+When ever the timeseries data not found in the adapter-query, it read data from adapter-metadata and index for search over timeseries metadata. This will cause to higher performance with geo timeseries searches. The performance of the \acrshort{mongodb} can further improve with using it features like Replication for high availability, and Sharding for higher throughput.
+Those attempts are beyond the scope of \acrshort{wdias} performance test and users can use those to get higher results from the \acrshort{wdias}.
