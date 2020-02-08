@@ -47,7 +47,7 @@ The conclusion of giving static latency while increasing the number of requests 
 
 \subsection{Full Test with 30min data (48 Request Size)}
 \label{subse:obs_test_plan_all_30min}
-This section \ref{subse:obs_test_plan_all_30min} discussed about the All test plan performance with 30 minutes data which means 48 data points per each request in Scalar and Vector timeseries, and 48 ASCII Grid files per each insert request. It performed 310k of sample requests which is almost similar to \ref{subse:obs_test_plan_all_60min} processed samples.
+This section \ref{subse:obs_test_plan_all_30min} discussed about the All test plan performance with 30 minutes data which means 48 data points per each request in Scalar and Vector timeseries, and 48 ASCII Grid files per each insert request. It performed round up to 311k of sample requests which is almost similar to \ref{subse:obs_test_plan_all_60min} processed samples.
 \begin{table}[]
 \begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
 \hline
@@ -70,8 +70,8 @@ TOTAL & 310878 & 129 & 0 & 1699 & 503 & 207.10 & 0.00\% & 175.3 \\ \hline
     \caption{Performance All Test 30 minutes - Response Time vs Threads}
     \label{fi:test_obs_all_30m_response_vs_threads}
 \end{figure}
-\ref{fi:test_obs_all_30m_response_vs_threads} show the response time against the number of active threads. As the graph show, the response time kept same while increasing the number of active threads against each test case. This shows the scalability of the \acrshort{wdias}, since the system able to process more requests without a significant change in the latency.
-When number of active threads increased more than 110, the \ref{fi:test_obs_all_60m_response_vs_threads} show uncertainty in the inserting and retrieving Scalar and Vector data. This graph is similar to the \ref{fi:test_obs_all_60m_response_vs_threads}, but the active thread count goes down as a result of increasing the request size.
+\ref{fi:test_obs_all_30m_response_vs_threads} show the response time against the number of active threads for 30min data. As the graph show, the response time kept same while increasing the number of active threads against each test case. This shows the scalability of the \acrshort{wdias}, since the system able to process more requests without a significant change in the latency.
+When number of active threads increased more than 110, the \ref{fi:test_obs_all_30m_response_vs_threads} show uncertainty in the inserting and retrieving Scalar and Vector data. This graph is similar to the \ref{fi:test_obs_all_60m_response_vs_threads}, but the active thread count goes down as a result of increasing the request size.
 
 \begin{figure}[htp]
     \centering
@@ -81,39 +81,37 @@ When number of active threads increased more than 110, the \ref{fi:test_obs_all_
 \end{figure}
 \ref{fi:test_obs_all_30m_latency} graph provides a better overview of the variation of latency over elapsed time of the test plan against number of server hits per second.
 This graph also conclude that, over the time latency does not change very much. But during the peak load, it shows some variation in insert and retrieve of Grid timeseries.
-When compared to \ref{fi:test_obs_all_60m_latency}, the latencies for insert and retrieve Grid timeseries increase by some amount.
+When compared to \ref{fi:test_obs_all_60m_latency}, the latency for insert and retrieve Grid timeseries increase by some amount.
+
 
 
 \subsection{Full Test with 15min data (96 Request Size)}
 \label{subse:obs_test_plan_all_15min}
+This section \ref{subse:obs_test_plan_all_15min} discussed about the All test plan performance with 15 minutes data which means 96 data points per each request in Scalar and Vector timeseries, and 48 ASCII Grid files per each insert Grid timeseries request. These requests are four times larger than the \ref{subse:obs_test_plan_all_60min} request size. It performed approximately 311k of sample requests which is almost similar to \ref{subse:obs_test_plan_all_30min} processed samples.
 \begin{table}[]
 \begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
 \hline
 Label & \# Samples & Average & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
 Insert Timeseries & 71775 & 30 & 12 & 1719 & 41 & 51.71 & 0.00\% & 40.5 \\ \hline
-Query: Location & 71749 & 3 & 2 & 130 & 4 & 2.32 & 0.00\% & 40.5 \\ \hline
-Insert Grid & 7975 & 91 & 77 & 279 & 112 & 19.58 & 1.42\% & 4.5 \\ \hline
 Retrieve Timeseries & 71736 & 23 & 8 & 1623 & 32 & 50.18 & 0.00\% & 40.6 \\ \hline
+Insert Grid & 7975 & 91 & 77 & 279 & 112 & 19.58 & 1.42\% & 4.5 \\ \hline
 Retrieve Grid & 7972 & 118 & 80 & 876 & 165 & 56.15 & 0.00\% & 4.5 \\ \hline
+Query: Location & 71749 & 3 & 2 & 130 & 4 & 2.32 & 0.00\% & 40.5 \\ \hline
 \textbf{TOTAL} & 310934 & 134 & 0 & 1719 & 503 & 206.40 & 0.04\% & 175.4 \\ \hline
 \end{tabulary}
 \caption{Throughput and Latency of All test cases with 15min data}
 \label{tab:obs_all_15_min_summary}
 \end{table}
+\ref{tab:obs_all_15_min_summary} shows the response latency summary details and \acrshort{rps} as same as explained in \ref{subse:obs_test_plan_all_30min}. And the latency observations are increased by some amount when compared to the observations in \ref{tab:obs_all_30_min_summary}. Noticeably retrieving latency of all type of data types increased by considerable amount. Same following the trend, standard deviation of retrieve timeseries data increased my considerable amount for all the types. We can assume that more writing to the databases affected on reads as well. Event the request data size increased by 4x time, the \acrshort{wdias} were able to handle them without any significant performance issues. And the system able to provide the same throughput as \ref{tab:obs_all_30_min_summary}.
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_15m_transaction_throughtput_vs_threads.png}
-    \caption{Performance Test - Transaction Throughput vs Threads}
-    \label{fi:test_obs_all_15m_throughtput}
+    \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_15m_response_times_vs_threads.png}
+    \caption{Performance Test - Response Time vs Active Threads}
+    \label{fi:test_obs_all_15m_response_vs_threads}
 \end{figure}
-
-\begin{figure}[htp]
-    \centering
-    \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_15m_response_times_percentiles.png}
-    \caption{Performance Test - Response times Percentiles}
-    \label{fi:test_obs_all_15m_latency_percentile}
-\end{figure}
+\ref{fi:test_obs_all_15m_response_vs_threads} show the response time against the number of active threads for 15min data. As the graph show, the response time kept same while increasing the number of active threads against each test case. When number of active threads increased more than 140, the \ref{fi:test_obs_all_15m_response_vs_threads} show uncertainty in the inserting and retrieving all data types. The latency of insert and retrieve Grid timeseries data goes up compared to \ref{fi:test_obs_all_30m_response_vs_threads}.
+With higher request size, it become to notice the latency also increase by a small factor when the number of active thread increased. This can clearly notice on with insert and retrieval of Grid timeseries data.
 
 \begin{figure}[htp]
     \centering
@@ -121,20 +119,27 @@ Retrieve Grid & 7972 & 118 & 80 & 876 & 165 & 56.15 & 0.00\% & 4.5 \\ \hline
     \caption{Performance Test - Latency against server hits}
     \label{fi:test_obs_all_15m_latency}
 \end{figure}
+\ref{fi:test_obs_all_15m_latency} graph provides a overview of the variation of latency over elapsed time of the test plan against number of server hits per second for 15min data.
+This graph show that over the time \acrshort{wdias} were able to keep the latency constant over the test plan. But at the peak time, it tend to vary from the mean value a lot.
+One noticeable fact is, throw out the test time period, it shows spikes in latency when compared to \ref{fi:test_obs_all_60m_latency} and \ref{fi:test_obs_all_30m_latency}.
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_15m_resource_utilization.png}
-    \caption{Performance Test - Resource Utilization}
-    \label{fi:test_obs_all_15m_resources}
+    \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_15m_transaction_throughtput_vs_threads.png}
+    \caption{Performance Test - Transaction Throughput vs Threads}
+    \label{fi:test_obs_all_15m_throughtput}
 \end{figure}
+\ref{fi:test_obs_import_15m_throughtput} shows the total server's transaction throughput against number of active threads.
+The formula for total server transaction throughput is \(<active threads> * 1 second / <1  thread response time>\) \cite{JMeterPluginsDocumentationJMeter-Plugins.org}. Basically, it shows the statistical maximum possible number of transactions based on number of users accessing the application.
+With combining the \ref{fi:test_obs_all_15m_latency}, this graph show that the throughput of the system get increased without much change in the latency, thus it proves the scalability of the \acrshort{wdias}.
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_15m_resource_pods.png}
-    \caption{Performance Test - Number of Active pods}
-    \label{fi:test_obs_all_15m_pods}
+    \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_15m_response_times_percentiles.png}
+    \caption{Performance Test - Response times Percentiles}
+    \label{fi:test_obs_all_15m_latency_percentile}
 \end{figure}
+\ref{fi:test_obs_all_15m_latency_percentile} visually shows the summary of \ref{tab:obs_all_15_min_summary} latency up to 90\% percentile. With a higher request size data, the \acrshort{wdias} able to process the requests without significant change in latency up to 90\% percentile.
 
 
 
