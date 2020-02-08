@@ -73,6 +73,7 @@ When implementing load test cases with \acrshort{jmeter}, it uses threads to sim
 
 TODO
 \subsubsection{closed vs. open workload models} \cite{Haggett1998AnWales}
+\label{subse:closed_vs_open_workload}
 \begin{itemize}
     \item \emph{closed system model} a new request is only triggered by the completion of a previous request, following by a think time. System has negative feedback that makes it impossible to bury-out the service, so users wait for the responses before making new requests.
     \item \emph{open system model} new requests arrival independently of completions, e.g. according to a stochastic process or fixed trace. System has no negative feedback.

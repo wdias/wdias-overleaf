@@ -38,35 +38,43 @@ As a upper limit of such scenarios while designing the performance testing, it u
     \item Every 5 minutes (288 data points) - One request is equivalent to a data points send by a weather station in 5 minutes interval for a whole day
 \end{itemize}
 
+\subsection{Test Plan Flow}
+\label{subse:test_plan_flow}
 Following are the test cases which are planned to performance test cases;
 \begin{enumerate}
-    \item Test Setup to create timeseries in 1hr, 30min and 5min intervals and create metadata of the timeseries
+    \item Test Setup to create timeseries in 1hr, 30min and 15min intervals and create metadata of the timeseries
     \item Import Timeseries
     \begin{itemize}
-        \item Plan for test run of 30 minutes. In each test run change the request size from 1hr, 30min and 5min. (total 1.5 hours)
-        \item Have mixture of data: Scalar - 70\%(max 210 requests), Vector (Multi-Scalar) - 20\% (max 60 requests), Grid - 10\% (max 30 requests)
+        \item Plan for test run of 15 minutes with the request size of 15min data.(total 0.25 hours)
+        \item Have mixture of data: Scalar - 70\%(max 210 requests per second), Vector (Multi-Scalar) - 20\% (max 60 requests per second), Grid - 10\% (max 30 requests per second)
     \end{itemize}
     \item Extensions
     \begin{itemize}
         \item Create Extensions for /Aggregation\_Accumulative, /Interpolation Linear, /Validation Missing Values (OnChange and OnTime)
-        \item 30min of test run. Just for 5min data. (total 0.5 hours)
+        \item Plan for the 15 minutes of test run with the request size of 15min data. (total 0.25 hours)
         \item Do with Import Timeseries with error data which will go through extensions.
     \end{itemize}
     \item Export Timeseries
     \begin{itemize}
-        \item 30min test run. Change request size from 1hr, 30min and 5min. (total 1.5 hours)
+        \item Plan for 15 minutes of test run with the request size of 15min data. (total 0.25 hours)
         \item Have mixture of data: Scalar - 70\%, Vector (Multi-Scalar) - 20\%, Grid - 10\% (Use the Imported - Data before and verify against Extensions)
     \end{itemize}
     \item Import + Extension + Export + Timeseries Queries (All)
     \begin{itemize}
-        \item 30min test run. Change with request size from 1hr, 30min and 5min. (total 1.5 hours)
+        \item Plan for 30 minutes of test run with the request size of 1hr (60min) data.
+        \item Plan for 30 minutes of test run with the request size of 30min data.
+        \item Plan for 30 minutes of test run with the request size of 15min data.
+        \item Plan for 30 minutes of test run with the request size of 15min data with Auto Scaling.
+        \item All test plan run against 60min, 30min and 15min request size of data. Another test plan run with enabling the Auto Scaling. (total 2 hours)
     \end{itemize}
 \end{enumerate}
 
-While performance analysis following metrics are use to measure the performance of the system.
+\subsection{Test Plan Observe Metrics}
+\label{subse:test_plan_metrics}
+During the performance analysis, following metrics are use to measure the performance of the system.
 \begin{itemize}
-    \item Throughput
-    \item Latency
-    \item Resource Utilization
-    \item Auto Scaling
+    \item Throughput - Number of requests that can be process per unit time. Normally for \acrshort{wdias} performance observations, it uses \acrfull{rps} in order to measure the throughput.
+    \item Latency - Time taken for response back to the sent request to the system. Normally it measures with milliseconds (ms) in the \acrshort{wdias}. During the performance analysis, it measures the minimum response time, maximum response time, the average response time, and standard deviation. The standard deviation measures the mean distance of the values to their average.It gives an idea of the dispersion or variability of the measures to their mean value. So, if the deviation value is low compared to the mean value, it will indicate that the measures are not dispersed (or mostly close to the mean value) and that the mean value is significant. Other than that, it measure the response time into 90\% percentile, while gives best response time up to 90\% percent of the responses.
+    \item Resource Utilization - Resource Utilization is calculated based on the CPU and Memory usage via \acrshort{k8s} metrics server. It calculates the resource utilization over 60 seconds of time window. Network usage is getting based on the actual physical machines.
+    \item Auto Scaling - The \acrshort{wdias} is running with two configurations. First is, since it is running the microservice as docker containers, it allow to increase or shrink the resource usage and share the resources within a physical machine. Second is, running with auto scaling enabled for the microservice which are using higher resources.
 \end{itemize}
