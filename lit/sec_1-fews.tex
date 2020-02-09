@@ -15,7 +15,7 @@ In figure \ref{fi:fews_schematic} show a schematic view of the connection betwee
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.7\textwidth]{fews/Schematic-structure-of-a-fl-ood-forecasting-system-showing-the-position-of-Delft-FEWS_W640.jpg}
-    \caption{Schematic structure of a flood forecasting system including \acrshort{fews} and links to other primary systems within the operational environment \cite{Werner2013TheSystem}.}
+    \caption[Schematic structure of a flood forecasting system including \acrshort{fews} and links to other primary systems within the operational environment]{Schematic structure of a flood forecasting system including \acrshort{fews} and links to other primary systems within the operational environment \cite{Werner2013TheSystem}.}
     \label{fi:fews_schematic}
 \end{figure}
 \dbc{Most figures are of low quality. You need to make sure figure resolution/quality is not lost. Dot should come after reference no. Fix all places.}
@@ -31,8 +31,7 @@ Data processing and manipulation is a required process in weather forecasting. M
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1.0\textwidth]{fews/Architecture-of-Delft-FEWS-showing-the-data-base-the-data-access-layers-and-examples-of_W640.jpg}\\
-    \caption{Architecture of \acrshort{fews} % showing the data base, the data access layers and examples of functional modules that communicate through the data access layer. 
-    \cite{Werner2013TheSystem} }
+    \caption[Architecture of \acrshort{fews}]{Architecture of \acrshort{fews} \cite{Werner2013TheSystem}.}
     \label{fi:fews_data_layer}
 \end{figure}
 Most of the library of functions provided work equally on scalar and gridded time series. As with all other modules this communicates with the database solely through the data access layer as shown in \ref{fi:fews_data_layer} \cite{Werner2013TheSystem}. As it shown in the figure, it is clearly showing that, the system is depends on single database and via the data access layer all the requests are coming to the database though a connection. It is possible to setup and connect to a enterprise level database with clustering and shading as a paid solution, in order to serve many requests as possible. But the design it self inherently suffer with the database bottleneck which effected on running a large set of timeseries or models.
@@ -40,7 +39,7 @@ Most of the library of functions provided work equally on scalar and gridded tim
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.8\textwidth]{fews/Linking-Delft-FEWS-with-external-models-The-fi-gure-shows-the-fl-ow-of-data-through-XML_W640.jpg}\\
-    \caption{ Linking \acrshort{fews} with external models. The figure shows the flow of data through XML and native model formats using solid lines, while executable commands are shown by dashed lines. \cite{Werner2013TheSystem} }
+    \caption[Linking \acrshort{fews} with external models]{Linking \acrshort{fews} with external models \cite{Werner2013TheSystem}.}
     \label{fi:fews_general_adapter}
 \end{figure}
 On of the simple and most effective feature in the \acrshort{fews} is open approach to integration of models and data. This approaches the concept of the open modeling framework proposed by \cite{Kokkonen2003InterfacingXML}. It simply gives the flexibility to allow operators to integrate more models as well as variations of the same model and come up with new integration flows as much as possible.
