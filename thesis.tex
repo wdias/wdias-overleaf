@@ -19,12 +19,13 @@
 \usepackage{listings}
 \usepackage{dirtytalk}
 \usepackage{tabulary}
+\usepackage{biblatex}
 
 \usepackage{todonotes}
 \newcommand{\db}[1]{\textcolor{blue!40}{#1}}
 \newcommand{\dbc}[1]{\todo[author=Dilum, inline, color=blue!40]{#1}}
 
-\def\refname{References}
+\addbibresource{mendeley.bib}
 
 \begin{document}
 \begin{titlepage}
@@ -281,6 +282,7 @@ Type out your second appendix here.
 
 \graphicspath{ {./images/} }
 \input{glossary.tex}
-\bibliographystyle{plain}
-\bibliography[title={References}]{mendeley}
+% \bibliographystyle{plain}
+% \addbibresource{mendeley.bib}
+\printbibliography[title={References}]
 \end{document}
