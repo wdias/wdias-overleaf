@@ -12,8 +12,8 @@ According the \ref{se:test_plan} section, this section includes the observations
 
 After running the All test plan with 60 minutes (24 data points), it observed the data summary of \ref{tab:obs_all_60_min_summary}. It performed 311k of sample requests.
 
-\begin{table}[!ht]
-\small
+\begin{table}[ht]
+\footnotesize
 \begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
 \hline
 Label & \# Samples & Avg & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
@@ -53,8 +53,8 @@ The conclusion of giving static latency while increasing the number of requests 
 \subsection{Full Test with 30min data (48 Request Size)}
 \label{subse:obs_test_plan_all_30min}
 This section \ref{subse:obs_test_plan_all_30min} discussed about the All test plan performance with 30 minutes data which means 48 data points per each request in Scalar and Vector timeseries, and 48 ASCII Grid files per each insert request. It performed round up to 311k of sample requests which is almost similar to \ref{subse:obs_test_plan_all_60min} processed samples.
-\begin{table}[!ht]
-\small
+\begin{table}[ht]
+\footnotesize
 \begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
 \hline
 Label & \# Samples & Average & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
@@ -94,8 +94,8 @@ When compared to \ref{fi:test_obs_all_60m_latency}, the latency for insert and r
 \subsection{Full Test with 15min data (96 Request Size)}
 \label{subse:obs_test_plan_all_15min}
 This section \ref{subse:obs_test_plan_all_15min} discussed about the All test plan performance with 15 minutes data which means 96 data points per each request in Scalar and Vector timeseries, and 96 ASCII Grid files per each insert Grid timeseries request. These requests are four times larger than the \ref{subse:obs_test_plan_all_60min} request size. It performed approximately 311k of sample requests which is almost similar to \ref{subse:obs_test_plan_all_30min} processed samples.
-\begin{table}[!ht]
-\small
+\begin{table}[ht]
+\footnotesize
 \begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
 \hline
 Label & \# Samples & Average & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
@@ -155,8 +155,8 @@ With combining the \ref{fi:test_obs_all_15m_latency}, this graph show that the t
 This section \ref{subse:obs_test_plan_all_auto_15min} discussed about the All test plan performance with 15 minutes data which means 96 data points per each request in Scalar and Vector timeseries, and 96 ASCII Grid files per each insert Grid timeseries request. These requests are four times larger than the \ref{subse:obs_test_plan_all_60min} request size. It performed approximately 311k of sample requests which is almost similar to \ref{subse:obs_test_plan_all_15min} processed samples.
 Other than that, this test plan runs with enabling \acrshort{k8s} Auto Scaling for the high resource utilized microservice as explained in the \ref{subse:test_plan_metrics}. With the test load used for the performance test, import-ascii-grid-upload microservice is using lots of CPU, and adapter-grid microservice is using lots of Memory. During this test plan, \acrshort{wdias} start with the auto scaling enabled for import-ascii-grid-upload microservice. Since adapter-grid is a consistence service for storing netCDF files, it is not possible to auto scale, since \acrshort{eks} does not support multiple read write support volumes \cite{LinuxFoundationPersistentKubernetes}.
 
-\begin{table}[!ht]
-\small
+\begin{table}[ht]
+\footnotesize
 \begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
 \hline
 Label & Samples & Avg & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
@@ -224,8 +224,8 @@ As the graph shows, 3 pods scheduled at the initial as per the configuration of 
 This section \ref{subse:obs_test_plan_query_15min} discussed about the Query test plan performance. It performs multiple information retrieval queries such as query over locations, parameters and timeseries etc which are described over \ref{se:query}. It performed approximately 123k of sample requests.
 Query test plan perform over 5 minutes of time period, and with a higher number of requests than other test plan with a peak of 600 hits per seconds.
 
-\begin{table}[!ht]
-\small
+\begin{table}[ht]
+\footnotesize
 \begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
 \hline
 Label & Samples & Avg & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
