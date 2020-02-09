@@ -188,7 +188,8 @@ As described in the \ref{se:microservice}, the \acrshort{wdias} is mainly focus 
 A detailed description of setting up the \acrshort{eks} available as \cite{KarunarathneWdias/Amazon_EKS.md:EKS} within the main repository of the \acrshort{wdias}.
 \acrshort{k8s} is a planet scaling tool \cite{LinuxFoundationProduction-GradeKubernetes}, and users can tweak the configuration to run the \acrshort{wdias} as per the required level of load on the system. During the performance test of the \acrshort{wdias}, it uses maximum of 300 \acrshort{rps} with providing to the system with increasing load, and monitor the auto scalability of the system with measuring other performance parameters mentioned in the \ref{se:test_plan}.
 
-\begin{table}[]
+\begin{table}[!ht]
+\small
 \begin{tabular}{lccccl}
 \hline
 \multicolumn{1}{c}{\textbf{Node Label}} & \textbf{vCPU} & \textbf{RAM (GB)} & \textbf{Storage (GB)} & \textbf{Quantity} & \multicolumn{1}{c}{\textbf{EC2 Name}} \\ \hline
