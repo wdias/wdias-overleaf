@@ -1,20 +1,25 @@
 \section{Linked Environments for Atmospheric Discovery}
 
-The reason behind developing \acrfull{lead} by US National Science Foundation (NSF)  is to addresses the fundamental research challenges needed to create an integrated, scalable framework for adaptive analyzing and predicting the atmosphere \cite{Droegemeier2005Service-OrientedWeather}. In order to predict and analysis weather models by researchers, it required many resources. Rather than each researcher is running and handling own computer resources to do the weather experiments, \acrshort{lead} is providing pool of resources, then the researchers can use this resource pool to run their experiment in shorter amounts of time and in higher scale. At the time, researchers are developing their experiment flow, they are not using the resources many, and other are using it at the same time. LEAD’s foundation is dynamic work flow orchestration and data management in a Web services framework \cite{Droegemeier2005Service-OrientedWeather}.
+%The reason behind developing \acrfull{lead} by US National Science Foundation (NSF)  is to
+\acrfull{lead} addresses the fundamental research challenges needed to create an integrated, scalable framework for adaptive analyzing and predicting the atmosphere \cite{Droegemeier2005Service-OrientedWeather}. To predict and analysis weather models by researchers, it required many resources. Rather than each researcher is running and handling own computer resources to do the weather experiments, \acrshort{lead} is providing pool of resources, then the researchers can use this resource pool to run their experiment in shorter amounts of time and in higher scale. At the time, researchers are developing their experiment flow, they are not using the resources many, and other are using it at the same time. LEAD’s foundation is dynamic work flow orchestration and data management in a Web services framework \cite{Droegemeier2005Service-OrientedWeather}.
 
-The most relevant and important analysis for designing \acrshort{lead} is understanding and analyzing the \acrfull{lead} architecture of it. LEAD’s complex array of services, applications, interfaces, and local and remote computing, networking, and storage resources is assembled by users in work flows to study mesoscale weather as it evolves \cite{Droegemeier2005Service-OrientedWeather}. As it follows the \acrshort{soa}, everything is implemented as independent services. This enable \acrshort{lead} to scale each service as required, and update each service without affecting other services. New models which are required for implementing a new forecast flow also has to be implement as a service and then integrate into the system.
+%The most relevant and important analysis for designing \acrshort{lead} is understanding and analyzing the \acrfull{lead} architecture of it. 
+LEAD's complex array of services, applications, interfaces, and local and remote computing, networking, and storage resources is assembled by users in work flows to study mesoscale weather as it evolves \cite{Droegemeier2005Service-OrientedWeather}. As it follows the \acrshort{soa}, everything is implemented as independent services. This enable \acrshort{lead} to scale each service as required, and update each service without affecting other services. New models which are required for implementing a new forecast flow also has to be implement as a service and then integrate into the system.
+\dbc{Check the use of apostrophe s. You need to use ' not ’.}
 
-In the \ref{fi:lead_system} shows the fundamental capabilities of the \acrshort{lead} system. 
-From the high-level view, \acrshort{lead} lets users query for and acquire information, simulate and predict weather by using numerical atmospheric models, assimilate data, analyze, mine, and visualize data and model output.
+Figure \ref{fi:lead_system} shows the fundamental capabilities of the \acrshort{lead} system. From the high-level view, \acrshort{lead} lets users query for and acquire information, simulate and predict weather by using numerical atmospheric models, assimilate data, analyze, mine, and visualize data and model output.
+\dbc{Make sure each reference to a figure or table is given as Figure x.y and Table x.y.}
 
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1.0\textwidth]{lead/LEAD-system-Fundamental-capabilities-familiar-to-meteorologists-are-shown-in-the-top_W640.jpg}\\
-    \caption{LEAD system. Fundamental capabilities familiar to meteorologists are shown in the top level, below which are the associated tools for enacting these capabilities and the middle-ware that links everything together. System-generated products appear at the bottom. \cite{Droegemeier2005Service-OrientedWeather} }
+    \caption{Layered architecture of LEAD. Fundamental capabilities familiar to meteorologists are shown in the top level, next are the tools for enacting these capabilities and the middleware that links everything together. System-generated products appear at the bottom \cite{Droegemeier2005Service-OrientedWeather}. }
     \label{fi:lead_system}
 \end{figure}
 
-The second level in \ref{fi:lead_system} contains the fundamental tools that help to link services together. This include following tools in brief \cite{Droegemeier2005Service-OrientedWeather};
+\dbc{Fig. 2.4 should use full text width.}
+
+The second level contains the fundamental tools that help to link services together. This include following tools \cite{Droegemeier2005Service-OrientedWeather};
 \begin{itemize}
     \item a Web portal, the primary (though not exclusive) user entry point
     \item the ARPS Data Assimilation System (ADAS), a sophisticated tool for data quality control and assimilation
@@ -27,28 +32,31 @@ The second level in \ref{fi:lead_system} contains the fundamental tools that hel
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1.0\textwidth]{lead/LEAD-system-framework-LEAD-is-composed-of-several-interacting-subsystems-with-the-LEAD_W640.jpg}\\
-    \caption{ LEAD system framework. LEAD is composed of several interacting subsystems, with the LEAD grid representing a stable, secure environment for development and testing. \cite{Droegemeier2005Service-OrientedWeather} }
+    \caption{LEAD system framework %. LEAD is composed of several interacting subsystems, with the LEAD grid representing a stable, secure environment for development and testing. 
+    \cite{Droegemeier2005Service-OrientedWeather} .}
     \label{fi:lead_framework}
 \end{figure}
 
 The Concept of the \acrshort{lead} is, the workflow orchestration for on-demand, real-time, dynamically adaptive systems, called as WOORDS. The system is doing the work flow orchestration as given in each procedure. Those procedural rules are define by researcher and feed into the system. The system is trying to perform the action immediate after the submission, and also it transmit the data, run the models and send back the put put with lower time delay as possible. According to the load and other requirement, the system will respond to those requirements automatically.
 
-Lead System is consist of following sub components, as shown in the \ref{fi:lead_soa}. As a brief summary of the subsystems is \cite{Droegemeier2005Service-OrientedWeather};
+As shown in the \ref{fi:lead_soa} LEAD consists of the following sub components:
 \begin{itemize}
-\item User subsystem - comprises the LEAD portal and enable user can access services
-\item Data subsystem - handles data and metadata, any numerical model output produced by operational or experimental models, and user generated information.
-\item Tools subsystem - consists of all meteorological and IT tools
-\item Orchestration subsystem - provides the technologies that let users manage data flows and model execution streams, and create and mine output. It also provides linkages to other software and processes for continuous or on-demand applications. 
+\item User subsystem -- comprises the LEAD portal and enable user can access services
+\item Data subsystem -- handles data and metadata, any numerical model output produced by operational or experimental models, and user generated information.
+\item Tools subsystem -- consists of all meteorological and IT tools
+\item Orchestration subsystem -- provides the technologies that let users manage data flows and model execution streams, and create and mine output. It also provides linkages to other software and processes for continuous or on-demand applications. 
 \end{itemize}
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=0.9\textwidth]{lead/LEADs-service-oriented-architecture-A-wide-variety-of-services-and-resources-grouped_W640.jpg}\\
-    \caption{LEAD’s service-oriented architecture. A wide variety of services and resources, grouped here according to general functionality, comprise the LEAD architecture, including services that cut across all aspects of the system. \cite{Droegemeier2005Service-OrientedWeather} }
+    \includegraphics[width=1\textwidth]{lead/LEADs-service-oriented-architecture-A-wide-variety-of-services-and-resources-grouped_W640.jpg}\\
+    \caption{LEAD’s service-oriented architecture %. A wide variety of services and resources, grouped here according to general functionality, comprise the LEAD architecture, including services that cut across all aspects of the system. 
+    \cite{Droegemeier2005Service-OrientedWeather}.}
     \label{fi:lead_soa}
 \end{figure}
 
 The distributed computing systems in the LEAD grid represent a distributed test bed for developing, integrating, and testing LEAD’s components.
+\dbc{Try to avoid singe sentence paras.}
 
 \acrshort{soa}s are widely deployed in the commercial enterprise sector, and they form the foundation of many scientific “grid” technologies at the time of \acrshort{lead} design and developed. A variant of \acrshort{soa} is evolved later called as microservice architecture, and widely use in the industry nowadays. The \acrshort{lead} \acrshort{soa} has five distinct yet highly interconnected layers. 
 
