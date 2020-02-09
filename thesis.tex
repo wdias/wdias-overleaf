@@ -24,6 +24,8 @@
 \newcommand{\db}[1]{\textcolor{blue!40}{#1}}
 \newcommand{\dbc}[1]{\todo[author=Dilum, inline, color=blue!40]{#1}}
 
+\def\refname{References}
+
 \begin{document}
 \begin{titlepage}
     \begin{center}
@@ -280,5 +282,5 @@ Type out your second appendix here.
 \graphicspath{ {./images/} }
 \input{glossary.tex}
 \bibliographystyle{plain}
-\bibliography{mendeley}
+\bibliography[title={References}]{mendeley}
 \end{document}
