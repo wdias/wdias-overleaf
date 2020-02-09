@@ -171,6 +171,7 @@ I would like to acknowledge and thank Department of Computer Science and Enginee
 
 Finally, I would like to thank the teachers, evaluating panel and colleagues that assisted me with this project. Their excitement and willingness to provide feedback made the completion of this research an enjoyable experience.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \tableofcontents
 
 \addcontentsline{toc}{chapter}{List of Figures}
@@ -183,66 +184,33 @@ Finally, I would like to thank the teachers, evaluating panel and colleagues tha
 \addcontentsline{toc}{chapter}{List of Abbreviations} 
 \printglossary[type=\acronymtype, title=List of Abbreviations, toctitle=List of Abbreviations, nonumberlist]
 \dbc{There has to be a space/tab between abbreviation and its expansion.} 
-\pagenumbering{arabic}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Introduction}
 \label{ch:intro}
+\pagenumbering{arabic}
 
 \dbc{It could have been much more easier to modify and compile thesis if each chapter was on a separate file. Page nos should be Roman numerals until Chap 1 beings.}
 
 ...
 \dbc{Start the para with a couple of sentences/para on weather prediction and NWMs. In another para mention about CUrW and its need to integrate and share data. Give citations of 1-2 good introductory sources on NWMs and another citation to CUrW website.}
 
-\section{Motivation}
-To enhance the accuracy of weather predictions, it is necessary to provide reliable and detailed weather data as inputs to \acrfull{nwm}. These NWMs utilize \db{multimodal} weather data collected via diverse sources such as automated weather stations, radars, air balloons, and satellite images. Prior to feeding such diverse data (collected from different sources that belongs to different stakeholders) into respective NWMs, it is necessary to integrate data into a common format. Moreover, the data integration system’s response time need to be relatively low to %accommodate critical situations 
-\db{forecast and monitor time-sensitive weather events} like hurricanes, storms, and floods which require rapid and frequent execution of NWMs.
+\import{introduction/}{sec_1-motivation.tex}
 
-\dbc{We are not developing this platform only because we need to have a common data format or need to share with 3rd parties. These are secondary reasons. Highlight key reason why we need a weather data assimilation system. Key reason should be indicated in Abstract too.}
+\import{introduction/}{sec_2-problem_statement.tex}
 
-Providing public to access weather data is also useful to enable many third-party applications and research. For example, logistic companies could use those data with their models to plan and schedule their deliveries. Agricultural insurance companies can warn the farmers in advance, as well as calculate premiums based on anticipated weather patterns.
-\dbc{Highlight why we need a platform to provide such 3rd party access. Should be indicated in Abstract too.}
+\import{introduction/}{sec_3-objectives.tex}
 
-While Data Integration and Analysis System (DIAS) and Meteorological Assimilation Data Ingest System (MADIS) are some of well-known Weather Data Integration and Assimilation (WDIA) systems, they are proprietary. Further Delft-FEWS is free to use, it is not open source. Hence, users of WDIA are forced to pay heavy licenses and are unable to extend the solutions to cater to their country-specific requirements. Therefore, the objective of this research is to develop a WDIA system for Sri Lanka, as well as make it open source, so that others could user and contribute to the solution.
-\dbc{Saying something proprietary is not good reason to do research. You should highlight the context under which these solutions are developed and differences between CUrW and Sri Lanka in general. Also, give a bit more details than saying "to cater to their country-specific requirements". All key systems such as DIAS, MADIS, Delf, etc. need to be properly cited.}
+\import{introduction/}{sec_4-outline.tex}
 
-
-\section{Problem \db{Statement}}
-\dbc{Convert following bullets to a paragraph. Goals belongs to next section. What we need here is a set of sentences highlighting the needs that are used to derive goals. Then provide a single sentence problem statement. Look at some of the thesis I shared via OneNote and my website for example problem statements.}
-\begin{itemize}
-    \item Handling spatio-temporal weather data is challenging
-    \item Need an extendable system to support weather models by efficiently storing and retrieving data
-    \item Goal is to design and develop a Weather Data Integration and Assimilation System that,
-    \begin{itemize}
-        \item Integrates weather data from different sources with quality control
-        \item Efficiently store spatio-temporal weather data with multiple dimensions
-        \item Support geographical and time-base queries
-    \end{itemize}
-\end{itemize}
-
-\section{Objectives}
-\db{We address above problem statement by  achieving the following objectives:}
-\begin{itemize}
-    \item To develop an open platform to integrate weather data from different sources in different formats
-    \item To design and develop a schema to store multidimensional weather timeseries data while optimizing access time, availability, and storage.
-    \item To optimize schema to support data queries based on geography and time
-    \item To develop an API to share data while providing role-based access control
-\end{itemize}
-
-\section{Outline}
-The rest of the thesis is organized as follows. Literature review is presented in Chapter \ref{ch:literature}. Solution approach with the proposed system architectures and adaptation with problem occurred are presented in Chapter \ref{ch:method}. Performance analysis is presented in Chapter \ref{ch:results} while summary and future work are presented in Chapter \ref{ch:conc}.
-\dbc{Expand a bit by adding at least 1 more sentence for each chapter.}
-
-
-
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Literature Review}
 \label{ch:literature}
 There are many of Weather forecasting, assimilation and dissemination systems developed by some of developed countries around the world as a result of trying to reduce the damage causing by natural disasters such as flood, storms, hurricanes, and even for drought. %Above kind of 
 Such natural disasters heavily affected on the economy and the life conditions of the country, researchers have developed systems and many of these systems are using as proprietary systems. Other countries also using those systems and adopt with own version of system which effective for the specific weather condition in a particular country. 
 %Though out 
 This chapter presents a Literature review on existing systems and their architecture approach and design with available resources. \db{In Section 2.x we present ...} Most influenced systems for \acrshort{wdias} is \acrshort{fews} and \acrfull{lead} system. \acrshort{fews}, \db{an open data handling platform distributed as closed-source software, is presented in Section 2.x}. \db{In Section 2.x ... } \acrshort{lead} is following the Service Oriented Architecture for system architecture. Under each system we explore both system architecture, scalability and flexibility of the system.
-\dbc{Complete above while refering to all major sections with chapter.}
+\dbc{Complete above while referring to all major sections with chapter.}
 
 \import{lit/}{sec_1-fews.tex}
 
@@ -256,7 +224,7 @@ This chapter presents a Literature review on existing systems and their architec
 
 \section{Summary}
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{\db{Research Methodology}}
 \label{ch:method}
 This chapter includes the design decision taken while implementing the \acrfull{wdias}, and how is the system got adapted from the systems analyzed in Chapter \ref{ch:literature}, then how is it trying to propose a better system with overcoming the issues.
@@ -285,6 +253,7 @@ This chapter includes the design decision taken while implementing the \acrfull{
 \import{method/}{sec_6-query.tex}
 \label{se:query}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Results}
 \label{ch:results}
 
@@ -303,6 +272,7 @@ This chapter includes the design decision taken while implementing the \acrfull{
 \import{results/}{sec_4-discussion.tex}
 \label{se:discussion}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{\db{Summary}}
 \label{ch:conc}
 
@@ -310,6 +280,7 @@ This chapter includes the design decision taken while implementing the \acrfull{
 
 \import{summary/}{sec_2-research_limitations.tex}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
 \chapter{First Appendix}
 Type out your first appendix here.
