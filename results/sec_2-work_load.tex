@@ -80,7 +80,7 @@ TODO
 \label{subse:closed_vs_open_workload}
 \begin{itemize}
     \item \emph{closed system model} a new request is only triggered by the completion of a previous request, following by a think time. System has negative feedback that makes it impossible to bury-out the service, so users wait for the responses before making new requests.
-    \item \emph{open system model} new requests arrival independently of completions, e.g. according to a stochastic process or fixed trace. System has no negative feedback.
+    \item \emph{open system model} new requests arrival independently of completions, e.g.,according to a stochastic process or fixed trace. System has no negative feedback.
 \end{itemize}
 While implementing the test cases for \acrshort{wdias}, it uses Concurrency Thread Group with Throughput Shaping Timer because of it support the open workload approach.
 Using other thread groups, it required to find exact number of threads and timer delays that produce desired number of requests per second (RPS) to server. Which is known as the \emph{closed workload}.
