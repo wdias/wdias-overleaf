@@ -1,22 +1,19 @@
 \section{Problem Statement}
-\dbc{Convert following bullets to a paragraph. Goals belongs to next section. What we need here is a set of sentences highlighting the needs that are used to derive goals. Then provide a single sentence problem statement. Look at some of the thesis I shared via OneNote and my website for example problem statements.}
-\begin{itemize}
-    \item Handling spatio-temporal weather data is challenging
-    \item Need an extendable system to support weather models by efficiently storing and retrieving data
-    \item Goal is to design and develop a Weather Data Integration and Assimilation System that,
-    \begin{itemize}
-        \item Integrates weather data from different sources with quality control
-        \item Efficiently store spatio-temporal weather data with multiple dimensions
-        \item Support geographical and time-base queries
-    \end{itemize}
-\end{itemize}
-
+Handling spatio-temporal weather data is challenging. Need an extendable system to support weather models by efficiently storing and retrieving data. Therefore, in this context the problem can be state as;
+\emph{necessaty of a Data Integration System which is scalable, highly available and capable of 
+interact with different data formats including spatio-temporal bulk stream data, 
+store efficiently while optimizing the disk space,
+support geographical and time-base queries,
+third parties can access the data with easy integration, and
+able to easy modify and use based on the requirements.
+}
 
 \section{Objectives}
-\db{We address above problem statement by  achieving the following objectives:}
+We address above problem statement by achieving the following objectives:
 \begin{itemize}
     \item To develop an open platform to integrate weather data from different sources in different formats
-    \item To design and develop a schema to store multidimensional weather timeseries data while optimizing access time, availability, and storage.
+    \item To design and develop a schema to store multidimensional weather timeseries data while optimizing access time, availability, and storage
     \item To optimize schema to support data queries based on geography and time
-    \item To develop an API to share data while providing role-based access control
+    \item To develop an API to share data
+    \item To use open source tools and provide the source publicly with appropriate liecense.
 \end{itemize}
