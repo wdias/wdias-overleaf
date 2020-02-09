@@ -181,9 +181,15 @@ Finally, I would like to thank the teachers, evaluating panel and colleagues tha
 \addcontentsline{toc}{chapter}{List of Tables} 
 \listoftables
 
+\newglossarystyle{custom-glossary-style}{%
+  \setglossarystyle{long}%
+  \renewenvironment{theglossary}%
+    {\begin{longtable}[l]{@{}p{\dimexpr 4cm-\tabcolsep}p{0.8\hsize}}}% <-- change the value here
+    {\end{longtable}}%
+}
+
 \addcontentsline{toc}{chapter}{List of Abbreviations} 
-\printglossary[type=\acronymtype, title=List of Abbreviations, toctitle=List of Abbreviations, nonumberlist]
-\dbc{There has to be a space/tab between abbreviation and its expansion.} 
+\printglossary[style=custom-glossary-style, type=\acronymtype, title=List of Abbreviations, toctitle=List of Abbreviations, nonumberlist]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Introduction}
