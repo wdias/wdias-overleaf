@@ -62,7 +62,7 @@ Also it reset and repeat reading from the beginning when the \acrshort{jmeter} d
 == Talk about the test test up - JMeter
 === mentioned distributed setup test data collect issue and continue with one server coz it can support what is required
 \subsection{Experimental Setup}
-In order to create higher work load using the \acrshort{jmeter}, it has Distributed Testing feature. It uses the master slave approach and it allowed to handle all the test cases via single instance, rather handling separate instances. But it has following limitation;
+In order to create higher workload using the \acrshort{jmeter}, it has Distributed Testing feature. It uses the master slave approach and it allowed to handle all the test cases via single instance, rather handling separate instances. But it has following limitation;
 \say{Note: The same test plan runs by all the servers. JMeter does not distribute the load between servers, each runs the full test plan. So if you set 1000 Threads and have 6 JMeter server, you end up injecting 6000 Threads}. When test cases runs with \acrshort{jmeter} Distributed mode, the server node trigger same copy of test case on configured slave nodes parallel. At the end of the test cases, it gather results into the master node.
 
 \begin{figure}[htp]

@@ -197,7 +197,7 @@ Following charts show the resource usage while running the all test plan while e
     \caption{Performance All Test 15min data - Auto Scaling Resource Usage of Import and Export Modules }
     \label{fi:obs_all_auto_15m_import_export_res}
 \end{figure}
-\ref{fi:obs_all_auto_15m_import_export_res} show the CPU usage and Memory usage for import timeseries modules and export timeseries modules. The CPU usage shown with milli CPUs \cite{LinuxFoundationManagingKubernetes} (1 CPU = 1000m CPUs) and the Memory usage shown with Megabytes (Mi) \cite{LinuxFoundationManagingKubernetes}. Noticeable, the import-ascii-grid-upload microservice used around 10 CPUs at the peak time while using 3.6 Gb of Memory. Another important fact is, after the test cases finished, the \acrshort{wdias} cool down the system via \acrshort{k8s} auto scaling and release the resources. This clearly shows the elasticity of the \acrshort{wdias} according to the work load.
+\ref{fi:obs_all_auto_15m_import_export_res} show the CPU usage and Memory usage for import timeseries modules and export timeseries modules. The CPU usage shown with milli CPUs \cite{LinuxFoundationManagingKubernetes} (1 CPU = 1000m CPUs) and the Memory usage shown with Megabytes (Mi) \cite{LinuxFoundationManagingKubernetes}. Noticeable, the import-ascii-grid-upload microservice used around 10 CPUs at the peak time while using 3.6 Gb of Memory. Another important fact is, after the test cases finished, the \acrshort{wdias} cool down the system via \acrshort{k8s} auto scaling and release the resources. This clearly shows the elasticity of the \acrshort{wdias} according to the workload.
 
 \begin{figure}[htp]
     \centering
@@ -206,7 +206,7 @@ Following charts show the resource usage while running the all test plan while e
     \label{fi:obs_all_auto_15m_import_grid_pod}
 \end{figure}
 \ref{fi:obs_all_auto_15m_import_grid_pod} shows the number of import-ascii-grid-upload pods scheduled over time. The auto scaling enabled with the configurations of 1 to 10 pods with the recommended CPU usage with 80\%. And the pods scheduled with 1 CPU requested, and limit with 2 CPUs per pod.
-As the graph shows, 3 pods scheduled at the initial as per the configuration of the helm chart. While increasing the work load, new pods get spawn while keeping the constraint of 80\% of recommended CPU utilization. After \acrshort{k8s} spawn 10 maximum pods, it stop spawning new pods. But the pods were able to perform with vertical scaling, since those are not hit the CPU limit of 2.
+As the graph shows, 3 pods scheduled at the initial as per the configuration of the helm chart. While increasing the workload, new pods get spawn while keeping the constraint of 80\% of recommended CPU utilization. After \acrshort{k8s} spawn 10 maximum pods, it stop spawning new pods. But the pods were able to perform with vertical scaling, since those are not hit the CPU limit of 2.
 
 \begin{figure}[htp]
     \centering
