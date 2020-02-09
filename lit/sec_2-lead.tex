@@ -1,11 +1,10 @@
 \section{Linked Environments for Atmospheric Discovery}
 
 %The reason behind developing \acrfull{lead} by US National Science Foundation (NSF)  is to
-\acrfull{lead} addresses the fundamental research challenges needed to create an integrated, scalable framework for adaptive analyzing and predicting the atmosphere \cite{Droegemeier2005Service-OrientedWeather}. To predict and analysis weather models by researchers, it required many resources. Rather than each researcher is running and handling own computer resources to do the weather experiments, \acrshort{lead} is providing pool of resources, then the researchers can use this resource pool to run their experiment in shorter amounts of time and in higher scale. At the time, researchers are developing their experiment flow, they are not using the resources many, and other are using it at the same time. LEAD’s foundation is dynamic work flow orchestration and data management in a Web services framework \cite{Droegemeier2005Service-OrientedWeather}.
+\acrfull{lead} addresses the fundamental research challenges needed to create an integrated, scalable framework for adaptive analyzing and predicting the atmosphere \cite{Droegemeier2005Service-OrientedWeather}. To predict and analysis weather models by researchers, it required many resources. Rather than each researcher is running and handling own computer resources to do the weather experiments, \acrshort{lead} is providing pool of resources, then the researchers can use this resource pool to run their experiment in shorter amounts of time and in higher scale. At the time, researchers are developing their experiment flow, they are not using the resources many, and other are using it at the same time. LEAD's foundation is dynamic work flow orchestration and data management in a Web services framework \cite{Droegemeier2005Service-OrientedWeather}.
 
 %The most relevant and important analysis for designing \acrshort{lead} is understanding and analyzing the \acrfull{lead} architecture of it. 
 LEAD's complex array of services, applications, interfaces, and local and remote computing, networking, and storage resources is assembled by users in work flows to study mesoscale weather as it evolves \cite{Droegemeier2005Service-OrientedWeather}. As it follows the \acrshort{soa}, everything is implemented as independent services. This enable \acrshort{lead} to scale each service as required, and update each service without affecting other services. New models which are required for implementing a new forecast flow also has to be implement as a service and then integrate into the system.
-\dbc{Check the use of apostrophe s. You need to use ' not ’.}
 
 Figure \ref{fi:lead_system} shows the fundamental capabilities of the \acrshort{lead} system. From the high-level view, \acrshort{lead} lets users query for and acquire information, simulate and predict weather by using numerical atmospheric models, assimilate data, analyze, mine, and visualize data and model output.
 \dbc{Make sure each reference to a figure or table is given as Figure x.y and Table x.y.}
@@ -49,11 +48,11 @@ As shown in the \ref{fi:lead_soa} LEAD consists of the following sub components:
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1\textwidth]{lead/LEADs-service-oriented-architecture-A-wide-variety-of-services-and-resources-grouped_W640.jpg}\\
-    \caption[LEAD’s service-oriented architecture]{LEAD’s service-oriented architecture \cite{Droegemeier2005Service-OrientedWeather}.}
+    \caption[LEAD's service-oriented architecture]{LEAD's service-oriented architecture \cite{Droegemeier2005Service-OrientedWeather}.}
     \label{fi:lead_soa}
 \end{figure}
 
-The distributed computing systems in the LEAD grid represent a distributed test bed for developing, integrating, and testing LEAD’s components.
+The distributed computing systems in the LEAD grid represent a distributed test bed for developing, integrating, and testing LEAD's components.
 \dbc{Try to avoid singe sentence paras.}
 
 \acrshort{soa}s are widely deployed in the commercial enterprise sector, and they form the foundation of many scientific “grid” technologies at the time of \acrshort{lead} design and developed. A variant of \acrshort{soa} is evolved later called as microservice architecture, and widely use in the industry nowadays. The \acrshort{lead} \acrshort{soa} has five distinct yet highly interconnected layers. 
