@@ -1,24 +1,26 @@
 \section{Query Timeseries}
 
-As described in \ref{sub:mongodb}, adapter-query is primarily using for support Geo-spatial queries. Other than that, as the primary service for searching for timeseries, it also supports for retrieval of timeseries metadata for external queries as well.
+As described in \db{Section} \ref{sub:mongodb}, adapter-query is primarily using for support Geo-spatial queries. Other than that, as the primary service for searching for timeseries, it also supports for retrieval of timeseries metadata for external queries as well.
 
 \subsection{Timeseries Metadata}
 Get timeseries metadata by timeseriesID.
 \begin{lstlisting}
     GET <HOST_NAME>/metadata/timeseries/<TIMESERIES_ID>
 \end{lstlisting}
+\dbc{Use monospace formatting.}
+
 Search for timeseries metadata with key attributes of the timeseries.
 \begin{lstlisting}
     GET <HOST_NAME>/metadata/timeseries?<QUERY_STRING>
 \end{lstlisting}
 QUERY\_STRING can be consist of zero to multiple parameters. Multiple query parameters are separated by the ampersand, "\&".
 \begin{itemize}
-    \item moduleId(Optional) - E.g. HEC-HMS
-    \item valueType(Optional) - E.g. Scalar
-    \item parameterId(Optional) - E.g. O.Precipitation
-    \item locationId(Optional) - E.g. wdias\_hanwella
-    \item timeseriesType(Optional) - E.g. ExternalHistorical
-    \item timeStepId(Optional) - E.g. each\_15\_min
+    \item moduleId(Optional), e.g., HEC-HMS
+    \item valueType(Optional), e.g., Scalar
+    \item parameterId(Optional), e.g., O.Precipitation
+    \item locationId(Optional), e.g., wdias\_hanwella
+    \item timeseriesType(Optional), e.g., ExternalHistorical
+    \item timeStepId(Optional), e.g., each\_15\_min
 \end{itemize}
 For the moment, query are only support by strict matching with above parameter values.
 

@@ -1,6 +1,10 @@
-\section{Work Load Creation}
+\section{Workload Creation}
+
+\dbc{Workload is a single word.}
+
 do I need to talk about system setup with EKS?
 add another section for performance tuning?
+\dbc{Sifficient details need to be given.}
 
 == Starts with how locations are created
 As explained in the \ref{ch:method}, timeseries has six primary attributes. In order to create a timeseries for performance testing, it needs data for each key attribute.
@@ -91,6 +95,8 @@ The test plans mentioned in \ref{se:test_plan} are implemented via the \acrshort
     \caption{WDIAS Performance Test Cases}
     \label{fi:wdias_performance_test}
 \end{figure}
+
+\dbc{Try to list names of test cases than having these black screenshots. Same for other places.}
 
 In the first step of the plan consist of setting up the timeseries metadata. At the same time, it creates the timeseries entry in the \acrshort{wdias} system as well as shown in the \ref{fi:test_create_timeseries}.
 By creating the timeseries before help to reduce the overhead during the performance testing, and cause to more accurate \acrshort{rps} at the run time.

@@ -20,6 +20,8 @@ The database structure of WDIAS mainly depends on the key attributes of the time
         "lon": 80.08166667
     }
   \end{lstlisting}
+ \dbc{Line spacing is too high. Use simple monospace format in latex.}
+ 
   - Regular Grid locations - Contains a name which is human readable. The grid presents by dividing into equal size cells. Thus, it need the number of rows and columns. 
   And the location of the first cell and the width and height of it.
   \begin{lstlisting}[language=Python]
@@ -96,7 +98,10 @@ Following chapters described the usage of databases in WDIAS and reason behind t
 
 \subsection{MySQL}
 \label{sub:mysql}
-Relational Database Management System (RDBMS).
+
+\dbc{Use a term like relational DB tham MySQL}
+
+%Relational Database Management System (RDBMS)
 SQL database has fewer version of open source and it is also possible to gain better performance with commercial versions. 
 Since WDIAS scope is to using open source tools, it is using MySQL as persistent database for storing timeseries metadata described above.
 One instance of MySQL is using only by adapter-metadata service.
@@ -129,7 +134,9 @@ Python wrapper for NetCDF-C library using in the WDIAS system, and use by adapte
 
 \subsection{MongoDB}
 \label{sub:mongodb}
-  MongoDB is a general purpose, document-based, distributed database
+\dbc{Use a technology independent term. Same with InfluxDB. MongoDB is used for 2 section names.}
+
+MongoDB is a general purpose, document-based, distributed database
   Supports query operations on geo-spatial data \cite{mongodbMongoDBManual}
   Clustering and Sharding available for scalability and reliability
 MongoDB geo-spatial features are using for support Geo queries in the WDIAS. Other than that, external timeseries metadata queries are served by the indexed timeseries metadata data.
