@@ -6,30 +6,29 @@ Among the characteristics of \acrfull{microservice}, few characteristics heavily
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Smart Endpoints And Dumb Pipes}
 \label{subse:smart_endpoints}
-- Smart endpoints and dumb pipes \cite{LewisMicroservicesPipes}
+When building communication endpoints, many architecture approach with putting significant smart into the communication mechanism. One good example is \acrshort{esb} what we discussed in section \ref{se:architectural_decisions}. But microservice follows alternative approach: \emph{Smart endpoints and dumb pipes} \cite{LewisMicroservicesPipes}.
+Applications built from microservices aim to be as decoupled and as cohesive as possible. They own their own domain logic and act more as filters in the classical Unix sense. After receiving a request, applying logic as appropriate and producing a response. And it uses simple RESTish protocols rather than complex protocols.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Database per Service}
+\subsection{Pattern: Database per Service}
 \label{subse:database_per_service}
-- Pattern: Database per service \cite{LewisMicroservicesManagement}
+- Pattern: Database per service 
 
-  \acrshort{microservice} prefer letting each service manages its own database, either different instances of the same database technology, or entirely different database systems - an approach called Polyglot Persistence.
-  
-  \cite{RichardsonMicroservicesService}
-  Keep each microservice’s persistent data private to that service and accessible only via its API. 
-There are a few different ways to keep a service’s persistent data private. You do not need to provision a database server for each service. For example, if you are using a relational database then the options are:
+\acrshort{microservice} prefer letting each service manages its own database, either different instances of the same database technology, or entirely different database systems - an approach called \emph{Polyglot Persistence} \cite{LewisMicroservicesManagement}.
+
+Keep each microservice’s persistent data private to that service and accessible only via its API. 
+There are a few different ways to keep a service’s persistent data private. You do not need to provision a database server for each service. For example, if you are using a relational database then the options are \cite{RichardsonMicroservicesService}:
 \begin{itemize}
-    \item Private-tables-per-service – each service owns a set of tables that must only be accessed by that service
-    \item Schema-per-service – each service has a database schema that’s private to that service
-    \item Database-server-per-service – each service has its own database server.
-    \item Private-tables-per-service and schema-per-service have the lowest overhead. Using a schema per service is appealing since it makes ownership clearer. Some high throughput services might need their own database server.
+    \item \emph{Private-tables-per-service} – each service owns a set of tables that must only be accessed by that service
+    \item \emph{Schema-per-service} – each service has a database schema that’s private to that service
+    \item \emph{Database-server-per-service} – each service has its own database server.
 \end{itemize}
+Private-tables-per-service and schema-per-service have the lowest overhead. Using a schema per service is appealing since it makes ownership clearer. Some high throughput services might need their own database server.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Sagas}
+\subsection{Pattern: Sagas}
 \label{subse:sagas}
-- Pattern: Sagas \cite{RichardsonMicroservicesSagas}
-  In order to ensure loose coupling, each service has its own database. Maintaining data consistency between services is a challenge because 2 phase-commit/distributed transactions is not an option for many applications. An application must instead use the Saga pattern. A service publishes an event when its data changes. Other services consume that event and update their data.
+In order to ensure loose coupling, each service has its own database. Maintaining data consistency between services is a challenge because 2 phase-commit/distributed transactions is not an option for many applications. An application must instead use the Saga pattern. A service publishes an event when its data changes. Other services consume that event and update their data \cite{RichardsonMicroservicesSagas}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The Scale Cube}
