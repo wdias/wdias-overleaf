@@ -11,7 +11,7 @@ Sections \ref{subse:obs_test_plan_all_60min} to \ref{subse:obs_test_plan_all_aut
 After running the All test plan with 60 minutes (24 data points), it observed the data summary of \ref{tab:obs_all_60_min_summary}. It performed 311k of sample requests.
 
 \begin{table}[ht]
-\caption{Throughput and Latency of All test cases with 60min data}
+\caption{Throughput and Latency of load testing with 60min data}
 \footnotesize
 \begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
 \hline
@@ -53,7 +53,7 @@ The conclusion of giving static latency while increasing the number of requests 
 This section \ref{subse:obs_test_plan_all_30min} discussed about the All test plan performance with 30 minutes data which means 48 data points per each request in Scalar and Vector timeseries, and 48 ASCII Grid files per each insert request. It performed round up to 311k of sample requests which is almost similar to \ref{subse:obs_test_plan_all_60min} processed samples.
 
 \begin{table}[ht]
-\caption{Throughput and Latency of All test cases with 30min data}
+\caption{Throughput and Latency of load test with 30min data}
 \footnotesize
 \begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
 \hline
@@ -94,7 +94,7 @@ When compared to \ref{fi:test_obs_all_60m_latency}, the latency for insert and r
 \label{subse:obs_test_plan_all_15min}
 This section \ref{subse:obs_test_plan_all_15min} discussed about the All test plan performance with 15 minutes data which means 96 data points per each request in Scalar and Vector timeseries, and 96 ASCII Grid files per each insert Grid timeseries request. These requests are four times larger than the \ref{subse:obs_test_plan_all_60min} request size. It performed approximately 311k of sample requests which is almost similar to \ref{subse:obs_test_plan_all_30min} processed samples.
 \begin{table}[ht]
-\caption{Throughput and Latency of All test cases with 15min data}
+\caption{Throughput and Latency of load testing with 15min data}
 \footnotesize
 \begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
 \hline
@@ -155,7 +155,7 @@ This section \ref{subse:obs_test_plan_all_auto_15min} discussed about the All te
 Other than that, this test plan runs with enabling \acrshort{k8s} Auto Scaling for the high resource utilized microservice as explained in the \ref{subse:test_plan_metrics}. With the test load used for the performance test, import-ascii-grid-upload microservice is using lots of CPU, and adapter-grid microservice is using lots of Memory. During this test plan, \acrshort{wdias} start with the auto scaling enabled for import-ascii-grid-upload microservice. Since adapter-grid is a consistence service for storing netCDF files, it is not possible to auto scale, since \acrshort{eks} does not support multiple read write support volumes \cite{LinuxFoundationPersistentKubernetes}.
 
 \begin{table}[ht]
-\caption{Throughput and Latency of All test cases with 15min data while enabled \acrshort{k8s} Auto Scaling}
+\caption{Throughput and Latency of load testing with 15min data while enabled \acrshort{k8s} Auto Scaling}
 \footnotesize
 \begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
 \hline
