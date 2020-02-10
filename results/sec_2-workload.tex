@@ -84,34 +84,71 @@ The test plans mentioned in \ref{se:test_plan} are implemented via the \acrshort
     \item Test Flow thread group
 \end{itemize}
 
-In the first step of the plan consist of setting up the timeseries metadata. At the same time, it creates the timeseries entry in the \acrshort{wdias} system as well as shown in the \ref{fi:test_create_timeseries}.
+In the first step of the plan consist of setting up the timeseries metadata. At the same time, it creates the timeseries entry in the \acrshort{wdias} system as well as shown in following list of test steps and configurations.
+
+\begin{itemize}
+    \item HTTP Request Defaults
+    \item HTTP Header Manager
+    \item Timeseries Metadata CSV
+    \item Create Timeseries
+    \item Get Timeseries
+    \item Query Timeseries
+\end{itemize}
+
 By creating the timeseries before help to reduce the overhead during the performance testing, and cause to more accurate \acrshort{rps} at the run time.
 Otherwise \acrshort{jmeter} need to allocate another set of threads for timeseries creation. Since the test cases insert data again set of timeseries, most of the time it about retrieving the timeseries metadata, rather creation a new timeseries in the \acrshort{wdias} system.
 
-\begin{figure}[htp]
-    \centering
-    \includegraphics[width=0.6\textwidth]{results/work_load/test_create_timeseries.png}
-    \caption{WDIAS Performance Test - Create timeseries}
-    \label{fi:test_create_timeseries}
-\end{figure}
-
 The \ref{fi:test_all_cases} shows the test cases of other steps of Import, Extensions, Export and combination of All of them as per the detail steps in \ref{se:test_plan}.
+Following list shows the test steps of \acrshort{jmeter} while performing the load testing and the configurations.
 
-\begin{figure}[htp]
-    \centering
-    \includegraphics[width=0.6\textwidth]{results/work_load/test_all_cases.png}
-    \caption{WDIAS Performance Test - Import, Export, Extension and Query test cases}
-    \label{fi:test_all_cases}
-\end{figure}
+\begin{itemize}
+    \item HTTP Request Defaults
+    \item HTTP Header Manager
+    \item Timeseries Metadata CSV
+    \item If Scalar or Vector
+        \begin{itemize}
+            \item Insert Timeseries
+        \end{itemize}
+    \item If a Grid
+    \begin{itemize}
+        \item Insert Grid Timeseries
+    \end{itemize}
+    \item wait for extensions timeseries
+    \item Interest Area preprocessor
+    \item Query If Scalar Or Vector
+    \item Retrieve If Scalar or Vector
+        \begin{itemize}
+            \item Retrieve Timeseries
+        \end{itemize}
+    \item Retrieve If a Grid
+    \begin{itemize}
+        \item Retrieve Grid Timeseries
+    \end{itemize}
+    \item increment date
+    \item throughput shaping timer prod
+\end{itemize}
 
-Following test case \ref{fi:test_query_timeseries} for intensively test the query timeseries features.
+Following list of test steps shows intensively test the query timeseries features.
 
-\begin{figure}[htp]
-    \centering
-    \includegraphics[width=0.6\textwidth]{results/work_load/test_query_timeseries.png}
-    \caption{WDIAS Performance Test - Query Timeseries}
-    \label{fi:test_query_timeseries}
-\end{figure}
+\begin{itemize}
+    \item HTTP Request Defaults
+    \item HTTP Header Manager
+    \item Locations CSV
+    \item Interest Area preprocessor
+    \begin{itemize}
+        \item /Location: * → Locations
+    	\item /Location: Area → Locations
+    	\item /Parameter: Location → Parameters
+    	\item /Parameter: Locations → Parameters
+    	\item /Timeseries: Location → Timeseries
+    	\item /Timeseries: Locations → Timeseries
+    	\item /Timeseries: Locations, Parameter → Timeseries
+    	\item /Timeseries: Area → Timeseries
+    	\item /Timeseries: Area, Parameter → Timeseries
+    	\item /Timeseries: *, Parameter → Timeseries
+    	\item /Timeseries: * → Timeseries
+	\end{itemize}
+\end{itemize}
 
 In the \ref{fi:test_prod_throughtput_shaping_timer} shows the Throughput Shaping Timer configurations for the All test case.
 
