@@ -58,14 +58,24 @@ Even \acrshort{wdias} is design based on the Y-axis scaling, it's possible to us
 \subsection{Brief introduction to the \acrfull{k8s}}
 \label{sebse:k8s_intro}
 
+\acrfull{k8s} is an open-source system for automating deployment, scaling, and management of containerized applications \cite{LinuxFoundationProduction-GradeKubernetes}. It groups containers that make up an application into logical units for easy management and discovery.
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1\textwidth]{method/microservice/k8s_architecture_v3.jpg}
     \caption{\acrfull{k8s} architecture.}
     \label{fi:k8s_architecture}
 \end{figure}
-
-- Explain how k8s support microservice architecture
+Components of \acrshort{k8s},
+\begin{itemize}
+    \item Pods – Cluster of containers that can group other container images in a single unit.
+    \item Nodes - the machines (VMs, physical servers, etc) in a cluster that run your applications and cloud workflows.
+    \item kubelet - An agent that runs on each node in the cluster. It makes sure that containers are running in a pod.
+    \item kube-proxy - A network proxy that runs on each node in the cluster, and maintains network rules on nodes.
+    \item Kubernetes master - Responsible for maintaining the desired state for your cluster.
+    \item etcd - Consistent and highly-available key value store used as Kubernetes’ backing store for all cluster data.
+\end{itemize}
+Users can add much as required Nodes into the \acrshort{k8s} cluster, and \acrshort{k8s} manage and deploy application as pods into cluster nodes.
+Each microservice can deploy as a Pod which is a group of containerize applications. And \acrshort{k8s} able to scale as much as user want as described above.
 
 <explain how each one is used while designing the WDIAS architecture>
 
