@@ -45,7 +45,8 @@ Location of the timeseries. All locations have unique String identifier called l
   \item \emph{Irregular Grid locations} - (endpoints are available with in the WDIAS system, but skipped since it is out of the interest of the scope.)
 \end{itemize}
 
-\subsubsection{Parameter} - Parameter describe the variable measuring against a location. All parameters ahve a unique String identifier called as parameterId. A parameter can be use in multiple locations.
+\subsubsection{Parameter}
+Parameter describe the variable measuring against a location. All parameters ahve a unique String identifier called as parameterId. A parameter can be use in multiple locations.
 While defining a parameter, there are three required fields which need to be provided such as variable, unit and parametertype.
 \begin{itemize}  
   \item \emph{Variable} - Nature of the variable measuring. Example Precipitation, Temperature and WaterLevel etc
@@ -94,12 +95,12 @@ Given that, a timeseries can uniquely indentify by moduleId, valueType, paramete
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=1\textwidth]{method/microservice/hierarchical_database.jpg}
+    \includegraphics[width=0.6\textwidth]{method/microservice/hierarchical_database.jpg}
     \caption{Hierarchical database}
     \label{fi:hierarchical_database}
 \end{figure}
 
-WDIAS is using a hierarchical database, with following the concept of Database per Service which is described in the \ref{micro_database_per_service}.
+WDIAS is using a hierarchical database, with following the concept of Database per Service which is described in the \emph{Database per Service} in Section \ref{subse:database_per_service}.
 Following chapters described the usage of databases in WDIAS and reason behind the selection.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -128,8 +129,8 @@ Other than \acrshort{influxdb}, another Database is Elastic Search which is main
 With changing the configurations of the \acrshort{influxdb}, it is possible to adapt as required. As mention in \cite{influxdbInfluxDBDocumentation}, 
 \acrshort{influxdb} can setup on a computer which will give the required performance. Going further, users can use commercial version of \acrshort{influxdb} in order to gain more performance.
 
-Two instance of \acrshort{influxdb} is using in the WDIAS system by adapter-scalar and adapter-vector services. For the scalability, the system uses \ref{micro_database_per_service}.
-But further, it split into two services, refering to the \ref{micro_z_axis_scaling} data is partitioned among few servers based on valueType key attribute of timeseries.
+Two instance of \acrshort{influxdb} is using in the WDIAS system by adapter-scalar and adapter-vector services. For the scalability, the system uses \emph{Database per Service} as mentioned in Section \ref{subse:database_per_service}.
+But further, it split into two services, referring to the Section \ref{subse:scale_cube}, the Z-axis scaling, the data is partitioned among few servers based on valueType key attribute of timeseries.
 Which also conclude the concept of splitting into more services based on other key attributes such as timeseriesType, if further performance required.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -152,7 +153,7 @@ Python wrapper for NetCDF-C library using in the WDIAS system, and use by adapte
 \end{itemize}
 \acrshort{mongodb} geo-spatial features are using for support Geo queries in the WDIAS. Other than that, external timeseries metadata queries are served by the indexed timeseries metadata data.
 If metadata not present in the adapter-query, if fetch data from the adapter-metadata, then indexed and cache in the \acrshort{mongodb}. Vise a versa, if new timeseries create in the adapter-metadata, it trigger an event to adapter-query to index the new timeseries.
-\ref{micro_y_axis_scaling} concept is using here by splitting into the multiple services based on the functionality and scale the system.
+In Section \ref{subse:scale_cube}, the Y-axis scaling concept is using here by splitting into the multiple services based on the functionality and scale the system.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{In-Memory Database}

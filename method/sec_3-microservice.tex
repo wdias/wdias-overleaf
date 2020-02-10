@@ -100,7 +100,8 @@ The system generate a unique identifier for each timeseries, and throw out the \
 \end{figure}
 Export module microservice follows the same concepts and provide the capability to export the data into required formats of the weather models.
 Each adapter follows the concept of database per service as mentioned in the section \ref{subse:database_per_service}. This gives the freedom for \acrshort{wdias} to scale better with \acrshort{k8s}.
-As shown in the figure \ref{fi:wdias_micro_on_demand}, when a smaller size request come to the system, it handle on demand and response back. But as shown in figure \ref{fi:wdias_micro_async}, when a request with larger size come to the system, it store the data for asynchronously process the data and response with a unique id which can use to verify whether data processed successfully or not.
+
+As shown in the figure \ref{fi:wdias_micro_on_demand}, when a smaller size request come to the system, it handle on demand and response back. But as shown in figure \ref{fi:wdias_micro_async}, when a request with larger size come to the system, it store the data for asynchronously process the data and response with a unique id which can use to verify whether data processed successfully or not. Here is uses the microservice pattern of \ref{subse:sagas} while processing the Grid data. First it store the data and respond back to the user. Then publish an event, and another service listen to those events and process the data and update the system status.
 
 \begin{figure}[htp]
     \centering
