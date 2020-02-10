@@ -11,6 +11,7 @@ Sections \ref{subse:obs_test_plan_all_60min} to \ref{subse:obs_test_plan_all_aut
 After running the All test plan with 60 minutes (24 data points), it observed the data summary of \ref{tab:obs_all_60_min_summary}. It performed 311k of sample requests.
 
 \begin{table}[ht]
+\caption{Throughput and Latency of All test cases with 60min data}
 \footnotesize
 \begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
 \hline
@@ -22,7 +23,6 @@ Retrieve Grid & 7979 & 68 & 59 & 238 & 75 & 10.11 & 0.00\% & 4.5 \\ \hline
 Query: Location & 71804 & 3 & 2 & 109 & 3 & 1.52 & 0.00\% & 40.5 \\ \hline
 \textbf{TOTAL} & 311182 & 127 & 0 & 2773 & 503 & 207.80 & 0.00\% & 175.4 \\ \hline
 \end{tabulary}
-\caption{Throughput and Latency of All test cases with 60min data}
 \label{tab:obs_all_60_min_summary}
 \end{table}
 Insert Timeseries performed over Scalar and Vector data types with each request send with 24 data points. On average it takes 28ms to insert data into the \acrshort{wdias}, and up to 90\% percentile inserted data within 31ms. Noticeably it has 0\% of errors which means that all the request are completed successfully. On average, \acrshort{wdias} handled 40.5 \acrshort{rps} with the given workload. The performance of the Retrieve of Scalar and Vector Timeseries are similar to insert timeseries due to it depends on it.
@@ -51,7 +51,9 @@ The conclusion of giving static latency while increasing the number of requests 
 \subsection{Load Testing with 30min data (48 Request Size)}
 \label{subse:obs_test_plan_all_30min}
 This section \ref{subse:obs_test_plan_all_30min} discussed about the All test plan performance with 30 minutes data which means 48 data points per each request in Scalar and Vector timeseries, and 48 ASCII Grid files per each insert request. It performed round up to 311k of sample requests which is almost similar to \ref{subse:obs_test_plan_all_60min} processed samples.
+
 \begin{table}[ht]
+\caption{Throughput and Latency of All test cases with 30min data}
 \footnotesize
 \begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
 \hline
@@ -63,7 +65,6 @@ Retrieve Grid & 7971 & 81 & 67 & 284 & 93 & 15.15 & 0.00\% & 4.5 \\ \hline
 Query: Location & 71734 & 3 & 2 & 110 & 3 & 1.90 & 0.00\% & 40.5 \\ \hline
 TOTAL & 310878 & 129 & 0 & 1699 & 503 & 207.10 & 0.00\% & 175.3 \\ \hline
 \end{tabulary}
-\caption{Throughput and Latency of All test cases with 30min data}
 \label{tab:obs_all_30_min_summary}
 \end{table}
 \ref{tab:obs_all_30_min_summary} shows the response latency summary details and \acrshort{rps} as explained in \ref{subse:obs_test_plan_all_60min}. And the results are almost similar to the observations in \ref{tab:obs_all_60_min_summary}. This implies that, even the request size is increased, the \acrshort{wdias} can perform better same as the with smaller size of data.
@@ -93,6 +94,7 @@ When compared to \ref{fi:test_obs_all_60m_latency}, the latency for insert and r
 \label{subse:obs_test_plan_all_15min}
 This section \ref{subse:obs_test_plan_all_15min} discussed about the All test plan performance with 15 minutes data which means 96 data points per each request in Scalar and Vector timeseries, and 96 ASCII Grid files per each insert Grid timeseries request. These requests are four times larger than the \ref{subse:obs_test_plan_all_60min} request size. It performed approximately 311k of sample requests which is almost similar to \ref{subse:obs_test_plan_all_30min} processed samples.
 \begin{table}[ht]
+\caption{Throughput and Latency of All test cases with 15min data}
 \footnotesize
 \begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
 \hline
@@ -104,7 +106,6 @@ Retrieve Grid & 7972 & 118 & 80 & 876 & 165 & 56.15 & 0.00\% & 4.5 \\ \hline
 Query: Location & 71749 & 3 & 2 & 130 & 4 & 2.32 & 0.00\% & 40.5 \\ \hline
 \textbf{TOTAL} & 310934 & 134 & 0 & 1719 & 503 & 206.40 & 0.04\% & 175.4 \\ \hline
 \end{tabulary}
-\caption{Throughput and Latency of All test cases with 15min data}
 \label{tab:obs_all_15_min_summary}
 \end{table}
 \ref{tab:obs_all_15_min_summary} shows the response latency summary details and \acrshort{rps} as same as explained in \ref{subse:obs_test_plan_all_30min}. And the latency observations are increased by some amount when compared to the observations in \ref{tab:obs_all_30_min_summary}. Noticeably retrieving latency of all type of data types increased by considerable amount. Same following the trend, standard deviation of retrieve timeseries data increased my considerable amount for all the types. We can assume that more writing to the databases affected on reads as well. Event the request data size increased by 4x time, the \acrshort{wdias} were able to handle them without any significant performance issues. And the system able to provide the same throughput as \ref{tab:obs_all_30_min_summary}.
@@ -154,6 +155,7 @@ This section \ref{subse:obs_test_plan_all_auto_15min} discussed about the All te
 Other than that, this test plan runs with enabling \acrshort{k8s} Auto Scaling for the high resource utilized microservice as explained in the \ref{subse:test_plan_metrics}. With the test load used for the performance test, import-ascii-grid-upload microservice is using lots of CPU, and adapter-grid microservice is using lots of Memory. During this test plan, \acrshort{wdias} start with the auto scaling enabled for import-ascii-grid-upload microservice. Since adapter-grid is a consistence service for storing netCDF files, it is not possible to auto scale, since \acrshort{eks} does not support multiple read write support volumes \cite{LinuxFoundationPersistentKubernetes}.
 
 \begin{table}[ht]
+\caption{Throughput and Latency of All test cases with 15min data while enabled \acrshort{k8s} Auto Scaling}
 \footnotesize
 \begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
 \hline
@@ -165,7 +167,6 @@ Retrieve Grid & 7965 & 89 & 63 & 1694 & 110 & 37.79 & 0.00\% & 4.5 \\ \hline
 Query: Location & 71704 & 1 & 0 & 203 & 2 & 2.05 & 0.00\% & 40.5 \\ \hline
 \textbf{TOTAL} & 310734 & 130 & 0 & 1777 & 501 & 212.35 & 0.00\% & 175.3 \\ \hline
 \end{tabulary}
-\caption{Throughput and Latency of All test cases with 15min data while enabled \acrshort{k8s} Auto Scaling}
 \label{tab:obs_all_auto_15_min_summary}
 \end{table}
 \ref{tab:obs_all_auto_15_min_summary} shows the response latency summary details and \acrshort{rps} as same as explained in \ref{subse:obs_test_plan_all_15min}.
@@ -224,6 +225,7 @@ This section \ref{subse:obs_test_plan_query_15min} discussed about the Query tes
 Query test plan perform over 5 minutes of time period, and with a higher number of requests than other test plan with a peak of 600 hits per seconds.
 
 \begin{table}[ht]
+\caption{Throughput and Latency of Query test cases with 15min data}
 \footnotesize
 \begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
 \hline
@@ -241,7 +243,6 @@ Area, Parameter → Timeseries & 11084 & 864 & 1 & 16699 & 1584 & 751.00 & 0.00\
 * → Timeseries & 10968 & 1473 & 24 & 18283 & 2467 & 912.45 & 0.00\% & 36.7 \\ \hline
 \textbf{TOTAL} & 123403 & 794 & 1 & 33235 & 1536 & 789.76 & 0.00\% & 412.6 \\ \hline
 \end{tabulary}
-\caption{Throughput and Latency of Query test cases with 15min data}
 \label{tab:obs_query_15_min_summary}
 \end{table}
 \ref{tab:obs_query_15_min_summary} shows the response latency summary details. The average latency is much higher than the minimum value. Also it reported higher maximum values as well. Standard deviation showed as quiet higher value which means the response latency values are not closer to the average value. Noticeably, it does not reported any errors, which means all the requests successfully process.
