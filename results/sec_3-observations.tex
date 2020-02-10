@@ -1,14 +1,11 @@
 \section{Observations}
 According the \ref{se:test_plan} section, this section includes the observations after performing the test plans on the \acrshort{wdias} system setup and test plan test up which is explained in the \ref{se:work_load}.
 
-%Following \ref{subse:obs_test_plan_all_60min}, \ref{subse:obs_test_plan_all_30min}, \ref{subse:obs_test_plan_all_15min} and \ref{subse:obs_test_plan_all_auto_15min} sections
-\db{Sections \ref{subse:obs_test_plan_all_60min} to \ref{subse:obs_test_plan_all_auto_15min} discuss} the observations collected with performing the Full test plan (also known as All test plan) over 60 minutes (24 data points), 30 minutes (48 data points) and 15 minutes (96 data points) by variate the request size. Then another performance test with enabling Auto Scaling as explained in \ref{subse:test_plan_metrics} for high resource utilized microservice.
+\db{Sections \ref{subse:obs_test_plan_all_60min} to \ref{subse:obs_test_plan_all_auto_15min} discuss} the observations collected with performing the Load test plans over 60 minutes (24 data points), 30 minutes (48 data points) and 15 minutes (96 data points) by variate the request size. Then another performance test with enabling Auto Scaling as explained in \ref{subse:test_plan_metrics} for high resource utilized microservice.
 
-
-\subsection{Full Test with hourly data (24 Request Size)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Load Testing with hourly data (24 Request Size)}
 \label{subse:obs_test_plan_all_60min}
-
-\dbc{"Full Test"is a not a good term}
 
 After running the All test plan with 60 minutes (24 data points), it observed the data summary of \ref{tab:obs_all_60_min_summary}. It performed 311k of sample requests.
 
@@ -49,8 +46,8 @@ When number of active threads increased more than 122, the \ref{fi:test_obs_all_
 The conclusion of giving static latency while increasing the number of requests in \ref{fi:test_obs_all_60m_response_vs_threads} can further prove with this graph, since \ref{fi:test_obs_all_60m_latency} graph gives in details overview over the test plan time span.
 
 
-
-\subsection{Full Test with 30min data (48 Request Size)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Load Testing with 30min data (48 Request Size)}
 \label{subse:obs_test_plan_all_30min}
 This section \ref{subse:obs_test_plan_all_30min} discussed about the All test plan performance with 30 minutes data which means 48 data points per each request in Scalar and Vector timeseries, and 48 ASCII Grid files per each insert request. It performed round up to 311k of sample requests which is almost similar to \ref{subse:obs_test_plan_all_60min} processed samples.
 \begin{table}[ht]
@@ -90,8 +87,8 @@ This graph also conclude that, over the time latency does not change very much. 
 When compared to \ref{fi:test_obs_all_60m_latency}, the latency for insert and retrieve Grid timeseries increase by some amount.
 
 
-
-\subsection{Full Test with 15min data (96 Request Size)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Load Testing with 15min data (96 Request Size)}
 \label{subse:obs_test_plan_all_15min}
 This section \ref{subse:obs_test_plan_all_15min} discussed about the All test plan performance with 15 minutes data which means 96 data points per each request in Scalar and Vector timeseries, and 96 ASCII Grid files per each insert Grid timeseries request. These requests are four times larger than the \ref{subse:obs_test_plan_all_60min} request size. It performed approximately 311k of sample requests which is almost similar to \ref{subse:obs_test_plan_all_30min} processed samples.
 \begin{table}[ht]
@@ -149,7 +146,7 @@ With combining the \ref{fi:test_obs_all_15m_latency}, this graph show that the t
 \ref{fi:test_obs_all_15m_latency_percentile} visually shows the summary of \ref{tab:obs_all_15_min_summary} latency up to 90\% percentile. With a higher request size data, the \acrshort{wdias} able to process the requests without significant change in latency up to 90\% percentile.
 
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Full Load test with \acrfull{k8s} auto pod scaling}
 \label{subse:obs_test_plan_all_auto_15min}
 This section \ref{subse:obs_test_plan_all_auto_15min} discussed about the All test plan performance with 15 minutes data which means 96 data points per each request in Scalar and Vector timeseries, and 96 ASCII Grid files per each insert Grid timeseries request. These requests are four times larger than the \ref{subse:obs_test_plan_all_60min} request size. It performed approximately 311k of sample requests which is almost similar to \ref{subse:obs_test_plan_all_15min} processed samples.
@@ -219,6 +216,7 @@ As the graph shows, 3 pods scheduled at the initial as per the configuration of 
 \ref{fi:obs_all_auto_15m_adapter_dbs_res} shows the resource utilization of database adapters in the \acrshort{wdias}.
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Query module load test}
 \label{subse:obs_test_plan_query_15min}
 This section \ref{subse:obs_test_plan_query_15min} discussed about the Query test plan performance. It performs multiple information retrieval queries such as query over locations, parameters and timeseries etc which are described over \ref{se:query}. It performed approximately 123k of sample requests.
