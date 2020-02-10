@@ -7,8 +7,8 @@ in build few extensions such as Interpolation, Transformation and Validation. Ot
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.5\textwidth]{method/data_preprocess/weather_data_preprocessing.jpg}
-    \caption{Weather Data Preprocessing}
-    \label{fig:weather_data_preprocessing}
+    \caption{Weather data preprocessing}
+    \label{fi:weather_data_preprocessing}
 \end{figure}
 The WDIAS provides the support via in build simple generic mathematical function structure. Each extension is considering as a mathematical function which can take p 
 number of input timeseries variables and output n number of timeseries variables. Other than that, at the time of processing the system can configure to provide
@@ -24,7 +24,7 @@ In serial interpolation mode, interpolation is done to fill any gaps in a time s
     \centering
     \includegraphics[width=0.6\textwidth]{method/data_preprocess/serial_interpolation.jpg}
     \caption{Serial Interpolation}
-    \label{fig:serial_interpolation}
+    \label{fi:serial_interpolation}
 \end{figure}
 
 \subsubsection{Spatial Interpolation}
@@ -33,7 +33,7 @@ In spatial interpolation mode, the interpolation can be either applied to fill g
     \centering
     \includegraphics[width=0.6\textwidth]{method/data_preprocess/spatial_interpolation.jpg}
     \caption{Spatial Interpolation}
-    \label{fig:spatial_interpolation}
+    \label{fi:spatial_interpolation}
 \end{figure}
 
 \subsection{Transformation}
@@ -43,7 +43,7 @@ Specific hydro-meteorological transformation such as stage discharge relationshi
     \centering
     \includegraphics[width=0.6\textwidth]{method/data_preprocess/transformation.jpg}
     \caption{Transformation}
-    \label{fig:transformation}
+    \label{fi:transformation}
 \end{figure}
 
 \subsection{Validation}
@@ -52,7 +52,7 @@ Checks for counting reliable, doubtful, unreliable, and missing values
     \centering
     \includegraphics[width=0.6\textwidth]{method/data_preprocess/validation.jpg}
     \caption{Validation}
-    \label{fig:validation}
+    \label{fi:validation}
 \end{figure}
 
 \subsection{Extension API}
@@ -84,7 +84,7 @@ In the WDIAS, it is possible to create new trigger for an extension via POST req
 \begin{itemize}
     \item extensionId - An unique identifier for new extension trigger. Should be unique among all extensions.
     \item extension - The main extension category which is responsible for handling the extension with extracting data required and storing the output. Interpolation/Transformation/Validation support for the moment.
-    \item function - Name of the microservice which is handling the input to output mapping. Fn() function in the \ref{fig:weather_data_preprocessing}.
+    \item function - Name of the microservice which is handling the input to output mapping. Fn() function in the \ref{fi:weather_data_preprocessing}.
     \item variables - Array timeseries mapping to variables. Multiple variables can be define with metadata or metadataIds of timeseries. Can be use same variable on inputVariables and outputVariables below.
     \item inputVariables - Timeseries that need to be provide into the function
     \item outputVariables - Timeseries that output from the function
@@ -105,8 +105,8 @@ Extension Handler is responsible for triggering the correct Extension with metad
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.6\textwidth]{method/data_preprocess/validation.jpg}
-    \caption{Extension Handler}
-    \label{fig:extension_handler}
+    \caption{Extension handler}
+    \label{fi:extension_handler}
 \end{figure}
 
 In further elaboration, when new data imported into one of adapter-scalar or adapter-vector, those notify the extension-handler. Then extension handler check whether there is any extension subscribed for particular timeseries, and trigger it via triggering an event on particular extensions.
