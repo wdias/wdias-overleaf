@@ -6,7 +6,7 @@ Since \acrshort{esb} mediator can be used to integrate the modules which are des
 
 But \acrshort{esb} is not a better solution for data streaming or bulk data processing. Also \acrshort{esb} suffer from single point of failure, since all the messages are going though a common bus.
 
-In the second phase of \acrshort{wdias}, the proposed architecture changed to use with Actor model using AKKA framework \cite{HewittWhyDocumentation} after consider into the disadvantage of using \acrshort{esb}. Using the Actors we tried to implement the microservice architecture. In that case, an Actor or An Actor with slave Actors map into each microservice in the \acrshort{wdias}.
+In the second phase of \acrshort{wdias}, the proposed architecture changed to use with Actor model using AKKA framework \cite{HewittWhyModel} after consider into the disadvantage of using \acrshort{esb}. Using the Actors we tried to implement the microservice architecture. In that case, an Actor or An Actor with slave Actors map into each microservice in the \acrshort{wdias}.
 
 The typical \acrshort{soa} model, for example, usually has more dependent \acrshort{esb}s, with microservices using faster messaging mechanisms. \acrshort{soa} also focuses on imperative programming, whereas microservices architecture focuses on a responsive-actor programming style. Moreover, \acrshort{soa} models tend to have an outsized relational database, while microservices frequently use NoSQL or micro-SQL databases (which can be connected to conventional databases). But the real difference has to do with the architecture methods used to arrive at an integrated set of services in the first place.
 
