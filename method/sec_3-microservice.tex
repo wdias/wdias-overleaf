@@ -5,7 +5,7 @@ The microservice architectural style is an approach to developing a single appli
 Among the characteristics of \acrfull{microservice}, few characteristics heavily affect while moving from \acrshort{soa} to \acrshort{microservice}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Smart Endpoints And Dumb Pipes}
-\label{subse:smart_endpoints}
+\label{subse:dumb_pipes}
 When building communication endpoints, many architecture approach with putting significant smart into the communication mechanism. One good example is \acrshort{esb} what we discussed in section \ref{se:architectural_decisions}. But microservice follows alternative approach: \emph{Smart endpoints and dumb pipes} \cite{LewisMicroservicesPipes}.
 Applications built from microservices aim to be as decoupled and as cohesive as possible. They own their own domain logic and act more as filters in the classical Unix sense. After receiving a request, applying logic as appropriate and producing a response. And it uses simple RESTish protocols rather than complex protocols.
 
@@ -52,7 +52,7 @@ The microservice architecture is an application of Y-axis scaling.
 When using Z-axis scaling each server runs an identical copy of the code (similar to X-axis scaling). The big difference is that each server is responsible for only a subset of the data. 
 Z-axis splits are commonly used to scale databases. Data is partitioned (a.k.a. sharded) across a set of servers based on an attribute of each record.
 
-Even \acrshort{wdias} is design based on the Y-axis scaling, it's possible to use the Z-axis scaling to scalibility of the system further. This will be more discuss in the section \ref{se:discussion}.
+Even \acrshort{wdias} is design based on the Y-axis scaling, it's possible to use the Z-axis scaling to scalability of the system further. This will be more discuss in the section \ref{se:discussion}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Brief introduction to the \acrfull{k8s}}
@@ -77,7 +77,10 @@ Components of \acrshort{k8s},
 Users can add much as required Nodes into the \acrshort{k8s} cluster, and \acrshort{k8s} manage and deploy application as pods into cluster nodes.
 Each microservice can deploy as a Pod which is a group of containerize applications. And \acrshort{k8s} able to scale as much as user want as described above.
 
-<explain how each one is used while designing the WDIAS architecture>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\acrshort{wdias} Microservices}
+\label{sebse:wdias_microservices}
 In the figures of \ref{fi:wdias_micro_on_demand} and \ref{fi:wdias_micro_async} each circle represent a microservice, and those are implemented as containerized applications.
 \begin{figure}[htp]
     \centering
@@ -85,6 +88,9 @@ In the figures of \ref{fi:wdias_micro_on_demand} and \ref{fi:wdias_micro_async} 
     \caption{\acrshort{wdias} architecture for server requests on demand}
     \label{fi:wdias_micro_on_demand}
 \end{figure}
+In left side of the figure \ref{fi:wdias_micro_on_demand} shows the import modules of the \acrshort{wdias}, and right side show the export modules. As it explained section \ref{subse:dumb_pipes}, each import microservice only do specific task of converting and forwarding the request to the correct data adapter module.
+For each data type, there is a adapter microservice is running which is optimized to storing such type of data. And the metadata data of the timeseries store using \acrshort{rdbms} which gives more performance over retrieving metadata data. The metadata is cached with In-Memory database in order to fast access as mentioned in section \ref{subse:redis}.
+The system generate a unique identifier for each timeseries, and throw out the \acrshort{wdias}, other microservice use it to handle data for fast access.
 
 \begin{figure}[htp]
     \centering
@@ -92,6 +98,9 @@ In the figures of \ref{fi:wdias_micro_on_demand} and \ref{fi:wdias_micro_async} 
     \caption{\acrshort{wdias} architecture for handle request asynchronously}
     \label{fi:wdias_micro_async}
 \end{figure}
+Export module microservice follows the same concepts and provide the capability to export the data into required formats of the weather models.
+Each adapter follows the concept of database per service as mentioned in the section \ref{subse:database_per_service}. This gives the freedom for \acrshort{wdias} to scale better with \acrshort{k8s}.
+As shown in the figure \ref{fi:wdias_micro_on_demand}, when a smaller size request come to the system, it handle on demand and response back. But as shown in figure \ref{fi:wdias_micro_async}, when a request with larger size come to the system, it store the data for asynchronously process the data and response with a unique id which can use to verify whether data processed successfully or not.
 
 \begin{figure}[htp]
     \centering
@@ -99,9 +108,48 @@ In the figures of \ref{fi:wdias_micro_on_demand} and \ref{fi:wdias_micro_async} 
     \caption{Separation \acrshort{wdias} microservices}
     \label{fi:wdias_micro_separation}
 \end{figure}
+The figure \ref{fi:wdias_micro_on_demand} show the clear separation of microservices into the modules of the \acrshort{wdias}. As it shown, each adapter has isolated database, and database is hosted separately for the high performance.
+Apart from that, as we further discuss in section \ref{se:data_preprocess}, the extension modules are running separately such as Interpolation, Transformation and Validation etc.
+The Extension Adapter allow users to register new triggers for the extensions. And extension scheduler triggers the events based on time and extension handler triggers event based on data change.
 
-<add the API description and how it related to modules>
-- Import
-- Export
-- Timeseries
-- Extensions
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\acrshort{wdias} API Convention}
+\label{sebse:wdias_api}
+One of the main design consideration in \acrshort{wdias} is the convention of defining the APIs. It follows the simple RESTful API, and allow users to interact with HTTP methods.
+
+\emph{Timeseries} endpoints allow to interact with Metadata Adapter, and those are cache on the Query Handler in order to perform search queries.
+\begin{itemize}
+    \item parameter
+    \begin{itemize}
+        \item \emph{/parameter}
+    \end{itemize}
+    \item timeStep
+    \begin{itemize}
+        \item \emph{/timestep}
+    \end{itemize}
+    \item location
+    \begin{itemize}
+        \item \emph{/location/point}
+        \item \emph{/location/regularGrid}
+    \end{itemize}
+    \item timeseries
+\end{itemize}
+
+\emph{Import} endpoints allow to upload data into the \acrshort{wdias} system.
+\begin{itemize}
+    \item \emph{/import/json/raw}
+    \item \emph{/import/ascii-grid/upload}
+\end{itemize}
+
+\emph{Export} endpoints allow to get/download data from the \acrshort{wdias} system.
+\begin{itemize}
+    \item \emph{/export/json/raw}
+    \item \emph{/export/ascii-grid/binary}
+\end{itemize}
+
+\emph{Extensions} endpoints for configure extensions.
+
+These details describes in the section \ref{se:data_preprocess}.
+
+The API convention of \emph{/<MODULE>/<DATA_FORMAT>/<DATA_OPERATION_TYPE>} allows users to integrate new import or export modules into the system as well as add new data types.
