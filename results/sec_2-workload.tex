@@ -72,16 +72,17 @@ While implementing the test cases for \acrshort{wdias}, it uses Concurrency Thre
 Using other thread groups, it required to find exact number of threads and timer delays that produce desired number of requests per second (RPS) to server. Which is known as the \emph{closed workload}.
 With using Throughput Shaping Timer, it only need to configure the \acrfull{rps}. When combine this \acrshort{jmeter} plugin with Concurrency Thread Group using Schedule Feedback Function to dynamically maintain thread count required to achieve target RPS \cite{KarunarathneGihanWdias/wdias-performance-test:JMeter.}.
 
-The test plans mentioned in \ref{se:test_plan} are implemented via the \acrshort{jmeter}. The \ref{fi:wdias_performance_test} shows the overall figure of all the test cases.
+The test plans mentioned in \ref{se:test_plan} are implemented via the \acrshort{jmeter}. The following list shows the all the test cases using for the performance testing.
 
-\begin{figure}[htp]
-    \centering
-    \includegraphics[width=0.6\textwidth]{results/work_load/wdias_performance_test.png}
-    \caption{WDIAS Performance Test Cases}
-    \label{fi:wdias_performance_test}
-\end{figure}
-
-\dbc{Try to list names of test cases than having these black screenshots. Same for other places.}
+\begin{itemize}
+    \item User Defined Variables
+    \item Setup thread group
+    \item Create Timeseries thread group
+    \item Create Extensions thread group
+    \item Load Test Timeseries Concurrency thread group
+    \item Load Test Timeseries Concurrency thread group
+    \item Test Flow thread group
+\end{itemize}
 
 In the first step of the plan consist of setting up the timeseries metadata. At the same time, it creates the timeseries entry in the \acrshort{wdias} system as well as shown in the \ref{fi:test_create_timeseries}.
 By creating the timeseries before help to reduce the overhead during the performance testing, and cause to more accurate \acrshort{rps} at the run time.

@@ -30,7 +30,6 @@
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-
 \lstdefinestyle{code-style}{
   backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
   basicstyle=\ttfamily\footnotesize,
@@ -45,8 +44,10 @@
   showtabs=false,                  
   tabsize=2
 }
-
 \lstset{style=code-style}
+
+\usepackage{newfloat} % Caption Lists: https://tex.stackexchange.com/a/239114/181545
+\DeclareFloatingEnvironment[placement={!ht},name=List]{customlist}
 
 \begin{document}
 \begin{titlepage}
