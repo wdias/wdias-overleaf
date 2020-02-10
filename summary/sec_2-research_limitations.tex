@@ -1,30 +1,28 @@
 \section{Research Limitations}
 This section discussed about the lacking features in the \acrshort{wdias}, and some of the improvement that can add for improve the performance and usability of the system.
 
-\dbc{Use italics to emphasize, not bold.}
-
-\paragraph{Lack of data preprossessing modules}
+\emph{Lack of data preprossessing modules}:
 The extension module enable plugin system to integrate prepossessing modules which can use for process the data which are inserted to the system or based on regular intervals. Also \acrshort{wdias} provide a more generic open interface approach to create more preprocessing modules. Since \acrshort{wdias} is an open source system, it expect more modules to be create by the community. When compared to other system like \acrshort{fews}, current system only have few extension for the testing purpose. This is one of the major area that need to be improved.
 
-\paragraph{Supporting Irregular Grids}
+\emph{Supporting Irregular Grids}:
 At the moment \acrshort{wdias} does not support Irregular Grids, but it has the API endpoints define for the implementation which can follow the same microservice architecture. The scope of the \acrshort{wdias} does not belong such level of implementation and the scope has reduced by removing such components from the system.
 
-\paragraph{Grid data performance}
+\emph{Grid data performance}:
 As mentioned in the \ref{se:conclusion}, the adapter-grid is using a Python wrapper for netCDF FORTRAN implementation with parallel IO enabled. This has some performance issues as well as memory leak issues. Since each microservice in the \acrshort{wdias} independent of technology that can use to implement the service, it will increase the performance if the adapter-grid directly ported to netCDF with a low level language such as C or FORTRAN. They are some future work that can focus on improving the performance of grid data.
 
-\paragraph{Define infrastructure as code}
+\emph{Define infrastructure as code}:
 Physical nodes for the \acrshort{k8s} cluster created using Cloud Computing provider such as \acrshort{eks}. And defining the each pod resource limitations at the helm chart level. But the infrastructure that need to deploy the \acrshort{wdias} can define as code such as using tools like Teraform which is independent of the Cloud Computing provider. Using such tool, users will able to easy deploy the \acrshort{wdias} on any Cloud provider without much hassle.
 
-\paragraph{Improve test cases}
+\emph{Improve test cases}:
 As described in detail with \ref{subse:closed_vs_open_workload}, for \acrshort{wdias} performance test uses Time Stepping Feedback loop with Concurrent Threads which is the best approach support by \acrshort{jmeter} at the moment. But using that it is not possible to get desired \acrshort{rps} for each test case within the test plan.
 Because of this issue, the \acrshort{wdias} test plans further improved by removing redundant test cases such as create timeseries at the beginning. Having create timeseries at the beginning causes some issues such as most of the thread are working on that test case rather on required test cases. Still there may be some improvement that can be done. 
 
-\paragraph{Further improve hierarchical database performance}
+\emph{Further improve hierarchical database performance}:
 As further described in \ref{se:conclusion}, it is possible to increase the performance of these bottlenecks much higher such as using \acrshort{influxdb} Commercial cluster support for high availability or horizontal scaling of \acrshort{influxdb}. With \acrshort{influxdb} cluster, it is possible to run multiple pods of adapter-scalar and adapter-vector for support more server hits per second.
 Other than that, the \acrshort{wdias} performance can improve via partitioning the timeseries key space into multiple \acrshort{influxdb} instances. The adapter-scalar or adapter-vector can improve to plug multiple instance of \acrshort{influxdb} instances by changing the configurations. As an example, based on the key attribute \ref{subse:timeseries_key_attributes} Timeseries Type, the adapter-scalar can connect to four instance of \acrshort{influxdb} instances such as  External Historical, External Forecast, Simulated Historical, and Simulated Forecast etc.
 
-\paragraph{Alerting extension modules}
+\emph{Alerting extension modules}:
 At the moment, extensions only support On Change and On Time events. But it will be good to have event trigger support based on reconfigured alert level.
 
-\paragraph{Publisher Subscriber extension modules}
+\emph{Publisher Subscriber extension modules}:
 The \acrshort{wdias} better to be capable of triggering external systems based on the events such as web hooks.
