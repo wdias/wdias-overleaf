@@ -38,5 +38,13 @@ The MADIS compute platforms comprise Intel based servers running the Red Hat Ent
 
 Since some MADIS data are considered proprietary by the provider, access to these data need to be controlled. To accommodate this, MADIS data are split into six different versions based on the level of access allowed by the data provider \cite{Macdermaid2005ARCHITECTUREP2.39}. When compared to \acrshort{fews}, \acrshort{madis} provide a control based access to the data.
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}
 \label{se:lit_summary}
+Several related work that discussed above in this chapter, mainly focus on issue of storing data which are ingest from different sources with different formats efficiently. The \acrshort{fews} and \acrshort{madis} are using the \acrshort{netCDF} as the common data format to store the data which is one of best solution available with modern technologies as well. Even it is not clearly mentioned, the \acrshort{dias} and \acrshort{lead} also following a method of having common storage space in order to store bulk data.
+\acrshort{fews} and \acrshort{lead} have the capability of handling workflow of forecasting, but other system are mainly focus on providing a weather data management system.
+\acrshort{fews} provide a modular approach via it's general adapter which is shown on figure \ref{fi:fews_general_adapter}, and according to the \acrshort{soa} architecture of \acrshort{lead} provide the same functionality via services.
+
+Most of the above systems develop by many developers and researcher via many of funding. And most of them are depend on underline platform, and not up to date with the modern technologies such as Cloud Computing.
