@@ -4,7 +4,7 @@ The database structure of WDIAS mainly depends on the key attributes of the time
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Timeseries Key Attributes}
-\label{sub:timeseries_key_attributes}
+\label{subse:timeseries_key_attributes}
 \subsubsection{Module ID}
 String field which describe the source of the data generated. e.g., hec-hms, flow2d, weather-station etc
 
@@ -104,20 +104,20 @@ Following chapters described the usage of databases in WDIAS and reason behind t
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\acrshort{rdbms}}
-\label{sub:mysql}
+\label{subse:mysql}
 
 There are lots of \acrshort{rdbms} available and for \acrshort{wdias} is using SQL as the \acrfull{rdbms}.
 SQL database has fewer version of open source and it is also possible to gain better performance with commercial versions. 
 Since WDIAS scope is to using open source tools, it is using \acrshort{mysql} as persistent database for storing timeseries metadata described above.
 One instance of \acrshort{mysql} is using only by adapter-metadata service.
-Other than that, another instance of \acrshort{mysql} is using for adapter-extension which will be describe in more detail \ref{data_preprocess}.
+Other than that, another instance of \acrshort{mysql} is using for adapter-extension which will be describe in more detail \ref{se:data_preprocess}.
 \acrshort{mysql} is used only for these services, those will only keep the consistency of the schema for timeseries metadata and extension metadata.
-\ref{db_struct_redis} instance is using for caching the data from \acrshort{mysql}, since the \acrshort{mysql} database instances, itself not going to get much load.
+\ref{subse:redis} instance is using for caching the data from \acrshort{mysql}, since the \acrshort{mysql} database instances, itself not going to get much load.
 Other than MySQL, there are many open source databases can be used to replace the same functionality.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Timeseries Database}
-\label{sub:influxdb}
+\label{subse:influxdb}
 Among the other timeseries open source databases available, \acrshort{influxdb} \cite{influxdbInfluxDBDocumentation} has higher number of usage and support. Database is written in Golang programming language, and has higher performance, and has following supports;
 \begin{itemize}
   \item Open timeseries DB with MIT license
@@ -134,7 +134,7 @@ Which also conclude the concept of splitting into more services based on other k
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\acrfull{netCDF}} 
-\label{sub:netcdf}
+\label{subse:netcdf}
 \acrshort{netCDF} \cite{unidataUnidataNetCDF} is a self-describing, machine-independent data formats that support creation, access, and sharing of array-oriented scientific data.
 And it also has the support for parallel file access.
 NetCDF is widely using in sciencetific domain due to it's capability of storing data in multi dementions easily and flexibility with storing many of the sciencetific data.
@@ -142,7 +142,7 @@ Python wrapper for NetCDF-C library using in the WDIAS system, and use by adapte
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Document-oriented Database}
-\label{sub:mongodb}
+\label{subse:mongodb}
 
 \acrshort{wdias} is using \acrshort{mongodb} as the Document-oriented databse, since it has the Geo searching capabilities.
 \acrshort{mongodb} \cite{mongodbMongoDBManual} is a general purpose, document-based, distributed database. And it supports;
@@ -156,7 +156,7 @@ If metadata not present in the adapter-query, if fetch data from the adapter-met
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{In-Memory Database}
-\label{sub:redis}
+\label{subse:redis}
 \acrshort{wdias} is using \acrshort{redis} \cite{redisRedisDocumentation} as the In-Memory database, since it's widely using tool with good support, and it support few other features such as Publisher Subscriber capabilities.
 \acrshort{redis} is an open source (BSD licensed), used as a database, cache. Clustering is available for scalability.
 \acrshort{redis} uses as in-memory caching for fast access of repreative access data in adapter-metadata and adapter-extension.
