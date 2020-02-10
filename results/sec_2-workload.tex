@@ -1,4 +1,4 @@
-\section{Workload Creation}
+\section{Workload}
 
 As explained in the \ref{ch:method}, timeseries has six primary attributes. In order to create a timeseries for performance testing, it needs data for each key attribute.
 While generating the timeseries for performance testing, it selected locations all over the world as a generic case to include all the locations without binding to a specific area.
@@ -49,6 +49,8 @@ Set ROOT_DIR=~/wdias/wdias-performance-test
 The water level also contains the real data for one month of period, and \emph{setup\_waterlevel.sh} script provide the functionality of prepare, cleanup and extract.
 Also it reset and repeat reading from the beginning when the \acrshort{jmeter} date counter keep increasing.
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Experimental Setup}
 In order to create higher workload using the \acrshort{jmeter}, it has Distributed Testing feature. It uses the master slave approach and it allowed to handle all the test cases via single instance, rather handling separate instances. But it has following limitation;
 \say{Note: The same test plan runs by all the servers. JMeter does not distribute the load between servers, each runs the full test plan. So if you set 1000 Threads and have 6 JMeter server, you end up injecting 6000 Threads}. When test cases runs with \acrshort{jmeter} Distributed mode, the server node trigger same copy of test case on configured slave nodes parallel. At the end of the test cases, it gather results into the master node.
@@ -62,6 +64,8 @@ In order to create higher workload using the \acrshort{jmeter}, it has Distribut
 
 When implementing load test cases with \acrshort{jmeter}, it uses threads to simulate the users. The root component of a test create is a thread group. There are different kind of thread groups are available such as Thread Group (Basic thread group), Arrivals Thread Group, Free Form Arrivals Thread Group, Stepping Thread Group, Concurrency Thread Group and Ultimate Thread Group etc.
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{closed vs. open workload models}
 \label{subse:closed_vs_open_workload}
 \begin{itemize}
@@ -98,7 +102,6 @@ In the first step of the plan consist of setting up the timeseries metadata. At 
 By creating the timeseries before help to reduce the overhead during the performance testing, and cause to more accurate \acrshort{rps} at the run time.
 Otherwise \acrshort{jmeter} need to allocate another set of threads for timeseries creation. Since the test cases insert data again set of timeseries, most of the time it about retrieving the timeseries metadata, rather creation a new timeseries in the \acrshort{wdias} system.
 
-The \ref{fi:test_all_cases} shows the test cases of other steps of Import, Extensions, Export and combination of All of them as per the detail steps in \ref{se:test_plan}.
 Following list shows the test steps of \acrshort{jmeter} while performing the load testing and the configurations.
 
 \begin{itemize}
@@ -219,6 +222,8 @@ It allows to run particular test plan which are described in \ref{se:test_plan}.
     \item Using Throughput Shaping Timer in order to get more accurate \acrshort{rps}
 \end{itemize}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{System Configuration}
 \label{sub:test_sys_config}
 As described in the \ref{se:microservice}, the \acrshort{wdias} is mainly focus on microservice architecture and implemented on top of kubernetes. \acrfull{k8s} is an open-source system for automating deployment, scaling, and management of containerized applications. For the performance study uses \acrfull{eks}. There are many \acrshort{k8s} solutions available such as GCP, Azure, Digital Ocean etc on the cloud.
@@ -242,7 +247,10 @@ test & 4 & 10.5 & 5 & 1 & c5n.xlarge \\ \hline
 
 The \acrshort{wdias} uses the Helm \cite{CNCFHelmDocs} which is a package manager for \acrshort{k8s}. Each microservice within the system deploy and maintain as a helm chart, and the Helm Charts \cite{KarunarathneWdias-helm-charts:Deployments} can be found within the code base. For the databases, it uses the official helm charts.
 
-\subsubsection{Performance Tuning}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Performance Tuning}
+\label{se:performance_tuning}
 In order to get better performance using the available resources, it is possible to schedule each microservice into a predefined set of nodes. There are few ways to do in the \acrshort{k8s};
 \begin{itemize}
     \item \emph{nodeSelector} - Hard rules match for node schedule. If not match, pods will not schedule.

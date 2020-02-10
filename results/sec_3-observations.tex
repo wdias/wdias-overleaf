@@ -1,7 +1,8 @@
 \section{Observations}
+
 According the \ref{se:test_plan} section, this section includes the observations after performing the test plans on the \acrshort{wdias} system setup and test plan test up which is explained in the \ref{se:work_load}.
 
-\db{Sections \ref{subse:obs_test_plan_all_60min} to \ref{subse:obs_test_plan_all_auto_15min} discuss} the observations collected with performing the Load test plans over 60 minutes (24 data points), 30 minutes (48 data points) and 15 minutes (96 data points) by variate the request size. Then another performance test with enabling Auto Scaling as explained in \ref{subse:test_plan_metrics} for high resource utilized microservice.
+Sections \ref{subse:obs_test_plan_all_60min} to \ref{subse:obs_test_plan_all_auto_15min} discuss the observations collected with performing the Load test plans over 60 minutes (24 data points), 30 minutes (48 data points) and 15 minutes (96 data points) by variate the request size. Then another performance test with enabling Auto Scaling as explained in \ref{subse:test_plan_metrics} for high resource utilized microservice.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Load Testing with hourly data (24 Request Size)}
@@ -217,7 +218,7 @@ As the graph shows, 3 pods scheduled at the initial as per the configuration of 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Query module load test}
+\subsection{Query Module Load Test}
 \label{subse:obs_test_plan_query_15min}
 This section \ref{subse:obs_test_plan_query_15min} discussed about the Query test plan performance. It performs multiple information retrieval queries such as query over locations, parameters and timeseries etc which are described over \ref{se:query}. It performed approximately 123k of sample requests.
 Query test plan perform over 5 minutes of time period, and with a higher number of requests than other test plan with a peak of 600 hits per seconds.

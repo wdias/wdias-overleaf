@@ -1,4 +1,5 @@
-\section{Test Plan}
+\section{Load Testing Plan}
+
 The system consists of three modules in functionality perspective of interacting with the \acrshort{wdias}.
 \begin{enumerate}
     \item Import modules
@@ -35,31 +36,21 @@ As a upper limit of such scenarios while designing the performance testing, it u
 \begin{itemize}
     \item Hourly (24 data points) 
     \item Every 30 minutes (48 data points)
-    \item Every 5 minutes (288 data points) - One request is equivalent to a data points send by a weather station in 5 minutes interval for a whole day
+    \item Every 15 minutes (96 data points) - One request is equivalent to a data points send by a weather station in 15 minutes interval for a single day
 \end{itemize}
 
-\subsection{Test Plan Flow}
+\subsection{Load Testing Flow}
 \label{subse:test_plan_flow}
 Following are the test cases which are planned to performance test cases;
 \begin{enumerate}
     \item Test Setup to create timeseries in 1hr, 30min and 15min intervals and create metadata of the timeseries
-    \item Import Timeseries
-    \begin{itemize}
-        \item Plan for test run of 15 minutes with the request size of 15min data.(total 0.25 hours)
-        \item Have mixture of data: Scalar - 70\%(max 210 requests per second), Vector (Multi-Scalar) - 20\% (max 60 requests per second), Grid - 10\% (max 30 requests per second)
-    \end{itemize}
-    \item Extensions
-    \begin{itemize}
-        \item Create Extensions for /Aggregation\_Accumulative, /Interpolation Linear, /Validation Missing Values (OnChange and OnTime)
-        \item Plan for the 15 minutes of test run with the request size of 15min data. (total 0.25 hours)
-        \item Do with Import Timeseries with error data which will go through extensions.
-    \end{itemize}
-    \item Export Timeseries
-    \begin{itemize}
-        \item Plan for 15 minutes of test run with the request size of 15min data. (total 0.25 hours)
-        \item Have mixture of data: Scalar - 70\%, Vector (Multi-Scalar) - 20\%, Grid - 10\% (Use the Imported - Data before and verify against Extensions)
-    \end{itemize}
-    \item Import + Extension + Export + Timeseries Queries (All)
+    % \item Extensions
+    % \begin{itemize}
+    %     \item Create Extensions for /Aggregation\_Accumulative, /Interpolation Linear, /Validation Missing Values (OnChange and OnTime)
+    %     \item Plan for the 15 minutes of test run with the request size of 15min data. (total 0.25 hours)
+    %     \item Do with Import Timeseries with error data which will go through extensions.
+    % \end{itemize}
+    \item Import + Extension + Export + Timeseries Queries
     \begin{itemize}
         \item Plan for 30 minutes of test run with the request size of 1hr (60min) data.
         \item Plan for 30 minutes of test run with the request size of 30min data.
@@ -67,9 +58,14 @@ Following are the test cases which are planned to performance test cases;
         \item Plan for 30 minutes of test run with the request size of 15min data with Auto Scaling.
         \item All test plan run against 60min, 30min and 15min request size of data. Another test plan run with enabling the Auto Scaling. (total 2 hours)
     \end{itemize}
+    \item Query
+    \begin{itemize}
+        \item Query Timeseries
+        \item Plan for the 5 minutes of test run. (total 1/12 hours)
+    \end{itemize}
 \end{enumerate}
 
-\subsection{Test Plan Performance Metrics}
+\subsection{Performance Metrics of Load Testing}
 \label{subse:test_plan_metrics}
 During the performance analysis, following metrics are use to measure the performance of the system.
 \begin{itemize}
