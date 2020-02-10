@@ -123,18 +123,36 @@ One of the main design consideration in \acrshort{wdias} is the convention of de
 \begin{itemize}
     \item parameter
     \begin{itemize}
-        \item \emph{/parameter}
+        \item \emph{GET /parameter} - Get parameters
+        \item \emph{POST /parameter} - Create parameter
+        \item \emph{PUT /parameter/id} - Update parameter
+        \item \emph{DELETE /parameter/id} - Delete parameter
     \end{itemize}
     \item timeStep
     \begin{itemize}
-        \item \emph{/timestep}
+        \item \emph{GET timestep} - Get TimeSteps
+        \item \emph{POST timestep} - Create TimeStep
+        \item \emph{PUT timestep/id} - Update TimeStep
+        \item \emph{DELETE timestep/id} - Delete TimeStep
     \end{itemize}
     \item location
     \begin{itemize}
-        \item \emph{/location/point}
-        \item \emph{/location/regularGrid}
+        \item \emph{GET /location} - Get location points
+        \item \emph{POST /location} - Create location point
+        \item \emph{PUT /location/id} - Update location point
+        \item \emph{DELETE /location/id} - Delete location point
+        \item \emph{GET /location/regular-grid} - Get regular grids
+        \item \emph{POST /location/regular-grid} - Create regular grid
+        \item \emph{PUT /location/regular-grid/id} - Update regular grid
+        \item \emph{DELETE /location/regular-grid/id} - Delete regular grid
     \end{itemize}
     \item timeseries
+    \begin{itemize}
+        \item \emph{GET /timeseries} - Get timeseries
+        \item \emph{POST /timeseries} - Create timeseries
+        \item \emph{PUT /timeseries/id} - Update timeseries
+        \item \emph{DELETE /timeseries/id} - Delete timeseries
+    \end{itemize}
 \end{itemize}
 
 \emph{Import} endpoints allow to upload data into the \acrshort{wdias} system.
@@ -151,4 +169,4 @@ One of the main design consideration in \acrshort{wdias} is the convention of de
 
 \emph{Extensions} endpoints for configure extensions. These details describes in the section \ref{se:data_preprocess}.
 
-The API convention of \texttt{/MODULE/DATA\_FORMAT/DATA\_OPERATION\_TYPE} allows users to integrate new import or export modules into the system as well as add new data types.
+The API convention of \texttt{/MODULE/DATA\_FORMAT/DATA\_OPERATION\_TYPE}  allows users to integrate new import or export modules into the system as well as add new data types.
