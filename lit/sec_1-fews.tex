@@ -22,11 +22,10 @@ In figure \ref{fi:fews_schematic} show a schematic view of the connection betwee
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=0.7\textwidth]{lit/fews/Schematic-structure-of-a-fl-ood-forecasting-system-showing-the-position-of-Delft-FEWS_W640.jpg}
+    \includegraphics[width=0.7\textwidth]{lit/fews/Schematic-structure-of-a-fl-ood-forecasting-system-showing-the-position-of-Delft-FEWS_W640.png}
     \caption[Schematic structure of a flood forecasting system including \acrshort{fews} and links to other primary systems within the operational environment]{Schematic structure of a flood forecasting system including \acrshort{fews} and links to other primary systems within the operational environment \cite{Werner2013TheSystem}.}
     \label{fi:fews_schematic}
 \end{figure}
-\dbc{Most figures are of low quality. You need to make sure figure resolution/quality is not lost. Dot should come after reference no. Fix all places.}
 
 The foundation of \acrshort{fews} is data-centric, with a common data-model through which all components interact. All time series data (both scalar and gridded) are stored in this common data-model in a database. Modeling capabilities are then linked to the system through one of the interfaces provided to the data-model \cite{Werner2013TheSystem}. As mention in the paper, having a common data-model make easy to store data in an efficient way. Operations like reporting and sharing the data also make it easy for integrate models. But the problem with this approach is, handling the multiple data formats. \acrshort{fews} overcome this issue with introducing adapters for most of commonly used data formats. This is a good feature which enable users to easily import data into the system. But at the same time, it's adding additional complexity into the system.
 
@@ -38,7 +37,7 @@ Data processing and manipulation is a required process in weather forecasting. M
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=1.0\textwidth]{lit/fews/Architecture-of-Delft-FEWS-showing-the-data-base-the-data-access-layers-and-examples-of_W640.jpg}
+    \includegraphics[width=1.0\textwidth]{lit/fews/Architecture-of-Delft-FEWS-showing-the-data-base-the-data-access-layers-and-examples-of_W640.png}
     \caption[Architecture of \acrshort{fews}]{Architecture of \acrshort{fews} \cite{Werner2013TheSystem}.}
     \label{fi:fews_data_layer}
 \end{figure}
@@ -46,7 +45,7 @@ Most of the library of functions provided work equally on scalar and gridded tim
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=0.6\textwidth]{lit/fews/Linking-Delft-FEWS-with-external-models-The-fi-gure-shows-the-fl-ow-of-data-through-XML_W640.jpg}
+    \includegraphics[width=0.6\textwidth]{lit/fews/Linking-Delft-FEWS-with-external-models-The-fi-gure-shows-the-fl-ow-of-data-through-XML_W640.png}
     \caption[Linking \acrshort{fews} with external models]{Linking \acrshort{fews} with external models \cite{Werner2013TheSystem}.}
     \label{fi:fews_general_adapter}
 \end{figure}
