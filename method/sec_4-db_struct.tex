@@ -5,13 +5,13 @@ The database structure of WDIAS mainly depends on the key attributes of the time
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Timeseries Key Attributes}
 \label{sub:timeseries_key_attributes}
-\emph{Module ID}
+\subsubsection{Module ID}
 String field which describe the source of the data generated. e.g., hec-hms, flow2d, weather-station etc
 
-\emph{Value Type}
+\subsubsection{Value Type}
 Scalar, Vector, Grid are the Value Types which are interested in the \acrshort{wdias}.
 
-\emph{Location}
+\subsubsection{Location}
 Location of the timeseries. All locations have unique String identifier called locationId. Further, there are two type of location types that is interested in the WDIAS.
 \begin{itemize}
   \item \emph{Point locations} - Contains a name which is human readable. lat and lon of the location on earth surface.
@@ -45,7 +45,7 @@ Location of the timeseries. All locations have unique String identifier called l
   \item \emph{Irregular Grid locations} - (endpoints are available with in the WDIAS system, but skipped since it is out of the interest of the scope.)
 \end{itemize}
 
-\emph{Parameter} - Parameter describe the variable measuring against a location. All parameters ahve a unique String identifier called as parameterId. A parameter can be use in multiple locations.
+\subsubsection{Parameter} - Parameter describe the variable measuring against a location. All parameters ahve a unique String identifier called as parameterId. A parameter can be use in multiple locations.
 While defining a parameter, there are three required fields which need to be provided such as variable, unit and parametertype.
 \begin{itemize}  
   \item \emph{Variable} - Nature of the variable measuring. Example Precipitation, Temperature and WaterLevel etc
@@ -61,14 +61,14 @@ While defining a parameter, there are three required fields which need to be pro
   \end{lstlisting}
 \end{itemize}
 
-\emph{Timeseries Type}
+\subsubsection{Timeseries Type}
 Timeseries Type can be combination of Source followed by Category.
 \begin{itemize}
   \item Sources - External, Simulated
   \item Category - Historical, Forecast
 \end{itemize}
 
-\emph{Time Step}
+\subsubsection{Time Step}
 All Time Steps has an uniqie String identifier called as timeStepId. Unit should be one of 'Second', 'Minute', 'Hour', 'Day', 'Week', 'Month', 'Year', 'NonEquidistant'. One of multiplier or divider can be use to define the interval between each measurement.
 \begin{lstlisting}[language=Python]
 {
