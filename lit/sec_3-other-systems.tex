@@ -1,6 +1,23 @@
 \section{Data Integration and Assimilation Systems}
 \label{se:dias}
 
+\acrshort{dias} collects and files data from satellites, ground observation stations, numerical weather prediction models and climate change projection models. Once this data is integrated with geographic and socio-economic information, DIAS generates results for managing global environmental issues and natural disasters \cite{Kawasaki2018DataReduction}. As mentioned above, \acrshort{dias} has the capability of collecting weather data form multiple data sources which are inherently in different formats. After successfully ingest the data, it generate results which can use for different kind of purposes.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=1\textwidth]{lit/other/dias_common_base_application_platform.png}
+    \caption[DIAS’s common base application platform.]{DIAS’s common base application platform \cite{Kawasaki2018DataReduction}.}
+    \label{fi:dias_common_platform}
+\end{figure}
+
+The mechanism of storing data in \acrshort{dias}, similar to the other systems discussed.
+These data sets are stored in an extra large volume disk array system with API (Application Programming Interface) software used to import the data. APIs work to convert or re-format data into manageable forms and are useful in creating the DIAS storage archive. API software consists of several tools, including the "Real-time data crawling and archiving system", "Data upload system", "Quality control system", and "Metadata management system" \cite{Kawasaki2018DataReduction}. In order to store on the large volume of disk space, it convert the data via provided set of APIs. This can be consider same as the open data model provide by the \acrshort{fews}. Other than that, \acrshort{dias} consist of additional tools which provide the functionality of quality control of the data, and metadata management which is similar to some of services in \acrshort{lead}.
+
+As shown in figure \ref{fi:dias_common_platform}, it provides an application layer which allows domain scientists to working on research tasks, and to develop specific tools and applications by working together with Information Technology experts. \cite{Kawasaki2018DataReduction}. Once the data is achieved on the \acrshort{dias} system, it share those details via Shared API layer. Thus it allows users to remote access to the data, and easy integration via the APIs.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Meteorological Assimilation Data Ingest System}
 \label{se:madis}
 \acrfull{madis} is a data ingest and assimilation system, which is collecting data over dozen of providers, then quality control over the data and store in \acrshort{netCDF} format. Later allow users to access the data via supporting different type of protocols.
