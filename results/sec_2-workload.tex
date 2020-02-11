@@ -258,7 +258,12 @@ In order to get better performance using the available resources, it is possible
     \item \emph{Taints and Tolerations} - Opposite of nodeSelector, repel mismatching pods away from the nodes.
 \end{itemize}
 
-\dbc{- e.g., diagram indicating the nodes and their connectivity (load generator, target, storage, etc.), Then briefly describe the diagram.}
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{results/work_load/eks_node_setup.jpg}
+    \caption{\acrfull{eks} node setup}
+    \label{fi:eks_node_setup}
+\end{figure}
 
 Users can use one of above features to fine-tune the \acrshort{wdias} to perform better. For the moment, \acrshort{wdias} helm charts uses node Affinity in order to use the same charts within local setup with one node and work the same charts on a \acrshort{k8s} cluster with multiple nodes. Pods are assigned to the nodes \ref{tab:aws_eks_nodes} based on the node label as below;
 \begin{itemize}
@@ -267,4 +272,5 @@ Users can use one of above features to fine-tune the \acrshort{wdias} to perform
     \item \emph{scalar}: scalar and vector adapters, import and export of same data types
     \item \emph{test}: jmeter and metric server
 \end{itemize}
+Figure \ref{fi:eks_node_setup} show the overview of show the nodes are setup and each microservices are assigned to each node, the connectivity of the nodes, and the data interactions via the arrows.
 The databases uses for data consistency and performance in storage optimization with search capabilities. But because of that, it only possible to run one instance of those. In the \acrshort{wdias}, the MySQL and MongoDb are not getting higher load as adapter databases such as InfluxDB for scalar and vector data types, and netCDF for grid data type. In order to keep up with the pace, those microservice pods are assign to dedicated nodes in order to increase the performance of inter-service communication.

@@ -10,6 +10,11 @@
 \usepackage{listings}
 \usepackage{biblatex}
 
+\usepackage{todonotes}
+\newcommand{\db}[1]{\textcolor{blue!40}{#1}}
+\newcommand{\dbc}[1]{\todo[author=Dilum, inline, color=blue!40]{#1}}
+
+
 \addbibresource{mendeley.bib}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -39,32 +44,40 @@
 }
 
 \author{\IEEEauthorblockN{Gihan Karunarathne}
-\IEEEauthorblockA{\textit{dept. computer science and Engineering} \\
-\textit{university of moratuwa}\\
-Moratuwa, Sri Lanka \\
+\IEEEauthorblockA{\textit{Dept. Computer Science and Engineering} \\
+\textit{University of Moratuwa}\\
+Katubedda, Sri Lanka \\
 gihan.09@cse.mrt.ac.lk}
 \and
-\IEEEauthorblockN{Dr. Dilum Bandara}
-\IEEEauthorblockA{\textit{dept. computer science and Engineering} \\
-\textit{university of moratuwa}\\
-Moratuwa, Sri Lanka \\
+\IEEEauthorblockN{H.M.N. Dilum Bandara}
+\IEEEauthorblockA{\textit{Dept. Computer Science and Engineering} \\
+\textit{University of Moratuwa}\\
+Katubedda, Sri Lanka \\
 dilumb@cse.mrt.ac.lk}
+\and
+\IEEEauthorblockN{Srikantha Herath}
+\IEEEauthorblockA{\textit{Center for Urban Water, Sri Lanka} \\
+%\textit{Center for Urban Water, Sri Lanka}\\
+Battaramulla, Sri Lanka \\
+admin@curwsl.org}
 }
 
 \maketitle
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-We describe our experience with implementing an extendable open source Weather Data Integration and Assimilation System, which is known as \acrshort{wdias}. It uses the modern architecture pattern such as microservice in order to achieve the scalability, rather using monolithic architecture or client service architecture. It provides a modular approach to integration data from different sources and export into different formats. Also the inbuilt extension module system allow users to add new features. The open source tools that are using for \acrshort{wdias} allows to run on Cloud Computing platforms without much hassle with the auto scaling feature allow to run \acrshort{wdias} from 1 CPU node to nodes with few hundred CPUs. The paper describes the initial design goals, evolve over few architectures to get desired performance, and explains how the system in way to achieve scalability. Later we analyse the performance test observations with the performance metrics.
+%We describe our experience with implementing an extendable open source Weather Data Integration and Assimilation System, which is known as \acrshort{wdias}. It uses the modern architecture pattern such as microservice in order to achieve the scalability, rather using monolithic architecture or client service architecture. It provides a modular approach to integration data from different sources and export into different formats. Also the inbuilt extension module system allow users to add new features. The open source tools that are using for \acrshort{wdias} allows to run on Cloud Computing platforms without much hassle with the auto scaling feature allow to run \acrshort{wdias} from 1 CPU node to nodes with few hundred CPUs. The paper describes the initial design goals, evolve over few architectures to get desired performance, and explains how the system in way to achieve scalability. Later we analyse the performance test observations with the performance metrics.
+
+\db{Numerical Weather Models (NWMs) utilize data collected via diverse sources such as automated weather stations, radars, air balloons, and satellite images. Prior to using such multimodal data into a NWM, it is necessary to transcode data into a format that can be ingested by the NWM. Moreover, the data integration system’s response time needs to be relatively low to forecast and monitor time-sensitive weather events like hurricanes, storms, and flash floods that require rapid and frequent execution of NWMs. The resulting weather data also need to be accessed by many researchers and third-party applications. Even though there are several weather data integration systems, they are based on monolithic or client-server architectures and are unable to benefit from novel computational models such as cloud computing and containers. Moreover, most of this software is proprietary or closed sourced; hence, it is difficult to customize such software for an island like Sri Lanka with different weather seasons. Therefore, in this research, we propose Weather Data Integration and Assimilation System (WDIAS) that utilizes modern architecture pattern such as microservices to achieve scalability, high availability, and low-cost operation based on cloud computing. WDIAS provides a modular architecture to integrate data from different sources, export into different formats, and the inbuilt extension module system allow users to add new features. We demonstrate the utility of WDIAS using cloud-based experimental setup and weather-related synthetic workloads.}
 \end{abstract}
 
 \begin{IEEEkeywords}
-\acrshort{wdias}, weather, microservice, kubernetes, hierarchical database 
+\db{Data assimilation, data integration, hierarchical databases, microservice, weather}
 \end{IEEEkeywords}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{INTRODUCTION}
-I'm going to do this today \cite{Haggett1998AnWales}.
+%I'm going to do this today \cite{Haggett1998AnWales}.
 Give general idea on weather data integration systems.
 Talk about the existing systems. And they're proprietary or close source.
 (Don't dedicate another section, otherwise need to do a comparison at the performance analysis)
@@ -77,15 +90,16 @@ Providing public access to weather data is also useful to enable many third-part
 While Data Integration and Analysis System (DIAS) and Meteorological Assimilation Data Ingest System (MADIS) are some of well-known Weather Data Integration and Assimilation (WDIA) systems, they are proprietary. Further Delft-FEWS is free to use, it is not open source. Hence, users of WDIA are forced to pay heavy licenses and are unable to extend the solutions to cater to their country-specific requirements. Therefore, the objective of this research is to develop a WDIA system for Sri Lanka, as well as make it open source, so that others could use and contribute to the solution.
 
 TODO: Specify the \acrshort{lead} service as a building block approach. \acrshort{fews} more modular approach with general adapter. And \acrshort{wdias} using microservice as module.
-Similar to the \acrfull{fews} \cite{WERNER2004DELFT-FEWS:SYSTEM} 
+Similar to the \acrfull{fews} \cite{Werner2013TheSystem} 
 
 The main purpose of this framework is to provide a platform through which opera- tional forecasting systems can be constructed, and that allows flexibility in the integration of models and data. In contrast to the NWSRFS and the RFFS systems that also follow a modular approach, the Delft-FEWS system contains no inherent hydrological model- ling capabilities within its code base. I
 
 TODO: Update content as below, overview of rest of the paper
 This paper first provides a short review of the operational forecasting process and the role of Delft-FEWS within that process. Section 3 provides an overview of the philosophy and the most important components and features of Delft-FEWS, while Section 4 discusses some example applications of the Delft-FEWS system in research and operations. A discussion of the systems strengths and limitations is provided in Section 5. Section 6 finally provides a summary of the paper, as well as an outlook on the future development of Delft-FEWS.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Modules of Weather Data System}
-The figure \ref{fi:wdia_components} shows the basic functions of a Weather data integration and assimilation system.
+\section{\db{Background}}
+%\section{Modules of Weather Data System}
+Fig. \ref{fi:wdia_components} shows the basic functions of a Weather data integration and assimilation system.
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.5\textwidth]{method/misc/weather_data_system_components.jpg}}
 \caption{Components of a weather data system.}
@@ -105,7 +119,8 @@ Brief mentioned about soa and Actor model and why moved away from them.
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Structure of \acrshort{wdias}}
+\section{\acrfull{wdias} Architecture}
+%\section{Structure of \acrshort{wdias}}
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.5\textwidth]{method/microservice/microservice_architecture-handle_on_demand-v3.jpg}}
 \caption{microservice architecture - handle on demand.}
@@ -136,8 +151,8 @@ Brief mentioned about soa and Actor model and why moved away from them.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Performance Analysis}
-
+\section{Performance \db{Evaluation}}
+%\section{Performance Analysis}
 \subsection{Test Plan and Workload}
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.5\textwidth]{results/work_load/performance_study_v4.jpg}}
@@ -220,6 +235,8 @@ During the test performance, the \acrshort{wdias} processed many requests with h
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Strengths and Limitations}
+\dbc{Make this the dicussion and a sub-section of Sec. 4}
+
 \paragraph{Lack of data preprossessing modules}
 The extension module enable plugin system to integrate prepossessing modules which can use for process the data which are inserted to the system or based on regular intervals. Also \acrshort{wdias} provide a more generic open interface approach to create more preprocessing modules. Since \acrshort{wdias} is an open source system, it expect more modules to be create by the community. When compared to other system like \acrshort{fews}, current system only have few extension for the testing purpose. This is one of the major area that need to be improved.
 
@@ -238,6 +255,7 @@ Other than that, the \acrshort{wdias} performance can improve via partitioning t
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}
+\dbc{Summary is too long. Should not be more than a single para}
 To enhance the accuracy of the weather prediction, it is required to have reliable weather data for \acrshort{nwm}. Most of existing weather data systems are proprietary or close sourced, or not up to date with the existing cloud computing technologies.
 We proposed an extendable open source Weather Data Integration and Assimilation Systems which is known as \acrshort{wdias}. It focused on providing efficiently integrates weather data from different sources with quality control and supporting steaming large size of data. And compatible with current cloud computing technologies and architecture patterns.
 
@@ -253,11 +271,7 @@ With the \acrshort{k8s} auto scaling, the \acrshort{wdias} were able to elastica
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Acknowledgment}
-
-The preferred spelling of the word ``acknowledgment'' in America is without 
-an ``e'' after the ``g''. Avoid the stilted expression ``one of us (R. B. 
-G.) thanks $\ldots$''. Instead, try ``R. B. G. thanks$\ldots$''. Put sponsor 
-acknowledgments in the unnumbered footnote on the first page.
+\db{This research is supported in part by the grant from the Center for Urban Water, Sri Lanka.}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
