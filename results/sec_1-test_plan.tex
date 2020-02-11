@@ -1,18 +1,17 @@
 \section{Load Testing Plan}
 
-The system consists of three modules in functionality perspective of interacting with the \acrshort{wdias}.
+\hl{The system consists of three modules in functionality perspective of interacting with the} \acrshort{wdias}.
 \begin{enumerate}
     \item Import modules
     \item Export modules
     \item Extension modules
 \end{enumerate}
-Other than above, adapter modules act as the core modules and the base of the system. Also query modules allow the users to query for the timeseries
-based on the metadata, and enable performing Geo based queries based on the locations.
+Other than above, adapter modules act as the core modules and the base of the system. Also, query modules allow the users to query for the timeseries based on the metadata, and enable performing Geo based queries based on the locations.
 
 The test plan is to perform the load test on each above module as separate entity in order to analyse the individual module scalability.
 Then perform load testing on whole system, and analyse the scalability in the system. There are two variables that can vary while doing the performance testing.
 \begin{enumerate}
-    \item Number of requests that can handle at a given time (\acrfull{rps})
+    \item Number of requests made to the system at a given time (\acrfull{rps})
     \item Request size
 \end{enumerate}
 A timeseries is a series of data points in time order. The system may receive the data points in multiple requests.
@@ -25,12 +24,12 @@ A weather station can collect the precipitation at each 5 minute period and send
 \end{itemize}
 
 The percentage of each data type can be vary depend on the situation. But most of the applications collect many data from the weather stations in order to correct and validate the models data. These weather stations can send the data in different frequencies with different parameters such as precipitation, temperature, humidity, wind direction etc.
-Most of these are scalar data. Parameters such as wind direct are vector data which has less percentage compared to scalar data. On other side, most of the grid data generate from models and simulations. Those produce in less frequency due to cost of the computer resource to produce results. After considering those factor, it is logical to come with following percentages;
-\begin{itemize}
-    \item Scalar - 70\%
-    \item Vector - 20\%
-    \item Grid - 10\%
-\end{itemize}
+Most of these are scalar data. Parameters such as wind direct are vector data which has less percentage compared to scalar data. On other side, most of the grid data generate from models and simulations. Those produce in less frequency due to cost of the computer resource to produce results. After considering those factor we came up with 70\% scalar, 20\% vector, and 10\% grid values.
+%\begin{itemize}
+%    \item Scalar - 70\%
+%    \item Vector - 20\%
+%    \item Grid - 10\%
+%\end{itemize}
 
 As a upper limit of such scenarios while designing the performance testing, it uses following;
 \begin{itemize}
@@ -39,7 +38,7 @@ As a upper limit of such scenarios while designing the performance testing, it u
     \item Every 15 minutes (96 data points) - One request is equivalent to a data points send by a weather station in 15 minutes interval for a single day
 \end{itemize}
 
-\subsection{Load Testing Flow}
+\subsection{\hl{Load Testing Flow}}
 \label{subse:test_plan_flow}
 Following are the test cases which are planned to performance test cases;
 \begin{enumerate}
@@ -65,12 +64,12 @@ Following are the test cases which are planned to performance test cases;
     \end{itemize}
 \end{enumerate}
 
-\subsection{Performance Metrics of Load Testing}
+\subsection{Performance Metrics}% of Load Testing}
 \label{subse:test_plan_metrics}
 During the performance analysis, following metrics are use to measure the performance of the system.
 \begin{itemize}
-    \item \emph{Throughput} - Number of requests that can be process per unit time. Normally for \acrshort{wdias} performance observations, it uses \acrfull{rps} in order to measure the throughput.
-    \item \emph{Latency} - Time taken for response back to the sent request to the system. Normally it measures with milliseconds (ms) in the \acrshort{wdias}. During the performance analysis, it measures the minimum response time, maximum response time, the average response time, and standard deviation. The standard deviation measures the mean distance of the values to their average.It gives an idea of the dispersion or variability of the measures to their mean value. So, if the deviation value is low compared to the mean value, it will indicate that the measures are not dispersed (or mostly close to the mean value) and that the mean value is significant. Other than that, it measure the response time into 90\% percentile, while gives best response time up to 90\% percent of the responses.
-    \item \emph{Resource Utilization} - Resource Utilization is calculated based on the CPU and Memory usage via \acrshort{k8s} metrics server. It calculates the resource utilization over 60 seconds of time window. Network usage is getting based on the actual physical machines.
-    \item \emph{Auto Scaling} - The \acrshort{wdias} is running with two configurations. First is, since it is running the microservice as docker containers, it allow to increase or shrink the resource usage and share the resources within a physical machine. Second is, running with auto scaling enabled for the microservice which are using higher resources.
+    \item \emph{Throughput} -- Number of requests that can be process per unit time. Normally for \acrshort{wdias} performance observations, it uses \acrfull{rps} in order to measure the throughput.
+    \item \emph{Latency} -- Time taken for response back to the sent request to the system. Normally it measures with milliseconds (ms) in the \acrshort{wdias}. During the performance analysis, it measures the minimum response time, maximum response time, the average response time, and standard deviation. The standard deviation measures the mean distance of the values to their average.It gives an idea of the dispersion or variability of the measures to their mean value. So, if the deviation value is low compared to the mean value, it will indicate that the measures are not dispersed (or mostly close to the mean value) and that the mean value is significant. Other than that, it measure the response time into 90\% percentile, while gives best response time up to 90\% percent of the responses.
+    \item \emph{Resource utilization} -- Resource Utilization is calculated based on the CPU and Memory usage via \acrshort{k8s} metrics server. It calculates the resource utilization over 60 seconds of time window. Network usage is getting based on the actual physical machines.
+    \item \emph{Auto scaling} -- The \acrshort{wdias} is running with two configurations. First is, since it is running the microservice as docker containers, it allow to increase or shrink the resource usage and share the resources within a physical machine. Second is, running with auto scaling enabled for the microservice which are using higher resources.
 \end{itemize}

@@ -1,10 +1,10 @@
-\section{Workload}
+\section{Workload Generation}
 
-As explained in the \ref{ch:method}, timeseries has six primary attributes. In order to create a timeseries for performance testing, it needs data for each key attribute.
+As explained in Section \ref{ch:method}, timeseries has six primary attributes. In order to create a timeseries for performance testing, it needs data for each key attribute.
 While generating the timeseries for performance testing, it selected locations all over the world as a generic case to include all the locations without binding to a specific area.
 
 These locations are taken from Google's Countries Public Data set \cite{GoogleGoogleCounties}, and consider static though out the testing, and data added to the wdias-performance-test.
-During the performance test, it creates 1000 timeseries and keep adding data against those timeseries. For each location, it creates four timeseries with vary with module Id key attribute with four values. Thus combining all together, those creates 1000 timeseries. But test cases generate these values before starts the performance tests, and able to increase the timeseries as wanted.
+During the performance test, it creates 1000 timeseries and keep adding data against those timeseries. For each location, it creates four timeseries \hl{with vary with module Id} key attribute with four values. Thus combining all together, those creates 1000 timeseries. But test cases generate these values before starts the performance tests, and able to increase the timeseries as wanted.
 
 For grid data, it uses static 100 grid locations which based on how is \acrshort{api} exposed. Since grid locations have different metadata structure as described in \ref{se:db_struct}, those data handle separately. But the locationId of grid and scalar data types have the same effect when define a timeseries.
 
@@ -13,7 +13,7 @@ Before running the test cases, it generate the metadata for timeseries and write
 
 The system is capable of storing any numeric value up to 3 decimal points. It does not make any different based on the parameter type whether it is the precipitation or the temperature. Thus during the performance testing, \acrshort{jmeter} uses real precipitation data from \acrshort{curw}. One month period of data for five weather stations have been using for prepare the test data. The script to cleanup and prepare the precipitation data is available as \emph{setup\_precipitation.sh} in wdias-performance.
 
-\begin{lstlisting}[language=sh, caption=Precipitation Data Preparation]
+\begin{lstlisting}[language=sh, caption=Preparation of precipitation data.]
 Set ROOT_DIR=~/wdias/wdias-performance-test
 -h | --help: Usage
   setup_precipitation.sh  <COMMAND>
@@ -33,7 +33,7 @@ While performing the load testing, \acrshort{jmeter} keep update a date counter,
 
 Almost similar to how was the precipitation data proceed, the water level are prepared for Grid data. One exception with Grid data during this test cases was, the maximum time step is 30min, instead of 15min due to larger size of the data. But the \acrshort{wdias} is capable of supporting such request. The main purpose of the \acrshort{wdias} is to provide a extensible architecture framework, during the performance testing it is not much consider about scaling the Grid data handling as it using \acrshort{netCDF}, and it is another domain with an attraction up to some extend.
 
-\begin{lstlisting}[language=sh, caption=Water level Data Preparation]
+\begin{lstlisting}[language=sh, caption= Preparation of water-level data.]
 Set ROOT_DIR=~/wdias/wdias-performance-test
 -h | --help: Usage
   setup_water-level.sh  <COMMAND>
@@ -53,7 +53,7 @@ Also it reset and repeat reading from the beginning when the \acrshort{jmeter} d
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Experimental Setup}
 In order to create higher workload using the \acrshort{jmeter}, it has Distributed Testing feature. It uses the master slave approach and it allowed to handle all the test cases via single instance, rather handling separate instances. But it has following limitation;
-\say{Note: The same test plan runs by all the servers. JMeter does not distribute the load between servers, each runs the full test plan. So if you set 1000 Threads and have 6 JMeter server, you end up injecting 6000 Threads}. When test cases runs with \acrshort{jmeter} Distributed mode, the server node trigger same copy of test case on configured slave nodes parallel. At the end of the test cases, it gather results into the master node.
+The same test plan runs by all the servers. JMeter does not distribute the load between servers, each runs the full test plan. So if you set 1,000 threads and have 6 JMeter server, you end up injecting 6,000 threads. When test cases runs with \acrshort{jmeter} Distributed mode, the server node trigger same copy of test case on configured slave nodes parallel. At the end of the test cases, it gather results into the master node.
 
 \begin{figure}[htp]
     \centering
@@ -62,11 +62,11 @@ In order to create higher workload using the \acrshort{jmeter}, it has Distribut
     \label{fi:experimental_setup}
 \end{figure}
 
-When implementing load test cases with \acrshort{jmeter}, it uses threads to simulate the users. The root component of a test create is a thread group. There are different kind of thread groups are available such as Thread Group (Basic thread group), Arrivals Thread Group, Free Form Arrivals Thread Group, Stepping Thread Group, Concurrency Thread Group and Ultimate Thread Group etc.
+When implementing load test cases with \acrshort{jmeter}, it uses threads to simulate the users. The root component of a test create is a thread group. There are different kind of thread groups are available such as thread group (basic thread group), arrivals thread Group, free form arrivals thread group, stepping thread group, concurrency thread group, and ultimate thread group.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{closed vs. open workload models}
+\subsubsection{Closed vs. open workload models}
 \label{subse:closed_vs_open_workload}
 \begin{itemize}
     \item \emph{closed system model} \cite{Haggett1998AnWales} a new request is only triggered by the completion of a previous request, following by a think time. System has negative feedback that makes it impossible to bury-out the service, so users wait for the responses before making new requests.
@@ -76,27 +76,27 @@ While implementing the test cases for \acrshort{wdias}, it uses Concurrency Thre
 Using other thread groups, it required to find exact number of threads and timer delays that produce desired number of requests per second (RPS) to server. Which is known as the \emph{closed workload}.
 With using Throughput Shaping Timer, it only need to configure the \acrfull{rps}. When combine this \acrshort{jmeter} plugin with Concurrency Thread Group using Schedule Feedback Function to dynamically maintain thread count required to achieve target RPS \cite{KarunarathneGihanWdias/wdias-performance-test:JMeter.}.
 
-The test plans mentioned in \ref{se:test_plan} are implemented via the \acrshort{jmeter}. The following list shows the all the test cases using for the performance testing.
+The test plans mentioned in \ref{se:test_plan} are implemented via the \acrshort{jmeter}. The following list shows the all the test cases used for the performance testing:
 
 \begin{itemize}
-    \item User Defined Variables
+    \item User-defined variables
     \item Setup thread group
-    \item Create Timeseries thread group
-    \item Create Extensions thread group
-    \item Load Test Timeseries Concurrency thread group
-    \item Load Test Timeseries Concurrency thread group
-    \item Test Flow thread group
+    \item Create timeseries thread group
+    \item Create extensions thread group
+    \item Load test timeseries concurrency thread group
+    \item Load test timeseries concurrency thread group
+    \item Test flow thread group
 \end{itemize}
 
 In the first step of the plan consist of setting up the timeseries metadata. At the same time, it creates the timeseries entry in the \acrshort{wdias} system as well as shown in following list of test steps and configurations.
 
 \begin{itemize}
-    \item HTTP Request Defaults
-    \item HTTP Header Manager
-    \item Timeseries Metadata CSV
-    \item Create Timeseries
-    \item Get Timeseries
-    \item Query Timeseries
+    \item HTTP request defaults
+    \item HTTP header manager
+    \item Timeseries metadata CSV
+    \item Create timeseries
+    \item Get timeseries
+    \item Query timeseries
 \end{itemize}
 
 By creating the timeseries before help to reduce the overhead during the performance testing, and cause to more accurate \acrshort{rps} at the run time.
@@ -116,7 +116,7 @@ Following list shows the test steps of \acrshort{jmeter} while performing the lo
     \begin{itemize}
         \item Insert Grid Timeseries
     \end{itemize}
-    \item wait for extensions timeseries
+    \item Wait for extensions timeseries
     \item Interest Area preprocessor
     \item Query If Scalar Or Vector
     \item Retrieve If Scalar or Vector
@@ -127,11 +127,11 @@ Following list shows the test steps of \acrshort{jmeter} while performing the lo
     \begin{itemize}
         \item Retrieve Grid Timeseries
     \end{itemize}
-    \item increment date
-    \item throughput shaping timer prod
+    \item Increment date
+    \item Throughput shaping timer prod
 \end{itemize}
 
-Following list of test steps shows intensively test the query timeseries features.
+\hl{Following list of test steps shows intensively test the query timeseries features.}
 
 \begin{itemize}
     \item HTTP Request Defaults
@@ -158,11 +158,13 @@ In the \ref{fi:test_prod_throughtput_shaping_timer} shows the Throughput Shaping
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.6\textwidth]{results/work_load/test_prod_throughtput_shaping_timer.png}
-    \caption{\acrshort{wdias} performance test - Throughput Shaping Timer graph}
+    \caption{\acrshort{wdias} performance test - Throughput \hl{shaping timer graph}}
     \label{fi:test_prod_throughtput_shaping_timer}
 \end{figure}
 
-With the above \acrshort{jmeter} test case setup, it need to enable each test case separately and before running via the command line in the server. In order to do it in much efficient way, a scripting tool has implemented, and accessible with the code base \cite{KarunarathneWdias-performance-test/TEST_PLAN.md:Plan} as \emph{test-dev}.
+\dbc{Top of Fig. 4.2 useless as it's black. Anyway, this figure isn't needed}
+
+With the above \acrshort{jmeter} test case setup, it need to enable each test case separately and before running via the command line in the server. To do it in much efficient way, a scripting tool has implemented, and accessible with the code base \cite{KarunarathneWdias-performance-test/TEST_PLAN.md:Plan} as \emph{test-dev}.
 
 \begin{lstlisting}[language=sh, caption=Performance Test Help]
 -h | --help: Usage
@@ -217,19 +219,19 @@ It allows to run particular test plan which are described in \ref{se:test_plan}.
 
 \subsubsection{JMeter performance tuning}
 \begin{itemize}
-    \item Use CSV files rather Random number generation
+    \item Use CSV files rather thanrandom number generation
     \item Use JSR223 scripts with Groovy for data processing for test cases
-    \item Using Throughput Shaping Timer in order to get more accurate \acrshort{rps}
+    \item Using Throughput Shaping Timer to get more accurate \acrshort{rps}
 \end{itemize}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{System Configuration}
+\subsection{\hl{System Configuration}}
 \label{subse:test_sys_config}
-As described in the \ref{se:microservice}, the \acrshort{wdias} is mainly focus on microservice architecture and implemented on top of kubernetes. \acrfull{k8s} is an open-source system for automating deployment, scaling, and management of containerized applications. For the performance study uses \acrfull{eks}. There are many \acrshort{k8s} solutions available such as GCP, Azure, Digital Ocean etc on the cloud.
+As described in the \ref{se:microservice}, the \acrshort{wdias} is mainly focus on microservice architecture and implemented on top of kubernetes. \acrfull{k8s} is an open-source system for automating deployment, scaling, and management of containerized applications. For the performance study uses \acrfull{eks}. There are many \acrshort{k8s} solutions available such as GCP, Azure, and Digital Ocean on the cloud.
 
 A detailed description of setting up the \acrshort{eks} available as \cite{KarunarathneWdias/Amazon_EKS.md:EKS} within the main repository of the \acrshort{wdias}.
-\acrshort{k8s} is a planet scaling tool \cite{LinuxFoundationProduction-GradeKubernetes}, and users can tweak the configuration to run the \acrshort{wdias} as per the required level of load on the system. During the performance test of the \acrshort{wdias}, it uses maximum of 300 \acrshort{rps} with providing to the system with increasing load, and monitor the auto scalability of the system with measuring other performance parameters mentioned in the \ref{se:test_plan}.
+\acrshort{k8s} is a planet scaling tool \cite{LinuxFoundationProduction-GradeKubernetes}, and users can tweak the configuration to run the \acrshort{wdias} as per the required level of load on the system. During the performance test of the \acrshort{wdias}, it uses maximum of 300 \acrshort{rps} with providing to the system with increasing load, and monitor the auto scalability of the system with measuring other performance parameters mentioned in Table \ref{se:test_plan}.
 
 \begin{table}[ht]
 \caption{\acrshort{eks} nodes}
@@ -244,6 +246,7 @@ test & 4 & 10.5 & 5 & 1 & c5n.xlarge \\ \hline
 \end{tabular}
 \label{tab:aws_eks_nodes}
 \end{table}
+\dbc{Center table on page}
 
 The \acrshort{wdias} uses the Helm \cite{CNCFHelmDocs} which is a package manager for \acrshort{k8s}. Each microservice within the system deploy and maintain as a helm chart, and the Helm Charts \cite{KarunarathneWdias-helm-charts:Deployments} can be found within the code base. For the databases, it uses the official helm charts.
 
@@ -251,26 +254,26 @@ The \acrshort{wdias} uses the Helm \cite{CNCFHelmDocs} which is a package manage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Performance Tuning}
 \label{se:performance_tuning}
-In order to get better performance using the available resources, it is possible to schedule each microservice into a predefined set of nodes. There are few ways to do in the \acrshort{k8s};
+To get better performance using the available resources, it is possible to schedule each microservice into a predefined set of nodes. There are few ways to do in the \acrshort{k8s};
 \begin{itemize}
-    \item \emph{nodeSelector} - Hard rules match for node schedule. If not match, pods will not schedule.
-    \item \emph{node Affinity and Anti-Affinity} - Soft rules for node schedule. Based on the rules, pods will schedule on most appropriate node.
-    \item \emph{Taints and Tolerations} - Opposite of nodeSelector, repel mismatching pods away from the nodes.
+    \item \emph{nodeSelector} -- Hard rules match for node schedule. If not match, pods will not schedule.
+    \item \emph{node Affinity and Anti-Affinity} -- Soft rules for node schedule. Based on the rules, pods will schedule on most appropriate node.
+    \item \emph{Taints and Tolerations} -- Opposite of nodeSelector, repel mismatching pods away from the nodes.
 \end{itemize}
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=0.6\textwidth]{results/work_load/eks_node_setup.jpg}
+    \includegraphics[width=0.75\textwidth]{results/work_load/eks_node_setup.jpg}
     \caption{\acrfull{eks} node setup}
     \label{fi:eks_node_setup}
 \end{figure}
 
 Users can use one of above features to fine-tune the \acrshort{wdias} to perform better. For the moment, \acrshort{wdias} helm charts uses node Affinity in order to use the same charts within local setup with one node and work the same charts on a \acrshort{k8s} cluster with multiple nodes. Pods are assigned to the nodes \ref{tab:aws_eks_nodes} based on the node label as below;
 \begin{itemize}
-    \item \emph{core}: metadata, extensions, query, status and extension services
-    \item \emph{grid}: grid adapter, import and export grid data
-    \item \emph{scalar}: scalar and vector adapters, import and export of same data types
-    \item \emph{test}: jmeter and metric server
+    \item \emph{core} -- metadata, extensions, query, status and extension services
+    \item \emph{grid} -- grid adapter, import and export grid data
+    \item \emph{scalar} -- scalar and vector adapters, import and export of same data types
+    \item \emph{test} -- jMeter and metric server
 \end{itemize}
 Figure \ref{fi:eks_node_setup} show the overview of show the nodes are setup and each microservices are assigned to each node, the connectivity of the nodes, and the data interactions via the arrows.
 The databases uses for data consistency and performance in storage optimization with search capabilities. But because of that, it only possible to run one instance of those. In the \acrshort{wdias}, the MySQL and MongoDb are not getting higher load as adapter databases such as InfluxDB for scalar and vector data types, and netCDF for grid data type. In order to keep up with the pace, those microservice pods are assign to dedicated nodes in order to increase the performance of inter-service communication.

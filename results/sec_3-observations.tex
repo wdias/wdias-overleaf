@@ -1,11 +1,11 @@
-\section{Observations}
+\section{\hl{Observations}}
 
 According the \ref{se:test_plan} section, this section includes the observations after performing the test plans on the \acrshort{wdias} system setup and test plan test up which is explained in the \ref{se:workload}.
 
 Sections \ref{subse:obs_test_plan_all_60min} to \ref{subse:obs_test_plan_all_auto_15min} discuss the observations collected with performing the Load test plans over 60 minutes (24 data points), 30 minutes (48 data points) and 15 minutes (96 data points) by variate the request size. Then another performance test with enabling Auto Scaling as explained in \ref{subse:test_plan_metrics} for high resource utilized microservice.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Load Testing with hourly data (24 Request Size)}
+\subsection{Load Testing with hourly data (\db{Request size = 24})}
 \label{subse:obs_test_plan_all_60min}
 
 After running the All test plan with 60 minutes (24 data points), it observed the data summary of \ref{tab:obs_all_60_min_summary}. It performed 311k of sample requests.
@@ -34,7 +34,7 @@ On the other hand, Insert Grid Timeseries data perform with 23ms with almost all
     \caption{Load testing with hourly data - Response Time vs Threads}
     \label{fi:test_obs_all_60m_response_vs_threads}
 \end{figure}
-\ref{fi:test_obs_all_60m_response_vs_threads} show the response time against the number of active threads. As the graph show, the response time kept same while increasing the number of active threads against each test case. This shows the scalability of the \acrshort{wdias}, since the system able to process more requests without a significant change in the latency.
+Figure \ref{fi:test_obs_all_60m_response_vs_threads} shows the response time against the number of active threads. As the graph show, the response time kept same while increasing the number of active threads against each test case. This shows the scalability of the \acrshort{wdias}, since the system able to process more requests without a significant change in the latency.
 When number of active threads increased more than 122, the \ref{fi:test_obs_all_60m_response_vs_threads} show uncertainty in the inserting and retrieving Scalar and Vector data.
 
 \begin{figure}[htp]
@@ -43,14 +43,15 @@ When number of active threads increased more than 122, the \ref{fi:test_obs_all_
     \caption{Load testing with hourly data - Latency against server hits}
     \label{fi:test_obs_all_60m_latency}
 \end{figure}
-\ref{fi:test_obs_all_60m_latency} graph provides a better overview of the variation of latency over elapsed time of the test plan against number of server hits per second.
+
+Figure \ref{fi:test_obs_all_60m_latency} graph provides a better overview of the variation of latency over elapsed time of the test plan against number of server hits per second.
 The conclusion of giving static latency while increasing the number of requests in \ref{fi:test_obs_all_60m_response_vs_threads} can further prove with this graph, since \ref{fi:test_obs_all_60m_latency} graph gives in details overview over the test plan time span.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Load Testing with 30min data (48 Request Size)}
+\subsection{Load Testing with 30min data (Request size = 48)}
 \label{subse:obs_test_plan_all_30min}
-This section \ref{subse:obs_test_plan_all_30min} discussed about the All test plan performance with 30 minutes data which means 48 data points per each request in Scalar and Vector timeseries, and 48 ASCII Grid files per each insert request. It performed round up to 311k of sample requests which is almost similar to \ref{subse:obs_test_plan_all_60min} processed samples.
+This section \ref{subse:obs_test_plan_all_30min} discussed about the All test plan performance with 30 minutes data which means 48 data points per each request in Scalar and Vector timeseries, and 48 ASCII grid files per each insert request. It performed round up to 311k of sample requests which is almost similar to \ref{subse:obs_test_plan_all_60min} processed samples.
 
 \begin{table}[ht]
 \caption{Throughput and Latency of load test with 30min data}
