@@ -27,6 +27,8 @@
 \newcommand{\db}[1]{\textcolor{blue!40}{#1}}
 \newcommand{\dbc}[1]{\todo[author=Dilum, inline, color=blue!40]{#1}}
 
+\newcommand{\gkc}[1]{\todo[author=Gihan, inline, color=green!50]{#1}}
+
 \addbibresource{mendeley.bib}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -159,25 +161,24 @@ The above candidate has carried out research for the Masters thesis under our su
 \restoregeometry
 \normalsize
 
-
 \newgeometry{left=2.5cm,top=0.2cm,right=2cm}
 \addcontentsline{toc}{chapter}{Abstract} 
-{\setstretch{1.0} 
-\chapter*{Abstract}
-%\chapter*{\hspace{1cm} Abstract}
+{\setstretch{1.5} 
 
-\acrfull{nwm} utilize data collected via diverse sources such as automated weather stations, radars, air balloons, and satellite images. Before using such multimodal data into a NWM, it is necessary to transcode data into a format that can be ingested by the NWM. Moreover, the data integration system's response time needs to be relatively low to forecast and monitor time-sensitive weather events like hurricanes, storms, and flash floods that require rapid and frequent execution of \acrshort{nwm}. The resulting weather data also need to be accessed by many researchers and third-party applications such as logistic companies and agricultural insurance. %Thus, the system should provide a simple protocol to integrate with external systems.
-%For example, logistic companies could use those data within their models to plan and schedule deliveries. Agricultural insurance companies can warn the farmers in advance, as well as calculate premiums based on anticipated weather patterns.
-Even though there are several weather data integration systems, they are based on monolithic or client-server architectures and are unable to benefit from novel computational models such as cloud computing and containers. Moreover, most of this software is proprietary or closed sourced; hence, it is difficult to customize such software for an island like Sri Lanka with different weather seasons. %than those software originated need to be highly customized. Throughout the operations and maintenance, it is required to get support with paying lots of charges, and difficult to debug into a closed source system without maintenance support from the vendors. And most of the software existing out there is not up to date with the latest technology concepts such as Cloud Computing. 
-\db{Therefore, in this research, we propose \acrfull{wdias} that utilizes modern architecture pattern such as microservices to achieve scalability, high availability, and low-cost operation based on cloud computing. \acrshort{wdias} provides a modular architecture to integrate data from different sources, export into different formats, and the inbuilt extension module system allow users to add new features. Due to the use of stateless microservices, \acrshort{wdias} achieves high scalability, availability, and enables the addition of new features on the fly with rollover capabilities. We demonstrate the utility of \acrshort{wdias} using cloud-based experimental setup and weather-related synthetic workloads.}
-%Because each module follows the stateless and failover microservices integrate with new Cloud Computing tools, the proposed solution comes with the scalability and high availability into large extend out of the box. The proposed solution is independent of the cloud platform which most software out there is not and independent of Cloud Platform providers which give much flexibility for the users to decide the best cost effective way to host it. And the auto scaling feature allows users to run \acrshort{wdias} from 1 CPU node to nodes with a few hundred CPUs. Unlike most existing systems \acrshort{wdias} does not require a shutdown in order to update the system configuration, and it allows to add new features on the fly with rollover capabilities.
+\chapter*{Abstract}
+
+\acrfull{nwm} utilize data collected via diverse sources such as automated weather stations, radars, air balloons, and satellite images. Before using such multimodal data into a NWM, it is necessary to transcode data into a format that can be ingested by the NWM. Moreover, the data integration system's response time needs to be relatively low to forecast and monitor time-sensitive weather events like hurricanes, storms, and flash floods that require rapid and frequent execution of \acrshort{nwm}. The resulting weather data also need to be accessed by many researchers and third-party applications such as logistic companies and agricultural insurance.
+Even though there are several weather data integration systems, they are based on monolithic or client-server architectures and are unable to benefit from novel computational models such as cloud computing and containers. Moreover, most of this software is proprietary or closed sourced; hence, it is difficult to customize such software for an island like Sri Lanka with different weather seasons.
+Therefore, in this research, we propose \acrfull{wdias} that utilizes modern architecture pattern such as microservices to achieve scalability, high availability, and low-cost operation based on cloud computing. \acrshort{wdias} provides a modular architecture to integrate data from different sources, export into different formats, and the inbuilt extension module system allow users to add new features. Due to the use of stateless microservices, \acrshort{wdias} achieves high scalability, availability, and enables the addition of new features on the fly with rollover capabilities. We demonstrate the utility of \acrshort{wdias} using cloud-based experimental setup and weather-related synthetic workloads.
 
 \dbc{Increase line space to 1.5}
+\gkc{FIXED}
 \vspace{4mm}
 
-\textbf{Keywords:} Cloud computing, \db{data assimilation, data integration, hierarchical databases, microservice, weather}
+\textbf{Keywords:} Cloud computing, data assimilation, data integration, hierarchical databases, microservice, weather
 %Cloud Computing, Data Management system, Distributed,  Highly Available, Scalable, Timeseries, Weather
 }
+
 \restoregeometry
 \normalsize
 
@@ -191,11 +192,12 @@ I also dedicate this thesis to my many friends at \acrshort{curw} who have suppo
 \chapter*{Acknowledgements}
 I wish to thank my evaluation panel members who were more than generous with their expertise and precious time. A special thanks to Dr. Dilum Bandara, my research supervisor for his countless hours of reflecting, reading, encouraging, and most of all patience throughout the entire process. Thank you Dr. Dilika Peris, and Dr. Indika Perera for agreeing to serve on my evaluation panel and Dr. Srikantha Herath for agreeing to serve as my external supervisor.
 
-I would like to acknowledge and thank Department of Computer Science and Engineering, University of Moratuwa, for allowing me to conduct my research and providing any assistance requested. Special thanks goes to both academic and non-academic staff of the department for their continued support. I also gratitude to the University of Moratuwa for the financial support as the research was supported in part by the Senate Research Grant of the University of Moratuwa under award number SRC/LT/2017/01.
+I would like to acknowledge and thank Department of Computer Science and Engineering, University of Moratuwa, for allowing me to conduct my research and providing any assistance requested. Special thanks go to both academic and non-academic staff of the department for their continued support. I also gratitude to the University of Moratuwa for the financial support as the research was supported in part by the Senate Research Grant of the University of Moratuwa under award number SRC/LT/2017/01,  and \acrfull{curw} for providing the grant and financial support during the research period with providing required resources and learning opportunities.
 
 Finally, I would like to thank the teachers, evaluating panel and colleagues that assisted me with this project. Their excitement and willingness to provide feedback made the completion of this research an enjoyable experience.
 
 \dbc{Need to ACK CUrW for grant.}
+\gkc{FIXED}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \tableofcontents
@@ -206,16 +208,19 @@ Finally, I would like to thank the teachers, evaluating panel and colleagues tha
 \addcontentsline{toc}{chapter}{List of Tables} 
 \listoftables
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newglossarystyle{custom-glossary-style}{%
-  \setglossarystyle{long}%
+  \setglossarystyle{list}%
   \renewenvironment{theglossary}%
-    {\begin{longtable}[l]{@{}p{\dimexpr 4cm-\tabcolsep}p{0.8\hsize}}}% <-- change the value here
+    % {\begin{longtable}[l]{@{}p{\dimexpr 2cm-\tabcolsep}p{0.8\hsize}}}% <-- change the value here
+    {\begin{longtable}{p{3cm}p{\glsdescwidth}}}%
     {\end{longtable}}%
 }
 
 \addcontentsline{toc}{chapter}{List of Abbreviations} 
-\printglossary[style=custom-glossary-style, type=\acronymtype, title=List of Abbreviations, toctitle=List of Abbreviations, nonumberlist]
+\printglossary[style=altlist, type=\acronymtype, title=List of Abbreviations, toctitle=List of Abbreviations, nonumberlist]
 \dbc{Make sure line spacing is consistent here.}
+\gkc{Could not figure out how to fix this. Those spaces are because of grouping by first letter with style long. What is needed is style list. styles are not working on list style: https://www.dickimaw-books.com/gallery/glossaries-styles/}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Introduction}
 \label{ch:intro}
@@ -246,11 +251,6 @@ Finally, I would like to thank the teachers, evaluating panel and colleagues tha
 
 \import{method/}{sec_1-architectural_decisions.tex}
 
-% \import{method/}{sec_1-soa.tex}
-% \label{se:soa}
-% \import{method/}{sec_2-actor_model.tex}
-% \label{se:actor_model}
-
 \import{method/}{sec_3-microservice.tex}
 \label{se:microservice}
 
@@ -267,19 +267,19 @@ Finally, I would like to thank the teachers, evaluating panel and colleagues tha
 \chapter{Performance Analysis}
 \label{ch:results}
 
-\import{results/}{sec_0-introduction.tex}
+% \import{results/}{sec_0-introduction.tex}
 \label{se:results_intro}
 
-\import{results/}{sec_1-test_plan.tex}
+% \import{results/}{sec_1-test_plan.tex}
 \label{se:test_plan}
 
-\import{results/}{sec_2-workload.tex}
+% \import{results/}{sec_2-workload.tex}
 \label{se:workload}
 
-\import{results/}{sec_3-observations.tex}
+% \import{results/}{sec_3-observations.tex}
 \label{se:observations}
 
-\import{results/}{sec_4-discussion.tex}
+% \import{results/}{sec_4-discussion.tex}
 \label{se:discussion}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
