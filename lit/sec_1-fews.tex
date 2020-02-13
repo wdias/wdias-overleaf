@@ -21,6 +21,7 @@ Are proposed by Haggett \cite{Haggett1998AnWales} key elements of a forecasting 
 
 In \db{Figure} \ref{fi:fews_schematic} show a schematic view of the connection between the forecasting system to real time data acquisition systems and dissemination systems. The widely using concept is using meteorological forecast data to get precipitation and, then using hydrological and hydraulic model chain to predict the level affect on the ground. The hydrological and hydraulic model should be design based on the ground. Basically ground should be analyze geographically and divide into the catchments. Based on the affected catchment, it can be further divide into sub areas to reduce the complexity of the simulation task. Ideally the forecasting system should therefore be flexible to allow change to models and data, while keeping the way forecasters work with it as constant as possible.
 \dbc{F is capital and T is capital when referring to Figures and Tables. Fix all other places.}
+\gkc{FIXED}
 
 \begin{figure}[htp]
     \centering
@@ -44,7 +45,7 @@ Data processing and manipulation is a required process in weather forecasting. M
     \caption[Architecture of \acrshort{fews}]{Architecture of \acrshort{fews} \cite{Werner2013TheSystem}.}
     \label{fi:fews_data_layer}
 \end{figure}
-Most of the library of functions provided work equally on scalar and gridded time series. As with all other modules this communicates with the database solely through the data access layer as shown in \hl{Section} \ref{fi:fews_data_layer} \cite{Werner2013TheSystem}. As it shown in the figure, it is clearly showing that, the system is depends on single database and via the data access layer all the requests are coming to the database though a connection. It is possible to setup and connect to a enterprise level database with clustering and shading as a paid solution, to serve many requests as possible. But the design it self inherently suffer with the database bottleneck which effected on running a large set of timeseries or models.
+Most of the library of functions provided work equally on scalar and gridded time series. As with all other modules this communicates with the database solely through the data access layer as shown in Figure \ref{fi:fews_data_layer} \cite{Werner2013TheSystem}. As it shown in the figure, it is clearly showing that, the system is depends on single database and via the data access layer all the requests are coming to the database though a connection. It is possible to setup and connect to a enterprise level database with clustering and shading as a paid solution, to serve many requests as possible. But the design it self inherently suffer with the database bottleneck which effected on running a large set of timeseries or models.
 \dbc{When referring to a section you need to use the word "Section" as highlighted above. Fix all other places.}
 
 \begin{figure}[htp]

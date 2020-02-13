@@ -84,7 +84,7 @@ Each microservice can deploy as a Pod which is a group of containerize applicati
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\acrshort{wdias} Microservices}
 \label{sebse:wdias_microservices}
-As seen in Figure of \ref{fi:wdias_micro_on_demand} and \ref{fi:wdias_micro_async} each circle represents a microservice, and those are implemented as containerized applications.
+As seen in Figure of Figure \ref{fi:wdias_micro_on_demand} and Figure \ref{fi:wdias_micro_async} each circle represents a microservice, and those are implemented as containerized applications.
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1\textwidth]{method/microservice/microservice_architecture-handle_on_demand-v3.jpg}
@@ -112,7 +112,7 @@ As shown in Figure \ref{fi:wdias_micro_on_demand}, when a smaller size request c
     \caption{Separation of \acrshort{wdias} microservices.}
     \label{fi:wdias_micro_separation}
 \end{figure}
-The figure \ref{fi:wdias_micro_on_demand} show the clear separation of microservices into the modules of the \acrshort{wdias}. As it shown, each adapter has isolated database, and database is hosted separately for the high performance.
+The Figure \ref{fi:wdias_micro_on_demand} show the clear separation of microservices into the modules of the \acrshort{wdias}. As it shown, each adapter has isolated database, and database is hosted separately for the high performance.
 Apart from that, as we further discuss in Section \ref{se:data_preprocess}, the extension modules are running separately such as Interpolation, Transformation and Validation etc.
 The Extension Adapter allow users to register new triggers for the extensions. And extension scheduler triggers the events based on time and extension handler triggers event based on data change.
 

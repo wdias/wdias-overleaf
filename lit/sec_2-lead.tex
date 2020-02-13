@@ -33,7 +33,7 @@ The Concept of the \acrshort{lead} is, the workflow orchestration for on-demand,
     \label{fi:lead_framework}
 \end{figure}
 
-As shown in the figure \ref{fi:lead_framework} LEAD consists of the following sub components, and it provides a distributed test bed for developing, integrating, and testing LEAD's components.
+As shown in the Figure \ref{fi:lead_framework} LEAD consists of the following sub components, and it provides a distributed test bed for developing, integrating, and testing LEAD's components.
 \begin{itemize}
     \item User subsystem -- comprises the LEAD portal and enable user can access services
     \item Data subsystem -- handles data and metadata, any numerical model output produced by operational or experimental models, and user generated information.
@@ -50,7 +50,7 @@ As shown in the figure \ref{fi:lead_framework} LEAD consists of the following su
 
 \acrshort{soa}s are widely deployed in the commercial enterprise sector, and they form the foundation of many scientific "grid" technologies at the time of \acrshort{lead} design and developed. A variant of \acrshort{soa} is evolved later called as microservice architecture, and widely use in the industry nowadays.
 
-As shown in figure \ref{fi:lead_soa}, \acrshort{lead} \acrshort{soa} has five distinct yet highly interconnected layers. 
+As shown in Figure \ref{fi:lead_soa}, \acrshort{lead} \acrshort{soa} has five distinct yet highly interconnected layers. 
 The bottom layer represents raw computation, application, and data resources distributed throughout the LEAD grid and elsewhere. The next level up holds the Web services that provide access to raw services \cite{Droegemeier2005Service-OrientedWeather}. These two layers are working together, since \acrshort{lead} system resources are distributed over multiple locations and creating a pool of resources. The upper layer to the raw resources is abstracting the complexity of managing and accessing the resources, and provide a simplified access to the upper layer. In the Upper layers, it view as a unlimited resource pool for storing and handling data.
 
 The configuration and execution services in the middle layer, consisting of five elements, represent services invoked by LEAD workflows. These are some critical aspects on a weather data management system. Most of the services listed here are required for creating work flows for weather data forecasting. Thus it is important to review them and understand the basic needs of a weather data management system.
@@ -62,6 +62,6 @@ The configuration and execution services in the middle layer, consisting of five
 \item The catalog services, represents the manner in which a user or application service discovers public-domain data products, or \acrshort{lead} services \cite{Droegemeier2005Service-OrientedWeather}. This is an important feature that should be available in a weather data system, and it is important to users to search for the availability of the data. Further wants to analyze the existing data for decision making.
 \item Users require a host of data services to support rich query, access, and transformation operations on data products. An important goal behind LEAD is access transparency—facilitating user queries across all available heterogeneous data sources without adverse affects from different formats and naming schemes \cite{Droegemeier2005Service-OrientedWeather}. Users need to have transformation services to read data in different format. The query service gives the capability to search via available data without any affect on the data formats.
 \end{itemize}
-The top of the figure \ref{fi:lead_soa}, shows the user interface to the system. This give the access to individual services. When user logs into the system, based on the authentication and authorization setting bind to the individual account, the portlets can access the services on behalf of the user. Look into further details is not relevant to developing the \acrshort{wdias}, since the focus is not about workflow orchestration.
+The top of the Figure \ref{fi:lead_soa}, shows the user interface to the system. This give the access to individual services. When user logs into the system, based on the authentication and authorization setting bind to the individual account, the portlets can access the services on behalf of the user. Look into further details is not relevant to developing the \acrshort{wdias}, since the focus is not about workflow orchestration.
 
 \acrshort{lead} is a more advanced system which can support for mesoscale weather prediction with the effort of multiple universities in the United State America with the effort of many of researchers and using many of computer resources. At the time it was building, it uses the \acrshort{soa} architecture as into its depth, and with the implementation each service can scale as needed and possible to enhance the service without interrupting other services. \acrshort{wdias} only focuses on creating a framework that is extendable as system needs more features as like \acrshort{lead} services.
