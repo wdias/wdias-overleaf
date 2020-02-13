@@ -1,9 +1,9 @@
 \section{Performance Metrics Analysis}
 
-In this section concludes the observations in \ref{se:observations} section against the performance metrics defines in \ref{subse:test_plan_metrics}.
+In this section concludes the observations in Section \ref{se:observations} section against the performance metrics defines in Section \ref{subse:test_plan_metrics}.
 
 The \emph{Latency} for each operation type kept constant over the whole test plan run time without any significant change. When the request size increased from 24 data points to 96 data points, the latency increase throw out the whole test plan with a smaller number. But for each test run the latency kept constant over the time.
-During the \ref{subse:obs_test_plan_all_auto_15min} test run, the performance of the Grid data got better when compared to the \ref{subse:obs_test_plan_all_15min}. Which means by adding more resources to the \acrshort{wdias}, it can handle more workload on the system.
+During the Section \ref{subse:obs_test_plan_all_auto_15min} test run, the performance of the Grid data got better when compared to the Section \ref{subse:obs_test_plan_all_15min}. Which means by adding more resources to the \acrshort{wdias}, it can handle more workload on the system.
 
 While keeping the latency constant without significant change, the \emph{throughput} of the \acrshort{wdias} kept constant while increasing the request size from 60min data (24 data points) to 15min data (96 data points) for all the data types such as Scalar, Vector and Grid.
 When number of active threads increased, the \acrshort{wdias} able to provide the same throughput with maintaining the latency stable.
@@ -13,8 +13,8 @@ One of the reason to having deviations at the peak time due to use of single ins
 Adapter-grid is using a Python wrapper for netCDF FORTRAN implementation with parallel IO enabled. This has some performance issues as well as memory leak issues. Since each microservice in the \acrshort{wdias} independent of technology that can use to implement the service, it will increase the performance if the adapter-grid directly ported to netCDF with a low level language such as C or FORTRAN.
 Other than \acrshort{eks}, if users can use a \acrshort{k8s} cluster which support Persistent Volumes with the access of Read Write  Many \cite{LinuxFoundationPersistentKubernetes} , then it is possible to run multiple pods of adapter-grid and increase the throughput of the \acrshort{wdias}.
 
-When look into the \emph{resource utilization} of \acrshort{wdias}; since it is using the \acrshort{k8s} as the container orchestration system, it allows to scale up and cool down the system as required based on the workload. This demonstrate on the test plan of \ref{subse:obs_test_plan_all_auto_15min}, and the system get scale up to the maximum at the peak time. Then cool down to single pod after finishing the test cases.
-Given above \acrshort{wdias} can run from 1 CPU node to nodes with 100 CPUs. As described in the \ref{se:microservice}, it uses the many of the concept of modern microservice architecture to create stateless, failover, redundant microservice to achieve such capabilities.
+When look into the \emph{resource utilization} of \acrshort{wdias}; since it is using the \acrshort{k8s} as the container orchestration system, it allows to scale up and cool down the system as required based on the workload. This demonstrate on the test plan of Section \ref{subse:obs_test_plan_all_auto_15min}, and the system get scale up to the maximum at the peak time. Then cool down to single pod after finishing the test cases.
+Given above \acrshort{wdias} can run from 1 CPU node to nodes with 100 CPUs. As described in the Section \ref{se:microservice}, it uses the many of the concept of modern microservice architecture to create stateless, failover, redundant microservice to achieve such capabilities.
 
 The \acrshort{wdias} supports \emph{auto scaling} by out of the box with \acrshort{k8s}. Services can configure with maximum number of pods in order to avoid over resource usage. When there is not much workload on the system, system cool down to less pods in order to save more resources. When there is any issue with a pod, \acrshort{k8s} auto schedule another pod and remove the unhealthy pod. Also it allows to update the system without any down time with rollback updates.
 

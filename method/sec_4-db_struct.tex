@@ -115,9 +115,9 @@ Following chapters described the usage of databases in WDIAS and reason behind t
 %SQL database has fewer version of open source and it is also possible to gain better performance with commercial versions. 
 Since WDIAS scope is to using open source tools, it is using \acrshort{mysql} as persistent database for storing timeseries metadata described above.
 One instance of \acrshort{mysql} is using only by adapter-metadata service.
-Other than that, another instance of \acrshort{mysql} is using for adapter-extension which will be describe in more detail \ref{se:data_preprocess}.
+Other than that, another instance of \acrshort{mysql} is using for adapter-extension which will be describe in more detail Section \ref{se:data_preprocess}.
 \acrshort{mysql} is used only for these services, those will only keep the consistency of the schema for timeseries metadata and extension metadata.
-\ref{subse:redis} instance is using for caching the data from \acrshort{mysql}, since the \acrshort{mysql} database instances, itself not going to get much load.
+As mentioned in Section \ref{subse:redis}, it uses \acrshort{redis} instance is using for caching the data from \acrshort{mysql}, since the \acrshort{mysql} database instances, itself not going to get much load.
 Other than MySQL, there are many open source databases can be used to replace the same functionality.
 \dbc{First start with a brief discussion on why a RDBMS is needed}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -167,4 +167,4 @@ In Section \ref{subse:scale_cube}, the Y-axis scaling concept is using here by s
 \acrshort{redis} is an open source (BSD licensed), used as a database, cache. Clustering is available for scalability.
 \acrshort{redis} uses as in-memory caching for fast access of repreative access data in adapter-metadata and adapter-extension.
 Other than that, adapter-status uses \acrshort{redis} as key value pair store for getting the status for async handling requests such as storing Grid data.
-In adapter-extension uses Redis's Publisher Subscriber capabilities in order to create a cron job in extension-scheduler when new extension create on \ref{se:data_preprocess}
+In adapter-extension uses Redis's Publisher Subscriber capabilities in order to create a cron job in extension-scheduler when new extension create on Section \ref{se:data_preprocess}
