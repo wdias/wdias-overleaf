@@ -6,9 +6,9 @@ While generating the timeseries for performance testing, it selected locations a
 These locations are taken from Google's Countries Public Data set \cite{GoogleGoogleCounties}, and consider static though out the testing, and data added to the wdias-performance-test.
 During the performance test, it creates 1000 timeseries and keep adding data against those timeseries. For each location, it creates four timeseries \hl{with vary with module Id} key attribute with four values. Thus combining all together, those creates 1000 timeseries. But test cases generate these values before starts the performance tests, and able to increase the timeseries as wanted.
 
-For grid data, it uses static 100 grid locations which based on how is \acrshort{api} exposed. Since grid locations have different metadata structure as described in Section \ref{se:db_struct}, those data handle separately. But the locationId of grid and scalar data types have the same effect when define a timeseries.
+For grid data, it uses static 100 grid locations which based on how is \acrshort{api} exposed. Since grid locations have different metadata structure as described in \cref{se:db_struct}, those data handle separately. But the locationId of grid and scalar data types have the same effect when define a timeseries.
 
-In the \acrshort{jmeter} Best Practices, \say{If your test needs large amounts of data - particularly if it needs to be \emph{randomised} create the test data in a file that can be read with CSV Data set. This avoids wasting resources at run-time. jmeter best practices lean\_mean}. Rather providing the randomness in run time, the timeseries stored with the random order which satisfy the percentage of 70\% Scalar, 20\% Vector and 10\% Grid as mentioned in Section \ref{se:test_plan}.
+In the \acrshort{jmeter} Best Practices, \say{If your test needs large amounts of data - particularly if it needs to be \emph{randomised} create the test data in a file that can be read with CSV Data set. This avoids wasting resources at run-time. jmeter best practices lean\_mean}. Rather providing the randomness in run time, the timeseries stored with the random order which satisfy the percentage of 70\% Scalar, 20\% Vector and 10\% Grid as mentioned in \cref{se:test_plan}.
 Before running the test cases, it generate the metadata for timeseries and write into a CSV file which is shared among the threads in the \acrshort{jmeter}. This occurs in the setup phase of the test cases. The metadata CSV file arrange in a way that within each 10 lines, 7 lines are Scalar timeseries, 2 lines are Vector timeseries, and 1 line is a Grid timeseries.
 
 The system is capable of storing any numeric value up to 3 decimal points. It does not make any different based on the parameter type whether it is the precipitation or the temperature. Thus during the performance testing, \acrshort{jmeter} uses real precipitation data from \acrshort{curw}. One month period of data for five weather stations have been using for prepare the test data. The script to cleanup and prepare the precipitation data is available as \emph{setup\_precipitation.sh} in wdias-performance.
@@ -76,7 +76,7 @@ While implementing the test cases for \acrshort{wdias}, it uses Concurrency Thre
 Using other thread groups, it required to find exact number of threads and timer delays that produce desired number of requests per second (RPS) to server. Which is known as the \emph{closed workload}.
 With using Throughput Shaping Timer, it only need to configure the \acrfull{rps}. When combine this \acrshort{jmeter} plugin with Concurrency Thread Group using Schedule Feedback Function to dynamically maintain thread count required to achieve target RPS \cite{KarunarathneGihanWdias/wdias-performance-test:JMeter.}.
 
-The test plans mentioned in Section \ref{se:test_plan} are implemented via the \acrshort{jmeter}. The following list shows the all the test cases used for the performance testing:
+The test plans mentioned in \cref{se:test_plan} are implemented via the \acrshort{jmeter}. The following list shows the all the test cases used for the performance testing:
 
 \begin{itemize}
     \item User-defined variables
@@ -153,7 +153,7 @@ Following list shows the test steps of \acrshort{jmeter} while performing the lo
 	\end{itemize}
 \end{itemize}
 
-In the Figure \ref{fi:test_prod_throughtput_shaping_timer} shows the Throughput Shaping Timer configurations for the All test case.
+In the \cref{fi:test_prod_throughtput_shaping_timer} shows the Throughput Shaping Timer configurations for the All test case.
 
 \begin{figure}[htp]
     \centering
@@ -215,7 +215,7 @@ Another wrapper was implemented around the test-dev as \emph{test-plan.sh} which
   SERVER_IPS=<IP1,IP2...> test_plan.sh ~/wdias/wdias-performance-test run
 \end{lstlisting}
 
-It allows to run particular test plan which are described in Section \ref{se:test_plan}. Also possible to run the all the test plans in order with given \emph{REQ\_SIZE} or for all the \emph{REQ\_SIZE}.
+It allows to run particular test plan which are described in \cref{se:test_plan}. Also possible to run the all the test plans in order with given \emph{REQ\_SIZE} or for all the \emph{REQ\_SIZE}.
 
 \subsubsection{JMeter performance tuning}
 \begin{itemize}
@@ -228,10 +228,10 @@ It allows to run particular test plan which are described in Section \ref{se:tes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\hl{System Configuration}}
 \label{subse:test_sys_config}
-As described in the Section \ref{se:microservice}, the \acrshort{wdias} is mainly focus on microservice architecture and implemented on top of kubernetes. \acrfull{k8s} is an open-source system for automating deployment, scaling, and management of containerized applications. For the performance study uses \acrfull{eks}. There are many \acrshort{k8s} solutions available such as GCP, Azure, and Digital Ocean on the cloud.
+As described in the \cref{se:microservice}, the \acrshort{wdias} is mainly focus on microservice architecture and implemented on top of kubernetes. \acrfull{k8s} is an open-source system for automating deployment, scaling, and management of containerized applications. For the performance study uses \acrfull{eks}. There are many \acrshort{k8s} solutions available such as GCP, Azure, and Digital Ocean on the cloud.
 
 A detailed description of setting up the \acrshort{eks} available as \cite{KarunarathneWdias/Amazon_EKS.md:EKS} within the main repository of the \acrshort{wdias}.
-\acrshort{k8s} is a planet scaling tool \cite{LinuxFoundationProduction-GradeKubernetes}, and users can tweak the configuration to run the \acrshort{wdias} as per the required level of load on the system. During the performance test of the \acrshort{wdias}, it uses maximum of 300 \acrshort{rps} with providing to the system with increasing load, and monitor the auto scalability of the system with measuring other performance parameters mentioned in Table \ref{tab:aws_eks_nodes}.
+\acrshort{k8s} is a planet scaling tool \cite{LinuxFoundationProduction-GradeKubernetes}, and users can tweak the configuration to run the \acrshort{wdias} as per the required level of load on the system. During the performance test of the \acrshort{wdias}, it uses maximum of 300 \acrshort{rps} with providing to the system with increasing load, and monitor the auto scalability of the system with measuring other performance parameters mentioned in \cref{tab:aws_eks_nodes}.
 
 \begin{table}[ht]
 \caption{\acrshort{eks} nodes}
@@ -268,12 +268,12 @@ To get better performance using the available resources, it is possible to sched
     \label{fi:eks_node_setup}
 \end{figure}
 
-Users can use one of above features to fine-tune the \acrshort{wdias} to perform better. For the moment, \acrshort{wdias} helm charts uses node Affinity in order to use the same charts within local setup with one node and work the same charts on a \acrshort{k8s} cluster with multiple nodes. Pods are assigned to the nodes \ref{tab:aws_eks_nodes} based on the node label as below;
+Users can use one of above features to fine-tune the \acrshort{wdias} to perform better. For the moment, \acrshort{wdias} helm charts uses node Affinity in order to use the same charts within local setup with one node and work the same charts on a \acrshort{k8s} cluster with multiple nodes. Pods are assigned to the nodes \cref{tab:aws_eks_nodes} based on the node label as below;
 \begin{itemize}
     \item \emph{core} -- metadata, extensions, query, status and extension services
     \item \emph{grid} -- grid adapter, import and export grid data
     \item \emph{scalar} -- scalar and vector adapters, import and export of same data types
     \item \emph{test} -- jMeter and metric server
 \end{itemize}
-Figure \ref{fi:eks_node_setup} show the overview of show the nodes are setup and each microservices are assigned to each node, the connectivity of the nodes, and the data interactions via the arrows.
+\cref{fi:eks_node_setup} show the overview of show the nodes are setup and each microservices are assigned to each node, the connectivity of the nodes, and the data interactions via the arrows.
 The databases uses for data consistency and performance in storage optimization with search capabilities. But because of that, it only possible to run one instance of those. In the \acrshort{wdias}, the MySQL and MongoDb are not getting higher load as adapter databases such as InfluxDB for scalar and vector data types, and netCDF for grid data type. In order to keep up with the pace, those microservice pods are assign to dedicated nodes in order to increase the performance of inter-service communication.

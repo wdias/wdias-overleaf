@@ -99,7 +99,7 @@ This paper first provides a short review of the operational forecasting process 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\db{Background}}
 %\section{Modules of Weather Data System}
-Figure \ref{fi:wdia_components} shows the basic functions of a Weather data integration and assimilation system.
+\cref{fi:wdia_components} shows the basic functions of a Weather data integration and assimilation system.
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.5\textwidth]{method/misc/weather_data_system_components.jpg}}
 \caption{Components of a weather data system.}
@@ -212,7 +212,7 @@ Query & 71704 & 1 & 2.05 & 0.00\% & 40.5 \\ \hline
 \subsection{Discussion}
 \paragraph{Latency}
 The latency for each operation type kept constant over the whole test plan run time without any significant change. When the request size increased from 24 data points to 96 data points, the latency increase throw out the whole test plan with a smaller number. But for each test run the latency kept constant over the time.
-During the Section \ref{subse:obs_test_plan_all_auto_15min} test run, the performance of the Grid data got better when compared to the Section \ref{subse:obs_test_plan_all_15min}. Which means by adding more resources to the \acrshort{wdias}, it can handle more workload on the system.
+During the \cref{subse:obs_test_plan_all_auto_15min} test run, the performance of the Grid data got better when compared to the \cref{subse:obs_test_plan_all_15min}. Which means by adding more resources to the \acrshort{wdias}, it can handle more workload on the system.
 
 \paragraph{Throughput}
 While keeping the latency constant without significant change, the throughput of the \acrshort{wdias} kept constant while increasing the request size from 60min data (24 data points) to 15min data (96 data points) for all the data types such as Scalar, Vector and Grid.
@@ -224,8 +224,8 @@ Adapter-grid is using a Python wrapper for netCDF FORTRAN implementation with pa
 Other than \acrshort{eks}, if users can use a \acrshort{k8s} cluster which support Persistent Volumes with the access of Read Write  Many \cite{LinuxFoundationPersistentKubernetes} , then it is possible to run multiple pods of adapter-grid and increase the throughput of the \acrshort{wdias}.
 
 \paragraph{Resource Utilization}
-Since \acrshort{wdias} using the \acrshort{k8s} as the container orchestration system, it allows to scale up and cool down the system as required based on the workload. This demonstrate on the test plan of Section \ref{subse:obs_test_plan_all_auto_15min}, and the system get scale up to the maximum at the peak time. Then cool down to single pod after finishing the test cases.
-Given above \acrshort{wdias} can run from 1 CPU node to nodes with 100 CPUs. As described in the Section \ref{se:microservice}, it uses the many of the concept of modern microservice architecture to create stateless, failover, redundant microservice to achieve such capabilities.
+Since \acrshort{wdias} using the \acrshort{k8s} as the container orchestration system, it allows to scale up and cool down the system as required based on the workload. This demonstrate on the test plan of \cref{subse:obs_test_plan_all_auto_15min}, and the system get scale up to the maximum at the peak time. Then cool down to single pod after finishing the test cases.
+Given above \acrshort{wdias} can run from 1 CPU node to nodes with 100 CPUs. As described in the \cref{se:microservice}, it uses the many of the concept of modern microservice architecture to create stateless, failover, redundant microservice to achieve such capabilities.
 
 \paragraph{Auto Scaling}
 The \acrshort{wdias} supports auto scaling by out of the box with \acrshort{k8s}. Services can configure with maximum number of pods in order to avoid over resource usage. When there is not much workload on the system, system cool down to less pods in order to save more resources. When there is any issue with a pod, \acrshort{k8s} auto schedule another pod and remove the unhealthy pod. Also it allows to update the system without any down time with rollback updates.
@@ -244,14 +244,14 @@ The extension module enable plugin system to integrate prepossessing modules whi
 At the moment \acrshort{wdias} does not support Irregular Grids, but it has the API endpoints define for the implementation which can follow the same microservice architecture. The scope of the \acrshort{wdias} does not belong such level of implementation and the scope has reduced by removing such components from the system.
 
 \paragraph{Grid data performance}
-As mentioned in the Section \ref{se:conclusion}, the adapter-grid is using a Python wrapper for netCDF FORTRAN implementation with parallel IO enabled. This has some performance issues as well as memory leak issues. Since each microservice in the \acrshort{wdias} independent of technology that can use to implement the service, it will increase the performance if the adapter-grid directly ported to netCDF with a low level language such as C or FORTRAN. They are some future work that can focus on improving the performance of grid data.
+As mentioned in the \cref{se:conclusion}, the adapter-grid is using a Python wrapper for netCDF FORTRAN implementation with parallel IO enabled. This has some performance issues as well as memory leak issues. Since each microservice in the \acrshort{wdias} independent of technology that can use to implement the service, it will increase the performance if the adapter-grid directly ported to netCDF with a low level language such as C or FORTRAN. They are some future work that can focus on improving the performance of grid data.
 
 \paragraph{Define infrastructure as code}
 Physical nodes for the \acrshort{k8s} cluster created using Cloud Computing provider such as \acrshort{eks}. And defining the each pod resource limitations at the helm chart level. But the infrastructure that need to deploy the \acrshort{wdias} can define as code such as using tools like Teraform which is independent of the Cloud Computing provider. Using such tool, users will able to easy deploy the \acrshort{wdias} on any Cloud provider without much hassle.
 
 \paragraph{Further improve hierarchical database performance}
-As further described in Section \ref{se:conclusion}, it is possible to increase the performance of these bottlenecks much higher such as using \acrshort{influxdb} Commercial cluster support for high availability or horizontal scaling of \acrshort{influxdb}. With \acrshort{influxdb} cluster, it is possible to run multiple pods of adapter-scalar and adapter-vector for support more server hits per second.
-Other than that, the \acrshort{wdias} performance can improve via partitioning the timeseries key space into multiple \acrshort{influxdb} instances. The adapter-scalar or adapter-vector can improve to plug multiple instance of \acrshort{influxdb} instances by changing the configurations. As an example, based on the key attribute Section \ref{subse:timeseries_key_attributes} Timeseries Type, the adapter-scalar can connect to four instance of \acrshort{influxdb} instances such as  External Historical, External Forecast, Simulated Historical, and Simulated Forecast etc.
+As further described in \cref{se:conclusion}, it is possible to increase the performance of these bottlenecks much higher such as using \acrshort{influxdb} Commercial cluster support for high availability or horizontal scaling of \acrshort{influxdb}. With \acrshort{influxdb} cluster, it is possible to run multiple pods of adapter-scalar and adapter-vector for support more server hits per second.
+Other than that, the \acrshort{wdias} performance can improve via partitioning the timeseries key space into multiple \acrshort{influxdb} instances. The adapter-scalar or adapter-vector can improve to plug multiple instance of \acrshort{influxdb} instances by changing the configurations. As an example, based on the key attribute \cref{subse:timeseries_key_attributes} Timeseries Type, the adapter-scalar can connect to four instance of \acrshort{influxdb} instances such as  External Historical, External Forecast, Simulated Historical, and Simulated Forecast etc.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}
@@ -265,7 +265,7 @@ Also the system provide a generic open mechanism to integrate new modules as ext
 The extension API provide easy access to create and modify the extension triggers on the fly without stopping the system or any downtime in order to change the configurations.
 The system provides extensive timeseries query endpoints to easy search over the system timeseries metadata with supporting Geo based queries.
 
-\acrshort{wdias} performance test is perform using the \acrshort{jmeter} tool's distributed testing capabilities which separately testing each modules. Then the test plans are performed with increasing the request size, and monitored the performance metrics. The system is setup on the \acrfull{eks} as per the configurations of Section \ref{subse:test_sys_config}.
+\acrshort{wdias} performance test is perform using the \acrshort{jmeter} tool's distributed testing capabilities which separately testing each modules. Then the test plans are performed with increasing the request size, and monitored the performance metrics. The system is setup on the \acrfull{eks} as per the configurations of \cref{subse:test_sys_config}.
 During the performance test plans, the system were able to provide constant throughput by keeping the latency constant while increasing the workload. Which exhibit the scalability of the system.
 With the \acrshort{k8s} auto scaling, the \acrshort{wdias} were able to elastically adjust the number of pods according to the workload with the given configurations.
 

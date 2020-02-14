@@ -1,10 +1,10 @@
 This chapter includes the design decision taken while implementing the \acrfull{wdias}, and how is the system got adapted from the systems analyzed in Chapter \ref{ch:literature}. %, then how is it trying to propose a better system with overcoming the issues.
-In Section \ref{se:high_level_design} a brief discussion on how the weather forecasting is happening and why it need to interact with multiple data formats is presented. Then following subsections define few termelogy which are using in the \acrshort{wdias}, and scope of the thesis.
-Section \ref{se:architectural_decisions} that we evolve over while designing and implementing the \acrshort{wdias}.
-The Section \ref{se:microservice} gives better understanding of the microservice architectural concepts follows while implementing the \acrshort{wdias}.
-Then the reason behind developing Heirarchital Database and technologies use for that discussed in the Section \ref{se:db_struct}.
-Throw out the Section \ref{se:data_preprocess} discussed about how the \acrshort{wdias} enable for data preprocessing and adding capabilities via concept of Extensions.
-Finally, in Section \ref{se:query} includes details on how to perform timeseries search and geo based queries.
+In \cref{se:high_level_design} a brief discussion on how the weather forecasting is happening and why it need to interact with multiple data formats is presented. Then following subsections define few termelogy which are using in the \acrshort{wdias}, and scope of the thesis.
+\cref{se:architectural_decisions} that we evolve over while designing and implementing the \acrshort{wdias}.
+The \cref{se:microservice} gives better understanding of the microservice architectural concepts follows while implementing the \acrshort{wdias}.
+Then the reason behind developing Heirarchital Database and technologies use for that discussed in the \cref{se:db_struct}.
+Throw out the \cref{se:data_preprocess} discussed about how the \acrshort{wdias} enable for data preprocessing and adding capabilities via concept of Extensions.
+Finally, in \cref{se:query} includes details on how to perform timeseries search and geo based queries.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{High-level Design}
@@ -30,7 +30,7 @@ Other than above there are many data formats using for handling data based on de
 \subsection{Modules of a Weather Data System}
 \label{subse:modules_weather_data_integration_sys}
 
-Figure \ref{fi:wdia_components} shows the basic functions of a Weather data integration and assimilation system which consists of the following modules:
+\cref{fi:wdia_components} shows the basic functions of a Weather data integration and assimilation system which consists of the following modules:
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.8\textwidth]{method/misc/weather_data_system_components.jpg}}
 \caption{Modules of a weather data system.}
@@ -67,4 +67,4 @@ Among many attribute to differentiate a timeseries from another, the following c
 \end{itemize}
 \dbc{Use bullets only when essential. Other places use paragraphs.}
 
-A detail description of the above attributes are presented in Section \ref{se:db_struct}.
+A detail description of the above attributes are presented in \cref{se:db_struct}.

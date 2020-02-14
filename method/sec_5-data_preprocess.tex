@@ -79,7 +79,7 @@ In the WDIAS, it is possible to create new trigger for an extension via POST req
 \begin{itemize}
     \item extensionId -- An unique identifier for new extension trigger. Should be unique among all extensions.
     \item extension -- The main extension category which is responsible for handling the extension with extracting data required and storing the output. Interpolation/Transformation/Validation support for the moment.
-    \item function -- Name of the microservice which is handling the input to output mapping. Fn() function in the Figure \ref{fi:weather_data_preprocessing}.
+    \item function -- Name of the microservice which is handling the input to output mapping. Fn() function in the \cref{fi:weather_data_preprocessing}.
     \item variables -- Array timeseries mapping to variables. Multiple variables can be define with metadata or metadataIds of timeseries. Can be use same variable on inputVariables and outputVariables below.
     \item inputVariables -- Timeseries that need to be provide into the function
     \item outputVariables -- Timeseries that output from the function
