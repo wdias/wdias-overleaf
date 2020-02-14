@@ -12,6 +12,7 @@ Finally, in \cref{se:query} includes details on how to perform timeseries search
 
 To get overall idea on the flow of weather prediction, let us look into one of flows using in \acrshort{curw} \cite{CUrWSL2017SL}.
 \dbc{Use CUrW-SL}
+\gkc{FIXED}
 
 \begin{enumerate}
     \item Extract GRIB WRF model data to netCDF
@@ -42,29 +43,36 @@ Other than above there are many data formats using for handling data based on de
 Then the system should be able to fulfill weather models varying data requirements. Also those models reproduce large set of redundant data, thus system should store the bulk data while optimizing the disk space.
 \paragraph{Dissemination}-- Then different users should be able to retrieve data as they required. Also the users should be able to easy to search into the available that in the system base on timeseries metadata or based on Geo queries.
 
-\paragraph{Timeseries}-- A timeseries is simply a series of data points ordered in time. In weather domain, it interest in timeseries in perspective of observations to forecasting. Each timeseries, the data points can be form in different formats as well. For example, scalar (0D), vector (1D), grid (2D), and polygon (2D).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \paragraph{Timeseries}-- A timeseries is simply a series of data points ordered in time. In weather domain, it interest in timeseries in perspective of observations to forecasting. Each timeseries, the data points can be form in different formats as well. For example, scalar (0D), vector (1D), grid (2D), and polygon (2D).
+
 dbc{Why are you referring to timeseries here? It's not one of the 3 key components in Fig. 3.1.}
+\gkc{Move this to WDIAS microservices \cref{sebse:wdias_microservices}. It need to describe the reason behind decompose into microservices. Seems to be this is confusing at this point.}
 
-In the proof of concept design described below, WDIAS focuses on handling scalar, vector and grid timeseries data. However, the system could be extended to handle polygon-based timeseries as well.
+% In the proof of concept design described below, WDIAS focuses on handling scalar, vector and grid timeseries data. However, the system could be extended to handle polygon-based timeseries as well.
 
-\subsubsection{Base of WDIAS architecture}
+% \subsubsection{Base of WDIAS architecture}
 \dbc{What's Base of WDIAS architecture?}
-\hl{The base of WDIAS architecture origins based on attributes of a timeseries.} %There are many attributes to differentiate timeseries one from another. But 
-Among many attribute to differentiate a timeseries from another, the following can be consider as the key attributes in uniquely identify a timeseries from another: % for the \acrshort{wdias}.
+\gkc{Moved to WDIAS microservices section \cref{sebse:wdias_microservices}}
+
+% \hl{The base of WDIAS architecture origins based on attributes of a timeseries.} There are many attributes to differentiate timeseries one from another. But 
+% Among many attribute to differentiate a timeseries from another, the following can be consider as the key attributes in uniquely identify a timeseries from another: % for the \acrshort{wdias}.
 \dbc{Highlighted sentence doesn't make sense to me. All yellow highlights mean they are not clear.}
 
-\begin{itemize}
-    \item Module -- module that generates the timeseries
-    \item Value type -- Scalar, vector, grid, or polygon
-    \item Location of readings
-    \item Parameter -- measuared parameter
-    \item hl{Timeseries type}
-    \begin{itemize}
-        \item Sources -- External or simulated
-        \item Category -- Historical or forecast
-    \end{itemize}
-    \item Time step
-\end{itemize}
-\dbc{Use bullets only when essential. Other places use paragraphs.}
+% \begin{itemize}
+%     \item Module -- module that generates the timeseries
+%     \item Value type -- Scalar, vector, grid, or polygon
+%     \item Location of readings
+%     \item Parameter -- measuared parameter
+%     \item hl{Timeseries type}
+%     \begin{itemize}
+%         \item Sources -- External or simulated
+%         \item Category -- Historical or forecast
+%     \end{itemize}
+%     \item Time step
+% \end{itemize}
+% \dbc{Use bullets only when essential. Other places use paragraphs.}
 
-A detail description of the above attributes are presented in \cref{se:db_struct}.
+% A detail description of the above attributes are presented in \cref{se:db_struct}.
