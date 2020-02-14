@@ -15,48 +15,49 @@ There are lots of microservice patterns developed and evolved over the time. Thr
 \dbc{At the end of previous para tell what will be discussed in the next set of sub-section. A single sentence like "Next, we will discusss ...." is enough}
 \gkc{FIXED}
 
-When building communication endpoints, \hl{many architecture approach with putting significant smart into the communication mechanism.} One good example is \acrshort{esb} what we discussed in \cref{se:architectural_decisions}. But microservice follows alternative approach: \emph{Smart endpoints and dumb pipes} \cite{LewisMicroservicesPipes}.
-Applications built from microservices aim to be as decoupled and as cohesive as possible. They own their own domain logic and act more as filters in the classical Unix sense. After receiving a request, applying logic as appropriate and producing a response. And it uses simple RESTish protocols rather than complex protocols.
+When building communication endpoints, \hl{many architectural approaches are adding significant smart by providing different protocol supports and complex logic support via the endpoints.} As an example \acrshort{esb} support multiple protocols and endpoints can use complex logic. But microservice follows alternative approach: \emph{Smart endpoints and dumb pipes} \cite{LewisMicroservicesPipes}.
+Applications built from microservices aim to be as decoupled and as cohesive as possible. They own their own domain logic and act more as filters in the classical Unix sense. After receiving a request, applying logic as appropriate and producing a response. And it uses simple RESTful protocols rather than complex protocols.
 \dbc{RESTish or RESTful?}
+\gkc{Yes. Changed.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{\hl{Pattern: Database per Service}}
+\subsection{\hl{Database per Microservice}}
 \label{subse:database_per_service}
-\hl{- Pattern: Database per service} 
 
 \acrshort{microservice} prefer letting each service manages its own database, either different instances of the same database technology, or entirely different database systems - an approach called \emph{Polyglot Persistence} \cite{LewisMicroservicesManagement}.
 
-Keep each microservice’s persistent data private to that service and accessible only via its API. 
-There are a few different ways to keep a service’s persistent data private. You do not need to provision a database server for each service. For example, if you are using a relational database then the options are \cite{RichardsonMicroservicesService}:
+The idea is to keep each microservice’s persistent data private to that service and accessible only via its \acrshort{api}. 
+There are a few different ways to keep a service's persistent data private. It is not need to provision a database server for each service. For example, in the case of using a relational database then following methods can be use to keep data private \cite{RichardsonMicroservicesService}:
 \begin{itemize}
-    \item \emph{Private-tables-per-service} –- each service owns a set of tables that must only be accessed by that service
-    \item \emph{Schema-per-service} –- each service has a database schema that’s private to that service
-    \item \emph{Database-server-per-service} -– each service has its own database server.
+    \item \emph{Private tables per service} –- each service owns a set of tables that must only be accessed by that service
+    \item \emph{Schema per service} –- each service has a database schema that’s private to that service
+    \item \emph{Database server per service} -– each service has its own database server.
 \end{itemize}
-Private-tables-per-service and schema-per-service have the lowest overhead. Using a schema per service is appealing since it makes ownership clearer. Some high throughput services might need their own database server.
+\emph{Private tables per service} and \emph{schema per service} have the lowest overhead. Using a \emph{schema per service} is appealing since it makes ownership clearer. Some high throughput services might need their own database server.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{\hl{Pattern: Sagas}}
+\subsection{\hl{Distributed Transactions over Microservices}}
 \label{subse:sagas}
-In order to ensure loose coupling, each service has its own database. Maintaining data consistency between services is a challenge because 2 phase-commit/distributed transactions is not an option for many applications. An application must instead use the Saga pattern. A service publishes an event when its data changes. Other services consume that event and update their data \cite{RichardsonMicroservicesSagas}.
+In order to ensure loose coupling, each microservice better to have own database. Maintaining data consistency between services is a challenge because 2 phase-commit/distributed transactions is not an option for many applications. A service publishes an event when its data changes. Other services consume that event and update their data \cite{RichardsonMicroservicesSagas}. This is also called as \emph{Saga pattern}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{\hl{The Scale Cube}}
+\subsection{\hl{Concept of Scale Cube}}
 \label{subse:scale_cube}
-The scalability of a system can explain via a concept called \emph{Scale Cube} which talk about the scalability of the application throw X, Y and Z axis.
+\gkc{I can not think about any other title than this.}
+The scalability of a system can explain via a concept called \emph{Scale Cube} which talk about the scalability of the application by defining over X, Y and Z axis.
 
-\paragraph{x-axis Saling}-- x-axis scaling consists of running multiple copies of an application behind a load balancer. If there are \textit{n} copies then each copy handles 1/\textit{n} of the load. This is a simple, commonly used approach of scaling an application \hl{TODO}.
+\paragraph{X-axis Scaling}-- X-axis scaling consists of running multiple copies of an application behind a load balancer. If there are \textit{n} copies then each copy handles 1/\textit{n} of the load. This is a simple, commonly used approach of scaling a service.
 
-\paragraph{y-axis Scaling}-- Unlike x-axis and x-axis, which consist of running multiple, identical copies of the application, y-axis axis scaling splits the application into multiple, different services. Each service is responsible for one or more closely related functions. There are a couple of different ways of decomposing the application into services.
+\paragraph{Y-axis Scaling}-- Unlike X-axis and Z-axis, which consist of running multiple, identical copies of the application, Y-axis axis scaling splits the application into multiple, different services. Each service is responsible for one or more closely related functions. There are a couple of different ways of decomposing the application into services.
 \begin{itemize}
-    \item verb-based decomposition ex: checkout.
+    \item verb-based decomposition e.g., checkout.
     \item decompose the application by noun, for e.g., customer management. 
-    \item An application might use a combination of verb-based and noun-based decomposition.
+    \item an application might use a combination of verb-based and noun-based decomposition.
 \end{itemize}
-    
-The microservice architecture is an application of Y-axis scaling.
 
-\paragraph{Z-axis Scaling}-- When using x-axis scaling each server runs an identical copy of the code (similar to X-axis scaling). The big difference is that each server is responsible for only a subset of the data. 
+\emph{The microservice architecture is an application of Y-axis scaling}.
+
+\paragraph{Z-axis Scaling}-- When using Z-axis scaling each server runs an identical copy of the code (similar to X-axis scaling). The big difference is that each server is responsible for only a subset of the data. 
 Z-axis splits are commonly used to scale databases. Data is partitioned (a.k.a. sharded) across a set of servers based on an attribute of each record.
 
 Even \acrshort{wdias} is design based on the Y-axis scaling, it's possible to use the Z-axis scaling to scalability of the system further. This will be more discuss in the \cref{se:discussion}.
@@ -66,7 +67,7 @@ Even \acrshort{wdias} is design based on the Y-axis scaling, it's possible to us
 % \subsection{Brief introduction to the \acrfull{k8s}}
 % \label{sebse:k8s_intro}
 \dbc{Don't present this as a separate section. Either this need to be in the literature survey, or integrate key ideas into another section as a paragraph.}
-\gkc{Move this as a paragraph at the end of the architectural design}
+\gkc{Move this as a paragraph at the end of the architectural decisions}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
