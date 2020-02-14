@@ -169,4 +169,4 @@ One of the main design consideration in \acrshort{wdias} is the convention of de
 As it mentioned above, other than the timeseries metadata which is the core of the data system, other module endpoints start with the module name such as import, export and extension. This allows to add new module system if required.
 For import and export modules, then follows by the data format. This provide the flexibility to integrate new data format modules.
 Then the endpoint name ends with the data upload/insert data type. Data can upload as a single file with binary or multiple files with upload. Or in the body of the request as raw, and need to send the required headers has mentioned by particular module.
-Thus the \acrshort{api} convention of \texttt{\hl{/MODULE/DATA\_FORMAT/DATA\_DATA\_TYPE}} allows users to integrate new import or export modules into the system as well as add new data types.
+Thus the \acrshort{api} convention of \texttt{\hl{/MODULE/DATA\_FORMAT/DATA\_TYPE}} allows users to integrate new import or export modules into the system as well as add new data types.

@@ -7,11 +7,11 @@ in build few extensions such as Interpolation, Transformation and Validation. Ot
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.5\textwidth]{method/data_preprocess/weather_data_preprocessing.jpg}
-    \caption{\hl{Weather data preprocessing}}
+    \caption{\hl{Generic mathematical function model for weather data preprocessing}}
     \label{fi:weather_data_preprocessing}
 \end{figure}
 
-The WDIAS provides the support via in build simple generic mathematical function structure. Each extension is considering as a mathematical function which can take p 
+The WDIAS provides the support via in build simple generic mathematical function model. Each extension is considering as a mathematical function which can take p 
 number of input timeseries variables and output n number of timeseries variables. Other than that, at the time of processing the system can configure to provide
 bind constant which can provide while configuring an extension. Which means, it is possible to change the behaviour of a existing function by providing different bind
 constant at the time of creating new triggers for an extension.
@@ -39,7 +39,7 @@ The Interpolation module generates data at desired locations or at desired point
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.6\textwidth]{method/data_preprocess/transformation.jpg}
-    \caption{\hl{Transformation}}
+    \caption{\hl{Time interval transformation.}}
     \label{fi:transformation}
 \end{figure}
 
@@ -47,11 +47,11 @@ The Interpolation module generates data at desired locations or at desired point
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.6\textwidth]{method/data_preprocess/validation.jpg}
-    \caption{\hl{Validation}}
+    \caption{\hl{Timeseries data validation against set of rules.}}
     \label{fi:validation}
 \end{figure}
 
-\subsection{\hl{Extension API}}
+\subsection{\hl{Data Preprocessing API}}
 In the WDIAS, it is possible to create new trigger for an extension via POST request to /extension endpoint.
 \begin{lstlisting}[language=Python]
 {
@@ -97,7 +97,7 @@ In the WDIAS, it is possible to create new trigger for an extension via POST req
 \end{itemize}
 
 \subsubsection{Extension Handler}
-Extension Handler is responsible for triggering the correct Extension with metadata when there is any change on subscribed extension trigger's OnChange timeseries.
+Extension Handler is responsible for triggering the correct Extension with metadata when there is any change on subscribed extension trigger's \emph{OnChange} timeseries.
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.6\textwidth]{method/data_preprocess/validation.jpg}
@@ -105,7 +105,7 @@ Extension Handler is responsible for triggering the correct Extension with metad
     \label{fi:extension_handler}
 \end{figure}
 
-\hl{In further elaboration,} when new data imported into one of adapter-scalar or adapter-vector, those notify the extension-handler. Then extension handler check whether there is any extension subscribed for particular timeseries, and trigger it via triggering an event on particular extensions.
+\hl{As an example,} when new data imported into one of adapter-scalar or adapter-vector, those notify the extension-handler. Then extension handler check whether there is any extension subscribed for particular timeseries, and trigger it via triggering an event on particular extensions.
 
 To improve the performance of matching triggers against a timeseries, the WDIAS added two mechanisms. For the separation of service responsibilities, those functionalities reside in the adapter-extension and expose via an endpoint. First, other than storing extension metadata in MySQL instance of adapter-extension, it also store the data in reverse lookup table called triggers. Using this reverse lookup table, for a given trigger\_type and timeseries, it can retrieve the extensions which are part of given timeseries. Thus, the response which is received by the 
 extension-handler only contains the extensions to be triggered. No additional filtering need to be done at the extension-handler service.
