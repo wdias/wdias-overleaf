@@ -1,10 +1,10 @@
-This chapter includes the design decision taken while implementing the \acrfull{wdias}, and how is the system got adapted from the systems analyzed in Chapter \ref{ch:literature}. %, then how is it trying to propose a better system with overcoming the issues.
-In \cref{se:high_level_design} a brief discussion on how the weather forecasting is happening and why it need to interact with multiple data formats is presented. Then following subsections define few termelogy which are using in the \acrshort{wdias}, and scope of the thesis.
-\cref{se:architectural_decisions} that we evolve over while designing and implementing the \acrshort{wdias}.
+This chapter includes the design decision taken while implementing the \acrfull{wdias}, and how is the system got adapted from the systems analyzed in Chapter \ref{ch:literature}.
+In \cref{se:high_level_design} a brief discussion on how the weather forecasting is happening and why it need to interact with multiple data formats is presented.
+\cref{se:architectural_decisions} that we evolve architectural design while designing and implementing the \acrshort{wdias}.
 The \cref{se:microservice} gives better understanding of the microservice architectural concepts follows while implementing the \acrshort{wdias}.
-Then the reason behind developing Heirarchital Database and technologies use for that discussed in the \cref{se:db_struct}.
-Throw out the \cref{se:data_preprocess} discussed about how the \acrshort{wdias} enable for data preprocessing and adding capabilities via concept of Extensions.
-Finally, in \cref{se:query} includes details on how to perform timeseries search and geo based queries.
+Then the reason behind developing Hierarchical Database and technologies use for that discussed in the \cref{se:db_struct}.
+Through out the \cref{se:data_preprocess} discussed about how the \acrshort{wdias} enable for data preprocessing and adding capabilities via concept of Extensions.
+Final \cref{se:query} includes details on how to perform timeseries search and Geo based queries.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{High-level Design}
@@ -15,9 +15,9 @@ To get overall idea on the flow of weather prediction, let us look into one of f
 \gkc{FIXED}
 
 \begin{enumerate}
-    \item Extract GRIB WRF model data to netCDF
-    \item From netCDF to CSV of each location data, then feed to HEC-HMS and get the output as CSV
-    \item CSV and Rain cell Grid feed into the FLO2D, and get the water level as Grid ASCII files after completion of simulation
+    \item Extract \acrshort{GRIB} \acrshort{wrf} model data to \acrshort{netCDF}
+    \item From \acrshort{netCDF} to \acrshort{csv} of each location data, then feed to HEC-HMS hydro-dynamic model and get the output as \acrshort{csv}
+    \item \acrshort{csv} and Rain cell Grid feed into the FLO2D hydro-logic model, and get the water level as ASCII Grid files after completion of simulation
     \item Upload ASCII files to ArcGIS create Raster files, then use for the LOSS Estimation
 \end{enumerate}
 When looked into the above flow, it clear understanding on multiple data formats using while weather predictions.
@@ -48,7 +48,7 @@ Then the system should be able to fulfill weather models varying data requiremen
 
 % \paragraph{Timeseries}-- A timeseries is simply a series of data points ordered in time. In weather domain, it interest in timeseries in perspective of observations to forecasting. Each timeseries, the data points can be form in different formats as well. For example, scalar (0D), vector (1D), grid (2D), and polygon (2D).
 
-dbc{Why are you referring to timeseries here? It's not one of the 3 key components in Fig. 3.1.}
+\dbc{Why are you referring to timeseries here? It's not one of the 3 key components in Fig. 3.1.}
 \gkc{Move this to WDIAS microservices \cref{sebse:wdias_microservices}. It need to describe the reason behind decompose into microservices. Seems to be this is confusing at this point.}
 
 % In the proof of concept design described below, WDIAS focuses on handling scalar, vector and grid timeseries data. However, the system could be extended to handle polygon-based timeseries as well.
