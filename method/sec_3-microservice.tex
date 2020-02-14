@@ -1,15 +1,19 @@
 \section{Microservice Architecture}
 \label{se:microservice}
 
-The microservice architectural style is an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms, often \hl{an HTTP resource API}. These services are built around business capabilities and independently deployable by fully automated deployment machinery. \hl{There is a bare minimum of centralized management of these services, which may be written in different programming languages and use different data storage technologies} \cite{LewisMicroservices}.
+The microservice architectural style is an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms, often via providing \hl{an RESTful API}. These services are built around business capabilities and independently deployable by fully automated deployment machinery \cite{LewisMicroservices}. \hl{These services are implement independently with minimising the centralized dependencies. Thus each microservice may be written in different programming languages and use different data storage technologies}.
 
-\hl{Among the characteristics of microservice, a few characteristics heavily affect while moving from} \acrshort{soa} to microservice.
+% \hl{Among the characteristics of microservice, a few characteristics heavily affect while moving from} \acrshort{soa} to microservice.
 \dbc{M in Microservice should be capitalized only on begining of a sentence.}
+
+There are lots of microservice patterns developed and evolved over the time. Through out the following sections, we will discuss in brief about some of the microservice design patterns mostly used on the context of designing \acrshort{wdias} architecture. Next, we will discuss about how microservice architecture promote to only to create endpoints which are only belongs to each service logical domain. Next discuss about only using database per service which allows to loosely couple between system and achieve high scalability. In Sagas, we discuss about how distributed transaction can achieve over microservices. Next, we will discuss about a concept called as \emph{scale cube}, which explains the scalability in perspective of x,y and z axis.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Smart Endpoints and Dumb Pipes}
 \label{subse:dumb_pipes}
 \dbc{At the end of previous para tell what will be discussed in the next set of sub-section. A single sentence like "Next, we will discusss ...." is enough}
+\gkc{FIXED}
 
 When building communication endpoints, \hl{many architecture approach with putting significant smart into the communication mechanism.} One good example is \acrshort{esb} what we discussed in \cref{se:architectural_decisions}. But microservice follows alternative approach: \emph{Smart endpoints and dumb pipes} \cite{LewisMicroservicesPipes}.
 Applications built from microservices aim to be as decoupled and as cohesive as possible. They own their own domain logic and act more as filters in the classical Unix sense. After receiving a request, applying logic as appropriate and producing a response. And it uses simple RESTish protocols rather than complex protocols.
