@@ -1,7 +1,7 @@
 \section{Query Timeseries}
 \label{se:query}
 
-As described in \cref{subse:mongodb}, adapter-query is primarily using for support Geo-spatial queries. Other than that, as the primary service for searching for timeseries, it also supports for retrieval of timeseries metadata for external queries as well.
+As described in \cref{subse:mongodb}, adapter-query is primarily using to support Geospatial queries. Other than that, as the primary service for searching for timeseries, it also supports for retrieval of timeseries metadata for external queries as well.
 
 \subsection{Timeseries Metadata}
 Get timeseries metadata by timeseriesID.
@@ -27,7 +27,7 @@ For the moment, query are only support by strict matching with above parameter v
 
 \subsection{Timeseries Geo Queries}
 
-\paragraph{Query Locations within Area}-- Using following API endpoint, it is possible to query the locations which are exists within the area provided by the geoJson data in the JSON payload.
+\paragraph{Query Locations within Area}-- Using the following API endpoint, it is possible to query the locations which exist within the area provided by the GeoJson data in the JSON payload.
 \begin{lstlisting}
     POST <HOST_NAME>/query/location
     JSON Body:
@@ -47,7 +47,7 @@ For the moment, query are only support by strict matching with above parameter v
     }
 \end{lstlisting}
 
-paragraph{Query parameters in Locations}-- Using the following API endpoint, it is possible to query the parameters stored against given locations. Location IDs should be provide as list of JSON payload.
+paragraph{Query parameters in Locations}-- Using the following API endpoint, it is possible to query the parameters stored against given locations. Location IDs should be provided as a list of JSON payload.
 \begin{lstlisting}
     POST <HOST_NAME>/query/parameter
     JSON Body:
