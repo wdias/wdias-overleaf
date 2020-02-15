@@ -1,16 +1,16 @@
 This chapter includes the design decision taken while implementing the \acrfull{wdias}, and how is the system got adapted from the systems analyzed in Chapter \ref{ch:literature}.
-In \cref{se:high_level_design} a brief discussion on how the weather forecasting is happening and why it need to interact with multiple data formats is presented.
+In \cref{se:high_level_design} a brief discussion on how the weather forecasting is happening and why it needs to interact with multiple data formats is presented.
 \cref{se:architectural_decisions} that we evolve architectural design while designing and implementing the \acrshort{wdias}.
-The \cref{se:microservice} gives better understanding of the microservice architectural concepts follows while implementing the \acrshort{wdias}.
-Then the reason behind developing Hierarchical Database and technologies use for that discussed in the \cref{se:db_struct}.
-Through out the \cref{se:data_preprocess} discussed about how the \acrshort{wdias} enable for data preprocessing and adding capabilities via concept of Extensions.
-Final \cref{se:query} includes details on how to perform timeseries search and Geo based queries.
+\cref{se:microservice} gives a better understanding of the microservice architectural concepts that follow while implementing the \acrshort{wdias}.
+Then the reason behind developing \acrshort{wdias} database structure and technologies use for that discussed in \cref{se:db_struct}.
+\cref{se:data_preprocess} discussed how the \acrshort{wdias} enables for data preprocessing and adding capabilities via the concept of Extensions.
+Final \cref{se:query} includes details on how to perform timeseries search and Geo-based queries.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{High-level Design}
 \label{se:high_level_design}
 
-To get overall idea on the flow of weather prediction, let us look into one of flows using in \acrshort{curw} \cite{CUrWSL2017SL}.
+To get an overall idea of the flow of weather prediction, let us look into one of the flows using in \acrshort{curw} \cite{CUrWSL2017SL}.
 \dbc{Use CUrW-SL}
 \gkc{FIXED}
 
@@ -20,13 +20,13 @@ To get overall idea on the flow of weather prediction, let us look into one of f
     \item \acrshort{csv} and Rain cell Grid feed into the FLO2D hydro-logic model, and get the water level as ASCII Grid files after completion of simulation
     \item Upload ASCII files to ArcGIS create Raster files, then use for the LOSS Estimation
 \end{enumerate}
-When looked into the above flow, it clear understanding on multiple data formats using while weather predictions.
-Other than that, to correct the model outputs, it required to collect real time data such as;
+When looked into the above flow, it gives a clear understanding of multiple data formats using while weather predictions.
+Other than that, to correct the model outputs, it required to collect real-time data such as;
 \begin{itemize}
     \item Automated weather station sending data in higher frequent intervals via HTTP protocol
     \item Automated water level stations send data in higher frequency
 \end{itemize}
-Other than above there are many data formats using for handling data based on devices and standards which are using. Also, for data modeling, it needs to convert the data into model compatible data format, then after successfully run the model it needs to collect data from the model output data formats.
+Other than above many data formats using for handling data based on devices and standards which are using. Also, for data modeling, it needs to convert the data into model compatible data format, then after successfully run the model it needs to collect data from the model output data formats.
 
 \subsection{Modules of a Weather Data System}
 \label{subse:modules_weather_data_integration_sys}
@@ -38,10 +38,10 @@ Other than above there are many data formats using for handling data based on de
 \label{fi:wdia_components}
 \end{figure}
 
-\paragraph{Integration}-- The system should capable of integrating data from different source such as satellite data, high end and low end weather station etc. And the system should be able to handle multidimensional spatial and temporal weather data efficiently and optimally. 
+\paragraph{Integration}-- The system should capable of integrating data from different sources such as satellite data, high end, and low-end weather station, etc. And the system should be able to handle multidimensional spatial and temporal weather data efficiently and optimally. 
 \subsubsection{Assimilation}
-Then the system should be able to fulfill weather models varying data requirements. Also those models reproduce large set of redundant data, thus system should store the bulk data while optimizing the disk space.
-\paragraph{Dissemination}-- Then different users should be able to retrieve data as they required. Also the users should be able to easy to search into the available that in the system base on timeseries metadata or based on Geo queries.
+Then the system should be able to fulfill weather models varying data requirements. Also, those models reproduce a large set of redundant data, thus the system should store the bulk data while optimizing the disk space.
+\paragraph{Dissemination}-- Then different users should be able to retrieve data as they required. Also, the users should be able to easy to search into the available that in the system base on timeseries metadata or based on Geo queries.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
