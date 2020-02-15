@@ -1,12 +1,13 @@
 \section{Load Testing Plan}
+\label{se:test_plan}
 
-\hl{The system consists of three modules in functionality perspective of interacting with the} \acrshort{wdias}.
+In \cref{subse:modules_weather_data_integration_sys} \hl{we discussed three modules of a weather data system such as integration, assimilation and dissemination. Each of those modules are mapped and handled in the WDIAS as below.}
 \begin{enumerate}
-    \item Import modules
-    \item Export modules
-    \item Extension modules
+    \item \emph{Import} modules (integration modules)
+    \item \emph{Export} modules (Dissemination modules)
+    \item \emph{Extension} modules (Assimilation modules)
 \end{enumerate}
-Other than above, adapter modules act as the core modules and the base of the system. Also, query modules allow the users to query for the timeseries based on the metadata, and enable performing Geo based queries based on the locations.
+Other than above, \emph{adapter modules} act as the core modules and the base of the system. Also, query modules allow the users to query for the timeseries based on the metadata, and enable performing Geo based queries based on the locations.
 
 The test plan is to perform the load test on each above module as separate entity in order to analyse the individual module scalability.
 Then perform load testing on whole system, and analyse the scalability in the system. There are two variables that can vary while doing the performance testing.
@@ -38,7 +39,17 @@ As a upper limit of such scenarios while designing the performance testing, it u
     \item Every 15 minutes (96 data points) - One request is equivalent to a data points send by a weather station in 15 minutes interval for a single day
 \end{itemize}
 
-\subsection{\hl{Load Testing Flow}}
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/work_load/performance_study_v4.jpg}
+    \caption{\acrshort{wdias} load testing plan with changing the request size and \acrshort{rps}}
+    \label{fi:performance_study_load}
+\end{figure}
+
+\cref{fi:performance_study_load} show the summary of this section, load testing plan with changing the request size and perform load testing with increasing the \acrshort{rps} over the time. As shown in the figure, for a given request size the \acrshort{rps} increased in steps. In each step, the \acrshort{rps} hold for a moment in order to give some time for the system to get stabilize. Thus at each milestone, we can measure the performance of the system and study the stability of the system. After it come to the peak time, the \acrshort{rps} holds for more time than the previous milestones. During the \acrshort{wdias} load testing, we are planning to have a peak of 18,000 requests per minute. Holding the peak load will help to show that whether system is capable of scaling more than proposed load testing plan. After the peak, test case goes through a cool down period in order to measure the ability of shrink down the resources when there is not any load on the system.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\hl{Test Scenarios}}
 \label{subse:test_plan_flow}
 Following are the test cases which are planned to performance test cases;
 \begin{enumerate}
@@ -64,6 +75,8 @@ Following are the test cases which are planned to performance test cases;
     \end{itemize}
 \end{enumerate}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Performance Metrics}% of Load Testing}
 \label{subse:test_plan_metrics}
 During the performance analysis, following metrics are use to measure the performance of the system.

@@ -1,10 +1,11 @@
 \section{Workload Generation}
+\label{se:workload}
 
 As explained in Chapter \ref{ch:method}, timeseries has six primary attributes. In order to create a timeseries for performance testing, it needs data for each key attribute.
 While generating the timeseries for performance testing, it selected locations all over the world as a generic case to include all the locations without binding to a specific area.
 
 These locations are taken from Google's Countries Public Data set \cite{GoogleGoogleCounties}, and consider static though out the testing, and data added to the wdias-performance-test.
-During the performance test, it creates 1000 timeseries and keep adding data against those timeseries. For each location, it creates four timeseries \hl{with vary with module Id} key attribute with four values. Thus combining all together, those creates 1000 timeseries. But test cases generate these values before starts the performance tests, and able to increase the timeseries as wanted.
+During the performance test, it creates 1000 timeseries and keep adding data against those timeseries. For each location, it creates four timeseries \hl{as a combination four values of moduleId key attribute}. Thus combining all together, those creates 1000 timeseries. But test cases generate these values before starts the performance tests, and able to increase the timeseries as wanted.
 
 For grid data, it uses static 100 grid locations which based on how is \acrshort{api} exposed. Since grid locations have different metadata structure as described in \cref{se:db_struct}, those data handle separately. But the locationId of grid and scalar data types have the same effect when define a timeseries.
 
@@ -74,8 +75,18 @@ When implementing load test cases with \acrshort{jmeter}, it uses threads to sim
 \end{itemize}
 While implementing the test cases for \acrshort{wdias}, it uses Concurrency Thread Group with Throughput Shaping Timer because of it support the open workload approach.
 Using other thread groups, it required to find exact number of threads and timer delays that produce desired number of requests per second (RPS) to server. Which is known as the \emph{closed workload}.
-With using Throughput Shaping Timer, it only need to configure the \acrfull{rps}. When combine this \acrshort{jmeter} plugin with Concurrency Thread Group using Schedule Feedback Function to dynamically maintain thread count required to achieve target RPS \cite{KarunarathneGihanWdias/wdias-performance-test:JMeter.}.
+With using \emph{Throughput Shaping Timer}, it only need to configure the \acrfull{rps}. When combine this \acrshort{jmeter} plugin with Concurrency Thread Group using Schedule Feedback Function to dynamically maintain thread count required to achieve target RPS \cite{KarunarathneGihanWdias/wdias-performance-test:JMeter.}.
 
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/work_load/test_prod_throughtput_shaping_timer.png}
+    \caption{\acrshort{wdias} load testing throughput shaping timer \acrshort{rps} configurations}
+    \label{fi:test_prod_throughtput_shaping_timer}
+\end{figure}
+
+In the \cref{fi:test_prod_throughtput_shaping_timer} shows the throughput shaping timer configurations use while load testing. The configurations as similar to the load test plan described in \cref{se:test_plan}. In order to get maximum peak of 18,000 request per minutes, which is equivalent to 300 \acrshort{rps} is setup according the the figure.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 The test plans mentioned in \cref{se:test_plan} are implemented via the \acrshort{jmeter}. The following list shows the all the test cases used for the performance testing:
 
 \begin{itemize}
@@ -131,7 +142,7 @@ Following list shows the test steps of \acrshort{jmeter} while performing the lo
     \item Throughput shaping timer prod
 \end{itemize}
 
-\hl{Following list of test steps shows intensively test the query timeseries features.}
+As mentioned in \cref{se:test_plan} \hl{, we planned to perform another test scenario on query timeseries module. During this test scenario, we use following test steps in order to cover most of the timeseries metadata search queries and Geo queries which are defined in the} \cref{se:query}.
 
 \begin{itemize}
     \item HTTP Request Defaults
@@ -153,16 +164,8 @@ Following list shows the test steps of \acrshort{jmeter} while performing the lo
 	\end{itemize}
 \end{itemize}
 
-In the \cref{fi:test_prod_throughtput_shaping_timer} shows the Throughput Shaping Timer configurations for the All test case.
-
-\begin{figure}[htp]
-    \centering
-    \includegraphics[width=0.6\textwidth]{results/work_load/test_prod_throughtput_shaping_timer.png}
-    \caption{\acrshort{wdias} performance test - Throughput \hl{shaping timer graph}}
-    \label{fi:test_prod_throughtput_shaping_timer}
-\end{figure}
-
 \dbc{Top of Fig. 4.2 useless as it's black. Anyway, this figure isn't needed}
+\gkc{Since we described about throughput shaping timer graph in \ref{subse:closed_vs_open_workload}, better to include it here. It include the details on RPS and how it's increasing over time. Will remove the black part. Also move this paragraph to the \cref{subse:closed_vs_open_workload}}
 
 With the above \acrshort{jmeter} test case setup, it need to enable each test case separately and before running via the command line in the server. To do it in much efficient way, a scripting tool has implemented, and accessible with the code base \cite{KarunarathneWdias-performance-test/TEST_PLAN.md:Plan} as \emph{test-dev}.
 
@@ -226,7 +229,7 @@ It allows to run particular test plan which are described in \cref{se:test_plan}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{\hl{System Configuration}}
+\subsection{\hl{Test System Setup}}
 \label{subse:test_sys_config}
 As described in the \cref{se:microservice}, the \acrshort{wdias} is mainly focus on microservice architecture and implemented on top of kubernetes. \acrfull{k8s} is an open-source system for automating deployment, scaling, and management of containerized applications. For the performance study uses \acrfull{eks}. There are many \acrshort{k8s} solutions available such as GCP, Azure, and Digital Ocean on the cloud.
 
@@ -234,19 +237,21 @@ A detailed description of setting up the \acrshort{eks} available as \cite{Karun
 \acrshort{k8s} is a planet scaling tool \cite{LinuxFoundationProduction-GradeKubernetes}, and users can tweak the configuration to run the \acrshort{wdias} as per the required level of load on the system. During the performance test of the \acrshort{wdias}, it uses maximum of 300 \acrshort{rps} with providing to the system with increasing load, and monitor the auto scalability of the system with measuring other performance parameters mentioned in \cref{tab:aws_eks_nodes}.
 
 \begin{table}[ht]
+\centering
 \caption{\acrshort{eks} nodes}
 \footnotesize
-\begin{tabular}{lccccl}
+\begin{tabular}{|l|c|c|c|c|l|}
 \hline
-\multicolumn{1}{c}{\textbf{Node Label}} & \textbf{vCPU} & \textbf{RAM (GB)} & \textbf{Storage (GB)} & \textbf{Quantity} & \multicolumn{1}{c}{\textbf{EC2 Name}} \\ \hline
-core & 16 & 32 & 15 & 1 & c5.4xlarge \\
-grid & 8 & 16 & 25 & 1 & c5.2xlarge \\
-scalar & 8 & 16 & 20 & 1 & c5.2xlarge \\
+\textbf{Node Label} & \textbf{vCPU} & \textbf{RAM (GB)} & \textbf{Storage (GB)} & \textbf{Quantity} & \textbf{EC2 Name} \\ \hline
+core & 16 & 32 & 15 & 1 & c5.4xlarge \\ \hline
+grid & 8 & 16 & 25 & 1 & c5.2xlarge \\ \hline
+scalar & 8 & 16 & 20 & 1 & c5.2xlarge \\ \hline
 test & 4 & 10.5 & 5 & 1 & c5n.xlarge \\ \hline
 \end{tabular}
 \label{tab:aws_eks_nodes}
 \end{table}
 \dbc{Center table on page}
+\gkc{FIXED}
 
 The \acrshort{wdias} uses the Helm \cite{CNCFHelmDocs} which is a package manager for \acrshort{k8s}. Each microservice within the system deploy and maintain as a helm chart, and the Helm Charts \cite{KarunarathneWdias-helm-charts:Deployments} can be found within the code base. For the databases, it uses the official helm charts.
 
