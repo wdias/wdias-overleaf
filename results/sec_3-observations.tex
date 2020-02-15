@@ -1,4 +1,4 @@
-\section{\hl{Observations}}
+\section{\hl{Performance Evaluation}}
 \label{se:observations}
 
 According the \cref{se:test_plan} section, this section includes the observations after performing the test plans on the \acrshort{wdias} system setup and test plan test up which is explained in the \cref{se:workload}.
@@ -6,7 +6,7 @@ According the \cref{se:test_plan} section, this section includes the observation
 Sections \ref{subse:obs_test_plan_all_60min} to \ref{subse:obs_test_plan_all_auto_15min} discuss the observations collected with performing the Load test plans over 60 minutes (24 data points), 30 minutes (48 data points) and 15 minutes (96 data points) by variate the request size. Then another performance test with enabling Auto Scaling as explained in \cref{subse:test_plan_metrics} for high resource utilized microservice.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Load Testing with hourly data (\db{Request size = 24})}
+\subsection{Load Testing with hourly data}
 \label{subse:obs_test_plan_all_60min}
 
 After running the All test plan with 60 minutes (24 data points), it observed the data summary of \cref{tab:obs_all_60_min_summary}. It performed 311k of sample requests.
@@ -50,7 +50,7 @@ The conclusion of giving static latency while increasing the number of requests 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Load Testing with 30min data (Request size = 48)}
+\subsection{Load Testing with 30min data}
 \label{subse:obs_test_plan_all_30min}
 This \cref{subse:obs_test_plan_all_30min} discussed about the All test plan performance with 30 minutes data which means 48 data points per each request in Scalar and Vector timeseries, and 48 ASCII grid files per each insert request. It performed round up to 311k of sample requests which is almost similar to \cref{subse:obs_test_plan_all_60min} processed samples.
 
@@ -92,7 +92,7 @@ When compared to \cref{fi:test_obs_all_60m_latency}, the latency for insert and 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Load Testing with 15min data (96 Request Size)}
+\subsection{Load Testing with 15min data}
 \label{subse:obs_test_plan_all_15min}
 This \cref{subse:obs_test_plan_all_15min} discussed about the All test plan performance with 15 minutes data which means 96 data points per each request in Scalar and Vector timeseries, and 96 ASCII Grid files per each insert Grid timeseries request. These requests are four times larger than the \cref{subse:obs_test_plan_all_60min} request size. It performed approximately 311k of sample requests which is almost similar to \cref{subse:obs_test_plan_all_30min} processed samples.
 \begin{table}[ht]
