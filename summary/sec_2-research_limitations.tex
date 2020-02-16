@@ -1,32 +1,34 @@
 \section{Research Limitations}
+\label{se:research_limitations}
 \gkc{Previously you asked to rename this section sir. Why can't it have the title of \emph{Future Work}. There are some of the requirements that can be done for the system, in order to gain more of it. Which part is misleading?}
-This section discussed about the lacking features in the \acrshort{wdias}, and some of the improvement that can add for improve the performance and usability of the system.
 
-\emph{Lack of data preprossessing modules}:
-The extension module enable plugin system to integrate prepossessing modules which can use for process the data which are inserted to the system or based on regular intervals. Also \acrshort{wdias} provide a more generic open interface approach to create more preprocessing modules. Since \acrshort{wdias} is an open source system, it expect more modules to be create by the community. When compared to other system like \acrshort{fews}, current system only have few extension for the testing purpose. This is one of the major area that need to be improved.
+This section discussed the lacking features in the \acrshort{wdias} and some of the improvements that can add to improve the performance and usability of the system.
+
+\emph{Lack of data preprocessing modules}:
+The extension module enables the plugin system to integrate prepossessing modules that can use for process the data which are inserted to the system or based on regular intervals. Also, \acrshort{wdias} provides a more generic open interface approach to create more preprocessing modules. Since \acrshort{wdias} is an open-source system, it expects more modules to be created by the community. When compared to other systems like \acrshort{fews}, the current system only have few extension for the testing purpose. This is one of the major areas that need to be improved.
 
 \emph{Supporting Irregular Grids}:
-At the moment \acrshort{wdias} does not support Irregular Grids, but it has the API endpoints define for the implementation which can follow the same microservice architecture. The scope of the \acrshort{wdias} does not belong such level of implementation and the scope has reduced by removing such components from the system.
+At the moment \acrshort{wdias} does not support Irregular Grids, but it has the API endpoints defined for the implementation which can follow the same microservice architecture. The scope of the \acrshort{wdias} does not belong to such level of implementation and the scope was reduced by removing such components from the system.
 
 \emph{Grid data performance}:
-As mentioned in the \cref{se:discussion}, the adapter-grid is using a Python wrapper for netCDF FORTRAN implementation with parallel IO enabled. This has some performance issues as well as memory leak issues. Since each microservice in the \acrshort{wdias} independent of technology that can use to implement the service, it will increase the performance if the adapter-grid directly ported to netCDF with a low level language such as C or FORTRAN. They are some future work that can focus on improving the performance of grid data.
+As mentioned in the \cref{se:discussion}, adapter-grid is using a Python wrapper for netCDF FORTRAN implementation with parallel IO enabled. This has some performance issues as well as memory leak issues. Since each microservice in the \acrshort{wdias} independent of technology that can use to implement the service, it will increase the performance if the adapter-grid directly ported to netCDF with a low-level language such as C or FORTRAN. They are some future work that can focus on improving the performance of grid data.
 
 \emph{Define infrastructure as code}:
-Physical nodes for the \acrshort{k8s} cluster created using Cloud Computing provider such as \acrshort{eks}. And defining the each pod resource limitations at the helm chart level. But the infrastructure that need to deploy the \acrshort{wdias} can define as code such as using tools like Teraform which is independent of the Cloud Computing provider. Using such tool, users will able to easy deploy the \acrshort{wdias} on any Cloud provider without much hassle.
+Physical nodes for the \acrshort{k8s} cluster created using Cloud Computing provider such as \acrshort{eks}. And defining each pod resource limitations at the helm chart level. But the infrastructure that needs to deploy the \acrshort{wdias} can define as code such as using tools like Terraform which is independent of the Cloud Computing provider. Using such a tool, users will able to easily deploy the \acrshort{wdias} on any Cloud provider without much hassle.
 
 \emph{Improve test cases}:
-As described in detail with \cref{subse:closed_vs_open_workload}, for \acrshort{wdias} performance test uses Time Stepping Feedback loop with Concurrent Threads which is the best approach support by \acrshort{jmeter} at the moment. But using that it is not possible to get desired \acrshort{rps} for each test case within the test plan.
-Because of this issue, the \acrshort{wdias} test plans further improved by removing redundant test cases such as create timeseries at the beginning. Having create timeseries at the beginning causes some issues such as most of the thread are working on that test case rather on required test cases. Still there may be some improvement that can be done. 
+As described in detail with \cref{subse:closed_vs_open_workload}, for \acrshort{wdias} performance test uses the \emph{Time Stepping Feedback} loop with Concurrent Threads which is the best approach support by \acrshort{jmeter} at the moment. But using that it is not possible to get the desired \acrshort{rps} for each test case within the test plan.
+Because of this issue, the \acrshort{wdias} test plans further improved by removing redundant test cases such as create timeseries at the beginning. Having created timeseries at the beginning causes some issues such as most of the thread are working on that test case rather on required test cases. Still, there may be some improvement that can be done. 
 
-\emph{Further improve hierarchical database performance}:
-As further described in \cref{se:discussion}, it is possible to increase the performance of these bottlenecks much higher such as using \acrshort{influxdb} Commercial cluster support for high availability or horizontal scaling of \acrshort{influxdb}. With \acrshort{influxdb} cluster, it is possible to run multiple pods of adapter-scalar and adapter-vector for support more server hits per second.
-Other than that, the \acrshort{wdias} performance can improve via partitioning the timeseries key space into multiple \acrshort{influxdb} instances. The adapter-scalar or adapter-vector can improve to plug multiple instance of \acrshort{influxdb} instances by changing the configurations. As an example, based on the key attribute \cref{subse:timeseries_key_attributes} Timeseries Type, the adapter-scalar can connect to four instance of \acrshort{influxdb} instances such as  External Historical, External Forecast, Simulated Historical, and Simulated Forecast etc.
+\emph{Tune \acrshort{wdias} database structure performance}:
+As further described in \cref{se:discussion}, it is possible to increase the performance of these bottlenecks much higher such as using \acrshort{influxdb} Commercial cluster support for high availability or horizontal scaling of \acrshort{influxdb}. With the \acrshort{influxdb} cluster, it is possible to run multiple pods of adapter-scalar and adapter-vector for support more server hits per second.
+Other than that, the \acrshort{wdias} performance can improve via partitioning the timeseries key space into multiple \acrshort{influxdb} instances. The adapter-scalar or adapter-vector can improve to plug multiple instances of \acrshort{influxdb} instances by changing the configurations. As an example, based on the key attribute \cref{subse:timeseries_key_attributes} Timeseries Type, the adapter-scalar can connect to four instances of \acrshort{influxdb} instances such as  External Historical, External Forecast, Simulated Historical, and Simulated Forecast, etc.
 
 \emph{Alerting extension modules}:
-At the moment, extensions only support On Change and On Time events. But it will be good to have event trigger support based on reconfigured alert level.
+At the moment, extensions only support \emph{OnChange} and \emph{OnTime} events. But it will be good to have event trigger support based on reconfigured alert level.
 
 \emph{Publisher Subscriber extension modules}:
-The \acrshort{wdias} better to be capable of triggering external systems based on the events such as web hooks.
+The \acrshort{wdias} better to be capable of triggering external systems based on events such as webhooks.
 
 \dbc{Need a new section for Conclusions.}
 \gkc{It did not make sense for me to adding another section as Conclusion. We already add a \cref{se:summary_conclusion} above. Do we need to rearrange the content of this Chapter? No point of adding another section with repeating the same content. May be I didn't understand your suggestion here.}
