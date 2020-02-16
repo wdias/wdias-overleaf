@@ -66,7 +66,7 @@ admin@curwsl.org}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-%We describe our experience with implementing an extendable open source Weather Data Integration and Assimilation System, which is known as \acrshort{wdias}. It uses the modern architecture pattern such as microservice in order to achieve the scalability, rather using monolithic architecture or client service architecture. It provides a modular approach to integration data from different sources and export into different formats. Also the inbuilt extension module system allow users to add new features. The open source tools that are using for \acrshort{wdias} allows to run on Cloud Computing platforms without much hassle with the auto scaling feature allow to run \acrshort{wdias} from 1 CPU node to nodes with few hundred CPUs. The paper describes the initial design goals, evolve over few architectures to get desired performance, and explains how the system in way to achieve scalability. Later we analyse the performance test observations with the performance metrics.
+%We describe our experience with implementing an extendable open source Weather Data Integration and Assimilation System, which is known as \acrshort{wdias}. It uses the modern architecture pattern such as microservice in order to achieve the scalability, rather using monolithic architecture or client service architecture. It provides a modular approach to integration data from different sources and export into different formats. Also the inbuilt extension module system allow users to add new features. The open source tools that are using for \acrshort{wdias} allows to run on Cloud Computing platforms without much hassle with the auto-scaling feature allow to run \acrshort{wdias} from 1 CPU node to nodes with few hundred CPUs. The paper describes the initial design goals, evolve over few architectures to get desired performance, and explains how the system in way to achieve scalability. Later we analyse the performance test observations with the performance metrics.
 
 \db{Numerical Weather Models (NWMs) utilize data collected via diverse sources such as automated weather stations, radars, air balloons, and satellite images. Prior to using such multimodal data into a NWM, it is necessary to transcode data into a format that can be ingested by the NWM. Moreover, the data integration system’s response time needs to be relatively low to forecast and monitor time-sensitive weather events like hurricanes, storms, and flash floods that require rapid and frequent execution of NWMs. The resulting weather data also need to be accessed by many researchers and third-party applications. Even though there are several weather data integration systems, they are based on monolithic or client-server architectures and are unable to benefit from novel computational models such as cloud computing and containers. Moreover, most of this software is proprietary or closed sourced; hence, it is difficult to customize such software for an island like Sri Lanka with different weather seasons. Therefore, in this research, we propose Weather Data Integration and Assimilation System (WDIAS) that utilizes modern architecture pattern such as microservices to achieve scalability, high availability, and low-cost operation based on cloud computing. WDIAS provides a modular architecture to integrate data from different sources, export into different formats, and the inbuilt extension module system allow users to add new features. We demonstrate the utility of WDIAS using cloud-based experimental setup and weather-related synthetic workloads.}
 \end{abstract}
@@ -199,19 +199,19 @@ Query & 71704 & 1 & 2.05 & 0.00\% & 40.5 \\ \hline
 
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.5\textwidth]{results/obs/all_auto/obs_all_auto_15m_res_latencies_against_hits.png}}
-\caption{Performance test 15min data enabled auto scaling - response latencies against server hits over the elapsed time.}
+\caption{Performance test 15min data enabled auto-scaling - response latencies against server hits over the elapsed time.}
 \label{fi:test_obs_auto_all_15_min_latency_vs_hits}
 \end{figure}
 
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.5\textwidth]{results/obs/all_auto/obs_all_auto_15m_transaction_throughtput_vs_threads.png}}
-\caption{Performance test 15min data enabled auto scaling - transnational throughput vs number of active threads.}
+\caption{Performance test 15min data enabled auto-scaling - transnational throughput vs number of active threads.}
 \label{fi:test_obs_auto_all_15_min_throughput_vs_threads}
 \end{figure}
 
 \subsection{Discussion}
 \paragraph{Latency}
-The latency for each operation type kept constant over the whole test plan run time without any significant change. When the request size increased from 24 data points to 96 data points, the latency increase through out the whole test plan with a smaller number. But for each test run the latency kept constant over the time.
+The latency for each operation type kept constant over the whole test plan run time without any significant change. When the request size increased from 24 data points to 96 data points, the latency increase throughout the whole test plan with a smaller number. But for each test run the latency kept constant over the time.
 During the \cref{subse:obs_test_plan_all_auto_15min} test run, the performance of the Grid data got better when compared to the \cref{subse:obs_test_plan_all_15min}. Which means by adding more resources to the \acrshort{wdias}, it can handle more workload on the system.
 
 \paragraph{Throughput}
@@ -228,10 +228,10 @@ Since \acrshort{wdias} using the \acrshort{k8s} as the container orchestration s
 Given above \acrshort{wdias} can run from 1 CPU node to nodes with 100 CPUs. As described in the \cref{se:microservice}, it uses the many of the concept of modern microservice architecture to create stateless, failover, redundant microservice to achieve such capabilities.
 
 \paragraph{Auto Scaling}
-The \acrshort{wdias} supports auto scaling by out of the box with \acrshort{k8s}. Services can configure with maximum number of pods in order to avoid over resource usage. When there is not much workload on the system, system cool down to less pods in order to save more resources. When there is any issue with a pod, \acrshort{k8s} auto schedule another pod and remove the unhealthy pod. Also it allows to update the system without any down time with rollback updates.
+The \acrshort{wdias} supports auto-scaling by out of the box with \acrshort{k8s}. Services can configure with maximum number of pods in order to avoid over resource usage. When there is not much workload on the system, system cool down to less pods in order to save more resources. When there is any issue with a pod, \acrshort{k8s} auto schedule another pod and remove the unhealthy pod. Also it allows to update the system without any down time with rollback updates.
 
 \paragraph{Risk of Unable to Process Data}
-During the test performance, the \acrshort{wdias} processed many requests with higher request size than the normal usage with lower rate of failures to process the requests, mainly with insert Grid data. If the usage of \acrshort{wdias} want to reduce the risk of unable to process data, then system can configure to run with redundant pods in order to handle spike of workloads. Also while configure for the auto scaling, the \acrshort{k8s} can configure to maintain lower amount of CPU usage such as 50\% to 60\% rather 80\%. Such configuration with always spawn new pods to handle double of current peak load.
+During the test performance, the \acrshort{wdias} processed many requests with higher request size than the normal usage with lower rate of failures to process the requests, mainly with insert Grid data. If the usage of \acrshort{wdias} want to reduce the risk of unable to process data, then system can configure to run with redundant pods in order to handle spike of workloads. Also while configure for the auto-scaling, the \acrshort{k8s} can configure to maintain lower amount of CPU usage such as 50\% to 60\% rather 80\%. Such configuration with always spawn new pods to handle double of current peak load.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Strengths and Limitations}
@@ -267,7 +267,7 @@ The system provides extensive timeseries query endpoints to easy search over the
 
 \acrshort{wdias} performance test is perform using the \acrshort{jmeter} tool's distributed testing capabilities which separately testing each modules. Then the test plans are performed with increasing the request size, and monitored the performance metrics. The system is setup on the \acrfull{eks} as per the configurations of \cref{subse:test_sys_config}.
 During the performance test plans, the system were able to provide constant throughput by keeping the latency constant while increasing the workload. Which exhibit the scalability of the system.
-With the \acrshort{k8s} auto scaling, the \acrshort{wdias} were able to elastically adjust the number of pods according to the workload with the given configurations.
+With the \acrshort{k8s} auto-scaling, the \acrshort{wdias} were able to elastically adjust the number of pods according to the workload with the given configurations.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Acknowledgment}
