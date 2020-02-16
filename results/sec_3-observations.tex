@@ -218,8 +218,9 @@ The following charts show the resource usage while running the all test plan whi
     \caption{Load testing with auto-scaling import ascii grid number of pods over time.}
     \label{fi:obs_all_auto_15m_import_grid_pod}
 \end{figure}
-\cref{fi:obs_all_auto_15m_import_grid_pod} shows the number of import-ascii-grid-upload pods scheduled over time. The auto-scaling enabled with the configurations of 1 to 10 pods with the recommended CPU usage with 80\%. And the pods scheduled with 1 CPU requested, and limit with 2 CPUs per pod.
-As the graph shows, 3 pods scheduled at the initial as per the configuration of the helm chart. While increasing the workload, new pods get spawn while keeping the constraint of 80\% of recommended CPU utilization. After \acrshort{k8s} spawn 10 maximum pods, it stop spawning new pods. But the pods were able to perform with vertical scaling, since those are not hit the CPU limit of 2.
+
+\cref{fi:obs_all_auto_15m_import_grid_pod} shows the number of import-ascii-grid-upload pods scheduled overtime. The auto-scaling enabled with the configurations of 1 to 10 pods with the recommended CPU usage with 80\%. And the pods scheduled with 1 CPU requested, and limit with 2 CPUs per pod.
+As the graph shows, 3 pods scheduled at the initial as per the configuration of the helm chart. While increasing the workload, new pods get spawn while keeping the constraint of 80\% of recommended CPU utilization. After \acrshort{k8s} spawn 10 maximum pods, it stops spawning new pods. But the pods were able to perform with vertical scaling since those are not hit the CPU limit of 2.
 
 \begin{figure}[htp]
     \centering
@@ -233,8 +234,9 @@ As the graph shows, 3 pods scheduled at the initial as per the configuration of 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Query Module Load Test}
 \label{subse:obs_test_plan_query_15min}
-This \cref{subse:obs_test_plan_query_15min} discussed about the Query test plan performance. It performs multiple information retrieval queries such as query over locations, parameters and timeseries etc which are described over \cref{se:query}. It performed approximately 123k of sample requests.
-Query test plan perform over 5 minutes of time period, and with a higher number of requests than other test plan with a peak of 600 hits per seconds.
+
+This \cref{subse:obs_test_plan_query_15min} discussed the Query test plan performance. It performs multiple information retrieval queries such as query over locations, parameters, and timeseries, etc which are described over \cref{se:query}. It performed approximately 123k of sample requests.
+Query test plan performs over 5 minutes, and with a higher number of requests than other test plans with a peak of 600 hits per seconds.
 
 \begin{table}[ht]
 \caption{Throughput and Latency of Query test cases with 15min data}
@@ -257,8 +259,9 @@ Area, Parameter → Timeseries & 11084 & 864 & 1 & 16699 & 1584 & 751.00 & 0.00\
 \end{tabulary}
 \label{tab:obs_query_15_min_summary}
 \end{table}
-\cref{tab:obs_query_15_min_summary} shows the response latency summary details. The average latency is much higher than the minimum value. Also it reported higher maximum values as well. Standard deviation showed as quiet higher value which means the response latency values are not closer to the average value. Noticeably, it does not reported any errors, which means all the requests successfully process.
-The throughput for each test case is much higher and similar to all the requests. This is happening since all of these requests are handle via the adapter-query, it depends on the \acrshort{mongodb} database performance.
+
+\cref{tab:obs_query_15_min_summary} shows the response latency summary details. The average latency is much higher than the minimum value. Also, it reported higher maximum values as well. Standard deviation showed a quiet higher value which means the response latency values are not closer to the average value. Noticeably, it does not report any errors, which means all the requests successfully process.
+The throughput for each test case is much higher and similar to all the requests. This is happening since all of these requests are handled via the adapter-query, it depends on the \acrshort{mongodb} database performance.
 
 \begin{figure}[htp]
     \centering
@@ -266,7 +269,7 @@ The throughput for each test case is much higher and similar to all the requests
     \caption{Load testing query test over 5 minutes - Response Latency over Time}
     \label{fi:test_obs_query_5m_response_latency}
 \end{figure}
-\cref{fi:test_obs_query_5m_response_latency} shows the response latency over time for the query test plan. When the number of request get higher, the latency also get increased. That means adapter-query is not very much scalable with the current configurations.
+\cref{fi:test_obs_query_5m_response_latency} shows the response latency overtime for the query test plan. When the number of requests gets higher, the latency also gets increased. That means adapter-query is not very much scalable with the current configurations.
 
 \begin{figure}[htp]
     \centering
@@ -276,5 +279,5 @@ The throughput for each test case is much higher and similar to all the requests
 \end{figure}
 \cref{fi:test_obs_query_5m_response_times_vs_threads} shows the response latency against number of active threads for the query test plan. When the number of server hits get higher, the latency also get increased. That means adapter-query is not very much scalable with the current configurations.
 
-When ever the timeseries data not found in the adapter-query, it read data from adapter-metadata and index for search over timeseries metadata. This will cause to higher performance with geo timeseries searches. The performance of the \acrshort{mongodb} can further improve with using it features like Replication for high availability, and Sharding for higher throughput.
-Those attempts are beyond the scope of \acrshort{wdias} performance test and users can use those to get higher results from the \acrshort{wdias}.
+Whenever the timeseries data not found in the adapter-query, it read data from adapter-metadata and index for search over timeseries metadata. This will cause to higher performance with geo timeseries searches. The performance of the \acrshort{mongodb} can further improve with using its features like Replication for high availability, and Sharding for higher throughput.
+Those attempts are beyond the scope of the \acrshort{wdias} performance test and users can use those to get higher results from the \acrshort{wdias}.
