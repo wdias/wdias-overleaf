@@ -9,7 +9,7 @@ Sections \ref{subse:obs_test_plan_all_60min} to \ref{subse:obs_test_plan_all_aut
 \subsection{Load Testing with hourly data}
 \label{subse:obs_test_plan_all_60min}
 
-After running the All test plan with 60 minutes (24 data points), it observed the data summary of \cref{tab:obs_all_60_min_summary}. It performed 311k of sample requests.
+After running the test plan with 60 minutes (24 data points), it observed the data summary of \cref{tab:obs_all_60_min_summary}. It performed 311k of sample requests.
 
 \begin{table}[ht]
 \caption{Throughput and Latency of load testing with 60min data}
@@ -52,7 +52,7 @@ The conclusion of giving static latency while increasing the number of requests 
 \subsection{Load Testing with 30min data}
 \label{subse:obs_test_plan_all_30min}
 
-\cref{subse:obs_test_plan_all_30min} discussed the All test plan performance with 30 minutes data which means 48 data points per each request in Scalar and Vector timeseries, and 48 ASCII grid files per each insert request. It performed round up to 311k of sample requests which are almost similar to \cref{subse:obs_test_plan_all_60min} processed samples.
+\cref{subse:obs_test_plan_all_30min} discussed the test plan performance with 30 minutes data which means 48 data points per each request in Scalar and Vector timeseries, and 48 ASCII grid files per each insert request. It performed round up to 311k of sample requests which are almost similar to \cref{subse:obs_test_plan_all_60min} processed samples.
 
 \begin{table}[ht]
 \caption{Throughput and Latency of load test with 30min data}
@@ -75,7 +75,7 @@ TOTAL & 310878 & 129 & 0 & 1699 & 503 & 207.10 & 0.00\% & 175.3 \\ \hline
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_30m_response_times_vs_threads.png}
-    \caption{Load testing with 30 minutes data - Response Time vs Threads}
+    \caption{Load testing with 30 minutes of data - Response Time vs Threads}
     \label{fi:test_obs_all_30m_response_vs_threads}
 \end{figure}
 
@@ -85,7 +85,7 @@ When the number of active threads increased more than 110, \cref{fi:test_obs_all
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_30m_res_latencies_against_hits.png}
-    \caption{Load testing with 30 minutes data - Latency against server hits}
+    \caption{Load testing with 30 minutes of data - Latency against server hits}
     \label{fi:test_obs_all_30m_latency}
 \end{figure}
 \cref{fi:test_obs_all_30m_latency} graph provides a better overview of the variation of latency over the elapsed time of the test plan against the number of server hits per second. This graph also concludes that over time latency does not change very much. But during the peak load, it shows some variation in the insert and retrieves of Grid timeseries.
@@ -118,7 +118,7 @@ Query: Location & 71749 & 3 & 2 & 130 & 4 & 2.32 & 0.00\% & 40.5 \\ \hline
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_15m_response_times_vs_threads.png}
-    \caption{Load testing with 15 minutes data - Response Time vs Active Threads}
+    \caption{Load testing with 15 minutes of data - Response Time vs Active Threads}
     \label{fi:test_obs_all_15m_response_vs_threads}
 \end{figure}
 
@@ -128,7 +128,7 @@ With higher request size, it becomes to notice the latency also increase by a sm
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_15m_res_latencies_against_hits.png}
-    \caption{Load testing with 15 minutes data - Latency against server hits}
+    \caption{Load testing with 15 minutes of data - Latency against server hits}
     \label{fi:test_obs_all_15m_latency}
 \end{figure}
 
@@ -139,7 +139,7 @@ One noticeable fact is, throughout the test period, it shows spikes in latency w
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_15m_transaction_throughtput_vs_threads.png}
-    \caption{Load testing with 15 minutes data - Transaction Throughput vs Threads}
+    \caption{Load testing with 15 minutes of data - Transaction Throughput vs Threads}
     \label{fi:test_obs_all_15m_throughtput}
 \end{figure}
 
@@ -150,7 +150,7 @@ By combining the \cref{fi:test_obs_all_15m_latency}, this graph shows that the t
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_15m_response_times_percentiles.png}
-    \caption{Load testing with 15 minutes data - Response times Percentiles}
+    \caption{Load testing with 15 minutes of data - Response times Percentiles}
     \label{fi:test_obs_all_15m_latency_percentile}
 \end{figure}
 \cref{fi:test_obs_all_15m_latency_percentile} visually shows the summary of \cref{tab:obs_all_15_min_summary} latency up to 90\% percentile. With higher request size data, the \acrshort{wdias} able to process the requests without significant change in latency up to 90\% percentile.
@@ -185,7 +185,7 @@ During this test plan. the main focus on the auto-scaling enabled microservice. 
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.8\textwidth]{results/obs/all_auto/obs_all_auto_15m_transaction_throughtput_vs_threads.png}
-    \caption{Load testing with 15 minutes data with enabled auto-scaling - Latency against server hits}
+    \caption{Load testing with 15 minutes of data with enabled auto-scaling - Latency against server hits}
     \label{fi:test_obs_all_auto_15m_latency}
 \end{figure}
 \cref{fi:test_obs_all_auto_15m_latency} graph provides an overview of the variation of latency over the elapsed time of the test plan against the number of server hits per second for 15min data while auto-scaling enabled for \acrshort{k8s}.
@@ -195,7 +195,7 @@ When compared to \cref{fi:test_obs_all_15m_latency}, throughout the test period,
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.8\textwidth]{results/obs/all_auto/obs_all_auto_15m_transaction_throughtput_vs_threads.png}
-    \caption{Load testing with 15 minutes data with enabled auto-scaling - Transaction Throughput vs Threads}
+    \caption{Load testing with 15 minutes of data with enabled auto-scaling - Transaction Throughput vs Threads}
     \label{fi:test_obs_all_auto_15m_throughtput}
 \end{figure}
 
