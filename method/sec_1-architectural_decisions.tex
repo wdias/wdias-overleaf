@@ -41,7 +41,7 @@ Even with using the AKKA framework, it has some of the disadvantages of implemen
 
 Containerization is an alternative to the virtualization that supports virtual machines or Hypervisors. It involves encapsulating or packaging up software code and all its dependencies so that it can run uniformly and consistently on any infrastructure \cite{IBMContainerizationExplained}. The concept of containerization and process isolation has emerged after the open-source Docker Engine \cite{DockerAppContainerization}, an industry standard for package software into standardized units for development, shipment, and deployment.
 
-\acrfull{k8s} is an open-source system for automating deployment, scaling, and management of containerized applications \cite{LinuxFoundationProduction-GradeKubernetes}. It groups containers that make up an application into logical units for easy management and discovery. While implementing the \acrshort{wdias}, we used \acrshort{k8s} as the container-orchestration system, to deploy each microservice as container and manage with providing scalability and availability.
+The \acrshort{wdias} is using \acrfull{k8s} as the container orchestration system which is an open-source tool for automating deployment, scaling, and management of containerized applications \cite{LinuxFoundationProduction-GradeKubernetes}. It groups containers that make up an application into logical units for easy management and discovery. While implementing the \acrshort{wdias}, we used \acrshort{k8s} as the container-orchestration system, to deploy each microservice as container and manage with providing scalability and availability.
 
 \begin{figure}[htp]
     \centering

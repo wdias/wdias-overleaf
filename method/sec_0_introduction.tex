@@ -1,10 +1,10 @@
 This chapter includes the design decision taken while implementing the \acrfull{wdias}, and how is the system got adapted from the systems analyzed in Chapter \ref{ch:literature}.
-In \cref{se:high_level_design} a brief discussion on how the weather forecasting is happening and why it needs to interact with multiple data formats is presented.
-\cref{se:architectural_decisions} that we evolve architectural design while designing and implementing the \acrshort{wdias}.
+\cref{se:high_level_design} includes a brief discussion on how the weather forecasting is happening and why it needs to interact with multiple data formats is presented.
+\cref{se:architectural_decisions} discussed about how did we evolve over the architectural design while designing and implementing the \acrshort{wdias}.
 \cref{se:microservice} gives a better understanding of the microservice architectural concepts that follow while implementing the \acrshort{wdias}.
-Then the reason behind developing \acrshort{wdias} database structure and technologies use for that discussed in \cref{se:db_struct}.
+Then the reasons behind developing \acrshort{wdias} database structure and technologies use for that discussed in \cref{se:db_struct}.
 \cref{se:data_preprocess} discussed how the \acrshort{wdias} enables for data preprocessing and adding capabilities via the concept of Extensions.
-Final \cref{se:query} includes details on how to perform timeseries search and Geo-based queries.
+Final \cref{se:query} includes details on how to perform timeseries search and Geo-based queries on the \acrshort{wdias}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{High-level Design}
@@ -28,10 +28,12 @@ Other than that, to correct the model outputs, it required to collect real-time 
 \end{itemize}
 Other than above many data formats using for handling data based on devices and standards which are using. Also, for data modeling, it needs to convert the data into model compatible data format, then after successfully run the model it needs to collect data from the model output data formats.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Modules of a Weather Data System}
 \label{subse:modules_weather_data_integration_sys}
 
 \cref{fi:wdia_components} shows the basic functions of a Weather data integration and assimilation system which consists of the following modules:
+
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.8\textwidth]{method/misc/weather_data_system_components.jpg}}
 \caption{Modules of a weather data system.}

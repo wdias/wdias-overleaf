@@ -78,7 +78,8 @@ admin@curwsl.org}
 \end{IEEEkeywords}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{INTRODUCTION}
+\section{Introduction}
+\label{pse:Introduction}
 Weather prediction is essential to reduce impact due to natural disasters and to gain
 effectively manage natural resources like water.
 Center for Urban Water, Sri Lanka (CUrW-SL) [3] is tasked with the mission to reduce water-related natural disasters in Sri Lanka.
@@ -109,72 +110,124 @@ Since most of existing systems are dependent underline infrastructure providers,
 TODO: Update content as below, overview of rest of the paper
 This paper first provides a short review of the operational forecasting process and the role of Delft-FEWS within that process. Section 3 provides an overview of the philosophy and the most important components and features of Delft-FEWS, while Section 4 discusses some example applications of the Delft-FEWS system in research and operations. A discussion of the systems strengths and limitations is provided in Section 5. Section 6 finally provides a summary of the paper, as well as an outlook on the future development of Delft-FEWS.
 
-This paper first provides a brief review on necessity of weather forecasting and some of existing weather data systems.
+This paper first provides a brief review on necessity of weather forecasting and some of existing weather data systems. \cref{pse:background} provides an overview of modern architectural patterns used in \acrshort{wdias} and the important components and features of the \acrshort{wdias} discussed in \cref{pse:wdias_architecture}, next \cref{pse:performance_analysis} discusses the test workload performance analysis with comparing with the metrics. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\db{Background}}
-%\section{Modules of Weather Data System}
-\cref{fi:wdia_components} shows the basic functions of a Weather data integration and assimilation system.
+\label{pse:background}
+
+\cref{fi:wdia_components} shows the basic functions of a Weather data integration and assimilation system such as Integration, Assimilation, and Dissemination.
+
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.5\textwidth]{method/misc/weather_data_system_components.jpg}}
 \caption{Components of a weather data system.}
-\label{fi:wdia_components}
+\label{pfi:wdia_components}
 \end{figure}
-\paragraph{Integration} The system should capable of integrating data from different source such as satellite data, high end and low end weather station etc. And the system should be able to handle multidimensional spatial and temporal weather data efficiently and optimally. 
-\paragraph{Assimilation} Then the system should be able to fulfill weather models varying data requirements. Also those models reproduce large set of redundant data, thus system should store the bulk data while optimizing the disk space.
-\paragraph{Dissemination} Then different users should be able to retrieve data as they required. Also the users should be able to easy to search into the available that in the system base on timeseries metadata or based on Geo queries.
+
+The system should capable of integrating data from different source such as satellite data, high end and low end weather station etc in the form of multidimensional spatial and temporal weather data as shown in the \emph{Integration} modules.
+Then the system should be able to fulfill weather models varying data requirements and should be able to store large set of redundant model data during the \emph{Assimilation} module.
+The users should be able to easy to search into the available that in the system base on timeseries metadata or based on Geo queries, and the \emph{Dissemination} module should be capable of sharing data among different users.
+
+The \acrshort{wdias} is supporting all three above modules. It iterate through few architectures with concerning about the scalability and high availability.
+The initial design of WDIAS used the Service Oriented Architecture (SOA). Moreover, it tried to use an Enterprise Service Bus (ESB) to integrate different modules, as ESB is acting as a common layer for all of the modules. However, it turned out that ESB is not suitable for data streaming or bulk data processing and ESB suffers from a single point of failure since it is using a common bus.
+In the second design phase of WDIAS, we attempted to use the actor model using the AKKA framework [9] to overcome above ESB drawbacks and followed the microservice architecture. The system architecture redesign with decomposing into microservices and
+used actors to implement each microservice in the system.
+
+Microservice architecture is resilient and flexible as one service is independent of another service. And it is highly scalable as demanding services can be deployed in multiple servers. One of the attractive features of microservice architecture is the independent nature of the microservices which allows to choose different technologies and maintain separately. But using AKKA framework for implement microservice architecture has some disadvantages such as unable to choose independent technologies and the actors messaging between different services cause to result in a too-tight code coupling between the services. To overcome these issues, we moved to the concept of container orchestration based microservice architecture.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Microservice Architecture}
-Brief mentioned about soa and Actor model and why moved away from them.
+\label{psubse:microservice_architecture}
+
+A microservice architecture style is an approach to developing a single application as
+a suite of small services, each running in its own process and communicating with
+lightweight mechanisms, often via providing a RESTful API. Follow are some of the microservice design patterns mostly used in the context of designing WDIAS architecture.
+\begin{itemize}
+    \item \emph{Smart Endpoints and Dumb Pipes} - rather than implementing smart endpoints with supporting multiple protocols and complex logic, microservices aim to be as decoupled and as cohesive as possible with only focusing one own domain.
+    \item \emph{Database per microservice} - The idea is to keep each microservices persistent data private to that service and accessible only via its API.
+    \item \emph{Distributed Transactions over microservices via event processing} - A service publishes an event when its data changes. Other services consume that event and update their data.
+    \item \emph{X-axis Scaling} -  running multiple copies of an application behind a load balancer
+    \item \emph{Y-axis Scaling} - splits the application into multiple, different services. Each service is responsible for one or more closely related functions. The microservice architecture is an application of Y-axis scaling.
+    \item \emph{Z-axis Scaling} - each server runs an identical copy of the code (similar to X-axis scaling). The big difference is that each server is responsible for only a subset of the data.
+\end{itemize}
+
+The \acrshort{wdias} is using \acrfull{k8s} as the container orchestration system which is an open-source tool for automating deployment, scaling, and management of containerized applications.
+
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.5\textwidth]{method/microservice/k8s_architecture_v3.jpg}}
 \caption{\acrfull{k8s} architecture.}
-\label{fi:k8s_architecture}
+\label{pfi:k8s_architecture}
 \end{figure}
+
+\cref{fi:k8s_architecture} gives an overall idea on the components of \acrshort{k8s},
+\begin{itemize}
+    \item Pods -- Cluster of containers that can group other container images in a single unit.
+    \item Nodes -- the machines (VMs, physical servers, etc) in a cluster that runs your applications and cloud workflows.
+    \item kubelet -- An agent that runs on each node in the cluster. It makes sure that containers are running in a pod.
+    \item kube-proxy -- A network proxy that runs on each node in the cluster, and maintains network rules on nodes.
+    \item Kubernetes master -- Responsible for maintaining the desired state for your cluster.
+    \item etcd -- Consistent and highly-available key value store used as Kubernetes’ backing store for all cluster data.
+\end{itemize}
+Users can add much as required Nodes into the K8s cluster, and K8s manage and
+deploy applications as pods into cluster nodes. Thus it allow users to implement the microservice architecture concepts above easily.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\acrfull{wdias} Architecture}
-%\section{Structure of \acrshort{wdias}}
+\label{pse:wdias_architecture}
+
+
+
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.5\textwidth]{method/microservice/microservice_architecture-handle_on_demand-v3.jpg}}
 \caption{microservice architecture - handle on demand.}
-\label{fi:microservice_architecture_on_demand}
+\label{pfi:microservice_architecture_on_demand}
 \end{figure}
 
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.5\textwidth]{method/microservice/microservice_architecture-handle_on_async-v3.jpg}}
 \caption{microservice architecture - handle asynchronously.}
-\label{fi:microservice_architecture_async}
+\label{pfi:microservice_architecture_async}
 \end{figure}
 
-\subsection{Hierarchical Database}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\acrshort{wdias} Database Structure}
+\label{subse:wdias_database}
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.4\textwidth]{method/microservice/wdias_database_structure.jpg}}
 \caption{Hierarchical database.}
-\label{fi:hierarchical_database}
+\label{pfi:hierarchical_database}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Weather Data Preprocessing}
+\label{psubse:data_preprocessing}
+
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.4\textwidth]{method/data_preprocess/summary_weather_data_preprocessing.jpg}}
 \caption{Generic functional approach to weather data preprocessing.}
-\label{fi:summary_weather_data_preprocessing}
+\label{pfi:summary_weather_data_preprocessing}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Query Timeseries Metadata}
+\label{psubse:query_timeseries}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Performance \db{Evaluation}}
+\section{Performance Analysis}
+\label{pse:performance_analysis}
 %\section{Performance Analysis}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Test Plan and Workload}
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.5\textwidth]{results/work_load/performance_study_v4.jpg}}
 \caption{Performance study.}
-\label{fi:performance_Study}
+\label{pfi:performance_Study}
 \end{figure}
 
-\subsection{Observations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Performance Evaluation}
+\label{psubse:performance_evaluation}
 \begin{table}[htbp]
 \caption{Table type styles}
 \begin{center}
@@ -189,7 +242,7 @@ Query & 71704 & 1 & 0 & 203 & 2.05 & 2 \\ \hline
 \textbf{TOTAL} & 310734 & 130 & 0 & 1777 & 212.35 & 501 \\ \hline
 \multicolumn{4}{l}{$^{\mathrm{a}}$Avg: Average Latency, Std: Standard Deviation.}
 \end{tabular}
-\label{tab:obs_all_auto_15_min_summary_latency}
+\label{ptab:obs_all_auto_15_min_summary_latency}
 \end{center}
 \end{table}
 
@@ -207,23 +260,25 @@ Query & 71704 & 1 & 2.05 & 0.00\% & 40.5 \\ \hline
 \textbf{TOTAL} & 310734 & 130 & 212.35 & 0.00\% & 175.3 \\ \hline
 \multicolumn{4}{l}{$^{\mathrm{a}}$Avg: Average Latency.}
 \end{tabular}
-\label{tab:obs_all_auto_15_min_summary_throughput}
+\label{ptab:obs_all_auto_15_min_summary_throughput}
 \end{center}
 \end{table}
 
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.5\textwidth]{results/obs/all_auto/obs_all_auto_15m_res_latencies_against_hits.png}}
 \caption{Performance test 15min data enabled auto-scaling - response latencies against server hits over the elapsed time.}
-\label{fi:test_obs_auto_all_15_min_latency_vs_hits}
+\label{pfi:test_obs_auto_all_15_min_latency_vs_hits}
 \end{figure}
 
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.5\textwidth]{results/obs/all_auto/obs_all_auto_15m_transaction_throughtput_vs_threads.png}}
 \caption{Performance test 15min data enabled auto-scaling - transnational throughput vs number of active threads.}
-\label{fi:test_obs_auto_all_15_min_throughput_vs_threads}
+\label{pfi:test_obs_auto_all_15_min_throughput_vs_threads}
 \end{figure}
 
-\subsection{Discussion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Performance Metrics Analysis}
+\label{psubse:performance_metrics}
 \paragraph{Latency}
 The latency for each operation type kept constant over the whole test plan run time without any significant change. When the request size increased from 24 data points to 96 data points, the latency increase throughout the whole test plan with a smaller number. But for each test run the latency kept constant over the time.
 During the \cref{subse:obs_test_plan_all_auto_15min} test run, the performance of the Grid data got better when compared to the \cref{subse:obs_test_plan_all_15min}. Which means by adding more resources to the \acrshort{wdias}, it can handle more workload on the system.
@@ -248,7 +303,8 @@ The \acrshort{wdias} supports auto-scaling by out of the box with \acrshort{k8s}
 During the test performance, the \acrshort{wdias} processed many requests with higher request size than the normal usage with lower rate of failures to process the requests, mainly with insert Grid data. If the usage of \acrshort{wdias} want to reduce the risk of unable to process data, then system can configure to run with redundant pods in order to handle spike of workloads. Also while configure for the auto-scaling, the \acrshort{k8s} can configure to maintain lower amount of CPU usage such as 50\% to 60\% rather 80\%. Such configuration with always spawn new pods to handle double of current peak load.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Strengths and Limitations}
+\subsection{Strengths and Limitations}
+\label{psubse:limitations}
 \dbc{Make this the dicussion and a sub-section of Sec. 4}
 
 \paragraph{Lack of data preprossessing modules}
@@ -269,6 +325,7 @@ Other than that, the \acrshort{wdias} performance can improve via partitioning t
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}
+\label{pse:summary}
 \dbc{Summary is too long. Should not be more than a single para}
 To enhance the accuracy of the weather prediction, it is required to have reliable weather data for \acrshort{nwm}. Most of existing weather data systems are proprietary or close sourced, or not up to date with the existing cloud computing technologies.
 We proposed an extendable open source Weather Data Integration and Assimilation Systems which is known as \acrshort{wdias}. It focused on providing efficiently integrates weather data from different sources with quality control and supporting steaming large size of data. And compatible with current cloud computing technologies and architecture patterns.
@@ -285,6 +342,7 @@ With the \acrshort{k8s} auto-scaling, the \acrshort{wdias} were able to elastica
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Acknowledgment}
+\label{pse:ack}
 \db{This research is supported in part by the grant from the Center for Urban Water, Sri Lanka.}
 
 
