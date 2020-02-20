@@ -14,6 +14,8 @@
 \newcommand{\db}[1]{\textcolor{blue!40}{#1}}
 \newcommand{\dbc}[1]{\todo[author=Dilum, inline, color=blue!40]{#1}}
 
+\usepackage{hyperref}
+\usepackage[noabbrev,capitalise]{cleveref}
 
 \addbibresource{mendeley.bib}
 
@@ -72,30 +74,42 @@ admin@curwsl.org}
 \end{abstract}
 
 \begin{IEEEkeywords}
-\db{Data assimilation, data integration, hierarchical databases, microservice, weather}
+\db{Cloud computing, data assimilation, data integration, }
 \end{IEEEkeywords}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{INTRODUCTION}
-%I'm going to do this today \cite{Haggett1998AnWales}.
-Give general idea on weather data integration systems.
-Talk about the existing systems. And they're proprietary or close source.
-(Don't dedicate another section, otherwise need to do a comparison at the performance analysis)
-At the end the structure of rest of the paper
+Weather prediction is essential to reduce impact due to natural disasters and to gain
+effectively manage natural resources like water.
+Center for Urban Water, Sri Lanka (CUrW-SL) [3] is tasked with the mission to reduce water-related natural disasters in Sri Lanka.
+It collected real-time data from weather stations and other government entities and generates daily forecasts. Then the generated results are shared with relevant public departments responsible for disaster planning, mitigation, and management.
+To enhance the accuracy of weather predictions, it is necessary to provide reliable and
+detailed weather data as inputs to NWMs.
+Before feeding such diverse data collected from different sources, it is necessary to a data format that can be ingest by the NWMs.
+Further these data need to be process with less time, and need to handle bulk stream weather data.
 
-To enhance the accuracy of weather predictions, it is necessary to provide reliable and detailed weather data as inputs to \acrfull{nwm}. These NWMs utilize weather data collected via diverse sources such as automated weather stations, radars, air balloons, and satellite images. Prior to feeding such diverse data (collected from different sources that belong to different stakeholders) into respective NWMs, it is necessary to integrate data into a common format. Moreover, the data integration system’s response time needs to be relatively low to accommodate critical situations like hurricanes, storms, and floods which require rapid and frequent execution of NWMs.
+There are many forecasting systems developed with considering above factors for disaster management. The \acrshort{fews} is developed in the Netherland by Deltares for operational forecasting. It uses a model-centric approach with considering forecasting process as a combination of data modeling steps and data transformation algorithms. So, it is a flexible framework with no inherent hydrological modeling capabilities and system and capable of creating forecasting workflows by integrating new models and algorithms. Also it follows a common data-model and allow models to interact with the system via one of the interfaces provided, and all the timeseries data are stored via this common data model. Even this approach is efficient in data storing and accessing, but it has the inherent issues of performance of accessing data via a single data model in a database. One of interesting concept of \acrshort{fews} is using unique fields to identify timeseries such by their location and data type, as well as an id related to the source of the data. Even it provide an simple but most effective feature by following the concept of the open modeling framework proposed by Open model integration \cite{Kokkonen2003InterfacingXML}, the model adapter is causing tide coupling into the execution process with the \acrshort{fews}. This causing some issue with unit testing models separately and does not easily allow users to run the models in flexible manner such as parallel execution or external process.
 
-Providing public access to weather data is also useful to enable many third-party applications and research. For example, logistic companies can use that data with their own model to plan and schedule their deliveries. Agricultural insurance companies can warn the farmers in advance, as well as calculate premiums based on anticipated weather patterns.
+\acrfull{lead} is using the fundamental concept of  dynamic workflow orchestration and
+data management in a Web services framework \cite{Droegemeier2005Service-OrientedWeather}. To predict and analyze weather models
+by researchers, it required many resources. Rather than each researcher is running and
+handling their computer resources to do the weather experiments, LEAD is providing pool of resources, then the researchers can use this resource a pool to run their
+experiment in shorter amounts of time and higher scale. It is following the \acrfull{soa} with different service layers, and expose services via drag and drop interface to create new flow by users to run new forecast workflows. Workflow service in the \acrshort{lead} schedule and run those with promising the full use of underline resources in the system. \acrfull{dias} and \acrfull{madis} mostly provide the functionality of integration and sharing of data. When compared to other systems, those do not have the workflow capabilities. To store on the large volume of disk space, \acrshort{dias} converts the data via a provided set of \acrshort{api}s and provide the functionality of quality control of the data, and metadata management and  shares the data via the Shared API layer. \acrshort{madis} also store the data by converting the data into a common format, and provide access to the data based on role access.
 
-While Data Integration and Analysis System (DIAS) and Meteorological Assimilation Data Ingest System (MADIS) are some of well-known Weather Data Integration and Assimilation (WDIA) systems, they are proprietary. Further Delft-FEWS is free to use, it is not open source. Hence, users of WDIA are forced to pay heavy licenses and are unable to extend the solutions to cater to their country-specific requirements. Therefore, the objective of this research is to develop a WDIA system for Sri Lanka, as well as make it open source, so that others could use and contribute to the solution.
-
-TODO: Specify the \acrshort{lead} service as a building block approach. \acrshort{fews} more modular approach with general adapter. And \acrshort{wdias} using microservice as module.
-Similar to the \acrfull{fews} \cite{Werner2013TheSystem} 
-
-The main purpose of this framework is to provide a platform through which opera- tional forecasting systems can be constructed, and that allows flexibility in the integration of models and data. In contrast to the NWSRFS and the RFFS systems that also follow a modular approach, the Delft-FEWS system contains no inherent hydrological model- ling capabilities within its code base. I
+Even though there are many data integration systems, most of them are proprietary or closed source.
+For an island like Sri Lanka that having different kinds of weather seasons
+over the year than that software originated need to be highly customized.
+Thus it required to get support from the vendor to integrate and configure the
+system.
+And most of the software existing out there is not up to date with the latest
+technology concepts such as Cloud Computing.
+The modern architecture pattern such as microservice architecture was able to provide high scalability and availability, rather using monolithic architecture or client service architecture.
+Since most of existing systems are dependent underline infrastructure providers, the users do not have much flexibility to decide the best cost-effective way to host it. Above facts has been considered while we proposed the \acrfull{wdias}. The main purpose of this system is to design and implement an extendable weather data integration, assimilation, and dissemination system which is capable of handling bulk data efficiently with providing scalability and high throughput with using open source tools and modern cloud computing technologies.
 
 TODO: Update content as below, overview of rest of the paper
 This paper first provides a short review of the operational forecasting process and the role of Delft-FEWS within that process. Section 3 provides an overview of the philosophy and the most important components and features of Delft-FEWS, while Section 4 discusses some example applications of the Delft-FEWS system in research and operations. A discussion of the systems strengths and limitations is provided in Section 5. Section 6 finally provides a summary of the paper, as well as an outlook on the future development of Delft-FEWS.
+
+This paper first provides a brief review on necessity of weather forecasting and some of existing weather data systems.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\db{Background}}
 %\section{Modules of Weather Data System}
@@ -135,7 +149,7 @@ Brief mentioned about soa and Actor model and why moved away from them.
 
 \subsection{Hierarchical Database}
 \begin{figure}[htbp]
-\centerline{\includegraphics[width=0.4\textwidth]{method/microservice/hierarchical_database.jpg}}
+\centerline{\includegraphics[width=0.4\textwidth]{method/microservice/wdias_database_structure.jpg}}
 \caption{Hierarchical database.}
 \label{fi:hierarchical_database}
 \end{figure}
@@ -277,8 +291,6 @@ With the \acrshort{k8s} auto-scaling, the \acrshort{wdias} were able to elastica
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \graphicspath{ {./images/} }
 \input{glossary.tex}
-% \bibliographystyle{plain}
-% \addbibresource{mendeley.bib}
 \printbibliography[title={References}]
 
 \end{document}

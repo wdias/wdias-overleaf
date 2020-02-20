@@ -1,7 +1,7 @@
 \section{\acrshort{wdias} Database Structure}
 \label{se:db_struct}
 
-To understand the underline design decisions of the \acrshort{wdias} database structure, it needs to deeply look into the weather data timeseries.
+The foundation of the \acrshort{wdias} is data-centric. To understand the underline design decisions of the \acrshort{wdias} database structure, it needs to deeply look into the weather data timeseries.
 \paragraph{Timeseries}-- \emph{A timeseries is simply a series of data points ordered in time}. In the weather domain, its interest in timeseries in perspective of observations to forecasting. Each timeseries, the data points can be formed in different formats as well. For example, scalar (0D), vector (1D), grid (2D), and polygon (2D).
 
 As per the above interpretation, a timeseries have data points ordered in time. Other than that, timeseries have other information which is known as \emph{timeseries metadata} which can use to uniquely identify one timeseries from another. As an example, a weather station can be placed on a location and it can keep measure variables which are called \emph{parameters} such as temperature, precipitation and wind direction which can produce different timeseries. Even we can use the location as metadata to identify the timeseries, that is not enough to separately identify the parameters. Thus we need to use a set of attributes to uniquely identify a timeseries. In the next \cref{subse:timeseries_key_attributes}, we describe key attributes which are using by the \acrshort{wdias} to uniquely identify a timeseries.
