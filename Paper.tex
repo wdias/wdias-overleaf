@@ -107,9 +107,6 @@ technology concepts such as Cloud Computing.
 The modern architecture pattern such as microservice architecture was able to provide high scalability and availability, rather using monolithic architecture or client service architecture.
 Since most of existing systems are dependent underline infrastructure providers, the users do not have much flexibility to decide the best cost-effective way to host it. Above facts has been considered while we proposed the \acrfull{wdias}. The main purpose of this system is to design and implement an extendable weather data integration, assimilation, and dissemination system which is capable of handling bulk data efficiently with providing scalability and high throughput with using open source tools and modern cloud computing technologies.
 
-TODO: Update content as below, overview of rest of the paper
-This paper first provides a short review of the operational forecasting process and the role of Delft-FEWS within that process. Section 3 provides an overview of the philosophy and the most important components and features of Delft-FEWS, while Section 4 discusses some example applications of the Delft-FEWS system in research and operations. A discussion of the systems strengths and limitations is provided in Section 5. Section 6 finally provides a summary of the paper, as well as an outlook on the future development of Delft-FEWS.
-
 This paper first provides a brief review on necessity of weather forecasting and some of existing weather data systems. \cref{pse:background} provides an overview of modern architectural patterns used in \acrshort{wdias} and the important components and features of the \acrshort{wdias} discussed in \cref{pse:wdias_architecture}, next \cref{pse:performance_analysis} discusses the test workload performance analysis with comparing with the metrics. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\db{Background}}
@@ -174,13 +171,23 @@ deploy applications as pods into cluster nodes. Thus it allow users to implement
 \section{\acrfull{wdias} Architecture}
 \label{pse:wdias_architecture}
 
-
+\cref{pfi:microservice_separation} shows the clear separation of microservices into the modules of the \acrshort{wdias}. As seen in Figure of \cref{fi:wdias_micro_on_demand} and \cref{fi:wdias_micro_async} each circle represents a microservice in the \acrshort{wdias}, and those are implemented as containerized applications. 
 
 \begin{figure}[htbp]
-\centerline{\includegraphics[width=0.5\textwidth]{method/microservice/microservice_architecture-handle_on_demand-v3.jpg}}
-\caption{microservice architecture - handle on demand.}
-\label{pfi:microservice_architecture_on_demand}
+\centerline{\includegraphics[width=0.5\textwidth]{method/microservice/separation_microservices-v3.jpg}}
+\caption{Separation of \acrshort{wdias} microservices.}
+\label{pfi:microservice_separation}
 \end{figure}
+
+The left side of Figure 3.3
+shows the import modules of the WDIAS, and the right side shows the export modules. each import microservice only does the specific
+task of converting and forwarding the request to the correct data adapter module. each data type, there is an adapter microservice is running which is optimized to storing
+such type of data. Each adapter has an isolated database, and the database is hosted separately for the high performance.
+And timeseries metadata stored using RDBMS which gives more performance over retrieving metadata data, and cached with the In-Memory database to fast access. The system
+generates a unique identifier for each timeseries, and throughout the WDIAS, other
+microservice use it to handle data for fast access.
+Export module microservice follows the same concepts and provides the capability
+to export the data into required formats of the weather models.
 
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.5\textwidth]{method/microservice/microservice_architecture-handle_on_async-v3.jpg}}
@@ -188,18 +195,65 @@ deploy applications as pods into cluster nodes. Thus it allow users to implement
 \label{pfi:microservice_architecture_async}
 \end{figure}
 
+as shown in Figure 3.4, when a request
+with a larger size comes to the system, it stores the data for asynchronously process
+the data and responds with a unique id that can use to verify whether data processed
+successfully or not. First it stores the data and publish an event to another service to process it. After successfully process the data by other service, it updates the system status.
+
+The \acrshort{wdias} provides a simple RESTful API to interact with timeseries metadata and other modules.
+\begin{itemize}
+    \item \texttt{/parameter} - CRUD operations on parameters
+    \item \texttt{/timestep} - CRUD operations on time step
+    \item \texttt{/location/point and /location/regualr-grid} - CRUD operations on point location and regular grid locations
+    \item \texttt{/timeseries} - CRUD operations on timeseries
+    \item Import
+    \begin{itemize}
+        \item \texttt{/import/json/raw} - Import JSON data in raw format
+        \item \texttt{/import/csv/raw} - Import CSV data in raw format
+        \item \texttt{/import/ascii-grid/upload} - Upload ASCII JSON Grid files
+    \end{itemize}
+    \item Export
+    \begin{itemize}
+        \item \texttt{/export/json/raw} - Export JSON data in raw format
+        \item \texttt{/export/ascii-grid/binary} - Download ASCII JSON Grid file
+    \end{itemize}
+    \item Extensions
+\end{itemize}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\acrshort{wdias} Database Structure}
 \label{subse:wdias_database}
+
+The foundation of the \acrshort{wdias} is data-centric and build around the timeseries data.
+
+\paragraph{Timeseries}-- \emph{A timeseries is simply a series of data points ordered in time}. In the weather domain, its interest in timeseries in perspective of observations to forecasting. Each timeseries, the data points can be formed in different formats as well. For example, scalar (0D), vector (1D), grid (2D), and polygon (2D).
+
+Following list is the timeseries metadata which can use to uniquely identify one timeseries from another which are call as \emph{key attributes}.
+
+\begin{itemize}
+    \item \textbf{Module ID} -  String field which describe the source of the data generated.
+    \item \textbf{Value Type} -  Scalar, Vector, Grid type
+    \item \textbf{Location} - Location of the timeseries. Point location, regular grid location or irregular grid location.
+    \item \textbf{Parameter} - variable measuring against a location
+    \item \textbf{Timeseries Type} - Such as Historical or forecast
+    \item \textbf{Time Step} - Unit of Second, Minute, Hour, Day, Week, Month, Year, or NonEqualDistance. One of multiplier or divider can be used to define the interval between each measurement.
+\end{itemize}
+
+Scalar data point only consist of a single value. And Vector data point consists of two values such as magnitude and the direction of the Vector. But for Grid data, a point can consist of multiple values. To get the advantage of storing data efficiently, we can use a set of different databases based on the advantage of using them for each valueType. To support search queries with lower latency, it required to use indexing for the fast search for timeseries metadata. Further, Geo-based indexing is required to support Geo-based search queries based on the locations. Above capabilities achieved by using a database structure with compose of multiple databases as shown in \cref{pfi:database_structure}.
+
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.4\textwidth]{method/microservice/wdias_database_structure.jpg}}
-\caption{Hierarchical database.}
-\label{pfi:hierarchical_database}
+\caption{\acrshort{wdias} database structure.}
+\label{pfi:database_structure}
 \end{figure}
+
+Since metadata consists of multiple key attributes, the data can be efficiently store using a Relational Database Management System (RDBMS). Two instances of Timeseries database is using in the WDIAS system by adapter-scalar and adapter-vector services. Use \acrfull{netCDF} for store the Grid data which support the creation, access, and sharing of array-oriented scientific data. And  in-memory database for caching for fast access the frequent access data in adapter-metadata and adapter-extension. Using a document-oriented database with support the Geo searching capabilities.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Weather Data Preprocessing}
 \label{psubse:data_preprocessing}
+
+The \acrshort{wdias} provides the data preprocessing capabilities via extension modules with a simple generic mathematical function model.
 
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.4\textwidth]{method/data_preprocess/summary_weather_data_preprocessing.jpg}}
@@ -207,15 +261,64 @@ deploy applications as pods into cluster nodes. Thus it allow users to implement
 \label{pfi:summary_weather_data_preprocessing}
 \end{figure}
 
+Each extension is considering as a mathematical function which can take \texttt{p} number of input timeseries variables and output \texttt{n} number of timeseries variables. Other than that, at the time of processing the system can configure to provide bind constant which can provide while configuring an extension. This means it is possible to change the behavior of an existing function by providing different bind constant at the time of creating new triggers for an extension. The system allow to create new triggers and update them at the run time via POST requests.
+
+\begin{lstlisting}[language=Python]
+{
+    "extensionId": "", // An unique identifier for new extension trigger
+    "extension": "Interpolation/Transformation/Validation",
+    "function": "", // microservice which handles the function mapping
+    "variables": [ // Array of timeseries mapping to variables
+        {
+            "variableId": "",
+            "metadata/metadtaIds": {
+            }
+        }
+    ],
+    "inputVariables": [], // Input timeseries
+    "outputVariables": [], // Output timeseries
+    "trigger": [ // When to trigger the function
+        {
+            "trigger_type": "OnChange/OnTime",
+            "trigger_on": []
+        }
+    ],
+    "options": { // Run time bind contant data for the extension
+    }
+}
+\end{lstlisting}
+
+Extension Handler is responsible for triggering the correct Extension with metadata when there is any change on the subscribed extension trigger's \emph{OnChange} timeseries.
+Extension Handler is responsible for triggering the correct Extension with metadata at a given time which is provided at the creation on extension trigger with the value of OnTime cronjob string value. To improve the performance of triggering cronjobs at given time schedules, the WDIAS added few optimization mechanisms.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Query Timeseries Metadata}
 \label{psubse:query_timeseries}
 
+Other than the metadata manipulation API mentioned in \cref{psubse:microservice_architecture}, the \acrshort{wdias} also supports timeseries search queries and Geo queries. As an example it can \emph{query timeseries in an area} This operation uses \texttt{geoWithin} search operator for the simplicity. Other than it can also support query timeseries in an area by parameter, query available timeseries by locations and query locations within an area etc.
+\begin{lstlisting}
+    POST <HOST_NAME>/query/timeseries
+    JSON Body:
+    {
+        "geoJson": {
+            "type": "Polygon",
+            "coordinates": [
+                [
+                    [
+                        <longitude>,
+                        <latitude>
+                    ],
+                    ...
+                ]
+            ]
+        }
+    }
+\end{lstlisting}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Performance Analysis}
 \label{pse:performance_analysis}
-%\section{Performance Analysis}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Test Plan and Workload}
