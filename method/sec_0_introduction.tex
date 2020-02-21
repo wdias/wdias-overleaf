@@ -10,7 +10,7 @@ Final \cref{se:query} includes details on how to perform timeseries search and G
 \section{High-level Design}
 \label{se:high_level_design}
 
-To get an overall idea of the flow of weather prediction, let us look into one of the flows using in \acrshort{curw} \cite{CUrWSL2017SL}.
+To get an overall idea of the flow of weather prediction, let us look into one of the flows using at \acrshort{curw} \cite{CUrWSL2017SL}.
 \dbc{Use CUrW-SL}
 \gkc{FIXED}
 
@@ -40,10 +40,12 @@ Other than above many data formats using for handling data based on devices and 
 \label{fi:wdia_components}
 \end{figure}
 
-\paragraph{Integration}-- The system should capable of integrating data from different sources such as satellite data, high end, and low-end weather station, etc. And the system should be able to handle multidimensional spatial and temporal weather data efficiently and optimally. 
+\subsubsection{Integration}
+The system should capable of integrating data from different sources such as satellite data, high end, and low-end weather station, etc. And the system should be able to handle multidimensional spatial and temporal weather data efficiently and optimally. 
 \subsubsection{Assimilation}
 Then the system should be able to fulfill weather models varying data requirements. Also, those models reproduce a large set of redundant data, thus the system should store the bulk data while optimizing the disk space.
-\paragraph{Dissemination}-- Then different users should be able to retrieve data as they required. Also, the users should be able to easy to search into the available that in the system base on timeseries metadata or based on Geo queries.
+\subsubsection{Dissemination}
+Then different users should be able to retrieve data as they required. Also, the users should be able to easy to search into the available that in the system base on timeseries metadata or based on Geo queries.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

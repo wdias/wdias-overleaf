@@ -1,7 +1,7 @@
 \section{Microservice Architecture}
 \label{se:microservice}
 
-A microservice architecture style is an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms, often via providing \hl{a RESTful API}. These services are built around business capabilities and independently deployable by fully automated deployment machinery \cite{LewisMicroservices}. \hl{These services are implemented independently with minimizing the centralized dependencies. Thus each microservice may be written in different programming languages and use different data storage technologies}.
+A microservice architecture style is an approach to developing a single application as a package of small services, each working in their own process and communicating with lightweight mechanisms, often through the delivery of \hl{a RESTful API}. These services are built around commercial capacities and can be used independently by fully automated implementation machines \cite{LewisMicroservices}. \hl{These services are implemented independently with minimizing the centralized dependencies. Thus each microservice may be written in different programming languages and use different data storage technologies}.
 
 % \hl{Among the characteristics of microservice, a few characteristics heavily affect while moving from} \acrshort{soa} to microservice.
 \dbc{M in Microservice should be capitalized only on begining of a sentence.}
@@ -15,8 +15,8 @@ There are lots of microservice patterns developed and evolved. Throughout the fo
 \dbc{At the end of previous para tell what will be discussed in the next set of sub-section. A single sentence like "Next, we will discusss ...." is enough}
 \gkc{FIXED}
 
-When building communication endpoints, \hl{many architectural approaches are adding significant smart by providing different protocol supports and complex logic support via the endpoints.} As an example \acrshort{esb} support multiple protocols and endpoints can use complex logic. But microservice follows an alternative approach: \emph{Smart endpoints and dumb pipes} \cite{LewisMicroservicesPipes}.
-Applications built from microservices aim to be as decoupled and as cohesive as possible. They own their domain logic and act more as filters in the classical Unix sense. After receiving a request, applying logic as appropriate and producing a response. And it uses simple RESTful protocols rather than complex protocols.
+When building communication endpoints, \hl{many architectural approaches are adding significant smart by providing different protocol supports and complex logic support via the endpoints.} As an example \acrshort{esb} support multiple protocols and endpoints can use complex logic. But microservice architecture follows an alternative approach called as \emph{Smart endpoints and dumb pipes} \cite{LewisMicroservicesPipes}.
+Applications built on the basis of microservices are intended to be as disconnected and as coherent as possible. They have their domain logic and work more like filters in the classical Unix meaning. After receiving a request, apply the correct logic and produce a response. And it uses simple RESTful protocols instead of complex protocols.
 \dbc{RESTish or RESTful?}
 \gkc{Yes. Changed.}
 
@@ -24,21 +24,21 @@ Applications built from microservices aim to be as decoupled and as cohesive as 
 \subsection{\hl{Database per Microservice}}
 \label{subse:database_per_service}
 
-\acrshort{microservice} prefer letting each service manages its database, either different instances of the same database technology, or entirely different database systems - an approach called \emph{Polyglot Persistence} \cite{LewisMicroservicesManagement}.
+\acrshort{microservice} prefers to have each service manage its database, either different instances of the same database technology or entirely different database systems - an approach called \emph{Polyglot Persistence} \cite{LewisMicroservicesManagement}.
 
-The idea is to keep each microservice’s persistent data private to that service and accessible only via its \acrshort{api}. 
-There are a few different ways to keep a service's persistent data private.  It does not need to provision a database server for each service. For example, in the case of using a relational database then the following methods can be used to keep data private \cite{RichardsonMicroservicesService}:
+The idea is to keep the persistent data of each microservice private for this service and only to make it accessible via the \acrshort{api}.
+There are different ways to keep the permanent data of a service private. It is not necessary to set up a database server for each service. For example, when you use a relational database, the following methods can be used to keep the data private. \cite{RichardsonMicroservicesService}:
 \begin{itemize}
-    \item \emph{Private tables per service} –- each service owns a set of tables that must only be accessed by that service
-    \item \emph{Schema per service} –- each service has a database schema that private to that service
+    \item \emph{Private tables per service} –- each service has a set of tables that this service should not have access to.
+    \item \emph{Schema per service} –- each service has a private database schedule for this service.
     \item \emph{Database server per service} -– each service has its database server.
 \end{itemize}
-\emph{Private tables per service} and \emph{schema per service} have the lowest overhead. Using a \emph{schema per service} is appealing since it makes ownership clearer. Some high throughput services might need their database server.
+\emph{private tables per service} and \emph{schedule per service} have the lowest overhead. The use of an \emph{schedule per service} is interesting because it makes the property clearer. Some high throughput services may require their database server.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\hl{Distributed Transactions over Microservices}}
 \label{subse:sagas}
-To ensure loose coupling, each microservice better to have own database. Maintaining data consistency between services is a challenge because 2 phase-commit/distributed transactions is not an option for many applications. A service publishes an event when its data changes. Other services consume that event and update their data \cite{RichardsonMicroservicesSagas}. This is also called the \emph{Saga pattern}.
+To guarantee a loose coupling, every microservice can have its own database. Maintaining data consistency between services is a challenge because 2 phase-commit/distribution transactions are not an option for many applications. A service publishes an event when the data changes. Other services use this event and update their data \cite{RichardsonMicroservicesSagas}. This is also called the \emph{Saga pattern}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\hl{Concept of Scale Cube}}
@@ -46,18 +46,18 @@ To ensure loose coupling, each microservice better to have own database. Maintai
 \gkc{I can not think about any other title than this.}
 The scalability of a system can explain via a concept called \emph{Scale Cube} which talks about the scalability of the application by defining over X, Y and Z axis.
 
-\paragraph{X-axis Scaling}-- X-axis scaling consists of running multiple copies of an application behind a load balancer. If there are \textit{n} copies then each copy handles 1/\textit{n} of the load. This is a simple, commonly used approach to scaling a service.
+\paragraph{X-axis Scaling}-- When scaling the X-axis, multiple instances of an application execute behind a load balancer. If there are \textit{n} copies then each copy handles 1/\textit{n} of the load. A commonly used simple approach to scaling a service.
 
-\paragraph{Y-axis Scaling}-- Unlike the X-axis and Z-axis, which consist of running multiple, identical copies of the application, Y-axis axis scaling splits the application into multiple, different services. Each service is responsible for one or more closely related functions. There are a couple of different ways of decomposing the application into services.
+\paragraph{Y-axis Scaling}-- When compared to the Z-axis and X-axis scaling, which follows the concept of running multiple identical copies of the application, but Y-axis axis scaling segregate the application into multiple services in same domain. So, the end services are responsible for one or more closely related functions. There are different ways to split the application into services.
 \begin{itemize}
     \item verb-based decomposition. e.g., checkout.
-    \item decompose the application by noun. e.g., customer management. 
-    \item an application might use a combination of verb-based and noun-based decomposition.
+    \item decompose the application by noun. e.g., order management. 
+    \item it possible to use a combination of verb-based and noun-based decomposition for an application.
 \end{itemize}
 
 \emph{The microservice architecture is an application of Y-axis scaling}.
 
-\paragraph{Z-axis Scaling}-- When using Z-axis scaling each server runs an identical copy of the code (similar to X-axis scaling). The big difference is that each server is responsible for only a subset of the data. 
+\paragraph{Z-axis Scaling}-- The Z-axis scaling is following the concept of each service runs an same application code (similar to X-axis scaling). The big difference is that each service is responsible for only a subset of the data. 
 Z-axis splits are commonly used to scale databases. Data is partitioned (a.k.a. sharded) across a set of servers based on an attribute of each record.
 
 Even \acrshort{wdias} is a design based on the Y-axis scaling, it's possible to use the Z-axis scaling to scaling the system further. This will be more discussion in \cref{se:discussion}.
