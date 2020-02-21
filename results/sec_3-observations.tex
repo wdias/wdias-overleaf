@@ -1,9 +1,7 @@
 \section{\hl{Performance Evaluation}}
 \label{se:observations}
 
-According to \cref{se:test_plan} section, this section includes the observations after performing the test plans on the \acrshort{wdias} system setup and test plan test up which is explained in \cref{se:workload}.
-
-Sections \ref{subse:obs_test_plan_all_60min} to \ref{subse:obs_test_plan_all_auto_15min} discuss the observations collected with performing the Load test plans over 60 minutes (24 data points), 30 minutes (48 data points) and 15 minutes (96 data points) by variate the request size. Then another performance test with enabling auto-scaling as explained in \cref{subse:test_plan_metrics} for high resource utilized microservice.
+According to \cref{se:test_plan} section, This section includes the observations based one the test plans in \cref{se:test_plan} and test plan test up which is explained in \cref{se:workload}. Sections \ref{subse:obs_test_plan_all_60min} to \ref{subse:obs_test_plan_all_auto_15min} discuss the observations collected with performing the Load test plans over 60 minutes data (24 data points), 30 minutes data (48 data points) and 15 minutes data (96 data points) by variate the request size. Then another performance test with enabling auto-scaling for the higher resource utilized microservices as explained in \cref{subse:test_plan_metrics}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Load Testing with hourly data}
@@ -26,8 +24,8 @@ Query: Location & 71804 & 3 & 2 & 109 & 3 & 1.52 & 0.00\% & 40.5 \\ \hline
 \end{tabulary}
 \label{tab:obs_all_60_min_summary}
 \end{table}
-Insert Timeseries performed over Scalar and Vector data types with each request send with 24 data points. On average it takes 28ms to insert data into the \acrshort{wdias}, and up to 90\% percentile inserted data within 31ms. Noticeably it has 0\% of errors which means that all the requests are completed successfully. On average, \acrshort{wdias} handled 40.5 \acrshort{rps} with the given workload. The performance of the Retrieve of Scalar and Vector Timeseries is similar to insert timeseries due to it depends on it.
-On the other hand, Insert Grid Timeseries data perform with 23ms with almost all the requests perform within the same amount of time, hence the standard deviation is smaller. Retrieve Grid Timeseries data perform the same but with a bit higher value of latency of 68ms. Both insert and retrieve grid timeseries data have 4.5 \acrshort{rps} since it only gets 10\% of the number of requests per given time via the test plan as explained in the data ration in \cref{se:test_plan}.
+Insert Timeseries performed over Scalar and Vector data types with each request send with 24 data points. On average it takes 28ms to insert data into the \acrshort{wdias}, and up to 90\% percentile inserted data within 31ms. Noticeably it has 0\% of errors which means that all the requests are completed successfully. On average, \acrshort{wdias} handled 40.5 \acrshort{rps} for Scalar and Vector data with the given workload. The performance of the Retrieve of Scalar and Vector Timeseries is similar to insert timeseries due to it depends on it.
+On the other hand, Insert Grid Timeseries data perform with 23ms with almost all the requests perform within the same amount of time, hence the standard deviation is smaller. The delay in inserting Grid timeseries smaller because those requests are handling asynchronously. Retrieve Grid Timeseries data perform the same but with a bit higher value of latency of 68ms. Both insert and retrieve grid timeseries data have 4.5 \acrshort{rps} since it only gets 10\% of the number of requests per given time via the test plan as explained in the data ratio in \cref{se:test_plan}.
 
 \begin{figure}[htp]
     \centering
@@ -35,7 +33,7 @@ On the other hand, Insert Grid Timeseries data perform with 23ms with almost all
     \caption{Load testing with hourly data - Response Time vs Threads}
     \label{fi:test_obs_all_60m_response_vs_threads}
 \end{figure}
-\cref{fi:test_obs_all_60m_response_vs_threads} shows the response time against the number of active threads. As the graph shows, the response time kept the same while increasing the number of active threads against each test case. This shows the scalability of the \acrshort{wdias} since the system able to process more requests without a significant change in the latency. When the number of active threads increased more than 122, \cref{fi:test_obs_all_60m_response_vs_threads} shows uncertainty in the inserting and retrieving Scalar and Vector data.
+\cref{fi:test_obs_all_60m_response_vs_threads} shows the response time against the number of active threads. As the graph shows, the response time kept the same while increasing the number of active threads against each test case. This shows the scalability of the \acrshort{wdias} since the system able to process more requests without a significant change in the latency. When the number of active threads increased more than 122, \cref{fi:test_obs_all_60m_response_vs_threads} shows uncertainty in the inserting and retrieving Scalar and Vector data. This is because of those data handle on demand and depend on the timeseries database performance.
 
 \begin{figure}[htp]
     \centering

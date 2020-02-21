@@ -9,6 +9,7 @@
 \usepackage{xcolor}
 \usepackage{listings}
 \usepackage{biblatex}
+\usepackage{adjustbox}
 
 \usepackage{todonotes}
 \newcommand{\db}[1]{\textcolor{blue!40}{#1}}
@@ -231,12 +232,12 @@ The foundation of the \acrshort{wdias} is data-centric and build around the time
 Following list is the timeseries metadata which can use to uniquely identify one timeseries from another which are call as \emph{key attributes}.
 
 \begin{itemize}
-    \item \textbf{Module ID} -  String field which describe the source of the data generated.
-    \item \textbf{Value Type} -  Scalar, Vector, Grid type
-    \item \textbf{Location} - Location of the timeseries. Point location, regular grid location or irregular grid location.
-    \item \textbf{Parameter} - variable measuring against a location
-    \item \textbf{Timeseries Type} - Such as Historical or forecast
-    \item \textbf{Time Step} - Unit of Second, Minute, Hour, Day, Week, Month, Year, or NonEqualDistance. One of multiplier or divider can be used to define the interval between each measurement.
+    \item \texttt{Module ID}--  String field which describe the source of the data generated.
+    \item \texttt{Value Type}--  Scalar, Vector, Grid type
+    \item \texttt{Location}-- Location of the timeseries. Point location, regular grid location or irregular grid location.
+    \item \texttt{Parameter}-- variable measuring against a location
+    \item \texttt{Timeseries Type} - Such as Historical or forecast
+    \item \texttt{Time Step}-- Unit of Second, Minute, Hour, Day, Week, Month, Year, or NonEqualDistance. One of multiplier or divider can be used to define the interval between each measurement.
 \end{itemize}
 
 Scalar data point only consist of a single value. And Vector data point consists of two values such as magnitude and the direction of the Vector. But for Grid data, a point can consist of multiple values. To get the advantage of storing data efficiently, we can use a set of different databases based on the advantage of using them for each valueType. To support search queries with lower latency, it required to use indexing for the fast search for timeseries metadata. Further, Geo-based indexing is required to support Geo-based search queries based on the locations. Above capabilities achieved by using a database structure with compose of multiple databases as shown in \cref{pfi:database_structure}.
@@ -325,7 +326,7 @@ Other than the metadata manipulation API mentioned in \cref{psubse:microservice_
 
 The test plan is to perform load testing on whole system, and analyze the scalability of the system while measuring the operations perform on each module. Two variables can vary while doing performance testing.
 \begin{enumerate}
-    \item Number of requests made to the system at a given time (\acrfull{rps})
+    \item \acrfull{rps}
     \item Request size
 \end{enumerate}
 
@@ -358,6 +359,7 @@ with Throughput Shaping Timer because it supports the open workload approach.
 \begin{table}[ht]
 \centering
 \caption{\acrshort{eks} nodes}
+\begin{adjustbox}{width=0.45\textwidth}
 \footnotesize
 \begin{tabular}{|l|c|c|c|c|l|}
 \hline
@@ -367,6 +369,7 @@ grid & 8 & 16 & 25 & 1 & c5.2xlarge \\ \hline
 scalar & 8 & 16 & 20 & 1 & c5.2xlarge \\ \hline
 test & 4 & 10.5 & 5 & 1 & c5n.xlarge \\ \hline
 \end{tabular}
+\end{adjustbox}
 \label{ptab:aws_eks_nodes}
 \end{table}
 
@@ -381,38 +384,90 @@ To get better performance using the available resources, it is possible to sched
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Performance Evaluation}
 \label{psubse:performance_evaluation}
+
+While performing the load testing, each test plan performed around 310k of total sample requests within 30minutes. The ratio between Scalar and Vector to Grid operations around 71k:8k with the ratio of 90\%:10\%. This implies that test cases were able to perform as planned in the \cref{psubse:test_plan}. Insert 
+
 \begin{table}[htbp]
-\caption{Table type styles}
+\caption{ Throughput and Latency of load testing with 60min data}
 \begin{center}
+\begin{adjustbox}{width=0.45\textwidth}
+\footnotesize
 \begin{tabular}{|c|c|c|c|c|c|c|}
 \hline
-\textbf{Label} & \textbf{Samples} & \textbf{Avg} & \textbf{Min} & \textbf{Max} & \textbf{Std} & \textbf{90\% Line} \\ \hline
-Insert Scalar & 71727 & 34 & 13 & 1777 & 118.78 & 27 \\ \hline
-Retrieve Scalar & 71693 & 7 & 5 & 1608 & 18.72 & 9 \\ \hline
-Insert Grid & 7968 & 87 & 77 & 233 & 14.07 & 98 \\ \hline
-Retrieve Grid & 7965 & 89 & 63 & 1694 & 37.79 & 110 \\ \hline
-Query & 71704 & 1 & 0 & 203 & 2.05 & 2 \\ \hline
-\textbf{TOTAL} & 310734 & 130 & 0 & 1777 & 212.35 & 501 \\ \hline
-\multicolumn{4}{l}{$^{\mathrm{a}}$Avg: Average Latency, Std: Standard Deviation.}
+\textbf{Label} & \textbf{Samples} & \textbf{Avg$^{\mathrm{a}}$} & \textbf{90\%$^{\mathrm{b}}$} & \textbf{S.D.$^{\mathrm{c}}$} & \textbf{Error \%} & \textbf{RPS} \\ \hline
+Insert Timeseries & 71826 & 28 & 31 & 58.74 & 0.00\% & 40.5 \\ \hline
+Retrieve Timeseries & 71796 & 8 & 10 & 4.18 & 0.00\% & 40.7 \\ \hline
+Insert Grid & 7982 & 23 & 26 & 4.23 & 0.06\% & 4.5 \\ \hline
+Retrieve Grid & 7979 & 68 & 75 & 10.11 & 0.00\% & 4.5 \\ \hline
+Query: Location & 71804 & 3 & 3 & 1.52 & 0.00\% & 40.5 \\ \hline
+\textbf{TOTAL} & 311182 & 127 & 503 & 207.80 & 0.00\% & 175.4 \\ \hline
+\multicolumn{4}{l}{$^{\mathrm{a}}$Avg: Average Latency, $^{\mathrm{b}}$S.D.: Standard Deviation, $^{\mathrm{c}}$90\%: 90\% percentile.}
 \end{tabular}
-\label{ptab:obs_all_auto_15_min_summary_latency}
+\end{adjustbox}
+\label{ptab:obs_all_60_min_summary_throughput}
 \end{center}
 \end{table}
 
 \begin{table}[htbp]
-\caption{Table type styles}
+\caption{ Throughput and Latency of load testing with 30min data}
 \begin{center}
-\begin{tabular}{|c|c|c|c|c|c|}
+\begin{adjustbox}{width=0.45\textwidth}
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|}
 \hline
-\textbf{Label} & \textbf{Samples} & \textbf{Avg} & \textbf{Std. Dev.} & \textbf{Error \%} & \textbf{RPS} \\ \hline
-Insert Scalar & 71727 & 34 & 118.78 & 0.00\% & 40.5 \\ \hline
-Retrieve Vector & 71693 & 7 & 18.72 & 0.00\% & 40.5 \\ \hline
-Insert Grid & 7968 & 87 & 14.07 & 0.18\% & 4.5 \\ \hline
-Retrieve Grid & 7965 & 89 & 37.79 & 0.00\% & 4.5 \\ \hline
-Query & 71704 & 1 & 2.05 & 0.00\% & 40.5 \\ \hline
-\textbf{TOTAL} & 310734 & 130 & 212.35 & 0.00\% & 175.3 \\ \hline
-\multicolumn{4}{l}{$^{\mathrm{a}}$Avg: Average Latency.}
+\textbf{Label} & \textbf{Samples} & \textbf{Avg$^{\mathrm{a}}$} & \textbf{90\%$^{\mathrm{b}}$} & \textbf{S.D.$^{\mathrm{c}}$} & \textbf{Error \%} & \textbf{RPS} \\ \hline
+Insert Timeseries & 71759 & 29 & 32 & 50.97 & 0.00\% & 40.5 \\ \hline
+Retrieve Timeseries & 71730 & 9 & 10 & 6.04 & 0.00\% & 40.6 \\ \hline
+Insert Grid & 7972 & 44 & 49 & 8.17 & 0.08\% & 4.5 \\ \hline
+Retrieve Grid & 7971 & 81 & 93 & 15.15 & 0.00\% & 4.5 \\ \hline
+Query: Location & 71734 & 3 & 3 & 1.90 & 0.00\% & 40.5 \\ \hline
+TOTAL & 310878 & 129 & 0 & 207.10 & 0.00\% & 175.3 \\ \hline
+\multicolumn{4}{l}{$^{\mathrm{a}}$Avg: Average Latency, $^{\mathrm{b}}$S.D.: Standard Deviation, $^{\mathrm{c}}$90\%: 90\% percentile.}
 \end{tabular}
+\end{adjustbox}
+\label{ptab:obs_all_30_min_summary_throughput}
+\end{center}
+\end{table}
+
+\begin{table}[htbp]
+\caption{ Throughput and Latency of load testing with 15min data}
+\begin{center}
+\begin{adjustbox}{width=0.45\textwidth}
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{Label} & \textbf{Samples} & \textbf{Avg$^{\mathrm{a}}$} & \textbf{90\%$^{\mathrm{b}}$} & \textbf{S.D.$^{\mathrm{c}}$} & \textbf{Error \%} & \textbf{RPS} \\ \hline
+Insert Timeseries & 71775 & 30 & 41 & 51.71 & 0.00\% & 40.5 \\ \hline
+Retrieve Timeseries & 71736 & 23 & 32 & 50.18 & 0.00\% & 40.6 \\ \hline
+Insert Grid & 7975 & 91 & 112 & 19.58 & 1.42\% & 4.5 \\ \hline
+Retrieve Grid & 7972 & 118 & 165 & 56.15 & 0.00\% & 4.5 \\ \hline
+Query: Location & 71749 & 3 & 4 & 2.32 & 0.00\% & 40.5 \\ \hline
+\textbf{TOTAL} & 310934 & 134 & 503 & 206.40 & 0.04\% & 175.4 \\ \hline
+\multicolumn{4}{l}{$^{\mathrm{a}}$Avg: Average Latency, $^{\mathrm{b}}$S.D.: Standard Deviation, $^{\mathrm{c}}$90\%: 90\% percentile.}
+\end{tabular}
+\end{adjustbox}
+\label{ptab:obs_all_15_min_summary_throughput}
+\end{center}
+\end{table}
+
+\begin{table}[htbp]
+\caption{Throughput and Latency of load testing with 15min data while enabled K8s
+auto-scaling}
+\begin{center}
+\begin{adjustbox}{width=0.45\textwidth}
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{Label} & \textbf{Samples} & \textbf{Avg$^{\mathrm{a}}$} & \textbf{90\%$^{\mathrm{b}}$} & \textbf{S.D.$^{\mathrm{c}}$} & \textbf{Error \%} & \textbf{RPS} \\ \hline
+Insert Timeseries & 71727 & 34 & 27 & 118.78 & 0.00\% & 40.5 \\ \hline
+Retrieve Timeseries & 71693 & 7 & 9 & 18.72 & 0.00\% & 40.5 \\ \hline
+Insert Grid & 7968 & 87 & 98 & 14.07 & 0.18\% & 4.5 \\ \hline
+Retrieve Grid & 7965 & 89 & 110 & 37.79 & 0.00\% & 4.5 \\ \hline
+Query: Location & 71704 & 1 & 2 & 2.05 & 0.00\% & 40.5 \\ \hline
+\textbf{TOTAL} & 310734 & 130 & 501 & 212.35 & 0.00\% & 175.3 \\ \hline
+\multicolumn{4}{l}{$^{\mathrm{a}}$Avg: Average Latency, $^{\mathrm{b}}$S.D.: Standard Deviation, $^{\mathrm{c}}$90\%: 90\% percentile.}
+\end{tabular}
+\end{adjustbox}
 \label{ptab:obs_all_auto_15_min_summary_throughput}
 \end{center}
 \end{table}
