@@ -233,7 +233,7 @@ It allows running a particular test plan which is described in \cref{se:test_pla
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\hl{Test System Setup}}
 \label{subse:test_sys_config}
-As described in the \cref{se:microservice}, the \acrshort{wdias} is mainly focused on microservice architecture and implemented on top of Kubernetes. \acrfull{k8s} is an open-source system for automating deployment, scaling, and management of containerized applications. For the performance study uses \acrfull{eks}. There are many \acrshort{k8s} solutions available such as GCP, Azure, and Digital Ocean on the cloud.
+As described in the \cref{se:microservice}, the \acrshort{wdias} is mainly focused on microservice architecture and implemented on top of Kubernetes. \acrfull{k8s} is an open-source system which is capable of automating deployment, scaling, and management of containerized applications. For the performance study uses \acrfull{eks}. There are many \acrshort{k8s} solutions available such as GCP, Azure, and Digital Ocean on the cloud.
 
 A detailed description of setting up the \acrshort{eks} available as \cite{KarunarathneWdias/Amazon_EKS.md:EKS} within the main repository of the \acrshort{wdias}.
 \acrshort{k8s} is a planet scaling tool \cite{LinuxFoundationProduction-GradeKubernetes}, and users can tweak the configuration to run the \acrshort{wdias} as per the required level of load on the system. During the performance test of the \acrshort{wdias}, it uses a maximum of 300 \acrshort{rps} with providing to the system with increasing load, and monitor the auto scalability of the system with measuring other performance parameters mentioned in \cref{tab:aws_eks_nodes}.
