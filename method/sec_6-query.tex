@@ -6,12 +6,12 @@ As described in \cref{subse:mongodb}, adapter-query is primarily using to suppor
 \subsection{Timeseries Metadata}
 Get timeseries metadata by timeseriesID.
 \begin{lstlisting}
-    GET <HOST_NAME>/metadata/timeseries/<TIMESERIES_ID>
+    GET <HOST_ADDR>/metadata/timeseries/<TIMESERIES_ID>
 \end{lstlisting}
 
 Search for timeseries metadata with key attributes of the timeseries.
 \begin{lstlisting}
-    GET <HOST_NAME>/metadata/timeseries?<QUERY_STRING}
+    GET <HOST_ADDR>/metadata/timeseries?<QUERY_STRING}
 \end{lstlisting}
 
 QUERY\_STRING can be consist of zero to multiple parameters. Multiple query parameters are separated by the ampersand, "\&".
@@ -29,7 +29,7 @@ For the moment, query are only support by strict matching with above parameter v
 
 \paragraph{Query Locations within Area}-- Using the following API endpoint, it is possible to query the locations which exist within the area provided by the GeoJson data in the JSON payload.
 \begin{lstlisting}
-    POST <HOST_NAME>/query/location
+    POST <HOST_ADDR>/query/location
     JSON Body:
     {
         "geoJson": {
@@ -49,14 +49,14 @@ For the moment, query are only support by strict matching with above parameter v
 
 paragraph{Query parameters in Locations}-- Using the following API endpoint, it is possible to query the parameters stored against given locations. Location IDs should be provided as a list of JSON payload.
 \begin{lstlisting}
-    POST <HOST_NAME>/query/parameter
+    POST <HOST_ADDR>/query/parameter
     JSON Body:
     ["<locationID>", ...]
 \end{lstlisting}
 
 \paragraph{Query Timeseries by Location}-- Using the following API endpoint, it is possible to query the timeseries metadata for a given location.
 \begin{lstlisting}
-    POST <HOST_NAME>/query/timeseries
+    POST <HOST_ADDR>/query/timeseries
     JSON Body:
     {
         "location": "<LOCATION_ID>"
@@ -66,7 +66,7 @@ paragraph{Query parameters in Locations}-- Using the following API endpoint, it 
 \subsubsection{Query Timeseries by Locations}
 Using the following API endpoint, it is possible to query the timeseries metadata for a given location set. Location IDs should be provide as list in the locations field.
 \begin{lstlisting}
-    POST <HOST_NAME>/query/timeseries
+    POST <HOST_ADDR>/query/timeseries
     JSON Body:
     {
         "locations": ["LOCATION_ID", ...]
@@ -76,7 +76,7 @@ Using the following API endpoint, it is possible to query the timeseries metadat
 \subsubsection{Query Timeseries by Parameter}
 Using the following API endpoint, it is possible to query the timeseries metadata by parameter for given location/locations.
 \begin{lstlisting}
-    POST <HOST_NAME>/query/timeseries
+    POST <HOST_ADDR>/query/timeseries
     JSON Body:
     {
         "locations": [""],
@@ -86,7 +86,7 @@ Using the following API endpoint, it is possible to query the timeseries metadat
 
 \paragraph{Query Timeseries in Area} -- Using the following API endpoint, it is possible to query the timeseries metadata within a given area. This operation uses geoWithin \acrshort{mongodb} operator for the simplicity.
 \begin{lstlisting}
-    POST <HOST_NAME>/query/timeseries
+    POST <HOST_ADDR>/query/timeseries
     JSON Body:
     {
         "geoJson": {
@@ -106,7 +106,7 @@ Using the following API endpoint, it is possible to query the timeseries metadat
 
 \paragraph{Query Timeseries in Area by Parameter}-- Using the following API endpoint, it is possible to query the timeseries metadata within a given area for given parameter. This is an extension to the above endpoint.
 \begin{lstlisting}
-    POST <HOST_NAME>/query/timeseries
+    POST <HOST_ADDR>/query/timeseries
     JSON Body:
     {
         "geoJson": {
@@ -127,7 +127,7 @@ Using the following API endpoint, it is possible to query the timeseries metadat
 
 \paragraph{Query All Timeseries} -- Send a request with empty JSON body will respond with all the timeseries.
 \begin{lstlisting}
-    POST <HOST_NAME>/query/timeseries
+    POST <HOST_ADDR>/query/timeseries
     JSON Body:
     {}
 \end{lstlisting}
