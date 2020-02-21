@@ -10,6 +10,7 @@
 \usepackage{listings}
 \usepackage{biblatex}
 \usepackage{adjustbox}
+\usepackage{tabulary}
 
 \usepackage{todonotes}
 \newcommand{\db}[1]{\textcolor{blue!40}{#1}}
@@ -385,13 +386,14 @@ To get better performance using the available resources, it is possible to sched
 \subsection{Performance Evaluation}
 \label{psubse:performance_evaluation}
 
-While performing the load testing, each test plan performed around 310k of total sample requests within 30minutes. The ratio between Scalar and Vector to Grid operations around 71k:8k with the ratio of 90\%:10\%. This implies that test cases were able to perform as planned in the \cref{psubse:test_plan}. Insert 
+While performing the load testing, each test plan performed around 310k of total sample requests within 30minutes according to the \cref{ptab:obs_all_60_min_summary_throughput} to \cref{ptab:obs_all_15_min_summary_throughput}. The ratio between Scalar and Vector to Grid operations around 71k:8k with the ratio of 90\%:10\%. This implies that test cases were able to perform as planned in the \cref{psubse:test_plan}.
+Other than insert Grid timeseries, other operations succeed with 0\% error rate.
 
 \begin{table}[htbp]
 \caption{ Throughput and Latency of load testing with 60min data}
 \begin{center}
-\begin{adjustbox}{width=0.45\textwidth}
 \footnotesize
+\begin{adjustbox}{width=0.49\textwidth}
 \begin{tabular}{|c|c|c|c|c|c|c|}
 \hline
 \textbf{Label} & \textbf{Samples} & \textbf{Avg$^{\mathrm{a}}$} & \textbf{90\%$^{\mathrm{b}}$} & \textbf{S.D.$^{\mathrm{c}}$} & \textbf{Error \%} & \textbf{RPS} \\ \hline
@@ -407,6 +409,9 @@ Query: Location & 71804 & 3 & 3 & 1.52 & 0.00\% & 40.5 \\ \hline
 \label{ptab:obs_all_60_min_summary_throughput}
 \end{center}
 \end{table}
+
+The average latency of inserting Scalar and Vector timeseries data increased by 1ms when the request size increased. But for the 90\% percentile of insertions increased from 31ms to 41ms. But the standard deviation kept same. \acrshort{wdias} were able to perform with the same throughput of 40.5 \acrshort{rps} without significant change in latency which shows the scalability of the system.
+While retrieving the Scalar and Vector timeseries data, the system was able to respond with in 10ms for 60minutes and 30minutes data with lesser standard deviation. But the latency got double when handling the 15minutes data. This caused by heavy writes on the timeseries database.
 
 \begin{table}[htbp]
 \caption{ Throughput and Latency of load testing with 30min data}
@@ -429,6 +434,9 @@ TOTAL & 310878 & 129 & 0 & 207.10 & 0.00\% & 175.3 \\ \hline
 \end{center}
 \end{table}
 
+When inserting the Grid timeseries data, the average latency was less than the insert Scalar or Vector data, because of the Grid data handle asynchronously. When the number of Grid files doubled, each time the latency also got doubled. Notably, the \acrshort{wdias} was able to perform with same throughput with lesser standard deviation. Also, for each test case the system was able to kept the same latency throughout test run without any significant change. This also show the scalability of the Grid data in the \acrshort{wdias}.
+Retrieving of Grid timeseries data happens on demand during the load test. But it is possible to upgrade the system to support asynchronously download alongside with direct download. Because of that, the latency of download the the Grid data is bit higher than the other test cases. In that case also, the \acrshort{wdias} perform with keeping the same throughput with lower standard deviation which shows the scalability of the export Grid data module.
+
 \begin{table}[htbp]
 \caption{ Throughput and Latency of load testing with 15min data}
 \begin{center}
@@ -449,6 +457,9 @@ Query: Location & 71749 & 3 & 4 & 2.32 & 0.00\% & 40.5 \\ \hline
 \label{ptab:obs_all_15_min_summary_throughput}
 \end{center}
 \end{table}
+
+Throughout all test plans, the \acrshort{wdias} system performed better on serving the search queries based locations for Scalar and Vector timeseries. This is due to using indexing for server such queries. The \acrshort{wdias} was able to respond with 3ms most of the cases with keeping lower standard deviation.
+% To get better performance test on the query module, we performed set of complex queries as shown in the \cref{ptab}
 
 \begin{table}[htbp]
 \caption{Throughput and Latency of load testing with 15min data while enabled K8s
@@ -472,17 +483,36 @@ Query: Location & 71704 & 1 & 2 & 2.05 & 0.00\% & 40.5 \\ \hline
 \end{center}
 \end{table}
 
+\cref{ptab:obs_all_auto_15_min_summary_throughput} shows the \acrshort{wdias} performance with 15minutes data, but enabled auto-scaling. During above test cases, most resource utilized module was importing Grid data.
+The observations are almost similar to \cref{ptab:obs_all_15_min_summary_throughput}, but notably the error rate of insert Grid timeseries got reduced after enabled the auto-scaling for import Grid data module. Also the standard deviation for handling Grid data reduced which means system was able to perform more better than the previous test plan.
+
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.5\textwidth]{results/obs/all_auto/obs_all_auto_15m_res_latencies_against_hits.png}}
 \caption{Performance test 15min data enabled auto-scaling - response latencies against server hits over the elapsed time.}
 \label{pfi:test_obs_auto_all_15_min_latency_vs_hits}
 \end{figure}
 
+\cref{pfi:test_obs_auto_all_15_min_latency_vs_hits} shows the latency of each test case throughout total time of load testing with 15minutes data while enabled auto-scaling. As the Figure clearly shows while increasing the number of server hits for each test case, the system kept the latency constant without significant change. At the peak time, handling Grid data has some disturbances and inserting Scalar and Vector data has some random spikes in the latencies.
+
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.5\textwidth]{results/obs/all_auto/obs_all_auto_15m_transaction_throughtput_vs_threads.png}}
 \caption{Performance test 15min data enabled auto-scaling - transnational throughput vs number of active threads.}
 \label{pfi:test_obs_auto_all_15_min_throughput_vs_threads}
 \end{figure}
+
+\cref{pfi:test_obs_auto_all_15_min_throughput_vs_threads} shows the total server's transaction throughput against the number of active threads.
+The formula for total server transaction throughput is \(<active threads> * 1 second / <1  thread response time>\) \cite{JMeterPluginsTransactionPlugin}. It shows the statistical maximum possible number of transactions based on the number of users accessing the application.
+By combining the \cref{pfi:test_obs_auto_all_15_min_latency_vs_hits}, this graph shows that the throughput of the system gets increased without much change in the latency, thus it proves the scalability of the \acrshort{wdias}.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{results/obs/all_auto/obs_all_auto_15m_import_grid_pod.png}
+    \caption{Load testing with auto-scaling import ascii grid number of pods over time.}
+    \label{pfi:obs_all_auto_15m_import_grid_pod}
+\end{figure}
+
+\cref{pfi:obs_all_auto_15m_import_grid_pod} shows the number of import-ascii-grid-upload pods scheduled overtime. The auto-scaling enabled with the configurations of 1 to 10 pods with the recommended CPU usage with 80\%. And the pods scheduled with 1 CPU requested, and limit with 2 CPUs per pod.
+As the graph shows, 3 pods scheduled at the initial as per the configuration of the helm chart. While increasing the workload, new pods get spawn while keeping the constraint of 80\% of recommended CPU utilization. After \acrshort{k8s} spawn 10 maximum pods, it stops spawning new pods. But the pods were able to perform with vertical scaling since those are not hit the CPU limit of 2.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Performance Metrics Analysis}
