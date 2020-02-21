@@ -319,14 +319,64 @@ Other than the metadata manipulation API mentioned in \cref{psubse:microservice_
 \section{Performance Analysis}
 \label{pse:performance_analysis}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Test Plan and Workload}
+\subsection{Load Testing Plan}
+\label{psubse:test_plan}
+
+The test plan is to perform load testing on whole system, and analyze the scalability of the system while measuring the operations perform on each module. Two variables can vary while doing performance testing.
+\begin{enumerate}
+    \item Number of requests made to the system at a given time (\acrfull{rps})
+    \item Request size
+\end{enumerate}
+
+\acrshort{wdias} is getting a mix of all the data types in the percentages of 70\% scalar, 20\% vector, and 10\% grid values. \cref{pfi:performance_study} shows for a given request size the RPS increased in steps. In each step, the RPS holds for a moment to give some time for the system to get stabilized.
+
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.5\textwidth]{results/work_load/performance_study_v4.jpg}}
-\caption{Performance study.}
-\label{pfi:performance_Study}
+\caption{\acrshort{wdias} load testing plan with changing the request size and \acrshort{rps}}
+\label{pfi:performance_study}
 \end{figure}
+
+Holding the peak load will help to show whether the system is capable of scaling more than the proposed load testing plan. After the peak, the test case goes through a cool-down period to measure the ability to shrink down the resources when there is not any load on the system. During the test plan, it runs for 30minutes of period with changing the request size form 1-hour data to 15 minutes data. Then another 30 minutes load test enabling the auto scaling of container orchestration system, and perform 5minutes test run with timeseries queries. The the results are evaluate against the performance metrics of throughput, latency, resource utilization and auto-scaling.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Experimental Setup}
+\label{psubse:experimental_setup}
+
+During the performance test, it creates 1000 timeseries using the locations are taken from Google's Countries Public Data set \cite{GoogleGoogleCounties}, and uses static 100 Grid locations for store Grid data. Load test perform using \acrshort{jmeter} and used the Distributed Testing feature to generate higher load. It uses the master-slave approach and it allowed to handle all the test cases via single instance, rather handling separate instances. The system is capable of storing any numeric value up to 3 decimal points. It does not make any difference based on the parameter type whether it is the precipitation or the temperature. Thus during the performance testing, \acrshort{jmeter} uses real precipitation data from \acrshort{curw}. One month period of data for five weather stations has been using to prepare the test data.
+
+While implementing the test cases for WDIAS, it uses the Concurrency Thread Group
+with Throughput Shaping Timer because it supports the open workload approach.
+
+\begin{itemize}
+    \item \emph{closed system model} \cite{Haggett1998AnWales} -- a new request is only triggered by the completion of a previous request, following by a think time.
+    \item \emph{open system model} -- new requests arrival independently of completions.
+\end{itemize}
+
+\acrshort{wdias} is using the \acrfull{k8s} as the container orchestration system which is an open-source system for automating deployment, scaling, and management of containerized applications. They are many \acrshort{k8s} solutions available as a cloud service, we used \acrfull{eks} based on the availability. \cref{ptab:aws_eks_nodes} shows the list of nodes/computers used during the performance test.
+
+\begin{table}[ht]
+\centering
+\caption{\acrshort{eks} nodes}
+\footnotesize
+\begin{tabular}{|l|c|c|c|c|l|}
+\hline
+\textbf{Node Label} & \textbf{vCPU} & \textbf{RAM (GB)} & \textbf{Storage (GB)} & \textbf{Quantity} & \textbf{EC2 Name} \\ \hline
+core & 16 & 32 & 15 & 1 & c5.4xlarge \\ \hline
+grid & 8 & 16 & 25 & 1 & c5.2xlarge \\ \hline
+scalar & 8 & 16 & 20 & 1 & c5.2xlarge \\ \hline
+test & 4 & 10.5 & 5 & 1 & c5n.xlarge \\ \hline
+\end{tabular}
+\label{ptab:aws_eks_nodes}
+\end{table}
+
+To get better performance using the available resources, it is possible to schedule each microservice into a predefined set of nodes. Pods are assigned to the nodes \cref{tab:aws_eks_nodes} based on the node label as below;
+\begin{itemize}
+    \item \emph{core} -- metadata, extensions, query, status and extension services
+    \item \emph{grid} -- grid adapter, import and export grid data
+    \item \emph{scalar} -- scalar and vector adapters, import and export of same data types
+    \item \emph{test} -- \acrshort{jmeter} and metric server
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Performance Evaluation}
