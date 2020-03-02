@@ -88,7 +88,7 @@
         University of Moratuwa\\
         Sri Lanka\\
         \vspace{32pt}
-        February 2020
+        March 2020
         
     \end{center}
 \end{titlepage}
@@ -117,7 +117,7 @@
         University of Moratuwa\\
         Sri Lanka\\
         \vspace{32pt}
-        February 2020
+        March 2020
         
     \end{center}
 \end{titlepage}
@@ -169,15 +169,16 @@ The above candidate has carried out research for the Masters thesis under our su
 
 \chapter*{Abstract}
 
-\acrfull{nwm} utilize data collected via diverse sources such as automated weather stations, radars, air balloons, and satellite images. Before using such multimodal data into a NWM, it is necessary to transcode data into a format that can be ingested by the NWM. Moreover, the data integration system's response time needs to be relatively low to forecast and monitor time-sensitive weather events like hurricanes, storms, and flash floods that require rapid and frequent execution of \acrshort{nwm}. The resulting weather data also need to be accessed by many researchers and third-party applications such as logistic companies and agricultural insurance.
-Even though there are several weather data integration systems, they are based on monolithic or client-server architectures and are unable to benefit from novel computational models such as cloud computing and containers. Moreover, most of this software is proprietary or closed sourced; hence, it is difficult to customize such software for an island like Sri Lanka with different weather seasons.
-Therefore, in this research, we propose \acrfull{wdias} that utilizes modern architecture pattern such as microservices to achieve scalability, high availability, and low-cost operation based on cloud computing. \acrshort{wdias} provides a modular architecture to integrate data from different sources, export into different formats, and the inbuilt extension module system allow users to add new features. Due to the use of stateless microservices, \acrshort{wdias} achieves high scalability, availability, and enables the addition of new features on the fly with rollover capabilities. We demonstrate the utility of \acrshort{wdias} using cloud-based experimental setup and weather-related synthetic workloads.
+\acrfull{nwm} utilize data collected via diverse sources such as automated weather stations, radars, air balloons, and satellite images. Before using such multimodal data in a \acrshort{nwm}, it is necessary to transcode data into a format that can be ingested by the NWM. Moreover, the data integration system's response time needs to be relatively low to forecast and monitor time-sensitive weather events like hurricanes, storms, and flash floods that require rapid and frequent execution of \acrshort{nwm}. The resulting weather data also need to be accessed by many researchers and third-party applications such as logistic and agricultural insurance firms.
+%Even though there are several weather data integration systems, they
+Existing weather data integration systems are based on monolithic or client-server architectures; hence, unable to benefit from novel computational models such as cloud computing and containers. Moreover, most of this software is proprietary or closed-source, making it difficult to customize them for an island like Sri Lanka with different weather seasons.
+Therefore, in this research, we propose \acrfull{wdias} that utilizes modern architectural patterns such as microservices to achieve scalability, high availability, and low-cost operation based on cloud computing. The use of stateless microservices also enables \acrshort{wdias} to add new features on the fly with rollover capabilities. Moreover, \acrshort{wdias} provides a modular framework to integrate data from different sources, export into different formats, and add new functionality by adding extension modules. % system allow users to add new features. 
+%Due to the use of stateless microservices, \acrshort{wdias} achieves high scalability, availability, and enables the addition of new features on the fly with rollover capabilities. 
+We demonstrate the utility of \acrshort{wdias} using cloud-based experimental setup and weather-related synthetic workloads.
 
-\dbc{Increase line space to 1.5}
-\gkc{FIXED}
 \vspace{4mm}
 
-\textbf{Keywords:} Cloud computing, data assimilation, data integration, hierarchical databases, microservice, weather
+\textbf{Keywords:} Cloud computing, data assimilation, data integration, microservice, weather
 %Cloud Computing, Data Management system, Distributed,  Highly Available, Scalable, Timeseries, Weather
 }
 
@@ -188,18 +189,17 @@ Therefore, in this research, we propose \acrfull{wdias} that utilizes modern arc
 \chapter*{Dedication}
 I dedicate this thesis work to teachers, lectures, my family and specially colleagues at \acrfull{curw}. A special feeling of gratitude to my loving parents, Nandawathi Dissanayake and H.M.K. Karunarathne whose put countless sweats to support me throughout my entire life. My wife Jayani Kumarasinghe and my son Sasmitha Karunarathne who missed a lots of wonderful moments to give me freedom to work on my research.
 
-Nevertheless I could not forget all of my friends at \acrshort{curw} who have supported and be with me during this period of time. Also special thanks to Dr. Dilum Bandara and Dr. Srikantha Herath for giving me this wonderful opportunity to explore this new domain.
+Nevertheless I could not forget all of my friends at \acrshort{curw} who have supported and be with me during this period of time. Also special thanks to Dr. Dilum Bandara and Prof. Srikantha Herath for giving me this wonderful opportunity to explore this new domain.
 
 \addcontentsline{toc}{chapter}{Acknowledgements} 
 \chapter*{Acknowledgements}
-I would like to thank the members of my evaluation committee who were more than generous with their expertise and their precious time. Special thanks to Dr Dilum Bandara, my research supervisor for helping me with his precious time, reading, encouragement and been patient with pushing me to the next level. Also, I', thankful to Dr. Dilika Peris, and Dr. Indika Perera for serve as my evaluation panel without any hesitation and Dr. Srikantha Herath for giving more knowledge on weather domain and support as my external supervisor.
+I would like to thank the members of my evaluation committee who were more than generous with their expertise and their precious time. Special thanks to Dr Dilum Bandara, my research supervisor for helping me with his precious time, reading, encouragement and been patient with pushing me to the next level. Also, I am, thankful to Dr. Dilika Peris, and Dr. Indika Perera for serve as my evaluation panel without any hesitation and Dr. Srikantha Herath for giving more knowledge on weather domain and support as my external supervisor.
 
-I would like to thank the Department of Computer Science and Engineering at the University of Moratuwa for allowing me to conduct my research and provide all the assistance requested. Special thanks go to the academic and non-academic staff of the department for their continued support. I also thank the University of Moratuwa for its financial support, as the research was partially funded by the Senate research grant from the University of Moratuwa under award number SRC/LT/2017/01,  and \acrfull{curw} for providing the grant and financial support during the research period with providing required resources and learning opportunities.
+I would like to thank the Department of Computer Science and Engineering at the University of Moratuwa for allowing me to conduct my research and provide all the assistance requested. Special thanks go to the academic and non-academic staff of the department for their continued support. I also thank the %University of Moratuwa for its financial support, as the research was partially funded by the Senate research grant from the University of Moratuwa under award number SRC/LT/2017/01,  and 
+\acrfull{curw} for providing the domain expertise, access to resources, and financial support during the research.% period with providing required resources and learning opportunities.
 
 Finally, I would like to thank the lectures, the evaluation panel and the colleagues who helped me with this project. Their enthusiasm and willingness to provide feedback support me to go far beyond my limits and complete my research with an enjoyable experience.
 
-\dbc{Need to ACK CUrW for grant.}
-\gkc{FIXED}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \tableofcontents
@@ -223,6 +223,7 @@ Finally, I would like to thank the lectures, the evaluation panel and the collea
 \printglossary[style=altlist, type=\acronymtype, title=List of Abbreviations, toctitle=List of Abbreviations, nonumberlist]
 \dbc{Make sure line spacing is consistent here.}
 \gkc{Could not figure out how to fix this. Those spaces are because of grouping by first letter with style long. What is needed is style list. styles are not working on list style: https://www.dickimaw-books.com/gallery/glossaries-styles/}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Introduction}
 \label{ch:intro}
