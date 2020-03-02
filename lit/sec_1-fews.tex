@@ -1,9 +1,7 @@
-Many weather forecasting, assimilation, and dissemination systems are developed to reduce the damage causing by natural disasters such as floods, storms, hurricanes, and even droughts. %Such natural disasters heavily affected on the economy and the life conditions of the country, researchers have developed systems and many of these systems are using as proprietary systems. 
-Other countries are also using those systems while adopting them %with own version of system which effective for the 
-to specific weather conditions.% in a particular country.
-This chapter presents a literature review on existing systems and their architectural approaches and designs. In \cref{se:fews}, we present \acrfull{fews}, an open model integration framework. \acrfull{lead}, an open data handling platform distributed as closed-source software, is presented in \cref{se:lead}. % \acrshort{lead} is following the \acrfull{soa} for system architecture. 
+Many weather forecasting, assimilation, and dissemination systems are developed to reduce the damage causing by natural disasters such as floods, storms, hurricanes, and even droughts.
+Other countries are also using those systems while adopting them to specific weather conditions.
+This chapter presents a literature review on existing systems and their architectural approaches and designs. In \cref{se:fews}, we present \acrfull{fews}, an open model integration framework. \acrfull{lead}, an open data handling platform distributed as closed-source software, is presented in \cref{se:lead}.
 In \cref{se:dias}, we discuss \acrfull{dias} which is a common data platform that can manage weather data. \acrfull{madis} is another widely used data integration system, which also provides data access with quality controls is presented in \cref{se:madis}. Under each system, we explore their system architecture, scalability, and flexibility.
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -14,8 +12,7 @@ In \cref{se:dias}, we discuss \acrfull{dias} which is a common data platform tha
 Most of models are using a model-centric approach such as inputs, need to be in the format of specific to the model. Also, the outputs produced by the model are specific to the model and hard to utilize by other systems (e.g., FLO2D create human readable text output files). As \acrshort{fews} uses a modular approach it is easier to integrate new models. 
 Thus, \acrshort{fews} can be considered as an integration framework or a middleware for the models.
 
-\db{As it describe with a simple example in \cref{ch:intro}, forecasting processes consist by creating modeling steps with combining data transformation algorithms.} Combining such flows can use to provide the forecasting capabilities. The system is flexible enough to integrate new models and algorithms into the core codebase \cite{Werner2013TheSystem}. \acrshort{fews} does not have any inbuilt hydrological modeling capabilities within its codebase. Rather it is a framework that can use to integrate into the system and create workflows for forecasting.
-\dbc{Reword highlighted sentence without referring to Chap 1.}
+Forecasting processes is creation of modeling steps with combining data transformation algorithms. In the flow, each step process and feed data into the next step. The \acrshort{fews} is flexible enough to integrate new models and algorithms into the core codebase that can use to create new workflows \cite{Werner2013TheSystem}. \acrshort{fews} does not have any inbuilt hydrological modeling capabilities within its codebase. Rather it is a framework that can use to integrate into the system and create workflows for forecasting.
 
 Are proposed by Haggett \cite{Haggett1998AnWales} key elements of a forecasting system are defined as detection, forecasting, then dissemination and warning, and response to the events. The \acrshort{fews} focuses on the forecasting step out from above steps. The main objective of this step is to provide additional lead time by forecasting future hydro-meteorological conditions \cite{Werner2005FloodCatchments}. It is a valid argument that providing accurate predictions with greater lead time can reduce the level of destruction. To forecast, the system should be capable of integrating real-time data from meteorological and hydrological observation network systems, and the disseminate the forecasted results through relevant products to the warning process.
 
@@ -43,9 +40,9 @@ The data integrated from the external sources are not in the appropriate tempora
     \caption[Architecture of \acrshort{fews}]{Architecture of \acrshort{fews} \cite{Werner2013TheSystem}.}
     \label{fi:fews_data_layer}
 \end{figure}
-Most of the \db{function library has provided equal work on scalar and grid time series}. However, the communicates with the database only via the data access layer as shown in \cref{fi:fews_data_layer} \cite{Werner2013TheSystem}. As it is shown in the figure, it is clearly showing that the system depends on a single database and via the data access layer, all the requests are coming to the database through a connection. It is possible to setup and connect to an enterprise-level database with clustering and shading as a paid solution, to serve many requests as possible. However, the design itself inherently suffers from the database bottleneck which effected by running a large set of timeseries or models.
+\db{The \acrshort{fews} supports data processing and modeling library to access scalar and grid timeseries same way}. However, the communicates with the database only via the data access layer as shown in \cref{fi:fews_data_layer} \cite{Werner2013TheSystem}. As it is shown in the figure, it is clearly showing that the system depends on a single database and via the data access layer, all the requests are coming to the database through a connection. It is possible to setup and connect to an enterprise-level database with clustering and shading as a paid solution, to serve many requests as possible. However, the design itself inherently suffers from the database bottleneck which effected by running a large set of timeseries or models.
 \dbc{Above highlighted is not clear to me.}
-
+\gkc{Updated}
 
 \begin{figure}[htp]
     \centering
