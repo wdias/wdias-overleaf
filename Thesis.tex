@@ -13,7 +13,7 @@
 
 \usepackage{setspace}
 \usepackage{tabu}
-\usepackage[acronym]{glossaries}
+\usepackage[acronym,nopostdot,nonumberlist]{glossaries}
 \makeglossaries
 \usepackage{import}
 \usepackage{listings}
@@ -212,17 +212,15 @@ Finally, I would like to thank the lectures, the evaluation panel and the collea
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newglossarystyle{custom-glossary-style}{%
-  \setglossarystyle{list}%
+  \setglossarystyle{long}%
+  \renewcommand{\glsgroupskip}{}
   \renewenvironment{theglossary}%
-    % {\begin{longtable}[l]{@{}p{\dimexpr 2cm-\tabcolsep}p{0.8\hsize}}}% <-- change the value here
-    {\begin{longtable}{p{3cm}p{\glsdescwidth}}}%
+    {\begin{longtable}[l]{@{}p{\dimexpr 3cm-\tabcolsep}p{0.8\hsize}}}% <-- change the value here
     {\end{longtable}}%
 }
 
 \addcontentsline{toc}{chapter}{List of Abbreviations} 
-\printglossary[style=altlist, type=\acronymtype, title=List of Abbreviations, toctitle=List of Abbreviations, nonumberlist]
-\dbc{Make sure line spacing is consistent here.}
-\gkc{Could not figure out how to fix this. Those spaces are because of grouping by first letter with style long. What is needed is style list. styles are not working on list style: https://www.dickimaw-books.com/gallery/glossaries-styles/}
+\printglossary[style=custom-glossary-style, type=\acronymtype, title=List of Abbreviations, toctitle=List of Abbreviations]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Introduction}
