@@ -259,7 +259,7 @@ Area, Parameter → Timeseries & 11084 & 864 & 1 & 16699 & 1584 & 751.00 & 0.00\
 \end{table}
 
 \cref{tab:obs_query_15_min_summary} shows the response latency summary details. The average latency is much higher than the minimum value. Also, it reported higher maximum values as well. Standard deviation showed a quiet higher value which means the response latency values are not closer to the average value. Noticeably, it does not report any errors, which means all the requests successfully process.
-The throughput for each test case is much higher and similar to all the requests. This is happening since all of these requests are handled via the adapter-query, it depends on the \acrshort{mongodb} database performance.
+The throughput for each test case is much higher and similar to all the requests. This is happening since all of these requests are handled via the adapter-query, it depends on the  MongoDB database performance.
 
 \begin{figure}[htp]
     \centering
@@ -277,5 +277,5 @@ The throughput for each test case is much higher and similar to all the requests
 \end{figure}
 \cref{fi:test_obs_query_5m_response_times_vs_threads} shows the response latency against number of active threads for the query test plan. When the number of server hits get higher, the latency also get increased. That means adapter-query is not very much scalable with the current configurations.
 
-Whenever the timeseries data not found in the adapter-query, it read data from adapter-metadata and index for search over timeseries metadata. This will cause to higher performance with geo timeseries searches. The performance of the \acrshort{mongodb} can further improve with using its features like Replication for high availability, and Sharding for higher throughput.
+Whenever the timeseries data not found in the adapter-query, it read data from adapter-metadata and index for search over timeseries metadata. This will cause to higher performance with geo timeseries searches. The performance of the  MongoDB can further improve with using its features like Replication for high availability, and Sharding for higher throughput.
 Those attempts are beyond the scope of the \acrshort{wdias} performance test and users can use those to get higher results from the \acrshort{wdias}.

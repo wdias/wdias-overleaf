@@ -9,10 +9,10 @@ During the performance test, it creates 1000 timeseries and keeps adding data ag
 
 For grid data, it uses static 100 grid locations based on how is \acrshort{api} exposed. Since grid locations have different metadata structures as described in \cref{se:db_struct}, those data handle separately. But the locationId of grid and scalar data types have the same effect when defining a timeseries.
 
-In the \acrshort{jmeter} Best Practices, \say{If your test needs large amounts of data - particularly if it needs to be \emph{randomized} create the test data in a file that can be read with CSV Data set. This avoids wasting resources at run-time}. Rather providing the randomness in run time, the timeseries stored with the random order which satisfy the percentage of 70\% Scalar, 20\% Vector, and 10\% Grid as mentioned in \cref{se:test_plan}.
-Before running the test cases, it generates the metadata for timeseries and writes into a CSV file which is shared among the threads in the \acrshort{jmeter}. This occurs in the setup phase of the test cases. The metadata CSV file arrange in a way that within every 10 lines, 7 lines are Scalar timeseries, 2 lines are Vector timeseries, and 1 line is a Grid timeseries.
+In the  JMeter Best Practices, \say{If your test needs large amounts of data - particularly if it needs to be \emph{randomized} create the test data in a file that can be read with CSV Data set. This avoids wasting resources at run-time}. Rather providing the randomness in run time, the timeseries stored with the random order which satisfy the percentage of 70\% Scalar, 20\% Vector, and 10\% Grid as mentioned in \cref{se:test_plan}.
+Before running the test cases, it generates the metadata for timeseries and writes into a CSV file which is shared among the threads in the  JMeter. This occurs in the setup phase of the test cases. The metadata CSV file arrange in a way that within every 10 lines, 7 lines are Scalar timeseries, 2 lines are Vector timeseries, and 1 line is a Grid timeseries.
 
-The system is capable of storing any numeric value up to 3 decimal points. It does not make any difference based on the parameter type whether it is the precipitation or the temperature. Thus during the performance testing, \acrshort{jmeter} uses real precipitation data from \acrshort{curw}. One month period of data for five weather stations has been using to prepare the test data. The script to clean up and prepare the precipitation data is available as \emph{setup\_precipitation.sh} in wdias-performance.
+The system is capable of storing any numeric value up to 3 decimal points. It does not make any difference based on the parameter type whether it is the precipitation or the temperature. Thus during the performance testing,  JMeter uses real precipitation data from \acrshort{curw}. One month period of data for five weather stations has been using to prepare the test data. The script to clean up and prepare the precipitation data is available as \emph{setup\_precipitation.sh} in wdias-performance.
 
 \begin{lstlisting}[language=sh, caption=Preparation of precipitation data.]
 Set ROOT_DIR=~/wdias/wdias-performance-test
@@ -30,7 +30,7 @@ Set ROOT_DIR=~/wdias/wdias-performance-test
 When preparing the data, it creates three sets of data based on the time interval such as hourly (60min), 30min, and 15min data with modifying the replicated data.
 This will reduce the overhead in performance testing and increase the performance itself.
 Extract function use while creating the containers, and extract the data into the container. This reduces the context loading while creating the container images.
-While performing the load testing, \acrshort{jmeter} keeps update a date counter and creates over the one-month data. At the end of the current month, the date counter advance to the next month. But data is repeated using from the beginning. To provide more randomness, it switches over five locations as well. The JSR223 scripts were written generically such that is possible to tweak and use if there are more location data available.
+While performing the load testing,  JMeter keeps update a date counter and creates over the one-month data. At the end of the current month, the date counter advance to the next month. But data is repeated using from the beginning. To provide more randomness, it switches over five locations as well. The JSR223 scripts were written generically such that is possible to tweak and use if there are more location data available.
 
 Almost similar to how was the precipitation data proceed, the water level is prepared for Grid data. The Grid data files are real data output of FLO2D 150 meter hydrology model which uses in the \acrshort{curw}. Each file follow the format of ASCII Grid file and consist of 120 rows and 139 columns with using the \texttt{-9} for the missing data as an optimization. Each file size is 50,337 Bytes (50 Kilobytes).
 % One exception with Grid data during these test cases was, the maximum time step is 30min, instead of 15min due to the larger size of the data. But the \acrshort{wdias} is capable of supporting such request. The main purpose of the \acrshort{wdias} is to provide an extensible architecture framework, during the performance testing it is not much considered about scaling the Grid data handling as it using \acrshort{netCDF}, and it is another domain with an attraction up to some extent.
@@ -49,14 +49,14 @@ Set ROOT_DIR=~/wdias/wdias-performance-test
     Clean up extracted directories
 \end{lstlisting}
 The water level also contains the real data for one month of period and \emph{setup\_waterlevel.sh} script provides the functionality of preparation, cleanup, and extract.
-Also, it reset and repeat reading from the beginning when the \acrshort{jmeter} date counter keeps increasing.
+Also, it reset and repeat reading from the beginning when the  JMeter date counter keeps increasing.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Experimental Setup}
 \label{subse:experimental_setup}
 
-To create a higher workload using the \acrshort{jmeter}, it has a Distributed Testing feature. It uses the master-slave approach and it allowed to handle all the test cases via single instance, rather handling separate instances. But it has the following limitation of \emph{the same test plan runs by all the servers}. \acrshort{jmeter} does not distribute the load between servers, each runs the full test plan. So if you set 1,000 threads and have 6 \acrshort{jmeter} servers, you end up injecting 6,000 threads. When test cases run with \acrshort{jmeter} Distributed mode, the server node trigger the same copy of the test case on configured slave nodes parallel. At the end of the test cases, it gathers results into the master node.
+To create a higher workload using the  JMeter, it has a Distributed Testing feature. It uses the master-slave approach and it allowed to handle all the test cases via single instance, rather handling separate instances. But it has the following limitation of \emph{the same test plan runs by all the servers}.  JMeter does not distribute the load between servers, each runs the full test plan. So if you set 1,000 threads and have 6  JMeter servers, you end up injecting 6,000 threads. When test cases run with  JMeter Distributed mode, the server node trigger the same copy of the test case on configured slave nodes parallel. At the end of the test cases, it gathers results into the master node.
 
 \begin{figure}[htp]
     \centering
@@ -65,7 +65,7 @@ To create a higher workload using the \acrshort{jmeter}, it has a Distributed Te
     \label{fi:experimental_setup}
 \end{figure}
 
-When implementing load test cases with \acrshort{jmeter}, it uses threads to simulate the users. The root component of a test create is a thread group. There are different kinds of thread groups are available such as thread group (basic thread group), arrivals thread Group, free form arrivals thread group, stepping thread group, concurrency thread group, and ultimate thread group.
+When implementing load test cases with  JMeter, it uses threads to simulate the users. The root component of a test create is a thread group. There are different kinds of thread groups are available such as thread group (basic thread group), arrivals thread Group, free form arrivals thread group, stepping thread group, concurrency thread group, and ultimate thread group.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -77,7 +77,7 @@ When implementing load test cases with \acrshort{jmeter}, it uses threads to sim
 \end{itemize}
 While implementing the test cases for \acrshort{wdias}, it uses the Concurrency Thread Group with Throughput Shaping Timer because it supports the open workload approach.
 Using other thread groups, it required to find the exact number of threads and timer delays that produce the desired number of \acrfull{rps} to server. It is known as the \emph{closed workload}.
-With using \emph{Throughput Shaping Timer}, it only needs to configure the \acrshort{rps}. When combining this \acrshort{jmeter} plugin with Concurrency Thread Group using Schedule Feedback Function to dynamically maintain thread count required to achieve target \acrshort{rps} \cite{KarunarathneGihanWdias/wdias-performance-test:JMeter.}.
+With using \emph{Throughput Shaping Timer}, it only needs to configure the \acrshort{rps}. When combining this  JMeter plugin with Concurrency Thread Group using Schedule Feedback Function to dynamically maintain thread count required to achieve target \acrshort{rps} \cite{KarunarathneGihanWdias/wdias-performance-test:JMeter.}.
 
 \begin{figure}[htp]
     \centering
@@ -89,7 +89,7 @@ With using \emph{Throughput Shaping Timer}, it only needs to configure the \acrs
 \cref{fi:test_prod_throughtput_shaping_timer} shows the throughput shaping timer configurations use while load testing. The configurations as similar to the load test plan described in \cref{se:test_plan}. To get the maximum peak of 18,000 request per minutes, which is equivalent to 300 \acrshort{rps} is setup according the the figure.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-The test plans mentioned in \cref{se:test_plan} are implemented via the \acrshort{jmeter}. The following list shows the all the test cases used for the performance testing:
+The test plans mentioned in \cref{se:test_plan} are implemented via the  JMeter. The following list shows the all the test cases used for the performance testing:
 
 \begin{itemize}
     \item User-defined variables
@@ -113,9 +113,9 @@ The first step of the plan consists of setting up the timeseries metadata. At th
 \end{itemize}
 
 By creating the timeseries before help to reduce the overhead during the performance testing, and cause to more accurate \acrshort{rps} at the run time.
-Otherwise, \acrshort{jmeter} needs to allocate another set of threads for timeseries creation. Since the test cases insert data again set of timeseries, most of the time it about retrieving the timeseries metadata, rather than creating new timeseries in the \acrshort{wdias} system.
+Otherwise,  JMeter needs to allocate another set of threads for timeseries creation. Since the test cases insert data again set of timeseries, most of the time it about retrieving the timeseries metadata, rather than creating new timeseries in the \acrshort{wdias} system.
 
-The following list shows the test steps of \acrshort{jmeter} while performing the load testing and the configurations.
+The following list shows the test steps of  JMeter while performing the load testing and the configurations.
 
 \begin{itemize}
     \item HTTP Request Defaults
@@ -169,7 +169,7 @@ As mentioned in \cref{se:test_plan}\hl{, we planned to perform another test scen
 \dbc{Top of Fig. 4.2 useless as it's black. Anyway, this figure isn't needed}
 \gkc{Since we described about throughput shaping timer graph in \ref{subse:closed_vs_open_workload}, better to include it here. It include the details on RPS and how it's increasing over time. Will remove the black part. Also move this paragraph to the \cref{subse:closed_vs_open_workload}}
 
-With the above \acrshort{jmeter} test case setup, it needs to enable each test case separately and before running via the command line in the server. To do it in a much efficient way, a scripting tool has implemented, and accessible with the codebase \cite{KarunarathneWdias-performance-test/TEST_PLAN.md:Plan} as \emph{test-dev}.
+With the above  JMeter test case setup, it needs to enable each test case separately and before running via the command line in the server. To do it in a much efficient way, a scripting tool has implemented, and accessible with the codebase \cite{KarunarathneWdias-performance-test/TEST_PLAN.md:Plan} as \emph{test-dev}.
 
 \begin{lstlisting}[language=sh, caption=Performance Test Help]
 -h | --help: Usage
@@ -280,7 +280,7 @@ Users can use one of the above features to fine-tune the \acrshort{wdias} to per
     \item \emph{core} -- metadata, extensions, query, status and extension services
     \item \emph{grid} -- grid adapter, import and export grid data
     \item \emph{scalar} -- scalar and vector adapters, import and export of same data types
-    \item \emph{test} -- \acrshort{jmeter} and metric server
+    \item \emph{test} --  JMeter and metric server
 \end{itemize}
 \cref{fi:eks_node_setup} shows the overview of the show the nodes are setup and each microservices are assigned to each node, the connectivity of the nodes, and the data interactions via the arrows.
 The databases used for data consistency and performance in storage optimization with search capabilities. But because of that, it only possible to run one instance of those. In the \acrshort{wdias}, the MySQL and MongoDB are not getting higher load as adapter databases such as InfluxDB for scalar and vector data types, and netCDF for the grid data type. To keep up with the pace, those microservice pods are assigned to dedicated nodes to increase the performance of inter-service communication.

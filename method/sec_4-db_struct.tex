@@ -129,11 +129,11 @@ The following sections describe the database structure of \acrshort{wdias} with 
 As described in the above section, to reduce the overhead while searching for timeseries and handling duplicates, it required to have a timeseries metadata store. Since metadata consists of multiple key attributes, the data can be efficiently store using a \acrfull{rdbms}. This helps to store data without any duplicates and store the data with normalization. As an example, the parameter attribute can have one or two dozen of values. Using an \acrshort{rdbms}, those values can be stored once and reuse with defining timeseries against location via reference.
 
 \acrshort{wdias} is using SQL as the \acrfull{rdbms}. 
-Since the \acrshort{wdias} scope is to use open source tools, it is using \acrshort{mysql} as a persistent database for storing timeseries metadata described above.
-One instance of \acrshort{mysql} is using only by adapter-metadata service.
-Other than that, another instance of \acrshort{mysql} is using for adapter-extension which will be described in more detail \cref{se:data_preprocess}.
-\acrshort{mysql} is used only for these services, those will only keep the consistency of the schema for timeseries metadata and extension metadata.
-As mentioned in \cref{subse:redis}, it uses \acrshort{redis} instance is using for caching the data from \acrshort{mysql}, since the \acrshort{mysql} database instances, itself not going to get much load.
+Since the \acrshort{wdias} scope is to use open source tools, it is using  MySQL as a persistent database for storing timeseries metadata described above.
+One instance of  MySQL is using only by adapter-metadata service.
+Other than that, another instance of  MySQL is using for adapter-extension which will be described in more detail \cref{se:data_preprocess}.
+ MySQL is used only for these services, those will only keep the consistency of the schema for timeseries metadata and extension metadata.
+As mentioned in \cref{subse:redis}, it uses  Redis instance is using for caching the data from  MySQL, since the  MySQL database instances, itself not going to get much load.
 Other than MySQL, many open source databases can be used to replace the same functionality.
 \dbc{First start with a brief discussion on why a RDBMS is needed}
 \gkc{ADDED}
@@ -141,17 +141,17 @@ Other than MySQL, many open source databases can be used to replace the same fun
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Timeseries Database}
 \label{subse:influxdb}
-Among several timeseries open source databases, \acrshort{influxdb} \cite{influxdbInfluxDBDocumentation} \hl{is using a unique database indexing algorithm to gain higher performance while storing timeseries data} when compared to other databases available. Also, it has better support, higher usage and has following supports;
+Among several timeseries open source databases,  InfluxDB \cite{influxdbInfluxDBDocumentation} \hl{is using a unique database indexing algorithm to gain higher performance while storing timeseries data} when compared to other databases available. Also, it has better support, higher usage and has following supports;
 \begin{itemize}
   \item Open timeseries DB with MIT license
   \item Support SQL-Like query language
   \item Clustering available with a commercial version
 \end{itemize}
-Other than \acrshort{influxdb}, another database is Elastic Search which is mainly using for indexing for searching.
-With changing the configurations of the \acrshort{influxdb}, it is possible to adapt as required. As mention in \cite{influxdbInfluxDBDocumentation}, 
-\acrshort{influxdb} can setup on a computer that will give the required performance. Going further, users can use the commercial version of \acrshort{influxdb} to gain more performance.
+Other than  InfluxDB, another database is Elastic Search which is mainly using for indexing for searching.
+With changing the configurations of the  InfluxDB, it is possible to adapt as required. As mention in \cite{influxdbInfluxDBDocumentation}, 
+ InfluxDB can setup on a computer that will give the required performance. Going further, users can use the commercial version of  InfluxDB to gain more performance.
 
-Two instances of \acrshort{influxdb} is using in the WDIAS system by adapter-scalar and adapter-vector services. For the scalability, the system uses \emph{Database per Service} as mentioned in \cref{subse:database_per_service}.
+Two instances of  InfluxDB is using in the WDIAS system by adapter-scalar and adapter-vector services. For the scalability, the system uses \emph{Database per Service} as mentioned in \cref{subse:database_per_service}.
 But further, it split into two services, referring to \cref{subse:scale_cube}, the Z-axis scaling, the data is partitioned among a few servers based on valueType key attribute of timeseries.
 Which also conclude the concept of splitting into more services based on other key attributes such as timeseriesType, if further performance required.
 
@@ -166,23 +166,23 @@ NetCDF is widely using in the scientific domain due to it has the capability of 
 \subsection{Document-oriented Database}
 \label{subse:mongodb}
 
-\acrshort{wdias} is using \acrshort{mongodb} as the document-oriented database, as it has the Geo searching capabilities.
-\acrshort{mongodb} \cite{mongodbMongoDBManual} is a general-purpose, document-based, distributed database. And it supports:
+\acrshort{wdias} is using  MongoDB as the document-oriented database, as it has the Geo searching capabilities.
+ MongoDB \cite{mongodbMongoDBManual} is a general-purpose, document-based, distributed database. And it supports:
 \dbc{Need for a mix of relational, time series, document stores, and in-memory need to be first mentioned and justified in high-level design of WDIAS above.}
 \gkc{Adding those details in \cref{se:high_level_design} may confuse the reader. At that point it didn't go through that much of details of the wdias. I added some justification at the end of \cref{subse:timeseries_key_attributes}. Let me know if we want to highlight it with a different section there.}
 \begin{itemize}
   \item Supports query operations on geospatial data \cite{mongodbMongoDBManual}
   \item Clustering and Sharding available for scalability and reliability
 \end{itemize}
-\acrshort{mongodb} geospatial features are using to support Geo queries in the WDIAS. Other than that, external timeseries metadata queries are served by the indexed timeseries metadata data.
-If metadata not present in the adapter-query if fetch data from the adapter-metadata, then indexed and cache in the \acrshort{mongodb}. Vise a versa, if new timeseries create in the adapter-metadata, it triggers an event to adapter-query to index the new timeseries.
+ MongoDB geospatial features are using to support Geo queries in the WDIAS. Other than that, external timeseries metadata queries are served by the indexed timeseries metadata data.
+If metadata not present in the adapter-query if fetch data from the adapter-metadata, then indexed and cache in the  MongoDB. Vise a versa, if new timeseries create in the adapter-metadata, it triggers an event to adapter-query to index the new timeseries.
 In \cref{subse:scale_cube}, the Y-axis scaling concept is using here by splitting into the multiple services based on the functionality and scale of the system.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{In-Memory Database}
 \label{subse:redis}
-\acrshort{wdias} is using \acrshort{redis} \cite{redisRedisDocumentation} as the In-Memory database, since it is a widely used tool with good support, and it supports few other features such as Publisher Subscriber capabilities.
-\acrshort{redis} is an open-source (BSD licensed), used as a database, cache. Clustering is available for scalability.
-\acrshort{redis} uses as in-memory caching for fast access the frequent access data in adapter-metadata and adapter-extension.
-Other than that, adapter-status uses \acrshort{redis} as a key-value pair store for getting the status for async handling requests such as storing Grid data.
+\acrshort{wdias} is using  Redis \cite{redisRedisDocumentation} as the In-Memory database, since it is a widely used tool with good support, and it supports few other features such as Publisher Subscriber capabilities.
+ Redis is an open-source (BSD licensed), used as a database, cache. Clustering is available for scalability.
+ Redis uses as in-memory caching for fast access the frequent access data in adapter-metadata and adapter-extension.
+Other than that, adapter-status uses  Redis as a key-value pair store for getting the status for async handling requests such as storing Grid data.
 In adapter-extension uses Redis's Publisher Subscriber capabilities to create a cronjob in extension-scheduler when a new extension creates on \cref{se:data_preprocess}
