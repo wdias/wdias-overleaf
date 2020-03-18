@@ -12,9 +12,9 @@ After running the test plan with 60 minutes (24 data points), it observed the da
 \begin{table}[ht]
 \caption{Throughput and Latency of load testing with 60min data}
 \footnotesize
-\begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
+\begin{tabulary}{\linewidth}{|L|R|R|R|R|R|R|R|R|}
 \hline
-Label & \# Samples & Avg & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
+Label & Samples & Avg & Min & Max & 90\% Line & Std.Dev. & Error & RPS \\ \hline
 Insert Timeseries & 71826 & 28 & 13 & 2773 & 31 & 58.74 & 0.00\% & 40.5 \\ \hline
 Retrieve Timeseries & 71796 & 8 & 7 & 242 & 10 & 4.18 & 0.00\% & 40.7 \\ \hline
 Insert Grid & 7982 & 23 & 21 & 126 & 26 & 4.23 & 0.06\% & 4.5 \\ \hline
@@ -55,9 +55,9 @@ The conclusion of giving static latency while increasing the number of requests 
 \begin{table}[ht]
 \caption{Throughput and Latency of load test with 30min data}
 \footnotesize
-\begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
+\begin{tabulary}{\linewidth}{|L|R|R|R|R|R|R|R|R|}
 \hline
-Label & \# Samples & Average & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
+Label & Samples & Avg & Min & Max & 90\% Line & Std.Dev. & Error & RPS \\ \hline
 Insert Timeseries & 71759 & 29 & 14 & 1699 & 32 & 50.97 & 0.00\% & 40.5 \\ \hline
 Retrieve Timeseries & 71730 & 9 & 7 & 1033 & 10 & 6.04 & 0.00\% & 40.6 \\ \hline
 Insert Grid & 7972 & 44 & 40 & 162 & 49 & 8.17 & 0.08\% & 4.5 \\ \hline
@@ -98,9 +98,9 @@ When compared to \cref{fi:test_obs_all_60m_latency}, the latency for insert and 
 \begin{table}[ht]
 \caption{Throughput and Latency of load testing with 15min data}
 \footnotesize
-\begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
+\begin{tabulary}{\linewidth}{|L|R|R|R|R|R|R|R|R|}
 \hline
-Label & \# Samples & Average & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
+Label & Samples & Avg & Min & Max & 90\% Line & Std.Dev. & Error & RPS \\ \hline
 Insert Timeseries & 71775 & 30 & 12 & 1719 & 41 & 51.71 & 0.00\% & 40.5 \\ \hline
 Retrieve Timeseries & 71736 & 23 & 8 & 1623 & 32 & 50.18 & 0.00\% & 40.6 \\ \hline
 Insert Grid & 7975 & 91 & 77 & 279 & 112 & 19.58 & 1.42\% & 4.5 \\ \hline
@@ -164,9 +164,9 @@ Other than that, this test plan runs with enabling \acrshort{k8s} Auto-scaling f
 \begin{table}[ht]
 \caption{Throughput and Latency of load testing with 15min data while enabled \acrshort{k8s} auto-scaling}
 \footnotesize
-\begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
+\begin{tabulary}{\linewidth}{|L|R|R|R|R|R|R|R|R|}
 \hline
-Label & Samples & Avg & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
+Label & Samples & Avg & Min & Max & 90\% Line & Std.Dev. & Error & RPS \\ \hline
 Insert Timeseries & 71727 & 34 & 13 & 1777 & 27 & 118.78 & 0.00\% & 40.5 \\ \hline
 Retrieve Timeseries & 71693 & 7 & 5 & 1608 & 9 & 18.72 & 0.00\% & 40.5 \\ \hline
 Insert Grid & 7968 & 87 & 77 & 233 & 98 & 14.07 & 0.18\% & 4.5 \\ \hline
@@ -239,7 +239,7 @@ Query test plan performs over 5 minutes, and with a higher number of requests th
 \begin{table}[ht]
 \caption{Throughput and Latency of Query test cases with 15min data}
 \footnotesize
-\begin{tabulary}{\linewidth}{|L|C|C|C|C|C|C|C|C|}
+\begin{tabulary}{\linewidth}{|L|R|R|R|R|R|R|R|R|}
 \hline
 Label & Samples & Avg & Min & Max & 90\% Line & Std. Dev. & Error \% & RPS \\ \hline
 * → Locations & 11462 & 992 & 5 & 17569 & 1740 & 704.67 & 0.00\% & 38.3 \\ \hline

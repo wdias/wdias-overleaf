@@ -1,9 +1,10 @@
 \section{Architectural Decisions}
 \label{se:architectural_decisions}
 
-The initial design of \acrshort{wdias} used the \acrfull{soa}. Moreover, it tried to use an \acrfull{esb} to integrate different modules, as \acrshort{esb} is acting as a common layer for all of the modules. By default, \acrshort{esb} also provides publisher/subscribe (pub/sub) capabilities.
-\hl{Because} \acrshort{esb} \hl{mediators can be used to integrate the modules which are described in Section} \ref{subse:modules_weather_data_integration_sys}. 
-\gkc{FIXED below}
+The initial design of \acrshort{wdias} used the \acrfull{soa}. Moreover, it tried to use an \acrfull{esb} to integrate different modules, as \acrshort{esb} could act as a \hl{common layer} for all of the modules. By default, \acrshort{esb} also provides publisher/subscribe (pub/sub) capabilities.
+\hl{Because \acrshort{esb} mediators can be used to integrate the modules which are described in Section} \ref{subse:modules_weather_data_integration_sys}. 
+\dbc{Last sentence incomplete too.}
+
 The \acrshort{esb} has the processing units called \emph{mediators}. A mediator can take a message, carry out some predefined actions on it, and output the modified message. These mediator capabilities can use to integrate the modules of a weather data system as shown in \cref{fi:wdia_components}. \acrshort{esb} also supports different transportation protocols such as HTTP and Web sockets. However, it turned out that \acrshort{esb} is not suitable for data streaming or bulk data processing. Also, \acrshort{esb} suffers from a single point of failure, as all the messages are going through a common bus and slower communication (cant use for transfer data).
 
 In the second design phase of \acrshort{wdias}, we attempted to use the actor model using the AKKA framework \cite{HewittWhyModel} to overcome above \acrshort{esb} drawbacks. At the same time, we moved away from the \acrshort{soa} architecture design to the microservice architecture design. Thus we redesign the system architecture with decomposing into microservices and used actors to implement each microservice in the system. In that case, an actor or an actor with slave actors was a map to each microservice in \acrshort{wdias}. \acrshort{soa} focuses on imperative programming, while the microservices architecture focuses on a reactive actor programming style using faster messaging mechanisms. 
@@ -24,17 +25,11 @@ When compare to \acrshort{soa}, the microservice architecture has several advant
 
 Even with using the AKKA framework, it has some of the disadvantages of implementing each microservice as an actor as described in AKKA documentation \cite{Akka.ioWhenCluster}. One of the attractive features of microservice architecture is the independent nature of the microservices. This allows choosing a different technology for each microservice based on the advantage that could bring in. Also allowed to independently develop and maintain by multiple smaller and more focused teams/communities. But using the actors as microservice, the actors messaging between different services cause to result in a too-tight code coupling between the services and difficulties deploying these independent of each other, which is one of the main reasons for using a microservices architecture \cite{Akka.ioWhenCluster}. To overcome these issues, we moved to the concept of container-orchestration based architecture.
 
-\dbc{Kubernetes is a product. What you need to refer is to the concept of container-orchestration. Fix.}
-
 % \begin{itemize}
 %     \item \hl{Unable to choose technology. But} \acrshort{k8s} \hl{allows you to choose technology that is best suited for a particular functionality}
 %     \item \hl{As mentioned in the AKKA documentation} \cite{Akka.ioWhenCluster}, \hl{it is better for developing one microservice within the whole} \acrshort{wdias} design.
 % \end{itemize}
 
-\dbc{What are these 2 bullets?}
-\gkc{Absorbed those two points into above paragraph}
-\dbc{Don't use shortened words like it's, isn't, don't,... in writing}
-\gkc{Fixed all places after full search. I avoid that while typing as well. I can only find your comments with those.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \subsection{Brief introduction to the \acrfull{k8s}}

@@ -1,41 +1,43 @@
-This chapter includes the design decision taken while implementing the \acrfull{wdias}, and how is the system got adapted from the systems analyzed in Chapter \ref{ch:literature}.
-\cref{se:high_level_design} includes a brief discussion on how the weather forecasting is happening and why it needs to interact with multiple data formats is presented.
-\cref{se:architectural_decisions} discussed about how did we evolve over the architectural design while designing and implementing the \acrshort{wdias}.
-\cref{se:microservice} gives a better understanding of the microservice architectural concepts that follow while implementing the \acrshort{wdias}.
-Then the reasons behind developing \acrshort{wdias} database structure and technologies use for that discussed in \cref{se:db_struct}.
-\cref{se:data_preprocess} discussed how the \acrshort{wdias} enables for data preprocessing and adding capabilities via the concept of Extensions.
-Final \cref{se:query} includes details on how to perform timeseries search and Geo-based queries on the \acrshort{wdias}.
+This chapter presents the design decisions taken while implementing \acrfull{wdias}, and how is the system got \hl{adapted from the systems analyzed in Chapter} \ref{ch:literature}.
+\cref{se:high_level_design} presents a brief discussion on how the weather forecasting is happening and why it needs to interact with multiple data formats.
+\cref{se:architectural_decisions} presents how the architectural design of proposed solution evolved while designing and implementing \acrshort{wdias}.
+\cref{se:microservice} presents %gives a better understanding of the 
+microservice architectural concepts followed while implementing \acrshort{wdias}.
+Then the reasons behind developing \acrshort{wdias} database structure and technologies used are discussed in \cref{se:db_struct}.
+\cref{se:data_preprocess} discusses how \acrshort{wdias} enables data preprocessing and adding capabilities using extensions.
+Finally, \cref{se:query} includes details on how to perform timeseries search and geo-based queries on the \acrshort{wdias}.
 
+\dbc{It's just WDIAS. "the" should be used only on essential places to being the meaning. }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{High-level Design}
 \label{se:high_level_design}
 
-To get an overall idea of the flow of weather prediction, let us look into one of the flows using at \acrshort{curw} \cite{CUrWSL2017SL}.
-\dbc{Use CUrW-SL}
-\gkc{FIXED}
+To get an overall idea of the flow of weather prediction, let us look into one of the \hl{flows using} at the \acrshort{curw} \cite{CUrWSL2017SL}.
 
 \begin{enumerate}
     \item Extract \acrshort{GRIB} \acrshort{wrf} model data to \acrshort{netCDF}
-    \item From \acrshort{netCDF} to \acrshort{csv} of each location data, then feed to HEC-HMS hydro-dynamic model and get the output as \acrshort{csv}
-    \item \acrshort{csv} and Rain cell Grid feed into the FLO2D hydro-logic model, and get the water level as ASCII Grid files after completion of simulation
-    \item Upload ASCII files to ArcGIS create Raster files, then use for the LOSS Estimation
+    \item \hl{From} \acrshort{netCDF} to \acrshort{csv} of each location data, then feed to HEC-HMS hydro-dynamic model and get the output as a \acrshort{csv} file.
+    \item \acrshort{csv} and \hl{Rain cell Grid feed} into the FLO2D hydrologic model, and get the water level as ASCII Grid files after the simulation is complete.
+    \item Upload ASCII files to \hl{ArcGIS create raster files, then use for the LOSS Estimation}
 \end{enumerate}
-When looked into the above flow, it gives a clear understanding of multiple data formats using while weather predictions.
-Other than that, to correct the model outputs, it required to collect real-time data such as;
+
+\hl{When looked into the above flow, it gives a clear understanding of multiple data formats using while weather predictions.}
+Also, to correct the model outputs, \hl{it required} to collect real-time data such as:
 \begin{itemize}
-    \item Automated weather station sending data in higher frequent intervals via HTTP protocol
-    \item Automated water level stations send data in higher frequency
+    \item Frequently collected automated weather station data via HTTP protocol
+    \item Frequently collected automated water level stations data
 \end{itemize}
-Other than above many data formats using for handling data based on devices and standards which are using. Also, for data modeling, it needs to convert the data into model compatible data format, then after successfully run the model it needs to collect data from the model output data formats.
+
+\hl{Other than above many data formats using for handling data based on devices and standards which are using.} Also, for data modeling, it needs to convert the data \hl{into model compatible data format}. Then \hl{after successfully run the model it needs to collect data from the model output data formats.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Modules of a Weather Data System}
 \label{subse:modules_weather_data_integration_sys}
 
-\cref{fi:wdia_components} shows the basic functions of a Weather data integration and assimilation system which consists of the following modules:
+\cref{fi:wdia_components} shows the basic functions of a weather data integration and assimilation system consisting of the following modules:
 
 \begin{figure}[htbp]
-\centerline{\includegraphics[width=0.8\textwidth]{method/misc/weather_data_system_components.jpg}}
+\centerline{\includegraphics[width=1\textwidth]{method/misc/weather_data_system_components.jpg}}
 \caption{Modules of a weather data system.}
 \label{fi:wdia_components}
 \end{figure}
@@ -52,18 +54,11 @@ Then different users should be able to retrieve data as they required. Also, the
 
 % \paragraph{Timeseries}-- A timeseries is simply a series of data points ordered in time. In weather domain, it interest in timeseries in perspective of observations to forecasting. Each timeseries, the data points can be form in different formats as well. For example, scalar (0D), vector (1D), grid (2D), and polygon (2D).
 
-\dbc{Why are you referring to timeseries here? It's not one of the 3 key components in Fig. 3.1.}
-\gkc{Move this to WDIAS microservices \cref{sebse:wdias_microservices}. It need to describe the reason behind decompose into microservices. Seems to be this is confusing at this point.}
-
 % In the proof of concept design described below, WDIAS focuses on handling scalar, vector and grid timeseries data. However, the system could be extended to handle polygon-based timeseries as well.
 
 % \subsubsection{Base of WDIAS architecture}
-\dbc{What's Base of WDIAS architecture?}
-\gkc{Moved to WDIAS database structure section \cref{sebse:wdias_microservices}}
-
 % \hl{The base of WDIAS architecture origins based on attributes of a timeseries.} There are many attributes to differentiate timeseries one from another. But 
 % Among many attribute to differentiate a timeseries from another, the following can be consider as the key attributes in uniquely identify a timeseries from another: % for the \acrshort{wdias}.
-\dbc{Highlighted sentence doesn't make sense to me. All yellow highlights mean they are not clear.}
 
 % \begin{itemize}
 %     \item Module -- module that generates the timeseries
