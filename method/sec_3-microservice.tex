@@ -78,7 +78,7 @@ As seen in Figure of \cref{fi:wdias_micro_on_demand} and \cref{fi:wdias_micro_as
     \caption{\acrshort{wdias} architecture for handling requests on demand}
     \label{fi:wdias_micro_on_demand}
 \end{figure}
-The left side of \cref{fi:wdias_micro_on_demand} shows the import modules of the \acrshort{wdias}, and the right side shows the export modules. As explained section \cref{subse:dumb_pipes}, each import microservice only does the specific task of converting and forwarding the request to the correct data adapter module.
+The left side of \cref{fi:wdias_micro_on_demand} shows the import modules of the \acrshort{wdias}, and the right side shows the export modules. As explained \cref{subse:dumb_pipes}, each import microservice only does the specific task of converting and forwarding the request to the correct data adapter module.
 For each data type, there is an adapter microservice is running which is optimized to storing such type of data. And the metadata data of the timeseries store using \acrshort{rdbms} which gives more performance over retrieving metadata data. The metadata is cached with the In-Memory database to fast access as mentioned in \cref{subse:redis}.
 The system generates a unique identifier for each timeseries, and throughout the \acrshort{wdias}, other microservice use it to handle data for fast access.
 
