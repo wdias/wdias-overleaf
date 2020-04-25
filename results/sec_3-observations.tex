@@ -1,13 +1,13 @@
-\section{\hl{Performance Evaluation}}
+\section{Performance Test Observations}
 \label{se:observations}
 
-According to \cref{se:test_plan} section, This section includes the observations based one the test plans in \cref{se:test_plan} and test plan test up which is explained in \cref{se:workload}. Sections \ref{subse:obs_test_plan_all_60min} to \ref{subse:obs_test_plan_all_auto_15min} discuss the observations collected with performing the Load test plans over 60 minutes data (24 data points), 30 minutes data (48 data points) and 15 minutes data (96 data points) by variate the request size. Then another performance test with enabling auto-scaling for the higher resource utilized microservices as explained in \cref{subse:test_plan_metrics}.
+This section includes the observations based on the test plans discussed in Section \cref{se:test_plan}, and the experimental system setup explained in \cref{se:workload}. Sections \ref{subse:obs_test_plan_all_60min} to \ref{subse:obs_test_plan_all_auto_15min}, we discuss the observations collected with performing the Load test plans over 60 minutes data (24 data points per request), 30 minutes data (48 data points per request), and 15 minutes data (96 data points per request) by varying the request size. Then we perform another round of 15 minutes data with enabling auto-scaling for the higher resource utilized microservices.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Load Testing with hourly data}
+\subsection{Load Testing with hourly resolution data}
 \label{subse:obs_test_plan_all_60min}
 
-After running the test plan with 60 minutes (24 data points), it observed the data summary of \cref{tab:obs_all_60_min_summary}. It performed 311k of sample requests.
+After running the test plan with 60-minute resolution data (24 data points per request), we observed the data summary of \cref{tab:obs_all_60_min_summary}. The test plan performed 311k of sample requests within 30 minutes of elapsed time.
 
 \begin{table}[ht]
 \caption{Throughput and Latency of load testing with 60min data}
@@ -24,8 +24,8 @@ Query: Location & 71804 & 3 & 2 & 109 & 3 & 1.52 & 0.00\% & 40.5 \\ \hline
 \end{tabulary}
 \label{tab:obs_all_60_min_summary}
 \end{table}
-Insert Timeseries performed over Scalar and Vector data types with each request send with 24 data points. On average it takes 28ms to insert data into the \acrshort{wdias}, and up to 90\% percentile inserted data within 31ms. Noticeably it has 0\% of errors which means that all the requests are completed successfully. On average, \acrshort{wdias} handled 40.5 \acrshort{rps} for Scalar and Vector data with the given workload. The performance of the Retrieve of Scalar and Vector Timeseries is similar to insert timeseries due to it depends on it.
-On the other hand, Insert Grid Timeseries data perform with 23ms with almost all the requests perform within the same amount of time, hence the standard deviation is smaller. The delay in inserting Grid timeseries smaller because those requests are handling asynchronously. Retrieve Grid Timeseries data perform the same but with a bit higher value of latency of 68ms. Both insert and retrieve grid timeseries data have 4.5 \acrshort{rps} since it only gets 10\% of the number of requests per given time via the test plan as explained in the data ratio in \cref{se:test_plan}.
+Insert timeseries performed over scalar and vector data types with each request sent with 24 data points. On average, it took 28ms to insert scalar and vector data into the \acrshort{wdias}, and up to 90\% percentile inserted data within 31ms. Noticeably it has 0\% of errors, which means that all the requests completed successfully. Also, \acrshort{wdias} handled 40.5 \acrshort{rps} of scalar and vector data requests with the given workload. The retrieval of scalar and vector timeseries has lesser delay than the insertion.
+On the other hand, insert grid timeseries data performed within 23ms, and almost all the requests perform within the same amount of time. Hence the standard deviation is smaller. Delay with inserting grid timeseries smaller because those requests are handled asynchronously. Retrieve grid timeseries data performed with a bit higher value of latency of 68ms due to performed the retrieve request on-demand. Both insert and retrieve grid timeseries data have 4.5 \acrshort{rps} since it only gets 10\% of the number of requests per given time during the load test.
 
 \begin{figure}[htp]
     \centering
@@ -33,7 +33,7 @@ On the other hand, Insert Grid Timeseries data perform with 23ms with almost all
     \caption{Load testing with hourly data - Response Time vs Threads}
     \label{fi:test_obs_all_60m_response_vs_threads}
 \end{figure}
-\cref{fi:test_obs_all_60m_response_vs_threads} shows the response time against the number of active threads. As the graph shows, the response time kept the same while increasing the number of active threads against each test case. This shows the scalability of the \acrshort{wdias} since the system able to process more requests without a significant change in the latency. When the number of active threads increased more than 122, \cref{fi:test_obs_all_60m_response_vs_threads} shows uncertainty in the inserting and retrieving Scalar and Vector data. This is because of those data handle on demand and depend on the timeseries database performance.
+\cref{fi:test_obs_all_60m_response_vs_threads} shows the response time against the number of active threads for 60-minute data requests. As the graph shows, the response time kept the same while increasing the number of active threads against each test case. The above graph shows the scalability of the \acrshort{wdias} since the system is able to process more requests without a significant change in the latency. When the number of active threads increased more than 122, \cref{fi:test_obs_all_60m_response_vs_threads} shows uncertainty in the inserting and retrieving scalar and vector data. The performance degrades because those data handles on-demand and depends on the timeseries database performance.
 
 \begin{figure}[htp]
     \centering
@@ -42,15 +42,14 @@ On the other hand, Insert Grid Timeseries data perform with 23ms with almost all
     \label{fi:test_obs_all_60m_latency}
 \end{figure}
 
-\cref{fi:test_obs_all_60m_latency} graph provides a better overview of the variation of latency over the elapsed time of the test plan against the number of server hits per second.
-The conclusion of giving static latency while increasing the number of requests in \cref{fi:test_obs_all_60m_response_vs_threads} can further prove with this graph since \cref{fi:test_obs_all_60m_latency} graph gives in detail an overview of the test plan period.
+\cref{fi:test_obs_all_60m_latency} graph provides a better overview of the variation of latency over the elapsed time of the test plan against the number of server hits per second. This graph further proves that the system was able to handle the increasing workload without any significant change in the delay.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Load Testing with 30min data}
+\subsection{Load Testing with 30-min resolution data}
 \label{subse:obs_test_plan_all_30min}
 
-\cref{subse:obs_test_plan_all_30min} discussed the test plan performance with 30 minutes data which means 48 data points per each request in Scalar and Vector timeseries, and 48 ASCII grid files per each insert request. It performed round up to 311k of sample requests which are almost similar to \cref{subse:obs_test_plan_all_60min} processed samples.
+Next, we performed the test plan with 30-minutes resolution data, which means 48 data points per each request for the scalar and vector data types, and 48 ASCII grid files per each insertion request for the grid data type. Also, the test plan performed round up to 311k number of sample requests, which is almost similar to the number of samples processed with hourly resolution data.
 
 \begin{table}[ht]
 \caption{Throughput and Latency of load test with 30min data}
@@ -68,7 +67,7 @@ TOTAL & 310878 & 129 & 0 & 1699 & 503 & 207.10 & 0.00\% & 175.3 \\ \hline
 \label{tab:obs_all_30_min_summary}
 \end{table}
 
-\cref{tab:obs_all_30_min_summary} shows the response latency summary details and \acrshort{rps} as explained in \cref{subse:obs_test_plan_all_60min}. And the results are almost similar to the observations in \cref{tab:obs_all_60_min_summary}. This implies that even the request size is increased, the \acrshort{wdias} can perform better the same as the with smaller size of data.
+\cref{tab:obs_all_30_min_summary}shows the response latency summary details and \acrshort{rps} with 30-min resolution data. The results are almost similar to the observations in \cref{subse:obs_test_plan_all_60min}. Even though we doubled the request size, \acrshort{wdias} was able to keep the performance almost the same instead of increasing the latency twice.
 
 \begin{figure}[htp]
     \centering
@@ -77,8 +76,7 @@ TOTAL & 310878 & 129 & 0 & 1699 & 503 & 207.10 & 0.00\% & 175.3 \\ \hline
     \label{fi:test_obs_all_30m_response_vs_threads}
 \end{figure}
 
-\cref{fi:test_obs_all_30m_response_vs_threads} shows the response time against the number of active threads for 30min data. As the graph shows, the response time kept the same while increasing the number of active threads against each test case. This shows the scalability of the \acrshort{wdias} since the system able to process more requests without a significant change in the latency.
-When the number of active threads increased more than 110, \cref{fi:test_obs_all_30m_response_vs_threads} shows uncertainty in the inserting and retrieving Scalar and Vector data. This graph is similar to the \cref{fi:test_obs_all_60m_response_vs_threads}, but the active thread count goes down as a result of increasing the request size.
+\cref{fi:test_obs_all_30m_response_vs_threads} shows the latency against the number of active threads for the test plan with 30-min resolution data. As the graph shows, the response time kept almost constant while increasing the number of active threads. Thus, we can say that \acrshort{wdias} is a scalable system since it was able to increase the throughput without a significant change in the latency. When the number of active threads increased, \cref{fi:test_obs_all_30m_response_vs_threads} shows uncertainty in the insertion and retrieval of scalar and vector data. Some of the facts cause this is, those operations are handled on-demand. At the same time, the system is writing timeseries while reading from the timeseries database. The InfluxDB can fine-tune for writes or read based on the requirements, but we used it with default configurations.
 
 \begin{figure}[htp]
     \centering
@@ -86,15 +84,14 @@ When the number of active threads increased more than 110, \cref{fi:test_obs_all
     \caption{Load testing with 30 minutes of data - Latency against server hits}
     \label{fi:test_obs_all_30m_latency}
 \end{figure}
-\cref{fi:test_obs_all_30m_latency} graph provides a better overview of the variation of latency over the elapsed time of the test plan against the number of server hits per second. This graph also concludes that over time latency does not change very much. But during the peak load, it shows some variation in the insert and retrieves of Grid timeseries.
-When compared to \cref{fi:test_obs_all_60m_latency}, the latency for insert and retrieve Grid timeseries increase by some amount.
+\cref{fi:test_obs_all_30m_latency} graph provides a better overview of the variation of latency over the elapsed time of the test plan against the \acrshort{rps}. By referring to the graph, we can see that over time the latency does not change very significantly. However, during the peak load, it shows a minor variation in latency of the insertion and retrieval of grid timeseries. When compared to \cref{fi:test_obs_all_60m_latency}, the latency of insertion grid timeseries data almost doubled. The grid timeseries data was handled asynchronously after successfully storing, thus the latency for storing the data increased by a factor of two since the request data size also increased twice.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Load Testing with 15min data}
+\subsection{Load Testing with 15-min resolution data}
 \label{subse:obs_test_plan_all_15min}
 
-\cref{subse:obs_test_plan_all_15min} discussed about the test plan performance with 15 minutes data which means 96 data points per each request in Scalar and Vector timeseries, and 96 ASCII Grid files per each insert Grid timeseries request. These requests are four times larger than the \cref{subse:obs_test_plan_all_60min} request size. It performed approximately 311k of sample requests which are almost similar to \cref{subse:obs_test_plan_all_30min} processed samples.
+During this section, we performed the test plan with 15-minutes resolution data, which means 96 data points per each request for the scalar and vector data types, and 96 ASCII grid files per each insertion request for the grid data type. The size of each request is four times larger than the 60-min resolution data. Here also, the test plan performed approximately 311k of sample requests, which are almost similar to sample requests made during 60-min and 30-min resolution data.
 \begin{table}[ht]
 \caption{Throughput and Latency of load testing with 15min data}
 \footnotesize
@@ -111,7 +108,7 @@ Query: Location & 71749 & 3 & 2 & 130 & 4 & 2.32 & 0.00\% & 40.5 \\ \hline
 \label{tab:obs_all_15_min_summary}
 \end{table}
 
-\cref{tab:obs_all_15_min_summary} shows the response latency summary details and \acrshort{rps} as same as explained in \cref{subse:obs_test_plan_all_30min}. And the latency observations are increased by some amount when compared to the observations in \cref{tab:obs_all_30_min_summary}. Noticeably retrieving latency of all types of data types increased by a considerable amount. The same following the trend, the standard deviation of retrieve timeseries data increased my considerable amount for all the types. We can assume that more writing to the databases affected reads as well. Event the request data size increased by 4x time, the \acrshort{wdias} were able to handle them without any significant performance issues. And the system able to provide the same throughput as shown in \cref{tab:obs_all_30_min_summary}.
+\cref{tab:obs_all_15_min_summary} shows the response latency summary details and \acrshort{rps} of the test plan with 15-min resolution data. When compared to the observations from the performance test with 30-min data, the request latency also increased for all sample requests. Also, the standard deviation of retrieval timeseries data increased by a considerable amount for all the data type's sample requests. One of the reasons for increasing the retrieval data delay was while performing heavy database writes on the database has effects on the database reads. Even though we increased the request data size by four times higher, the system was able to handle all requests without significant performance issues. Also, the system provided the same throughput as with 60-min and 30-min resolution data.
 
 \begin{figure}[htp]
     \centering
@@ -120,8 +117,7 @@ Query: Location & 71749 & 3 & 2 & 130 & 4 & 2.32 & 0.00\% & 40.5 \\ \hline
     \label{fi:test_obs_all_15m_response_vs_threads}
 \end{figure}
 
-\cref{fi:test_obs_all_15m_response_vs_threads} shows the response time against the number of active threads for 15min data. As the graph shows, the response time kept the same while increasing the number of active threads against each test case. When the number of active threads increased more than 140, the \cref{fi:test_obs_all_15m_response_vs_threads} show uncertainty in the inserting and retrieving all data types. The latency of insert and retrieve Grid timeseries data goes up compared to \cref{fi:test_obs_all_30m_response_vs_threads}.
-With higher request size, it becomes to notice the latency also increase by a small factor when the number of active thread increased. This can notice on with insert and retrieval of Grid timeseries data.
+\cref{fi:test_obs_all_15m_response_vs_threads} shows the latency against the number of active threads for the test plan with 15-min resolution data. As per the graph, the system was able to keep the response latency constant while increasing the number of active threads. However, when the number of active threads became higher, there was a disturbance with the response delay during the insertion and retrieval of timeseries data. The latency of insert and retrieval of grid timeseries data increased twice when compared to 30-min resolution data. With a larger request size, we can notice the latency also increased by a smaller factor when we increased the number of active threads. 
 
 \begin{figure}[htp]
     \centering
@@ -130,9 +126,7 @@ With higher request size, it becomes to notice the latency also increase by a sm
     \label{fi:test_obs_all_15m_latency}
 \end{figure}
 
-\cref{fi:test_obs_all_15m_latency} graph provides a overview of the variation of latency over elapsed time of the test plan against the number of server hits per second for 15min data.
-This graph shows that over time \acrshort{wdias} was able to keep the latency constant over the test plan. But at peak time, it tends to vary from the mean value a lot.
-One noticeable fact is, throughout the test period, it shows spikes in latency when compared to \cref{fi:test_obs_all_60m_latency} and \cref{fi:test_obs_all_30m_latency}.
+\cref{fi:test_obs_all_15m_latency} graph provides an overview of the variation of latency over the elapsed time of the test plan against the number of server hits per second for 15-min resolution data. As per the graph, the system was able to keep the latency constant all over the test plan. However, at the peak, the latency tends to vary from the mean value by a smaller factor. Also, we can observe that there were lots of latency spikes throughout the test plan when we increased the request size.
 
 \begin{figure}[htp]
     \centering
@@ -145,21 +139,12 @@ One noticeable fact is, throughout the test period, it shows spikes in latency w
 The formula for total server transaction throughput is \(<active threads> * 1 second / <1  thread response time>\) \cite{JMeterPluginsTransactionPlugin}. It shows the statistical maximum possible number of transactions based on the number of users accessing the application.
 By combining the \cref{fi:test_obs_all_15m_latency}, this graph shows that the throughput of the system gets increased without much change in the latency, thus it proves the scalability of the \acrshort{wdias}.
 
-\begin{figure}[htp]
-    \centering
-    \includegraphics[width=0.8\textwidth]{results/obs/all/obs_all_15m_response_times_percentiles.png}
-    \caption{Load testing with 15 minutes of data - Response times Percentiles}
-    \label{fi:test_obs_all_15m_latency_percentile}
-\end{figure}
-\cref{fi:test_obs_all_15m_latency_percentile} visually shows the summary of \cref{tab:obs_all_15_min_summary} latency up to 90\% percentile. With higher request size data, the \acrshort{wdias} able to process the requests without significant change in latency up to 90\% percentile.
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Load Testing with Auto Pod Scaling}
+\subsection{Load Testing with 15-min resolution data while Auto Pod Scaling enabled}
 \label{subse:obs_test_plan_all_auto_15min}
 
-This \cref{subse:obs_test_plan_all_auto_15min} discussed the test plan performance with 15 minutes data which means 96 data points per each request in Scalar and Vector timeseries, and 96 ASCII Grid files per each insert Grid timeseries request. These requests are four times larger than the \cref{subse:obs_test_plan_all_60min} request size. It performed approximately 311k of sample requests which are almost similar to \cref{subse:obs_test_plan_all_15min} processed samples.
-Other than that, this test plan runs with enabling \acrshort{k8s} Auto-scaling for the high resource utilized microservice as explained in \cref{subse:test_plan_metrics}. With the test load used for the performance test, import-ascii-grid-upload microservice is using lots of CPU, and adapter-grid microservice is using lots of Memory. During this test plan, \acrshort{wdias} start with the auto-scaling enabled for import-ascii-grid-upload microservice. Since adapter-grid is a consistent service for storing netCDF files, it is not possible to auto scale, since \acrshort{eks} does not support multiple reads writes support volumes \cite{LinuxFoundationPersistentKubernetes}.
+Here we did the performance test plan with 15-minutes resolution data, which is similar to the above section. However, during the test plan, we enabled the K8s auto-scaling only for higher resource utilized microservices, as explained in \cref{subse:test_plan_metrics}. While performing the above test plans, we noticed the import-ascii-grid-upload microservice is using lots of CPU, and the adapter-grid microservice is using lots of memory. Before starting the test plan, we configured auto-scaling for the import-ascii-grid-upload microservices. However, the adapter-grid microservice is a consistent service for storing netCDF files. If we want to enable the auto-scaling for the service, all microservice instances of adapter-grid need to share data via shared storage. Since \acrshort{eks} does not support multiple reads and writes support volumes \cite{LinuxFoundationPersistentKubernetes}, we are unable to enable auto-scaling during the test plan. However, the test plan performed approximately 311k of almost similar sample requests during the above sections.
 
 \begin{table}[ht]
 \caption{Throughput and Latency of load testing with 15min data while enabled \acrshort{k8s} auto-scaling}
@@ -177,8 +162,7 @@ Query: Location & 71704 & 1 & 0 & 203 & 2 & 2.05 & 0.00\% & 40.5 \\ \hline
 \label{tab:obs_all_auto_15_min_summary}
 \end{table}
 
-\cref{tab:obs_all_auto_15_min_summary} shows the response latency summary details and \acrshort{rps} as same as explained in \cref{subse:obs_test_plan_all_15min}.
-During this test plan. the main focus on the auto-scaling enabled microservice. As per the insert grid latency in the \cref{tab:obs_all_auto_15_min_summary}, the average insert latency is reduced from 91ms to 87ms. Also, the error percentage reduced from 1.42\% to 0.18\%. Standard deviation reduced from 19.58 to 14.07 which means the latency is much closer to the average latency. These improvements in insert Grid timeseries data seem to affect on output of retrieve Grid timeseries data as well.
+\cref{tab:obs_all_auto_15_min_summary} shows the response latency summary details and \acrshort{rps} as explained in \cref{subse:obs_test_plan_all_15min}. If we analyzed the performance of the auto-scaling enabled microservice, the average grid data insertion latency was reduced from 91ms to 87ms. Also, we can notice that the error percentage reduced from 1.42\% to 0.18\%. Since the standard deviation also reduced, we can conclude that the latencies are closer to the average latency. Further, these improvements in insert Grid timeseries data seem to affect the output of retrieve Grid timeseries data as well.
 
 \begin{figure}[htp]
     \centering
@@ -186,9 +170,8 @@ During this test plan. the main focus on the auto-scaling enabled microservice. 
     \caption{Load testing with 15 minutes of data with enabled auto-scaling - Latency against server hits}
     \label{fi:test_obs_all_auto_15m_latency}
 \end{figure}
-\cref{fi:test_obs_all_auto_15m_latency} graph provides an overview of the variation of latency over the elapsed time of the test plan against the number of server hits per second for 15min data while auto-scaling enabled for \acrshort{k8s}.
-This graph show that over the time \acrshort{wdias} were able to keep the latency constant over the test plan.
-When compared to \cref{fi:test_obs_all_15m_latency}, throughout the test period, the latency spikes become less.
+\cref{fi:test_obs_all_auto_15m_latency} graph provides an overview of the variation of latency over the elapsed time of the test plan against the number of server hits per second for 15min data while auto-scaling enabled for K8s. According to the graph, the \acrshort{wdias} was able to keep the latency constant all over the elapsed time.
+When compared to \cref{fi:test_obs_all_15m_latency} without auto-scaling, we can see lesser latency spikes throughout the test period.
 
 \begin{figure}[htp]
     \centering
@@ -197,10 +180,8 @@ When compared to \cref{fi:test_obs_all_15m_latency}, throughout the test period,
     \label{fi:test_obs_all_auto_15m_throughtput}
 \end{figure}
 
-\cref{fi:test_obs_all_auto_15m_throughtput} shows the total server's transaction throughput against number of active threads.
-When compared to \cref{fi:test_obs_all_15m_throughtput}, the estimated throughput with a higher number of active threads become stable at the graph. This means enabling auto-scaling also improves the throughput with a higher number of active users as well.
+\cref{fi:test_obs_all_auto_15m_throughtput} shows the total server's transaction throughput against the number of active threads. When compared to \cref{fi:test_obs_all_15m_throughtput} without auto-scaling, the estimated throughput with a higher number of active threads becomes stable, according to the graph. Thus, we can conclude that enabling auto-scaling also improves the throughput by supporting a higher number of active users. During the next paragraphs, we discuss the resource usage while running the test plan while enabling the auto-scaling.
 
-The following charts show the resource usage while running the all test plan while enabling the auto-scaling.
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.8\textwidth]{results/obs/all_auto/obs_all_auto_15m_import_export_res.png}
@@ -208,7 +189,7 @@ The following charts show the resource usage while running the all test plan whi
     \label{fi:obs_all_auto_15m_import_export_res}
 \end{figure}
 
-\cref{fi:obs_all_auto_15m_import_export_res} shows the CPU usage and Memory usage for import timeseries modules and export timeseries modules. The CPU usage is shown with milli CPUs \cite{LinuxFoundationManagingKubernetes} (1 CPU = 1000m CPUs) and the Memory usage shown with Megabytes (Mi) \cite{LinuxFoundationManagingKubernetes}. Noticeable, the import-ascii-grid-upload microservice used around 10 CPUs at the peak time while using 3.6 Gb of Memory. Another important fact is, after the test cases finished, the \acrshort{wdias} cool down the system via \acrshort{k8s} auto-scaling and release the resources. This clearly shows the elasticity of the \acrshort{wdias} according to the workload.
+\cref{fi:obs_all_auto_15m_import_export_res} shows the CPU usage and memory usage for import timeseries modules and export timeseries modules with 1 minutes resolution. We show the CPU usage with milli CPUs \cite{LinuxFoundationManagingKubernetes} (1 CPU = 1000m CPUs) and the memory usage shown with Megabytes (Mi) \cite{LinuxFoundationManagingKubernetes} in the graphs. Noticeably, the import-ascii-grid-upload microservice used around 10 CPUs at the peak time while using 3.6 Gigabytes (Gb) of memory. Another important fact is, after the test cases finished, the \acrshort{wdias} cooled down the system via K8s auto-scaling and released the resources. Thus, we can see the elasticity of the \acrshort{wdias} according to the workload.
 
 \begin{figure}[htp]
     \centering
@@ -217,9 +198,7 @@ The following charts show the resource usage while running the all test plan whi
     \label{fi:obs_all_auto_15m_import_grid_pod}
 \end{figure}
 
-\cref{fi:obs_all_auto_15m_import_grid_pod} shows the number of import-ascii-grid-upload pods scheduled overtime. The auto-scaling enabled with the configurations of 1 to 10 pods with the recommended CPU usage with 80\%. And the pods scheduled with 1 CPU requested, and limit with 2 CPUs per pod.
-As the graph shows, 3 pods scheduled at the initial as per the configuration of the helm chart. While increasing the workload, new pods get spawn while keeping the constraint of 80\% of recommended CPU utilization. After \acrshort{k8s} spawn 10 maximum pods, it stops spawning new pods. But the pods were able to perform with vertical scaling since those are not hit the CPU limit of 2.
-\cref{fi:obs_all_auto_15m_adapter_dbs_res} shows the resource utilization of database adapters in the \acrshort{wdias}.
+\cref{fi:obs_all_auto_15m_import_grid_pod} shows the number of import-ascii-grid-upload pods scheduled overtime during the test plan. As mentioned in the previous paragraph, we enabled the auto-scaling with a maximum of 10 pods and 80\% recommended CPU usage. As the graph shows, we scheduled three pods before initialing the test plan. When the workload increased, K8s spawned new pods while keeping the total CPU utilization up to 80\%, as we configured above. After K8s spawned ten maximum pods, it stopped spawning new pods. However, each pod was able to vertical scale up to the limit of 2 CPUs. Even we saw the resources released after the peak load, but the number of pods did not decrease according to the graph. K8s has a threshold of reducing the number of pods, and it waits for 5 minutes before terminating a pod after a resource is released. \cref{fi:obs_all_auto_15m_adapter_dbs_res} shows the resource utilization of database adapters in the \acrshort{wdias}. The adapter-scalar and adapter-vector are not getting heavy load since they only process a scalar array of data points. However, we can see the CPU usage over time increased according to the test plan workload and cool down after the peak. For the adapter-grid, the CPU resource utilization increased and cooled down similarly to other adapters. However, the memory resources are not released due to the caching of netCDF files by the application.
 
 \begin{figure}[htp]
     \centering
@@ -233,8 +212,7 @@ As the graph shows, 3 pods scheduled at the initial as per the configuration of 
 \subsection{Query Module Load Test}
 \label{subse:obs_test_plan_query_15min}
 
-This \cref{subse:obs_test_plan_query_15min} discussed the Query test plan performance. It performs multiple information retrieval queries such as query over locations, parameters, and timeseries, etc which are described over \cref{se:query}. It performed approximately 123k of sample requests.
-Query test plan performs over 5 minutes, and with a higher number of requests than other test plans with a peak of 600 hits per seconds.
+This \cref{subse:obs_test_plan_query_15min} discussed the query test plan performance. During the test plan, we performed multiple information retrievals queries such as queries over locations, parameters, and timeseries, which we described in the test planning phase. The test plan performed approximately 123k of sample requests only with the query microservice during the test period. We performed the query test plan over 5 minutes with a higher number of requests than other test plans with a peak of 600 hits per second.
 
 \begin{table}[ht]
 \caption{Throughput and Latency of Query test cases with 15min data}
@@ -258,8 +236,7 @@ Area, Parameter → Timeseries & 11084 & 864 & 1 & 16699 & 1584 & 751.00 & 0.00\
 \label{tab:obs_query_15_min_summary}
 \end{table}
 
-\cref{tab:obs_query_15_min_summary} shows the response latency summary details. The average latency is much higher than the minimum value. Also, it reported higher maximum values as well. Standard deviation showed a quiet higher value which means the response latency values are not closer to the average value. Noticeably, it does not report any errors, which means all the requests successfully process.
-The throughput for each test case is much higher and similar to all the requests. This is happening since all of these requests are handled via the adapter-query, it depends on the  MongoDB database performance.
+\cref{tab:obs_query_15_min_summary} shows the response latency summary details. The average latency is much higher than the minimum value. Also, the summary reported higher maximum values as well. Standard deviation showed a quiet higher value, which means the response latency values are not closer to the average value. Noticeably, we can not see any errors in the table, which means all the requests successfully process. The throughput is similar among all the requests. The performance of the adapter-query depends on the performance of the document storage database performance and geo-indexing performance.
 
 \begin{figure}[htp]
     \centering
@@ -267,7 +244,7 @@ The throughput for each test case is much higher and similar to all the requests
     \caption{Load testing query test over 5 minutes - Response Latency over Time}
     \label{fi:test_obs_query_5m_response_latency}
 \end{figure}
-\cref{fi:test_obs_query_5m_response_latency} shows the response latency overtime for the query test plan. When the number of requests gets higher, the latency also gets increased. That means adapter-query is not very much scalable with the current configurations.
+\cref{fi:test_obs_query_5m_response_latency} shows the response latency overtime for the query test plan. When the number of requests gets higher, the latency also gets increased. Further, \cref{fi:test_obs_query_5m_response_times_vs_threads} shows the response latency against the number of active threads for the query test plan. When the number of server hits gets higher, the latency also increases. According to the Figures, we can conclude that the performance of the adapter-query depends on the database. Even if we increase the number of adapter-query pods, the throughput of the microservice is not going to increase until we increase the performance by using the z-axis scaling of scale cube concept.
 
 \begin{figure}[htp]
     \centering
@@ -275,7 +252,6 @@ The throughput for each test case is much higher and similar to all the requests
     \caption{Load testing query test over 5 minutes - Response Latency Times vs Threads}
     \label{fi:test_obs_query_5m_response_times_vs_threads}
 \end{figure}
-\cref{fi:test_obs_query_5m_response_times_vs_threads} shows the response latency against number of active threads for the query test plan. When the number of server hits get higher, the latency also get increased. That means adapter-query is not very much scalable with the current configurations.
 
-Whenever the timeseries data not found in the adapter-query, it read data from adapter-metadata and index for search over timeseries metadata. This will cause to higher performance with geo timeseries searches. The performance of the  MongoDB can further improve with using its features like Replication for high availability, and Sharding for higher throughput.
-Those attempts are beyond the scope of the \acrshort{wdias} performance test and users can use those to get higher results from the \acrshort{wdias}.
+Whenever the timeseries data is not found in the adapter-query, it reads data from adapter-metadata and index for search over timeseries metadata. We used the above mechanism to increase the performance with geo timeseries searches. The performance of the document storage can further improve with using its features like Replication for high availability, and Sharding for higher throughput.
+We did not attempt those performance improvements during the test plan since it was beyond the scope of the research. However, the users of the \acrshort{wdias} system can enable such features and get higher performance.
