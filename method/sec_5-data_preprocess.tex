@@ -7,7 +7,7 @@ Thus we need to preprocess imported data before using it for forecasting. The WD
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.5\textwidth]{method/data_preprocess/weather_data_preprocessing.jpg}
-    \caption{\hl{Weather data preprocessing using a generic mathematical function model}}
+    \caption{A generic mathematical function model for weather data preprocessing}
     \label{fi:weather_data_preprocessing}
 \end{figure}
 
@@ -33,24 +33,26 @@ The interpolation module generates data at desired locations or at desired data 
     \label{fi:spatial_interpolation}
 \end{figure}
 
-\subsection{Transformation}- Simple arithmetic manipulation, Time interval transformation and Shifting the series in time Specific hydro-meteorological transformation such as stage discharge relationships.
+\subsection{Transformation}
+Simple arithmetic manipulation, Time interval transformation and Shifting the series in time Specific hydro-meteorological transformation such as stage discharge relationships.
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.6\textwidth]{method/data_preprocess/transformation.jpg}
-    \caption{\hl{Time interval transformation.}}
+    \caption{Time interval aggregration.}
     \label{fi:transformation}
 \end{figure}
 
-\subsection{Validation}- Checks for counting reliable, doubtful, unreliable, and missing values
+\subsection{Validation}
+Checks for counting reliable, doubtful, unreliable, and missing values
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.6\textwidth]{method/data_preprocess/validation.jpg}
-    \caption{\hl{Timeseries data validation against a set of rules.}}
+    \caption{Timeseries data validation.}
     \label{fi:validation}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Extension \acrfull{api} for Data Prepossessing}
+\subsection{Extension API for Data Prepossessing}
 
 We exposed an \acrshort{api} to create new triggers for extensions via /extension endpoint. Following is the accepted payload of the request while creating a new trigger. Later we discussed the \acrshort{api} in detail and how we can use the \acrshort{api} to create new triggers to use extension modules.
 

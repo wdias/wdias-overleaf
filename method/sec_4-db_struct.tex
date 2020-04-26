@@ -1,4 +1,4 @@
-\section{\acrshort{wdias} Database Structure}
+\section{WDIAS Database Structure}
 \label{se:db_struct}
 
 The foundation of the \acrshort{wdias} is data-centric. We need to look into the weather data timeseries deeply to understand the underline design decisions of the \acrshort{wdias} database structure.
@@ -18,33 +18,33 @@ Based on the above interpretation, a timeseries have data points ordered in time
 \paragraph{Location}-- Location of the timeseries. All locations have a unique String identifier called \emph{locationId}. Further, two types of location types are interested in the \acrshort{wdias}, namely:
 \begin{itemize}
   \item \emph{Point locations}-- Contains a name that is human readable. lat and lon of the location on the earth surface.
-  \begin{lstlisting}[language=Python, lastline=-1]
-    {
-        "locationId": "wdias-hanwella",
-        "name": "Hanwella",
-        "lat": 6.909722222,
-        "lon": 80.08166667
-    }
-  \end{lstlisting}
+\begin{lstlisting}[language=Python]
+{
+    "locationId": "wdias-hanwella",
+    "name": "Hanwella",
+    "lat": 6.909722222,
+    "lon": 80.08166667
+}
+\end{lstlisting}
   \item \emph{Regular Grid locations} -- Contains a name that is human readable. The grid presents by dividing into equal size cells. Thus, it needs the number of rows and columns. 
   And the location of the first cell and the width and height of it.
-  \begin{lstlisting}[language=Python]
-      {
-        "locationId": "wdias_kelani_basin",
-        "description": "Kelani Basin",
-        "rows": 120,
-        "columns": 139,
-        "geoDatum": "Kandawala",
-        "gridFirstCell": {
-            "firstCellCenter": {
-                "x": 397074.0,
-                "y": 504875.0
-            },
-            "xCellSize": 250.0,
-            "yCellSize": 250.0
-        }
+\begin{lstlisting}[language=Python]
+{
+    "locationId": "wdias_kelani_basin",
+    "description": "Kelani Basin",
+    "rows": 120,
+    "columns": 139,
+    "geoDatum": "Kandawala",
+    "gridFirstCell": {
+        "firstCellCenter": {
+            "x": 397074.0,
+            "y": 504875.0
+        },
+        "xCellSize": 250.0,
+        "yCellSize": 250.0
     }
-  \end{lstlisting}
+}
+\end{lstlisting}
   \item \emph{Irregular Grid locations} -- (endpoints are available within the WDIAS system, but skipped since it is out of the interest of the scope.)
 \end{itemize}
 
@@ -55,14 +55,14 @@ Parameter describes the variable measuring against a location. All parameters sh
   \item \emph{Variable} -- Nature of the variable measuring. Example Precipitation, Temperature and Water Level etc
   \item \emph{Unit} -- metric unit of measuring
   \item \emph{Parameter Type} -- Should be one of Instantaneous, Accumulative, or Mean
-  \begin{lstlisting}[language=Python]
-    {
-      "parameterId": "O.Precipitation",
-      "variable": "Precipitation",
-      "unit": "mm",
-      "parameterType": "Instantaneous"
-    }
-  \end{lstlisting}
+\begin{lstlisting}[language=Python]
+{
+  "parameterId": "O.Precipitation",
+  "variable": "Precipitation",
+  "unit": "mm",
+  "parameterType": "Instantaneous"
+}
+\end{lstlisting}
 \end{itemize}
 
 \subsubsection{Timeseries Type}
@@ -143,7 +143,7 @@ Other than InfluxDB, the ElasticSearch database can be used, but it mainly uses 
 Two individual instances of InfluxDB used for adapter-scalar and adapter-vector services in the \acrshort{wdias} system. For the scalability, the system uses \emph{database per service}, as mentioned in \cref{subse:database_per_service}. If users want further performance, the database can split into another set of partitions based on other key attributes based on the Z-axis scaling described in \cref{subse:scale_cube}. As an example, scalar and vector adapters can further split into more services based on other key attributes such as timeseriesType.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{\acrfull{netCDF}}
+\subsection{Network Common Data Form}
 \label{subse:netcdf}
 
 \acrshort{netCDF} \cite{unidataUnidataNetCDF} is a self-describing, machine-independent data format that supports the creation, access, and sharing of array-oriented scientific data. Moreover, NetCDF also supports parallel file access. NetCDF is widely used in the scientific domain due to the capability of storing multi-dimensions data efficiently and flexibly. Thus, we used NetCDF for storing the grid data due to its capability of storing array-oriented scientific data efficiently when compared to other database systems.
