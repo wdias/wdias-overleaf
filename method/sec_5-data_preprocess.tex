@@ -1,8 +1,9 @@
 \section{Data Prepossessing}
 \label{se:data_preprocess}
 
-The data imported via import modules may have incorrect data, missing data and not compatible with direct feed into simulation modules. 
-Thus it required to preprocess the data before use it. The WDIAS supports these capabilities via the \emph{extension} modules. The current system has a few inbuilt extensions such as Interpolation, Transformation, and Validation. Other than those, it possible to add more extensions as required.
+The data imported via import modules may have incorrect data, missing data, and incompatible data which can not directly feed into simulation modules.
+Thus we need to preprocess imported data before using it for forecasting. The WDIAS supports data preprocessing capabilities via the extension modules. The current system has a few inbuilt extensions such as Interpolation, Transformation, and Validation, but users can add more extensions as required.
+
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.5\textwidth]{method/data_preprocess/weather_data_preprocessing.jpg}
@@ -10,12 +11,13 @@ Thus it required to preprocess the data before use it. The WDIAS supports these 
     \label{fi:weather_data_preprocessing}
 \end{figure}
 
-The WDIAS provides the support via a simple generic mathematical function model. Each extension is considering as a mathematical function which can take \texttt{p} number of input timeseries variables and output \texttt{n} number of timeseries variables. Other than that, at the time of processing the system can configure to provide bind constant which can provide while configuring an extension. This means it is possible to change the behavior of an existing function by providing different bind constant at the time of creating new triggers for an extension.
+The data preprocess functionalities support simple generic mathematical function models. Each extension is considered as a mathematical function that can take \texttt{p} number of input timeseries variables and output \texttt{n} number of timeseries variables after applying the given function. Further, the system supports to provide a bind constant as configurations to the extension at the time of preprocessing. Thus, users can change the behavior of an existing function by providing different bind constants at the time of creating new triggers for an extension and produce different behaviors.
 
 \subsection{Interpolation}
-The interpolation module generates data at desired locations or at desired data points using a serial or spatial interpolation technique. It is used to fill gaps in on-line measured data, and to derive spatially distributed data for weather time series, such as precipitation and temperature, based on information available at nearby locations.
+The interpolation module generates data at desired locations or at desired data points using a serial The interpolation module generates data at desired locations or desired data points using a serial or spatial interpolation technique. It is used to fill gaps in on-line measured data and to derive spatially distributed data for weather time series, such as precipitation and temperature, based on information available at nearby locations.
 
-\paragraph{Serial Interpolation}-- In serial interpolation mode, interpolation is done to fill any gaps in a time series. The interpolation module will only consider the time series itself in filling these gaps.
+\paragraph{Serial Interpolation}-- During serial interpolation, we use interpolation to fill any gaps in a time series. The interpolation module will only consider a single time series, which is itself in filling these gaps.
+
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.6\textwidth]{method/data_preprocess/serial_interpolation.jpg}
@@ -23,7 +25,7 @@ The interpolation module generates data at desired locations or at desired data 
     \label{fi:serial_interpolation}
 \end{figure}
 
-\paragraph{Spatial Interpolation}-- In spatial interpolation mode, the interpolation can be either applied to fill gaps in time series, or to create a new time series for a location using data from other (spatially distributed) locations. Spatial interpolation can also be applied for sampling scalar time series from grid time series, for re-sampling grids, or for creating grids from timeseries data.
+\paragraph{Spatial Interpolation}-- During spatial interpolation, we use interpolation to either fill gaps in timeseries or to create a new time series for a location using data from other (spatially distributed) locations. Spatial interpolation can also be applied for sampling scalar timeseries from grid timeseries, for re-sampling grids, or for creating grids from timeseries data.
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.6\textwidth]{method/data_preprocess/spatial_interpolation.jpg}
@@ -47,8 +49,11 @@ The interpolation module generates data at desired locations or at desired data 
     \label{fi:validation}
 \end{figure}
 
-\subsection{\hl{Data Preprocessing API}}
-In the WDIAS, it is possible to create new trigger for an extension via POST request to /extension endpoint.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Extension \acrfull{api} for Data Prepossessing}
+
+We exposed an \acrshort{api} to create new triggers for extensions via /extension endpoint. Following is the accepted payload of the request while creating a new trigger. Later we discussed the \acrshort{api} in detail and how we can use the \acrshort{api} to create new triggers to use extension modules.
+
 \begin{lstlisting}[language=Python]
 {
     "extensionId": "",
@@ -76,7 +81,7 @@ In the WDIAS, it is possible to create new trigger for an extension via POST req
 \begin{itemize}
     \item extensionId -- An unique identifier for new extension trigger. Should be unique among all extensions.
     \item extension -- The main extension category which is responsible for handling the extension with extracting data required and storing the output. Interpolation/Transformation/Validation support for the moment.
-    \item function -- Name of the microservice which is handling the input to output mapping. Fn() function in the \cref{fi:weather_data_preprocessing}.
+    \item function -- Name of the microservice which is handling the input to output mapping. \texttt{Fn()} function in the \cref{fi:weather_data_preprocessing}.
     \item variables -- Array timeseries mapping to variables. Multiple variables can be define with metadata or metadataIds of timeseries. Can be use same variable on inputVariables and outputVariables below.
     \item inputVariables -- Timeseries that need to be provide into the function
     \item outputVariables -- Timeseries that output from the function
@@ -92,8 +97,11 @@ In the WDIAS, it is possible to create new trigger for an extension via POST req
     \item options -- Bind Constant which is bind at the time of creating new extension trigger and pass on triggering the extension.
 \end{itemize}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Extension Handler}
-Extension Handler is responsible for triggering the correct Extension with metadata when there is any change on the subscribed extension trigger's \emph{OnChange} timeseries.
+
+Extension Handler is responsible for triggering the correct extension with timeseries metadata when there is any change in the subscribed timeseries with a list of \emph{OnChange} timeseries while creating an extension trigger.
+
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.6\textwidth]{method/data_preprocess/validation.jpg}
@@ -101,14 +109,15 @@ Extension Handler is responsible for triggering the correct Extension with metad
     \label{fi:extension_handler}
 \end{figure}
 
-\hl{As an example,} when new data imported into one of the adapter-scalar or adapter-vector, those notify the extension-handler. Then extension handler checks whether there is any extension subscribed for particular timeseries, and triggers it via triggering an event on particular extensions.
+When new data is inserted into one of the adapter-scalar or adapter-vector, those microservices notify the extension-handler. Then the extension-handler checks whether there is any extension subscribed for inserted timeseries. If there is an extension needed to be triggered, then it invokes the given extension with the required data.
 
-To improve the performance of matching triggers against a timeseries, the WDIAS added two mechanisms. For the separation of service responsibilities, those functionalities reside in the adapter-extension and expose via an endpoint. First, other than storing extension metadata in MySQL instance of adapter-extension, it also stores the data in reverse lookup table called triggers. Using this reverse lookup table, for a given trigger\_type and timeseries, it can retrieve the extensions which are part of given timeseries. Thus, the response which is received by the 
-extension-handler only contains the extensions to be triggered. No additional filtering needs to be done at the extension-handler service.
-Second, cache the resulting trigger\_type and timeseries data in the  Redis database for fast access and avoid too many queries on the  MySQL database.
+To improve the performance of matching triggers against a timeseries, we used two mechanisms as below. First, other than only storing extension metadata in a MySQL instance of adapter-extension, we also store extension data in a reverse lookup table called triggers while creating new extension triggers. Using this reverse lookup table, we can retrieve the extensions against a given timeseries without heavy processing and less delay. Second, we cache the resulting trigger type and timeseries data using the Redis database inside the extension-handler for fast access and avoid too many queries on the MySQL database. For the separation of service responsibilities, the extension data stored in the persistence database of the adapter-extension and exposed via an endpoint.
 
-\paragraph{Extension Scheduler}-- Extension Handler is responsible for triggering the correct Extension with metadata at a given time which is provided at the creation on extension trigger with the value of OnTime cronjob string value. To improve the performance of triggering cronjobs at given time schedules, the WDIAS added few optimization mechanisms.
-Same as for extension-handler, the adapter-extension exposes an endpoint to retrieve extension metadata grouped by cronjob time. Then use \acrshort{go} to implement the extension-handler to fast processing the extensions. After retrieve extensions which is grouped by cronjob time; within the extension-handler, it schedules programmatic cronjobs to trigger at given times. When each cronjob triggers at the given time, it also contains the extensions to be triggered. Fetching extension data and creating cronjobs occur with a long period to avoid heavy overhead.
-When a new extension trigger created, those data push into a  Redis list. Then pulling from the extension-handler in regular time intervals and create new cronjobs for mentioned cronjob time.
-As mentioned above, to avoid the expansion of the programmatic cronjob list which are created for new extension triggers, all cronjobs fetch again in a long period and flush the previously scheduled cronjobs.
-The extension-handler should be run as a single entity for the atrocity, to avoid triggering the same extension twice.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Extension Scheduler}
+
+Extension scheduler is responsible for triggering the correct extension with metadata at a given time that provided at the time of creation as OnTime cron job values to the extension trigger. To improve the performance of triggering cron jobs at given time schedules, we used a few optimization mechanisms as described below. 
+Same as for extension-handler, the adapter-extension exposed an endpoint to retrieve extension metadata grouped by cronjob time. Then we create cron jobs as per the data retrieved via adapter-extension. We used a low-level programming language to simulate the cron jobs for fast processing the extensions. After getting extension triggers, the extension-handler grouped them based on cronjob time and scheduled cron jobs programmatically to trigger at given times. 
+When each cron job triggers at the scheduled time, each cron job also contains the extensions to be triggered. Fetching extension triggers data, and creating cron jobs occur with a long period to avoid huge overhead on adapter-extension. When a user creates a new extension trigger, those data push into a queue in the Redis database. Then the extension-handler pulls data from the queue in regular time intervals and creates new cron jobs for mentioned cronjob time. 
+As mentioned above, to avoid the expansion of the programmatic cron job list that we created for new extension triggers, all cronjobs fetch again in a long period and flush the previously scheduled cron jobs. While doing that, we also flush the Redis queue.
+The extension-handler should be run as a single process for the atomicity, to avoid triggering the same extension twice.
