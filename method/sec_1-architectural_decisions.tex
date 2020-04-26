@@ -1,43 +1,27 @@
 \section{Architectural Decisions}
 \label{se:architectural_decisions}
 
-The initial design of \acrshort{wdias} used the \acrfull{soa}. Moreover, it tried to use an \acrfull{esb} to integrate different modules, as \acrshort{esb} could act as a \hl{common layer} for all of the modules. By default, \acrshort{esb} also provides publisher/subscribe (pub/sub) capabilities.
-\hl{Because \acrshort{esb} mediators can be used to integrate the modules which are described in Section} \ref{subse:modules_weather_data_integration_sys}. 
-\dbc{Last sentence incomplete too.}
+The initial design of \acrshort{wdias} used the \acrfull{soa}. Moreover, it tried to use an \acrfull{esb} to integrate different modules, as \acrshort{esb} could act as a shared layer for all of the modules to interact together. By default, \acrshort{esb} also provides publisher/subscribe (pub/sub) capabilities.
 
-The \acrshort{esb} has the processing units called \emph{mediators}. A mediator can take a message, carry out some predefined actions on it, and output the modified message. These mediator capabilities can use to integrate the modules of a weather data system as shown in \cref{fi:wdia_components}. \acrshort{esb} also supports different transportation protocols such as HTTP and Web sockets. However, it turned out that \acrshort{esb} is not suitable for data streaming or bulk data processing. Also, \acrshort{esb} suffers from a single point of failure, as all the messages are going through a common bus and slower communication (cant use for transfer data).
+The \acrshort{esb} has the processing units called \emph{mediators}. A mediator can take a message, carry out some predefined actions on it, and output the modified message. These mediator capabilities can be used to integrate the modules of a weather data system, as shown in \cref{fi:wdia_components}. \acrshort{esb} also supports different transportation protocols such as HTTP and Web sockets. However, we realized that \acrshort{esb} is not suitable for data streaming or bulk data processing. Also, \acrshort{esb} suffers from a single point of failure, as all the messages are going through a common shared bus and slower communication (can not be used for transfer data). In the second design phase of \acrshort{wdias}, we attempted to use the actor model using the AKKA framework \cite{HewittWhyModel} to overcome above \acrshort{esb} drawbacks. At the same time, we moved away from the \acrshort{soa} architecture design to the microservice architecture design.
 
-In the second design phase of \acrshort{wdias}, we attempted to use the actor model using the AKKA framework \cite{HewittWhyModel} to overcome above \acrshort{esb} drawbacks. At the same time, we moved away from the \acrshort{soa} architecture design to the microservice architecture design. Thus we redesign the system architecture with decomposing into microservices and used actors to implement each microservice in the system. In that case, an actor or an actor with slave actors was a map to each microservice in \acrshort{wdias}. \acrshort{soa} focuses on imperative programming, while the microservices architecture focuses on a reactive actor programming style using faster messaging mechanisms. 
-
-When compare to \acrshort{soa}, the microservice architecture has several advantages such as the following:
+Thus we redesigned the system architecture with decomposing into microservices and used actors to implement each microservice in the system. In that case, we mapped each microservice in \acrshort{wdias} to an actor or an actor with slave actors. \acrshort{soa} focuses on imperative programming, while the microservices architecture focuses on a reactive actor programming style using faster messaging mechanisms.
+When compared to \acrshort{soa}, the microservice architecture has several advantages:
 \begin{itemize}
     \item Follow the principle of a single responsibility.
-    \item Resilient / flexible because a failure of a service has no influence on other services. If you have monolithic or major service errors in a service / module, this can have an impact on other modules / functionalities.
-    \item High scalability because demanding services can be implemented on different servers to improve performance and stay away from other services so that they do not affect other services. It will be difficult to achieve the same with a single large monolithic service.
-    \item Easy to improve because the dependencies are less. It is also easier to change and test.
+    \item Resilient/flexible because a failure of service does not influence other services. If you have monolithic or significant service errors in a service/module, this can have an impact on other modules/functionalities.
+    \item High scalability because demanding services can be deployed on different servers to improve performance and stay away from other services so that they do not affect other services. It will be challenging to achieve the same with a single large monolithic service.
+    \item Easy to improve the system because the microservices are decoupled from other services. It is also easier to change and test each microservices.
     \item Little impact on other services because each service is independent.
     \item Easy to understand because they represent a small functionality.
     \item Ease of deployment.
 \end{itemize}
 
-% /hl{The typical \acrshort{soa} model, for example, usually has more dependent \acrshort{esb}s, with microservices using faster messaging mechanisms. \acrshort{soa} also focuses on imperative programming, whereas microservices architecture focuses on a responsive-actor programming style.}
-\dbc{Multiple design rounds and decisions are mixed in the para. First finish discussing ESB. Then finish actor model in another para. Then focus on mircoservice details.}
+The AKKA framework has some of the disadvantages of implementing each microservice as an actor, as described in AKKA documentation \cite{Akka.ioWhenCluster}. One of the attractive features of microservice architecture is the independent nature of the microservices. The above concept allows choosing different technologies for each microservice based on the advantage that could bring in. Also, the microservice architecture will enable us to independently develop and maintain a system by multiple smaller and more focused teams/communities. But using the actors as microservice, the actors communicate using message passing cause to result in a too-tight code coupling between the services and difficulty to deploy services independent of each other, which is one of the main reasons for using a microservices architecture \cite{Akka.ioWhenCluster}. To overcome these problems, we moved to the concept of container orchestration based microservice architecture.
 
-Even with using the AKKA framework, it has some of the disadvantages of implementing each microservice as an actor as described in AKKA documentation \cite{Akka.ioWhenCluster}. One of the attractive features of microservice architecture is the independent nature of the microservices. This allows choosing a different technology for each microservice based on the advantage that could bring in. Also allowed to independently develop and maintain by multiple smaller and more focused teams/communities. But using the actors as microservice, the actors messaging between different services cause to result in a too-tight code coupling between the services and difficulties deploying these independent of each other, which is one of the main reasons for using a microservices architecture \cite{Akka.ioWhenCluster}. To overcome these issues, we moved to the concept of container-orchestration based architecture.
+Containerization is an alternative to virtualization that supports virtual machines or hypervisors. It includes encapsulating or grouping the software code and all its dependencies so that it can work uniformly and consistently in any infrastructure \cite{IBMContainerizationExplained}. The concept of containerization and process isolation has emerged after the open source Docker Engine \cite{DockerAppContainerization}, an industry standard for package software into standardized units for development, shipment, and deployment.
 
-% \begin{itemize}
-%     \item \hl{Unable to choose technology. But} \acrshort{k8s} \hl{allows you to choose technology that is best suited for a particular functionality}
-%     \item \hl{As mentioned in the AKKA documentation} \cite{Akka.ioWhenCluster}, \hl{it is better for developing one microservice within the whole} \acrshort{wdias} design.
-% \end{itemize}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \subsection{Brief introduction to the \acrfull{k8s}}
-% \label{sebse:k8s_intro}
-
-Containerization is an alternative to virtualization that supports virtual machines or hypervisors. This includes encapsulating or grouping the software code and all its dependencies so that it can work uniformly and consistently in any infrastructure. \cite{IBMContainerizationExplained}. The concept of containerization and process isolation has emerged after the open-source Docker Engine \cite{DockerAppContainerization}, an industry standard for package software into standardized units for development, shipment, and deployment.
-
-The \acrshort{wdias} is using \acrfull{k8s} as the container orchestration system which is an open-source tool for automating deployment, scaling, and management of containerized applications \cite{LinuxFoundationProduction-GradeKubernetes}. It groups the containers that make up an application into logical units for easy management and detection. While implementing the \acrshort{wdias}, we used \acrshort{k8s} as the container-orchestration system, to deploy each microservice as container and manage with providing scalability and availability.
+The \acrshort{wdias} used \acrfull{k8s} as the container orchestration system. \acrshort{k8s} is an open-source tool for automating deployment, scaling, and management of containerized applications [15]. It groups the containers that make up an application into logical units for easy management and detection. Using \acrshort{k8s}, we deploy each microservice as a container and manage it by providing scalability and availability.
 
 \begin{figure}[htp]
     \centering
@@ -45,16 +29,15 @@ The \acrshort{wdias} is using \acrfull{k8s} as the container orchestration syste
     \caption{\acrfull{k8s} architecture.}
     \label{fi:k8s_architecture}
 \end{figure}
+
 \cref{fi:k8s_architecture} gives an overall idea on the components of \acrshort{k8s},
 \begin{itemize}
-    \item pods -- Cluster of containers that can group other container images in a single unit.
-    \item nodes -- The machines (VMs, physical servers, etc) in a cluster that runs your applications and cloud workflows.
-    \item kubelet -- An agent that runs on each node in the cluster. It makes sure that containers are running in a pod.
-    \item kube-proxy -- A network proxy that runs on each node in the cluster, and maintains network rules on nodes.
-    \item kubernetes master -- Responsible for maintaining the desired state for your cluster.
-    \item etcd -- Consistent and highly-available key value store used as Kubernetes’ backing store for all cluster data.
+    \item pods – Cluster of containers that can group other container images in a single unit.
+    \item nodes – The machines (VMs, physical servers, etc) in a cluster that runs your applications and cloud workflows.
+    \item kubelet – An agent that runs on each node in the cluster. It makes sure that containers are running in a pod.
+    \item kube-proxy – A network proxy that runs on each node in the cluster, and maintains network rules on nodes.
+    \item kubernetes master – Responsible for maintaining the desired state for your cluster.
+    \item etcd – Consistent and highly-available key value store used as Kubernetes backing store for all cluster data.
 \end{itemize}
 
-Users can add much as required Nodes into the \acrshort{k8s} cluster, and \acrshort{k8s} manage and deploy applications as pods into cluster nodes.
-Each microservice can deploy as a pod which is a group of containerized applications. And \acrshort{k8s} able to scale as much as the user wants as described above.
-By separating each microservice as a container, and running them as multiple pods inside the \acrshort{k8s} removes the tight coupling of microservices when compared to the actors. This preserves the independent nature of the microservices which allows to high scale the system.
+Users can add much as Nodes required into the \acrshort{k8s} cluster, and \acrshort{k8s} manage and deploy applications as pods into cluster nodes. Each microservice can deploy as a pod, which is a group of containerized applications. And \acrshort{k8s} is able to scale as much as the user requirements by deploying multiple copies of the same pod. By separating each microservice as a container, and running them as multiple pods inside the \acrshort{k8s} removes the tight coupling of microservices when compared to the actors. It preserves the independent nature of the microservices and supports the high scalability of the system.
