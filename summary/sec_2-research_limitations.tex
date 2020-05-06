@@ -16,7 +16,7 @@ As mentioned in \cref{se:discussion}, adapter-grid is using a Python wrapper for
 Physical nodes for the \acrshort{k8s} cluster created using cloud computing providers such as Amazon EKS, Google Cloud, and Microsoft Azure cloud. However, the infrastructure that needs to deploy the \acrshort{wdias} can be defined as code such as using tools like Terraform, which is independent of the cloud computing provider. Using such a tool, users will be able to quickly deploy the \acrshort{wdias} on any cloud provider without much hassle.
 
 \emph{Improvements to test cases}:
-As described in detail with \cref{subse:closed_vs_open_workload}, the \acrshort{wdias} test plans use the time-stepping feedback loop with concurrent threads, which is the best approach support by JMeter at the moment. However, using the above approach, we can not get the desired \acrshort{rps} for each test case within the test plan.
+As described in detail with \cref{subse:closed_vs_open_workload}, the \acrshort{wdias} test plans use the time-stepping feedback loop with concurrent threads, which is the best approach support by JMeter at the moment. However, using the above approach, we cannot get the desired \acrshort{rps} for each test case within the test plan.
 Because of the above issue, the \acrshort{wdias} test plans further improved by removing redundant test cases such as create timeseries at the beginning. Having created timeseries at the beginning causes some issues such as most of the thread are working on that test case, rather than running the required test cases. Thus, the test plans need to be further improved with running more test cases with the desired \acrshort{rps}.
 
 \emph{Tune \acrshort{wdias} database structure performance}:

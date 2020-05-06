@@ -3,7 +3,7 @@
 
 As explained in the research methodology (\cref{ch:method}), we selected six primary attributes from the timeseries metadata while implementing the system architecture. Before storing the data in \acrshort{wdias}, we need to register timeseries metadata for the timeseries, and are required to provide values for the six attributes. During the test for location attribute, we selected the locations all over the world as a generic case to include all the locations without binding to a specific area.
 
-We used 250 locations from Google’s Countries Public Data set \cite{GoogleGoogleCounties}, and considered static throughout the testing. For each location, we created four timeseries metadata by using four different values for the moduleId key attribute. Thus combining all together first, we created 1000 timeseries metadata during the performance test and then stored the timeseries data against timeseries unique identifiers. We have written automated scripts to generate these data for the performance testing, and scripts are generic enough to create more timeseries metadata by changing the configurations.
+We used 250 locations from Google’s Countries Public Data set \cite{GoogleGoogleCounties}, and considered static throughout the testing. For each location, we created four timeseries metadata by using four different values for the moduleId key attribute. Thus, combining all together first, we created 1000 timeseries metadata during the performance test and then stored the timeseries data against timeseries unique identifiers. We have written automated scripts to generate these data for the performance testing, and scripts are generic enough to create more timeseries metadata by changing the configurations.
 
 For storing grid data, we used static 100 grid locations. Since grid locations have different metadata structures, we had to generate metadata for them separately. However, the locationID of the grid timeseries metadata is similar to scalar timeseries metadata that have the same effect when defining timeseries metadata.
 
@@ -157,7 +157,7 @@ As mentioned in \cref{se:test_plan}, we performed another separate test plan on 
 	\end{itemize}
 \end{itemize}
 
-With the above JMeter test plans, we have to enable each test plan separately and before running with JMeter distributed mode. In order to make the process faster, we implemented a script tool to interact with the JMeter test stored files. The script is available within the code base \cite{KarunarathneWdias-performance-test/TEST_PLAN.md:Plan} as \emph{test-dev} and supports the following features.
+With the above JMeter test plans, we have to enable each test plan separately and before running with JMeter distributed mode. To make the process faster, we implemented a script tool to interact with the JMeter test stored files. The script is available within the code base \cite{KarunarathneWdias-performance-test/TEST_PLAN.md:Plan} as \emph{test-dev} and supports the following features.
 
 \begin{lstlisting}[language=sh, caption=Performance Test Help]
 -h | --help: Usage
@@ -214,8 +214,6 @@ test & 4 & 10.5 & 5 & 1 & c5n.xlarge \\ \hline
 \end{tabular}
 \label{tab:aws_eks_nodes}
 \end{table}
-\dbc{Center table on page}
-\gkc{FIXED}
 
 The \acrshort{wdias} uses Helm \cite{CNCFHelmDocs} which is a package manager for \acrshort{k8s}. Each Also, we used Helm \cite{CNCFHelmDocs} that is a package manager for \acrshort{k8s}. Each microservice within the system deploys and maintains as a Helm chart and the Helm charts \cite{KarunarathneWdias-helm-charts:Deployments} for each microservice available within the codebase. For the databases, we used the official helm charts. Using Helm, we can configure resources, the number of replicas needed, deploy new changes, and manage credentials, storage, and proxy settings that are needed for each microservice.
 
@@ -223,7 +221,7 @@ The \acrshort{wdias} uses Helm \cite{CNCFHelmDocs} which is a package manager fo
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Performance Tuning}
 \label{se:performance_tuning}
-According to \cref{tab:aws_eks_nodes}, we selected a few physical nodes with different resource capacities. The grid and test labeled nodes have higher network bandwidth. To get better performance using the available resources, we can schedule each microservice into a predefined set of nodes. Thus we tried to deploy all JMeter microservices on test labeled nodes since the test plans need to interact with all the services and transfer bulk timeseries data. Also, the grid microservices are hosted inside the grid labeled node due to the massive size of grid data timeseries that need to be transferred during the load testing. There are few ways to assign microservice to a particular physical node in the \acrshort{k8s};
+According to \cref{tab:aws_eks_nodes}, we selected a few physical nodes with different resource capacities. The grid and test labeled nodes have higher network bandwidth. To get better performance using the available resources, we can schedule each microservice into a predefined set of nodes. Thus, we tried to deploy all JMeter microservices on test labeled nodes since the test plans need to interact with all the services and transfer bulk timeseries data. Also, the grid microservices are hosted inside the grid labeled node due to the massive size of grid data timeseries that need to be transferred during the load testing. There are few ways to assign microservice to a particular physical node in the \acrshort{k8s};
 
 \begin{itemize}
     \item \emph{nodeSelector} -- Hard rules match for node schedule. If not match, pods will not schedule.
@@ -245,4 +243,4 @@ Users can use one of the above methods to schedule microservice on physical node
     \item \emph{scalar} -- scalar and vector adapters, import and export of same data types
     \item \emph{test} --  JMeter and metric server
 \end{itemize}
-\cref{fi:eks_node_setup} shows the overview of the microservices assignment to each node in the \acrshort{eks} setup. Further, it shows the connectivity of the nodes and the data interactions via the arrows. We scheduled the microservices in the core labeled node together, since most of those services are communicating together, and running them inside one physical node reduces the latency. Then we separate scalar and vector microservices and their databases, in order to separate the load from the core node while storing scalar and vector timeseries data. As same as, we assigned microservices to grid and test nodes based on the higher bandwidth requirements.
+\cref{fi:eks_node_setup} shows the overview of the microservices assignment to each node in the \acrshort{eks} setup. Further, it shows the connectivity of the nodes and the data interactions via the arrows. We scheduled the microservices in the core labeled node together, since most of those services are communicating together, and running them inside one physical node reduces the latency. Then we separate scalar and vector microservices and their databases to separate the load from the core node while storing scalar and vector timeseries data. As same as, we assigned microservices to grid and test nodes based on the higher bandwidth requirements.

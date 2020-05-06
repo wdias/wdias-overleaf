@@ -25,7 +25,7 @@ Query: Location & 71804 & 3 & 2 & 109 & 3 & 1.52 & 0.00\% & 40.5 \\ \hline
 \label{tab:obs_all_60_min_summary}
 \end{table}
 Insert timeseries performed over scalar and vector data types with each request sent with 24 data points. On average, it took 28ms to insert scalar and vector data into the \acrshort{wdias}, and up to 90\% percentile inserted data within 31ms. Noticeably it has 0\% of errors, which means that all the requests completed successfully. Also, \acrshort{wdias} handled 40.5 \acrshort{rps} of scalar and vector data requests with the given workload. The retrieval of scalar and vector timeseries has lesser delay than the insertion.
-On the other hand, insert grid timeseries data performed within 23ms, and almost all the requests perform within the same amount of time. Hence the standard deviation is smaller. Delay with inserting grid timeseries smaller because those requests are handled asynchronously. Retrieve grid timeseries data performed with a bit higher value of latency of 68ms due to performed the retrieve request on-demand. Both insert and retrieve grid timeseries data have 4.5 \acrshort{rps} since it only gets 10\% of the number of requests per given time during the load test.
+On the other hand, insert grid timeseries data performed within 23ms, and almost all the requests perform within the same amount of time. Hence, the standard deviation is smaller. Delay with inserting grid timeseries smaller because those requests are handled asynchronously. Retrieve grid timeseries data performed with a bit higher value of latency of 68ms due to performed the retrieve request on-demand. Both insert and retrieve grid timeseries data have 4.5 \acrshort{rps} since it only gets 10\% of the number of requests per given time during the load test.
 
 \begin{figure}[htp]
     \centering
@@ -236,7 +236,7 @@ Area, Parameter → Timeseries & 11084 & 864 & 1 & 16699 & 1584 & 751.00 & 0.00\
 \label{tab:obs_query_15_min_summary}
 \end{table}
 
-\cref{tab:obs_query_15_min_summary} shows the response latency summary details. The average latency is much higher than the minimum value. Also, the summary reported higher maximum values as well. Standard deviation showed a quiet higher value, which means the response latency values are not closer to the average value. Noticeably, we can not see any errors in the table, which means all the requests successfully process. The throughput is similar among all the requests. The performance of the adapter-query depends on the performance of the document storage database performance and geo-indexing performance.
+\cref{tab:obs_query_15_min_summary} shows the response latency summary details. The average latency is much higher than the minimum value. Also, the summary reported higher maximum values as well. Standard deviation showed a quiet higher value, which means the response latency values are not closer to the average value. Noticeably, we cannot see any errors in the table, which means all the requests successfully process. The throughput is similar among all the requests. The performance of the adapter-query depends on the performance of the document storage database performance and geo-indexing performance.
 
 \begin{figure}[htp]
     \centering
@@ -244,7 +244,7 @@ Area, Parameter → Timeseries & 11084 & 864 & 1 & 16699 & 1584 & 751.00 & 0.00\
     \caption{Load testing query test over 5 minutes - Response Latency over Time}
     \label{fi:test_obs_query_5m_response_latency}
 \end{figure}
-\cref{fi:test_obs_query_5m_response_latency} shows the response latency overtime for the query test plan. When the number of requests gets higher, the latency also gets increased. Further, \cref{fi:test_obs_query_5m_response_times_vs_threads} shows the response latency against the number of active threads for the query test plan. When the number of server hits gets higher, the latency also increases. According to the Figures, we can conclude that the performance of the adapter-query depends on the database. Even if we increase the number of adapter-query pods, the throughput of the microservice is not going to increase until we increase the performance by using the z-axis scaling of scale cube concept.
+\cref{fi:test_obs_query_5m_response_latency} shows the response latency overtime for the query test plan. When the number of requests gets higher, the latency also gets increased. Further, \cref{fi:test_obs_query_5m_response_times_vs_threads} shows the response latency against the number of active threads for the query test plan. When the number of server hits gets higher, the latency also increases. According to the figures, we can conclude that the performance of the adapter-query depends on the database. Even if we increase the number of adapter-query pods, the throughput of the microservice is not going to increase until we increase the performance by using the z-axis scaling of scale cube concept.
 
 \begin{figure}[htp]
     \centering
