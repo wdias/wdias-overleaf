@@ -40,18 +40,18 @@ Every microservice can have its database to guarantee a loose couple between mic
 
 The scalability of a system can be explained via a concept called \emph{the Scale Cube}, which talks about the scalability of the application by defining over X, Y, and Z axes.
 
-\paragraph{X-axis Scaling}-- When scaling an application through the X-axis, multiple instances of the application execute behind a load balancer. If there are \textit{n} copies, then each copy handles 1/\textit{n} of the load. The above simple approach is commonly to scale a service.
+\paragraph{X-axis Scaling}-- When scaling an application through the x-axis, multiple instances of the application execute behind a load balancer. If there are \textit{n} copies, then each copy handles 1/\textit{n} of the load. The above simple approach is commonly to scale a service.
 
-\paragraph{Y-axis Scaling}-- When compared to the Z-axis and X-axis scaling, which follows the concept of running multiple identical copies of the application, but Y-axis scaling segregates the application into multiple services in the same domain. So, the end services are responsible for one or more closely related functions of the previous service before the segregation. There are different ways to split the application into services.
+\paragraph{Y-axis Scaling}-- When compared to the z-axis and x-axis scaling, which follows the concept of running multiple identical copies of the application, but y-axis scaling segregates the application into multiple services in the same domain. So, the end services are responsible for one or more closely related functions of the previous service before the segregation. There are different ways to split the application into services.
 \begin{itemize}
     \item Verb-based decomposition. e.g., checkout.
     \item Decompose the application by the noun. e.g., order management.
     \item It is possible to use a combination of verb-based and noun-based decomposition for an application.
 \end{itemize}
-\emph{The microservice architecture is an application of Y-axis scaling}.
+\emph{The microservice architecture is an application of y-axis scaling}.
 
-\paragraph{Z-axis Scaling}-- The Z-axis scaling follows the concept of each service running the same application code (similar to X-axis scaling). The big difference is that each service is responsible for only a subset of the data. Z-axis splits are commonly used to scale databases. As an example, data partition (aka., sharded) across a set of servers based on an attribute of each record.
-Even our research is a design based on the Y-axis scaling; it is possible to use the Z-axis scaling to further scaling the system. We will discuss more detail in \cref{se:discussion}.
+\paragraph{Z-axis Scaling}-- The z-axis scaling follows the concept of each service running the same application code (similar to x-axis scaling). The big difference is that each service is responsible for only a subset of the data. z-axis splits are commonly used to scale databases. As an example, data partition (aka., sharded) across a set of servers based on an attribute of each record.
+Even our research is a design based on the y-axis scaling; it is possible to use the z-axis scaling to further scaling the system. We will discuss more detail in \cref{se:discussion}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -67,7 +67,7 @@ Even our research is a design based on the Y-axis scaling; it is possible to use
     \label{fi:wdias_micro_on_demand}
 \end{figure}
 
-Export module microservices also follow the concepts of single responsibility and provide the capability to export the data into required formats of the weather models. Each data type adapter follows the microservice architecture concept of database per service, as mentioned in \cref{subse:database_per_service} When the system requires more database throughput, it is easy to scale each database instance by adding more resources or using Z-axis scaling concepts.
+Export module microservices also follow the concepts of single responsibility and provide the capability to export the data into required formats of the weather models. Each data type adapter follows the microservice architecture concept of database per service, as mentioned in \cref{subse:database_per_service} When the system requires more database throughput, it is easy to scale each database instance by adding more resources or using z-axis scaling concepts.
 
 \begin{figure}[htp]
     \centering

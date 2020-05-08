@@ -141,7 +141,7 @@ Among several timeseries open source databases, InfluxDB \cite{influxdbInfluxDBD
 
 Other than InfluxDB, the ElasticSearch database can be used, but it mainly uses indexing for searching. InfluxDB allows us to change the read/write behavior and indexing mechanism via database configurations. Further, users can use the commercial version of InfluxDB to gain more performance, like database sharding and replicas.
 
-Two individual instances of InfluxDB used for adapter-scalar and adapter-vector services in the \acrshort{wdias} system. For the scalability, the system uses \emph{database per service}, as mentioned in \cref{subse:database_per_service}. If users want further performance, the database can split into another set of partitions based on other key attributes based on the Z-axis scaling described in \cref{subse:scale_cube}. As an example, scalar and vector adapters can further split into more services based on other key attributes such as timeseriesType.
+Two individual instances of InfluxDB used for adapter-scalar and adapter-vector services in the \acrshort{wdias} system. For the scalability, the system uses \emph{database per service}, as mentioned in \cref{subse:database_per_service}. If users want further performance, the database can split into another set of partitions based on other key attributes based on the z-axis scaling described in \cref{subse:scale_cube}. As an example, scalar and vector adapters can further split into more services based on other key attributes such as timeseriesType.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Network Common Data Form}
@@ -161,4 +161,4 @@ To provide fast geo-search queries, we have to use a database system that suppor
 \end{itemize}
 
 We used MongoDB geospatial features to support Geo queries in the \acrshort{wdias}. Also, we indexed the timeseries metadata with other indexing features to serve external timeseries metadata queries. If particular timeseries metadata not present in the adapter-query, then fetch metadata from the adapter-metadata and indexed in the MongoDB. Vise a versa; when a new timeseries created in the adapter-metadata, it triggers an event to index metadata in the adapter-query.
-Here we used the \emph{Y-axis scaling} concept by splitting metadata search into multiple services. Within the system, it uses in-memory database cache to support internal metadata access, and external search queries fulfill by the adapter-query with using MongoDB.
+Here we used the \emph{y-axis scaling} concept by splitting metadata search into multiple services. Within the system, it uses in-memory database cache to support internal metadata access, and external search queries fulfill by the adapter-query with using MongoDB.
