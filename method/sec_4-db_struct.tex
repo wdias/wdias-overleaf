@@ -153,12 +153,12 @@ Two individual instances of InfluxDB used for adapter-scalar and adapter-vector 
 \subsection{Document-oriented Database}
 \label{subse:mongodb}
 
-To provide fast geo-search queries, we have to use a database system that supports geo indexing. We used MongoDB, which is a document-oriented database with Geo indexing capabilities. Also, MongoDB \cite{mongodbMongoDBManual} is a general-purpose, document-based, distributed database, and supports: 
+To provide fast geo-search queries, we have to use a database system that supports geo indexing. We used MongoDB, which is a document-oriented database with geo indexing capabilities. Also, MongoDB \cite{mongodbMongoDBManual} is a general-purpose, document-based, distributed database, and supports: 
 
 \begin{itemize}
   \item Supports query operations on geospatial data \cite{mongodbMongoDBManual}
   \item Clustering and Sharding available for scalability and reliability
 \end{itemize}
 
-We used MongoDB geospatial features to support Geo queries in the \acrshort{wdias}. Also, we indexed the timeseries metadata with other indexing features to serve external timeseries metadata queries. If particular timeseries metadata not present in the adapter-query, then fetch metadata from the adapter-metadata and indexed in the MongoDB. Vise a versa; when a new timeseries created in the adapter-metadata, it triggers an event to index metadata in the adapter-query.
+We used MongoDB geospatial features to support geo-queries in the \acrshort{wdias}. Also, we indexed the timeseries metadata with other indexing features to serve external timeseries metadata queries. If particular timeseries metadata not present in the adapter-query, then fetch metadata from the adapter-metadata and indexed in the MongoDB. Vise a versa; when a new timeseries created in the adapter-metadata, it triggers an event to index metadata in the adapter-query.
 Here we used the \emph{y-axis scaling} concept by splitting metadata search into multiple services. Within the system, it uses in-memory database cache to support internal metadata access, and external search queries fulfill by the adapter-query with using MongoDB.
