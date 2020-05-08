@@ -5,7 +5,7 @@ The foundation of the \acrshort{wdias} is data-centric. We need to look into the
 
 \paragraph{Timeseries}-- \emph{A timeseries is simply a series of data points ordered in time}. In the weather domain, we are interested in observation and forecasting timeseries data. Each timeseries, the data points can be formed in different formats as well. For example, scalar (0D), vector (1D), grid (2D), and polygon (2D).
 
-Based on the above interpretation, a timeseries have data points ordered in time. Other than that, timeseries have additional information that is known as \emph{timeseries metadata}, which can use to identify one timeseries from another uniquely. As an example, we can place a weather station on a \emph{location}, and it can measure different types of weather data that are called \emph{parameters} such as temperature, precipitation, and wind direction. Each parameter can produce different timeseries. Even we can use the location as metadata to identify the timeseries, but that is not enough to distinctly identify the parameters. Thus, we need to use a set of attributes to identify a timeseries uniquely. In the next \cref{subse:timeseries_key_attributes}, we describe key attributes that are used by the \acrshort{wdias} to identify a timeseries uniquely.
+Based on the above interpretation, a timeseries have data points ordered in time. Other than that, timeseries have additional information that is known as \emph{timeseries metadata}, which can use to identify one timeseries from another uniquely. As an example, we can place a weather station on a \emph{location}, and it can measure different types of weather data that are called \emph{parameters} such as temperature, precipitation, and wind direction. Each parameter can produce different timeseries. Even we can use the location as metadata to identify the timeseries, but that is not enough to distinctly identify the parameters. Thus, we need to use a set of attributes to identify a timeseries uniquely. Next, we describe key attributes that are used by the \acrshort{wdias} to identify a timeseries uniquely.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -13,7 +13,7 @@ Based on the above interpretation, a timeseries have data points ordered in time
 \label{subse:timeseries_key_attributes}
 \paragraph{Module ID}-- String field which describe the source of the data generated. e.g., hec-hms, flow2d, weather-station, etc
 
-\paragraph{Value Type}-- Scalar, Vector, Grid are the Value Types that are interested in the \acrshort{wdias}.
+\paragraph{Value Type}-- Scalar, vector, grid are the Value Types that are interested in the \acrshort{wdias}.
 
 \paragraph{Location}-- Location of the timeseries. All locations have a unique String identifier called \emph{locationId}. Further, two types of location types are interested in the \acrshort{wdias}, namely:
 \begin{itemize}
@@ -52,7 +52,7 @@ Based on the above interpretation, a timeseries have data points ordered in time
 Parameter describes the variable measuring against a location. All parameters should have a unique string identifier called \emph{parameterId}. A parameter can be used in multiple locations. While defining a parameter, three required fields need to be provided, such as variable, unit, and \emph{parameterType}.
 
 \begin{itemize}  
-  \item \emph{Variable} -- Nature of the variable measuring. Example Precipitation, Temperature and Water Level etc
+  \item \emph{Variable} -- Nature of the variable measuring. Example precipitation, temperature and water level
   \item \emph{Unit} -- metric unit of measuring
   \item \emph{Parameter Type} -- Should be one of Instantaneous, Accumulative, or Mean
 \begin{lstlisting}[language=Python]
@@ -109,22 +109,23 @@ Many modern database systems give a higher performance on a specific type of app
     \label{fi:database_structure}
 \end{figure}
 
-\cref{fi:database_structure} shows the \acrshort{wdias} database structure.
-The following sections describe the database structure of \acrshort{wdias} with compare to the design with more details on how is support the microservice architecture.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Timeseries Metadata Storage}
 \label{subse:mysql}
 
+\cref{fi:database_structure} shows the \acrshort{wdias} database structure.
+The following sections describe the database structure of \acrshort{wdias} with compare to the design with more details on how is support the microservice architecture.
+
 To reduce the overhead while searching for timeseries and handling duplicates, we used a timeseries metadata store. Since metadata consists of multiple key attributes, the data can be efficiently stored using a \acrfull{rdbms}. It helps to store data without any duplicates and optimize the data with normalization. As an example, the parameter attribute can only have a dozen possible values. Using an \acrshort{rdbms}, those values can be stored once and reuse with defining timeseries against location via references.
 
-We used SQL as the \acrshort{rdbms}. Since one of \acrshort{wdias} main goals is to use open source tools, it used MySQL as a persistent database for storing timeseries metadata described above. One MySQL instance used only for adapter-metadata service. Other than that, another MySQL instance used for adapter-extension. We will explain in more detail in \cref{se:data_preprocess}. We used MySQL only for the above services, and those database instances keep the consistency of the schema for timeseries metadata and extension metadata. Further, we used an In-Memory database instance for caching the requested metadata to reduce the load on the MySQL database instances while repeated queries. Other than MySQL, many open-source SQL databases can be used to replace the same functionality.
+Since one of \acrshort{wdias} main goals is to use open source tools, it used MySQL as a persistent database for storing timeseries metadata described above. One MySQL instance used only for adapter-metadata service. Other than that, another MySQL instance used for adapter-extension. We will explain in more detail in \cref{se:data_preprocess}. We used MySQL only for the above services, and those database instances keep the consistency of the schema for timeseries metadata and extension metadata. Further, we used an In-Memory database instance for caching the requested metadata to reduce the load on the MySQL database instances while repeated queries. Other than MySQL, many open-source SQL databases can be used to replace the same functionality.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{In-Memory Database}
 \label{subse:redis}
 
-We used Redis \cite{redisRedisDocumentation} as the In-Memory database since it is a widely used database system with excellent support. It also supports Publisher Subscriber capabilities as an inbuilt feature. Redis is an open-source (BSD licensed). Clustering is available for scalability. Redis uses in-memory caching for fast access to the frequent access data in adapter-metadata and adapter-extension. Other than that, adapter-status uses Redis as a key-value pair store to maintain the status for async requests handling while storing grid data. The adapter-extension uses Redis's Publisher Subscriber capabilities to create a cronjob in extension-scheduler when a new extension creates with a trigger on time during data preprocessing.
+We used Redis \cite{redisRedisDocumentation} as the In-Memory database since it is a widely used database system with excellent support. It also supports Publisher Subscriber capabilities as an inbuilt feature. Redis is an open-source. Clustering is available for scalability. Redis uses in-memory caching for fast access to the frequent access data in adapter-metadata and adapter-extension. Other than that, adapter-status uses Redis as a key-value pair store to maintain the status for async requests handling while storing grid data. The adapter-extension uses Redis's Publisher Subscriber capabilities to create a cronjob in extension-scheduler when a new extension creates with a trigger on time during data preprocessing.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Timeseries Database}

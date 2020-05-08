@@ -7,10 +7,10 @@ We used 250 locations from Google’s Countries Public Data set \cite{GoogleGoog
 
 For storing grid data, we used static 100 grid locations. Since grid locations have different metadata structures, we had to generate metadata for them separately. However, the locationID of the grid timeseries metadata is similar to scalar timeseries metadata that have the same effect when defining timeseries metadata.
 
-We used the Apache JMeter for performing the load test since it is open source and supports distributed load testing. As mentioned in the JMeter Best Practices, "If your test needs large amounts of data - particularly if it needs to be \emph{randomized}, create the test data in a file that can be read with CSV Data set. This avoids wasting resources at run-time". While running the load test, JMeter iterates over the timeseries metadata CSV file and assigns a new thread to work on the test scenario with given timeseries metadata. Instead of providing the randomness at run time, we stored the timeseries metadata in random order that satisfies the percentage of 70\% scalar, 20\% vector, and 10\% grid, as mentioned in \cref{se:test_plan}.
+We used the Apache JMeter for performing the load test since it is open source. And supports distributed load testing. As mentioned in the JMeter Best Practices, "If your test needs large amounts of data - particularly if it needs to be \emph{randomized}, create the test data in a file that can be read with CSV Data set. This avoids wasting resources at run-time". While running the load test, JMeter iterates over the timeseries metadata CSV file and assigns a new thread to work on the test scenario with given timeseries metadata. Instead of providing the randomness at run time, we stored the timeseries metadata in random order that satisfies the percentage of 70\% scalar, 20\% vector, and 10\% grid, as mentioned in \cref{se:test_plan}.
 Before running the test cases, we generated the timeseries metadata in random order and wrote them into a CSV file during the setup phase. The metadata CSV file arranges in a way that, within every ten lines, seven lines are Scalar timeseries, two lines are Vector timeseries, and 1 line is a Grid timeseries.
 
-\acrshort{wdias} is capable of storing any numeric value up to 3 decimal points as per the default configuration. Even the parameter type is either precipitation or temperature does not make any difference, because in storage perspective, it's a number. Thus, during the performance testing, we only use real precipitation data from \acrshort{curw}. So, we used data from five weather stations for a month while preparing the test data for scalar timeseries. We used a script to clean up and prepare the precipitation data, and it is available as setup precipitation in \acrshort{wdias} codebase.
+\acrshort{wdias} is capable of storing any numeric value up to 3 decimal points as per the default configuration. Even the parameter type is either precipitation, temperature does not make any difference, because in storage perspective, we are storing numeric value. Thus, during the performance testing, we only use real precipitation data from \acrshort{curw}. So, we used data from five weather stations for a month while preparing the test data for scalar timeseries. We used a script to clean up and prepare the precipitation data, and it is available as setup precipitation in \acrshort{wdias} codebase.
 
 \begin{lstlisting}[language=sh, caption=Preparation of precipitation data.]
 Set ROOT_DIR=~/wdias/wdias-performance-test
@@ -55,7 +55,7 @@ To create a higher workload, we used JMeter's Distributed Testing capabilities. 
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=0.6\textwidth]{results/work_load/experimental_setup_v3.jpg}
+    \includegraphics[width=0.6\textwidth]{results/work_load/experimental_setup_v3.pdf}
     \caption{Experimental setup with JMeter}
     \label{fi:experimental_setup}
 \end{figure}
@@ -231,7 +231,7 @@ According to \cref{tab:aws_eks_nodes}, we selected a few physical nodes with dif
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=0.75\textwidth]{results/work_load/eks_node_setup.jpg}
+    \includegraphics[width=0.75\textwidth]{results/work_load/eks_node_setup.pdf}
     \caption{\acrfull{eks} node setup}
     \label{fi:eks_node_setup}
 \end{figure}
