@@ -12,6 +12,7 @@ Before running the test cases, we generated the timeseries metadata in random or
 
 \acrshort{wdias} is capable of storing any numeric value up to 3 decimal points as per the default configuration. Even the parameter type is either precipitation, temperature does not make any difference, because in storage perspective, we are storing numeric value. Thus, during the performance testing, we only use real precipitation data from \acrshort{curw}. So, we used data from five weather stations for a month while preparing the test data for scalar timeseries. We used a script to clean up and prepare the precipitation data, and it is available as setup precipitation in \acrshort{wdias} codebase.
 
+\begin{minipage}{\linewidth}
 \begin{lstlisting}[language=sh, caption=Preparation of precipitation data.]
 Set ROOT_DIR=~/wdias/wdias-performance-test
 -h | --help: Usage
@@ -25,11 +26,13 @@ Set ROOT_DIR=~/wdias/wdias-performance-test
   setup_precipitation.sh cleanup
     Clean up extracted directories
 \end{lstlisting}
+\end{minipage}
 
 While preparing the data, we created three sets of timeseries based on the time interval, such as hourly (60min), 30min, and 15min data, with modifying the replicated data. The above method reduced the overhead of filtering data during performance testing. We also set up the JMeter as a containerized application, which allows us to run inside the k8s cluster. As an optimization for the JMeter container creation, we avoid adding extensive test timeseries data, which causes the container size to be large and making the build process slower. Rather than doing that, we used extract scripts while running the container and extract the data into the container. For each test plan, we used a date counter and increment the date after one full cycle of timeseries metadata CSV file is processed. When the date counter increases, it reads the real data for that day. After the date counter advances to the next month, we repeat reading data from the beginning of the month. To provide more randomness, we switch over five locations during the date increment. The JMeter reads the data via the JSR223 scripts, and we have written those scripts in a generalized style such that it is possible to tweak and use if there are more location data available.
 
 Similar to the scalar test data prepared, we prepared the test grid data using the real water-level output of the FLO2D 150 meter hydrology model that is used in the \acrshort{curw} The FLO2D timeseries are produced as ASCII Grid files, and each data point represents a grid file that consists of 120 rows and 139 columns. To represent missing cell values of the ASCII grid file, we used the \texttt{-9} instead of \texttt{-999} as an optimization. Even with that, each file size is around 50,337 Bytes (50 Kilobytes).
 
+\begin{minipage}{\linewidth}
 \begin{lstlisting}[language=sh, caption= Preparation of water-level data.]
 Set ROOT_DIR=~/wdias/wdias-performance-test
 -h | --help: Usage
@@ -43,6 +46,7 @@ Set ROOT_DIR=~/wdias/wdias-performance-test
   setup_water-level.sh cleanup
     Clean up extracted directories
 \end{lstlisting}
+\end{minipage}
 
 We also used the real water level data for one month period and developed a script to do the data preparation, cleanup, and extract. Similar to the scalar test scenario, the JMeter repeats reading from the beginning of test data when the date counter increments to the next month.
 

@@ -104,6 +104,8 @@ Following endpoint supports to query the timeseries metadata by parameter for gi
 \end{lstlisting}
 
 \paragraph{Query Timeseries in Area by Parameter}-- Following endpoint supports to query the timeseries metadata within a given area for a given parameter. This endpoint is an extension of the above endpoint.
+
+\begin{minipage}{\linewidth}
 \begin{lstlisting}
     POST <HOST_ADDR>/query/timeseries
     JSON Body:
@@ -123,6 +125,7 @@ Following endpoint supports to query the timeseries metadata by parameter for gi
         "parameter": "<PARAMETER_ID>"
     }
 \end{lstlisting}
+\end{minipage}
 
 \paragraph{Query All Timeseries} -- Send a request with an empty JSON body that will respond with all the timeseries.
 \begin{lstlisting}
