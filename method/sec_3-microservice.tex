@@ -95,61 +95,11 @@ Apart from that, as we further discuss in \cref{se:data_preprocess}, the extensi
 
 We defined an \acrfull{rest} as the communication layer for \acrshort{wdias}, and it affects the microservice architecture design as well. It follows a simple \acrshort{rest} \acrshort{api} and allows users to interact with the system through HTTP methods.
 
-We provided a set of timeseries endpoints to register new timeseries metadata before storing the real data. Timeseries endpoints allow users to interact with Metadata Adapter to create and update the timeseries metadata. And create timeseries metadata, we cached on the Query Handler to perform search queries and geo-indexed to support geo-based queries. When a user registers a timeseries metadata, the system generates a unique timeseries identifier based on the metadata values. Then the user can use that identifier to store the real weather data and retrieve stored data.
-
-\begin{itemize}
-    \item parameter
-    \begin{itemize}
-        \item \texttt{GET /parameter} -- Get parameters
-        \item \texttt{POST /parameter} -- Create parameter
-        \item \texttt{PUT /parameter/id} -- Update parameter
-        \item \texttt{DELETE /parameter/id} -- Delete parameter
-    \end{itemize}
-    \item timeStep
-    \begin{itemize}
-        \item \texttt{GET /timestep} -- Get TimeSteps
-        \item \texttt{POST /timestep} -- Create TimeStep
-        \item \texttt{PUT /timestep/id} -- Update TimeStep
-        \item \texttt{DELETE /timestep/id} -- Delete TimeStep
-    \end{itemize}
-    \item location
-    \begin{itemize}
-        \item \texttt{GET /location} -- Get location points
-        \item \texttt{POST /location} -- Create location point
-        \item \texttt{PUT /location/id} -- Update location point
-        \item \texttt{DELETE /location/id} -- Delete location point
-        \item \texttt{GET /location/regular-grid} -- Get regular grids
-        \item \texttt{POST /location/regular-grid} -- Create regular grid
-        \item \texttt{PUT /location/regular-grid/id} -- Update regular grid
-        \item \texttt{DELETE /location/regular-grid/id} -- Delete regular grid
-    \end{itemize}
-    \item timeseries
-    \begin{itemize}
-        \item \texttt{GET /timeseries} -- Get timeseries
-        \item \texttt{POST /timeseries} -- Create timeseries
-        \item \texttt{PUT /timeseries/id} -- Update timeseries
-        \item \texttt{DELETE /timeseries/id} -- Delete timeseries
-    \end{itemize}
-\end{itemize}
+We provided a set of timeseries endpoints to register new timeseries metadata before storing the real data, and a detailed description appears in Appendix A. Timeseries endpoints allow users to interact with Metadata Adapter to create and update the timeseries metadata. And create timeseries metadata, we cached on the Query Handler to perform search queries and geo-indexed to support geo-based queries. When a user registers a timeseries metadata, the system generates a unique timeseries identifier based on the metadata values. Then the user can use that identifier to store the real weather data and retrieve stored data.
 
 Current \acrshort{wdias} only supports handling point locations and grid locations. If it needs to extend the system to store irregular grid data, then it should add another set of location endpoints for storing irregular grid location details.
 
-\emph{Import} endpoints allow to upload data into the \acrshort{wdias} system.
-\begin{itemize}
-    \item \texttt{POST /import/json/raw} -- Insert Scalar/Vector timeseries data with JSON body
-    \item \texttt{POST /import/csv/raw} -- Insert Scalar/Vector timeseries data in CSV format
-    \item \texttt{POST /import/ascii-grid/upload} -- Upload set of ASCII Grid files
-    \item \texttt{POST /import/ascii-grid/binary} -- Upload a single ASCII Grid file
-\end{itemize}
-
-\emph{Export} endpoints allow to get/download data from the \acrshort{wdias} system.
-\begin{itemize}
-    \item \texttt{GET /export/json/raw} -- Get Scalar/Vector timeseries data in JSON format
-    \item \texttt{GET /export/json/raw?start=2000-01-01\&end=2000-01-03} -- Get Scalar/Vector timeseries data in JSON format for given time period
-    \item \texttt{GET /export/netcdf/binary} -- Download Grid data timeseries data in \acrshort{netCDF} format
-\end{itemize}
-
-Other than the above endpoints, we exposed another set of endpoints to configure extensions, and we will describe further in \cref{se:data_preprocess}.
+Other than the endpoints in Appendix A, we exposed another set of endpoints to configure extensions, and we will describe further in \cref{se:data_preprocess}.
 Other than the timeseries metadata endpoints, other module endpoints start with the module name such as import, export, and extension when compared to timeseries metadata endpoints. Using the above convention, we allowed adding a new module system if required.
 For import and export modules, the names of the endpoints defined as the modules name then follow the data format. The above endpoint naming convention provides the flexibility to integrate new data format modules for import and export. Then the endpoint name ends with the type of data operation. Data can upload as a single file with binary or multiple files with the upload. Other than that, users can send requests with raw data with required headers has mentioned by a particular import module.
 Thus, the \acrshort{api} convention of \texttt{/MODULE/DATA\_FORMAT/DATA\_TYPE} allows users to integrate new import or export modules into the system, as well as add new data types.

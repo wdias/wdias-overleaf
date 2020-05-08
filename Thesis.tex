@@ -21,6 +21,7 @@
 \usepackage{dirtytalk}
 \usepackage{tabulary}
 \usepackage{biblatex}
+\usepackage[titletoc]{appendix}
 
 \usepackage{color,soul}
 \usepackage{todonotes}
@@ -280,12 +281,21 @@ Finally, I would like to thank the lectures, the evaluation panel and the collea
 \import{summary/}{sec_2-research_limitations.tex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \appendix
-% \import{Appendix/}{app_1_soa_and_actor_model.tex}
 
 \graphicspath{ {./images/} }
 \input{glossary.tex}
 % \bibliographystyle{plain}
 % \addbibresource{mendeley.bib}
+
+\addcontentsline{toc}{chapter}{References} 
 \printbibliography[title={References}]
+
+\begin{appendices}
+\input{Appendix/apx_1_rest_api}
+\end{appendices}
+
+\begin{appendices}
+\input{Appendix/apx_2_query_api}
+\end{appendices}
+
 \end{document}
