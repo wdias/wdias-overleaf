@@ -24,8 +24,8 @@ Query: Location & 71804 & 3 & 2 & 109 & 3 & 1.52 & 0.00\% & 40.5 \\ \hline
 \end{tabulary}
 \label{tab:obs_all_60_min_summary}
 \end{table}
-Insert timeseries performed over scalar and vector data types with each request sent with 24 data points. On average, it took 28ms to insert scalar and vector data into the \acrshort{wdias}, and up to 90\% percentile inserted data within 31ms. Noticeably it has 0\% of errors, which means that all the requests completed successfully. Also, \acrshort{wdias} handled 40.5 \acrshort{rps} of scalar and vector data requests with the given workload. The retrieval of scalar and vector timeseries has lesser delay than the insertion.
-On the other hand, insert grid timeseries data performed within 23ms, and almost all the requests perform within the same amount of time. Hence, the standard deviation is smaller. Delay with inserting grid timeseries smaller because those requests are handled asynchronously. Retrieve grid timeseries data performed with a bit higher value of latency of 68ms due to performed the retrieve request on-demand. Both insert and retrieve grid timeseries data have 4.5 \acrshort{rps} since it only gets 10\% of the number of requests per given time during the load test.
+Insert timeseries performed over scalar and vector data types with each request sent with 24 data points. On average, it took 28 milliseconds to insert scalar and vector data into the \acrshort{wdias}, and up to 90\% percentile inserted data within 31ms. Noticeably it has 0\% of errors, which means that all the requests completed successfully. Also, \acrshort{wdias} handled 40.5 \acrshort{rps} of scalar and vector data requests with the given workload. The retrieval of scalar and vector timeseries has lesser delay than the insertion.
+On the other hand, insert grid timeseries data performed within 23ms, and almost all the requests perform within the same amount of time. Hence, the standard deviation is smaller. Delay with inserting grid timeseries smaller because those requests are handled asynchronously. Retrieve grid timeseries data performed with a bit higher value of latency of 68 milliseconds due to performed the retrieve request on-demand. Both insert and retrieve grid timeseries data have 4.5 \acrshort{rps} since it only gets 10\% of the number of requests per given time during the load test.
 
 \begin{figure}[htp]
     \centering
@@ -162,7 +162,7 @@ Query: Location & 71704 & 1 & 0 & 203 & 2 & 2.05 & 0.00\% & 40.5 \\ \hline
 \label{tab:obs_all_auto_15_min_summary}
 \end{table}
 
-\cref{tab:obs_all_auto_15_min_summary} shows the response latency summary details and \acrshort{rps} as explained in \cref{subse:obs_test_plan_all_15min}. If we analyzed the performance of the auto-scaling enabled microservice, the average grid data insertion latency was reduced from 91ms to 87ms. Also, we can notice that the error percentage reduced from 1.42\% to 0.18\%. Since the standard deviation also reduced, we can conclude that the latencies are closer to the average latency. Further, these improvements in insert Grid timeseries data seem to affect the output of retrieve Grid timeseries data as well.
+\cref{tab:obs_all_auto_15_min_summary} shows the response latency summary details and \acrshort{rps} as explained in \cref{subse:obs_test_plan_all_15min}. If we analyzed the performance of the auto-scaling enabled microservice, the average grid data insertion latency was reduced from 91 milliseconds to 87 milliseconds. Also, we can notice that the error percentage reduced from 1.42\% to 0.18\%. Since the standard deviation also reduced, we can conclude that the latencies are closer to the average latency. Further, these improvements in insert Grid timeseries data seem to affect the output of retrieve Grid timeseries data as well.
 
 \begin{figure}[htp]
     \centering
