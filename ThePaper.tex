@@ -146,7 +146,7 @@ In next \cref{pse:wdias_architecture}, we discussed about the \acrshort{wdias} u
 \gkc{Replaced with PDF images.}
 
 The left side of Figure 3.3 shows the import modules of the WDIAS, and the right side shows the export modules. each import microservice only does the specific task of converting and forwarding the request to the correct data adapter module. each data type, there is an adapter microservice is running which is optimized to storing such type of data. Each adapter has an isolated database, and the database is hosted separately for the high performance.
-And timeseries metadata stored using RDBMS which gives more performance over retrieving metadata data, and cached with the In-Memory database to fast access. The system generates a unique identifier for each timeseries, and throughout the WDIAS, other microservice use it to handle data for fast access. Export module microservice follows the same concepts and provides the capability to export the data into required formats of the weather models.
+And timeseries metadata stored using RDBMS which gives more performance over retrieving metadata data, and cached with the in-memory database to fast access. The system generates a unique identifier for each timeseries, and throughout the WDIAS, other microservice use it to handle data for fast access. Export module microservice follows the same concepts and provides the capability to export the data into required formats of the weather models.
 
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.5\textwidth]{method/microservice/microservice_architecture-handle_on_async-v4.pdf}}
