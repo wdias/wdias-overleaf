@@ -1,7 +1,4 @@
-\addtocontents{toc}{\protect\setcounter{tocdepth}{0}} 
-\chapter{WDIAS Query API}
-
-\subsection{Timeseries Metadata Queries}
+\section*{Timeseries Metadata Queries}
 Get timeseries metadata by timeseriesID.
 \begin{lstlisting}
     GET <HOST_ADDR>/metadata/timeseries/<TIMESERIES_ID>
@@ -24,7 +21,7 @@ QUERY\_STRING can be consist of zero to multiple parameters. Multiple query para
 For the moment, query are only support by strict matching with above parameter values.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Timeseries Geo-queries}
+\section*{Timeseries Geo-queries}
 
 \paragraph{Query Locations within Area}-- Following endpoint supports to query the locations which exist within the area provided by the GeoJson data in the JSON payload.
 \begin{lstlisting}
@@ -64,6 +61,8 @@ paragraph{Query parameters in Locations}-- Following endpoint supports to query 
 
 \subsubsection{Query Timeseries by Locations}
 Following endpoint supports to query the timeseries metadata for a given location set. Location IDs should be provided as a list in the locations field.
+
+\begin{minipage}{\linewidth}
 \begin{lstlisting}
     POST <HOST_ADDR>/query/timeseries
     JSON Body:
@@ -71,6 +70,7 @@ Following endpoint supports to query the timeseries metadata for a given locatio
         "locations": ["LOCATION_ID", ...]
     }
 \end{lstlisting}
+\end{minipage}
 
 \subsubsection{Query Timeseries by Parameter}
 Following endpoint supports to query the timeseries metadata by parameter for given location/locations.

@@ -287,15 +287,23 @@ Finally, I would like to thank the lectures, the evaluation panel and the collea
 % \bibliographystyle{plain}
 % \addbibresource{mendeley.bib}
 
-\addcontentsline{toc}{chapter}{References} 
+\addcontentsline{toc}{chapter}{References}
 \printbibliography[title={References}]
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{appendices}
-\input{Appendix/apx_1_rest_api}
+    \chapter{WDIAS REST API}
+    \input{Appendix/apx_1_rest_api}
+    \chapter{WDIAS Query API}
+    \input{Appendix/apx_2_query_api}
 \end{appendices}
 
-\begin{appendices}
-\input{Appendix/apx_2_query_api}
-\end{appendices}
+% \appendix
+% \addcontentsline{toc}{section}{Appendix~\ref{apx:rest_api}: WDIAS REST API}
+% \chapter{WDIAS REST API}
+% \input{Appendix/apx_1_rest_api}
+% \addtocontents{toc}{\protect\setcounter{tocdepth}{0}} % Issue with List of figures
+% \chapter{WDIAS Query API}
+% \input{Appendix/apx_2_query_api}
 
 \end{document}
