@@ -8,11 +8,11 @@ In \cref{se:high_level_design} we discussed three modules of weather data integr
     \item \emph{Extension} modules - Assimilation modules
 \end{enumerate}
 
-Other than the above modules, \emph{adapter modules} act as the core modules and the base of the system. Also, the \emph{query module} allows the users to query for the timeseries based on the metadata and perform geo-based queries based on the locations.
+Other than the above modules, \emph{adapter modules} act as the core modules and the base of the system. Also, the \emph{query module} allows the users to query for the timeseries metadata and perform geo-based queries based on the locations.
 
 The test plan is to perform load testing on the whole system and analyze the scalability of the system while measuring the operations performed on each module. Two variables can vary while doing performance testing.
 \begin{enumerate}
-    \item Number of requests made to the system at a given time (Requests Per Second (RPS))
+    \item Number of requests made to the system at a given time called as \acrfull{rps}
     \item Request size
 \end{enumerate}
 
@@ -34,7 +34,7 @@ As an upper limit of such scenarios while designing the performance testing, it 
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.8\textwidth]{results/work_load/performance_study_v4.jpg}
-    \caption{\acrshort{wdias} load testing plan with changing the request size and \acrshort{rps}}
+    \caption{\acrshort{wdias} load testing plan with changing the request size and \acrshort{rps}.}
     \label{fi:performance_study_load}
 \end{figure}
 
@@ -45,7 +45,7 @@ As an upper limit of such scenarios while designing the performance testing, it 
 \label{subse:test_plan_flow}
 Following are the test cases which are planned to performance test cases;
 \begin{enumerate}
-    \item Test Setup to create timeseries in 1hr, 30min and 15min intervals and create metadata of the timeseries
+    \item Test Setup to create timeseries in 1hr, 30min and 15min intervals, create metadata of the timeseries and create random extension triggers
     % \item Extensions
     % \begin{itemize}
     %     \item Create Extensions for /Aggregation\_Accumulative, /Interpolation Linear, /Validation Missing Values (OnChange and OnTime)
@@ -54,16 +54,16 @@ Following are the test cases which are planned to performance test cases;
     % \end{itemize}
     \item Import + Extension + Export + Timeseries Queries
     \begin{itemize}
-        \item Plan for 30 minutes of the test run with the request size of 1hr (60min) data.
-        \item Plan for 30 minutes of the test run with the request size of 30min data.
-        \item Plan for 30 minutes of the test run with the request size of 15min data.
-        \item Plan for 30 minutes of the test run with the request size of 15min data with auto-scaling.
-        % \item Test plan run against 60min, 30min and 15min request size of data. Another test plan runs with enabling the auto-scaling. (total of 2 hours)
+        \item Plan for 30 minutes of the test run with the request size of 1hr (60min) data
+        \item Plan for 30 minutes of the test run with the request size of 30min data
+        \item Plan for 30 minutes of the test run with the request size of 15min data
+        \item Plan for 30 minutes of the test run with the request size of 15min data with auto-scaling
+        % \item Test plan run against 60min, 30min and 15min request size of data. Another test plan runs with enabling the auto-scaling
     \end{itemize}
     \item Query
     \begin{itemize}
         \item Query Timeseries
-        \item Plan for the 5 minutes of test run.
+        \item Plan for the 5 minutes of test run
     \end{itemize}
 \end{enumerate}
 
@@ -78,6 +78,6 @@ During the performance analysis, we used the following metrics to measure the pe
     Normally for \acrshort{wdias} performance observations, it uses \acrfull{rps} to measure the throughput.
     \item \emph{Latency} -- Taken time to respond to the request sent to the system. 
     Normally we measure with milliseconds (ms) in the \acrshort{wdias}. During the performance analysis, we measure the minimum response time, maximum response time, the average response time, and standard deviation. The standard deviation measures the mean distance of the values to their average value. It gives an idea of the dispersion or variability of the measures to their mean value. So, if the deviation value is low compared to the mean value, it will indicate that the measures are not dispersed (or mostly close to the mean value), and the mean value is significant. Other than that, we measure the response time into 90\% percentile while giving the best response time up to 90\% percentile of the responses.
-    \item \emph{Resource utilization} -- Resource Utilization is calculated based on the CPU and Memory usage via the K8s metrics server. It calculates the resource utilization over a 60 seconds time window. Network usage is getting based on the actual physical machines.
+    \item \emph{Resource utilization} -- Resource utilization is calculated based on the CPU and Memory usage via the K8s metrics server. It calculates the resource utilization over a 60 seconds time window. Network usage is getting based on the actual physical machines.
     \item \emph{Auto-scaling} -- We performed the load testing with two system configurations. First, we ran the microservices with a fixed number of pods inside the K8s cluster. Then k8s are only allowed to vertically scale each microservice until a container hits the CPU and memory limits defined per container or overwhelm the physical node resources. Secondly, we ran the load testing with auto-scaling enabled only for microservices, which are using higher resources with the above system configurations. Auto-scaling spawns new copies of the same microservice when the microservice gets more load than the configured percentage, and shrink the running instances when there is a lesser load.
 \end{itemize}

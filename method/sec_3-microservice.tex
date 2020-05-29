@@ -13,7 +13,7 @@ There are lots of microservice patterns developed and evolved. Through the follo
 When building communication endpoints, many architectural approaches are adding significant smart by providing different protocol supports and complex logic support through the endpoints. As an example, \acrshort{esb} supports multiple protocols, and endpoints can be used to implement complex logic. But microservice architecture follows an alternative approach called as \emph{Smart endpoints and dumb pipes} \cite{LewisMicroservicesPipes}. Applications built based on microservice architecture are intended to be as disconnected and as coherent as possible. Each microservice has its domain logic and independent of other microservices logic and works more like filters in the classical Unix pipelines. Each microservice provides its functionalities as a \acrshort{rest} \acrshort{api} instead of using complex protocols. After receiving a request for each microservice through its \acrshort{rest} \acrshort{api}, it applies the correct logic and produces a response.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Database per Microservice Microservice Pattern}
+\subsection{Database per Microservice Pattern}
 \label{subse:database_per_service}
 
 \acrshort{microservice} prefers to have each microservice manages its database, either different instances of the same database technology or entirely different database systems - an approach called \emph{Polyglot Persistence} \cite{LewisMicroservicesManagement}.
@@ -21,9 +21,9 @@ When building communication endpoints, many architectural approaches are adding 
 The idea is to keep the persistent data of each microservice private for this service and only to make it accessible through an \acrshort{api}.
 There are different ways to keep the permanent data of a microservice private. But it is not required to set up a database instance for each microservice. For example, when you use a relational database, the following methods can be used to keep the data private \cite{RichardsonMicroservicesService}:
 \begin{itemize}
-    \item Individual tables per service - each microservice has a set of tables that restricts access for other microservices.
-    \item Schema per service - each service has a private database schedule for a given microservice.
-    \item Database server per service - each service has its database server.
+    \item Individual tables per service -- each microservice has a set of tables that restricts access for other microservices.
+    \item Schema per service -- each service has a private database schedule for a given microservice.
+    \item Database server per service -- each service has its database server.
 \end{itemize}
 
 \emph{Private tables per service} and \emph{schema per service} have the lowest overhead. The use of a schema per service is interesting because it makes the property clearer. Some high throughput services may require their database server.
@@ -40,17 +40,17 @@ Every microservice can have its database to guarantee a loose couple between mic
 
 The scalability of a system can be explained via a concept called \emph{the Scale Cube}, which talks about the scalability of the application by defining over X, Y, and Z axes.
 
-\paragraph{X-axis Scaling}-- When scaling an application through the x-axis, multiple instances of the application execute behind a load balancer. If there are \textit{n} copies, then each copy handles 1/\textit{n} of the load. The above simple approach is commonly to scale a service.
+\paragraph{X-axis scaling} -- When scaling an application through the x-axis, multiple instances of the application execute behind a load balancer. If there are \textit{n} copies, then each copy handles 1/\textit{n} of the load. The above simple approach is commonly to scale a service.
 
-\paragraph{Y-axis Scaling}-- When compared to the z-axis and x-axis scaling, which follows the concept of running multiple identical copies of the application, but y-axis scaling segregates the application into multiple services in the same domain. So, the end services are responsible for one or more closely related functions of the previous service before the segregation. There are different ways to split the application into services.
+\paragraph{Y-axis scaling} -- When compared to the z-axis and x-axis scaling, which follows the concept of running multiple identical copies of the application, but y-axis scaling segregates the application into multiple services in the same domain. So, the end services are responsible for one or more closely related functions of the previous service before the segregation. There are different ways to split the application into services.
 \begin{itemize}
     \item Verb-based decomposition. e.g., checkout.
     \item Decompose the application by the noun. e.g., order management.
     \item It is possible to use a combination of verb-based and noun-based decomposition for an application.
 \end{itemize}
-\emph{The microservice architecture is an application of y-axis scaling}.
+The microservice architecture is an application of y-axis scaling.
 
-\paragraph{Z-axis Scaling}-- The z-axis scaling follows the concept of each service running the same application code (similar to x-axis scaling). The big difference is that each service is responsible for only a subset of the data. z-axis splits are commonly used to scale databases. As an example, data partition (aka., sharded) across a set of servers based on an attribute of each record.
+\paragraph{Z-axis scaling} -- The z-axis scaling follows the concept of each service running the same application code (similar to x-axis scaling). The big difference is that each service is responsible for only a subset of the data. z-axis splits are commonly used to scale databases. As an example, data partition (aka., sharded) across a set of servers based on an attribute of each record.
 Even our research is a design based on the y-axis scaling; it is possible to use the z-axis scaling to further scaling the system. We will discuss more detail in \cref{se:discussion}.
 
 
@@ -58,12 +58,12 @@ Even our research is a design based on the y-axis scaling; it is possible to use
 \subsection{WDIAS Microservices}
 \label{sebse:wdias_microservices}
 
-\cref{fi:wdias_micro_on_demand} and \cref{fi:wdias_micro_async} show the system interaction of the WDIA microservices architecture while handling the requests. Each circle in the figures represents a microservice in the \acrshort{wdias}. And each microservice is implemented as a containerized application. The left side of \cref{fi:wdias_micro_on_demand} shows the import modules of the \acrshort{wdias}, and the right side shows the export modules. Also, we implemented each module as a microservice to independent maintainability and upgradability. We followed the concept of smart endpoints and dumb pipes explained in \cref{subse:dumb_pipes}, and each import microservice only does the specific task of converting and forwarding the request to the correct data adapter module. For scalar, vector, and grid data types, we created adapter microservices that are optimized for storing such kinds of data. And the metadata data of the timeseries store using an RDBMS, which gives more performance over retrieving timeseries metadata. The metadata is cached using an in-memory database to fast access while implementing the database structure. The system generates a unique identifier for each timeseries, and throughout the \acrshort{wdias} system, all microservices use it to handle data for fast access.
+\cref{fi:wdias_micro_on_demand} and \ref{fi:wdias_micro_async} show the system interaction of the WDIA microservices architecture while handling requests. Each circle in the figures represents a microservice in the \acrshort{wdias}. And each microservice is implemented as a containerized application. The left side of \cref{fi:wdias_micro_on_demand} shows the import modules of the \acrshort{wdias}, and the right side shows the export modules. Also, we implemented each module as a microservice to independent maintainability and upgradability. We followed the concept of smart endpoints and dumb pipes explained in \cref{subse:dumb_pipes}, and each import microservice only does the specific task of converting and forwarding the request to the correct data adapter module. For scalar, vector, and grid data types, we created adapter microservices that are optimized for storing such kinds of data. The metadata data of the timeseries store using an RDBMS, which gives more performance over retrieving timeseries metadata. The metadata is cached using an in-memory database to fast access while implementing the database structure. The system generates a unique identifier for each timeseries, and throughout the \acrshort{wdias} system, all microservices use it to handle data for fast access.
 
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1\textwidth]{method/microservice/microservice_architecture-handle_on_demand-v4.pdf}
-    \caption{\acrshort{wdias} architecture for handling requests on demand}
+    \caption{\acrshort{wdias} architecture for handling requests on demand.}
     \label{fi:wdias_micro_on_demand}
 \end{figure}
 
@@ -76,7 +76,7 @@ Export module microservices also follow the concepts of single responsibility an
     \label{fi:wdias_micro_async}
 \end{figure}
 
-As shown in \cref{fi:wdias_micro_on_demand}, when a request with a smaller payload comes to the system, the system handles the request on-demand and response back. However, as shown in \cref{fi:wdias_micro_async}, when a request with a larger payload comes to the system, it stores the data for an asynchronous process and responds with a unique id that can be used to verify whether data processed successfully or not. We used the microservice concept of Saga, as mentioned in \cref{subse:sagas}, while processing the Grid data. First, it stores the data and responds with a unique identifier to the user. After successfully storing the data, the microservice publishes an event. Another microservice listens to those events and processes the data and updates the system status.
+As shown in \cref{fi:wdias_micro_on_demand}, when a request with a smaller payload comes to the system, the system handles the request on-demand and response back. However, as shown in \cref{fi:wdias_micro_async}, when a request with a larger payload comes to the system, it stores the data for an asynchronous process and responds with a unique id that can be used to verify whether data processed successfully or not. We used the microservice concept of Saga, as mentioned in \cref{subse:sagas}, while processing the grid data. First, it stores the data and responds with a unique identifier to the user. After successfully storing the data, the microservice publishes an event. Another microservice listens to those events and processes the data and updates the system status.
 
 \begin{figure}[htp]
     \centering
@@ -85,7 +85,7 @@ As shown in \cref{fi:wdias_micro_on_demand}, when a request with a smaller paylo
     \label{fi:wdias_micro_separation}
 \end{figure}
 
-\cref{fi:wdias_micro_separation} shows the clear separation of microservices into the modules of the \acrshort{wdias}. Each adapter has a separate database, and the database is hosted separately for the high performance and to avoid interferences.
+\cref{fi:wdias_micro_separation} shows the clear separation of microservices into the modules of the \acrshort{wdias}. Each adapter has a separate database, and the database is hosted separately for the high performance and to avoid interference.
 Apart from that, as we further discuss in \cref{se:data_preprocess}, the extension modules are running independently, such as Interpolation, Transformation, and Validation, and we will also discuss in \cref{se:data_preprocess}. The Extension Adapter allows users to register new event-based or time-based triggers for the extensions. The extension scheduler triggers the events based on time and the extension handler triggers events based on data change.
 
 
@@ -93,13 +93,13 @@ Apart from that, as we further discuss in \cref{se:data_preprocess}, the extensi
 \subsection{WDIAS Application Programming Interface}
 \label{sebse:wdias_api}
 
-We defined an \acrfull{rest} as the communication layer for \acrshort{wdias}, and it affects the microservice architecture design as well. It follows a simple \acrshort{rest} \acrshort{api} and allows users to interact with the system through HTTP methods.
+We defined an \acrshort{rest} as the communication layer for \acrshort{wdias}, and it affects the microservice architecture design as well. It follows a simple \acrshort{rest} \acrshort{api} and allows users to interact with the system through HTTP methods.
 
-We provided a set of timeseries endpoints to register new timeseries metadata before storing the real data, and a detailed description appears in Appendix A. Timeseries endpoints allow users to interact with Metadata Adapter to create and update the timeseries metadata. And create timeseries metadata, we cached on the Query Handler to perform search queries and geo-indexed to support geo-based queries. When a user registers a timeseries metadata, the system generates a unique timeseries identifier based on the metadata values. Then the user can use that identifier to store the real weather data and retrieve stored data.
+We provided a set of timeseries endpoints to register new timeseries metadata before storing the real data, and a detailed description appears in Appendix A. Timeseries endpoints allow users to interact with Metadata Adapter to create and update the timeseries metadata. After creating timeseries metadata, we cached on the Query Handler to perform search queries and geo-indexed to support geo-based queries. When a user registers a timeseries metadata, the system generates a unique timeseries identifier based on the metadata values. Then the user can use that identifier to store the real weather data and retrieve stored data.
 
 Current \acrshort{wdias} only supports handling point locations and grid locations. If it needs to extend the system to store irregular grid data, then it should add another set of location endpoints for storing irregular grid location details.
 
 Other than the endpoints in Appendix A, we exposed another set of endpoints to configure extensions, and we will describe further in \cref{se:data_preprocess}.
-Other than the timeseries metadata endpoints, other module endpoints start with the module name such as import, export, and extension when compared to timeseries metadata endpoints. Using the above convention, we allowed adding a new module system if required.
+Also, other module endpoints start with the module name such as import, export, and extension when compared to timeseries metadata endpoints. Using the above convention, we allowed adding a new module system if required.
 For import and export modules, the names of the endpoints defined as the modules name then follow the data format. The above endpoint naming convention provides the flexibility to integrate new data format modules for import and export. Then the endpoint name ends with the type of data operation. Data can upload as a single file with binary or multiple files with the upload. Other than that, users can send requests with raw data with required headers has mentioned by a particular import module.
 Thus, the \acrshort{api} convention of \texttt{/MODULE/DATA\_FORMAT/DATA\_TYPE} allows users to integrate new import or export modules into the system, as well as add new data types.

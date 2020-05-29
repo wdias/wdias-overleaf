@@ -3,7 +3,7 @@
 
 The initial design of \acrshort{wdias} used the \acrfull{soa}. Moreover, it tried to use an \acrfull{esb} to integrate different modules, as \acrshort{esb} could act as a shared layer for all of the modules to interact together. By default, \acrshort{esb} also provides publisher/subscribe (pub/sub) capabilities.
 
-The \acrshort{esb} has the processing units called \emph{mediators}. A mediator can take a message, carry out some predefined actions on it, and output the modified message. These mediator capabilities can be used to integrate the modules of a weather data system, as shown in \cref{fi:wdia_components}. \acrshort{esb} also supports different transportation protocols such as HTTP and Web sockets. However, we realized that \acrshort{esb} is not suitable for data streaming or bulk data processing. Also, \acrshort{esb} suffers from a single point of failure, as all the messages are going through a common shared bus and slower communication (cannot be used for transfer data). In the second design phase of \acrshort{wdias}, we attempted to use the actor model using the AKKA framework \cite{HewittWhyModel} to overcome above \acrshort{esb} drawbacks. At the same time, we moved away from the \acrshort{soa} architecture design to the microservice architecture design.
+The \acrshort{esb} processing units called \emph{mediators}. A mediator can take a message, carry out some predefined actions on it, and output the modified message. These mediator capabilities can be used to integrate the modules of a weather data system, as shown in \cref{fi:wdia_components}. \acrshort{esb} also supports different transportation protocols such as HTTP and web sockets. However, we realized that \acrshort{esb} is not suitable for data streaming or bulk data processing. Also, \acrshort{esb} suffers from a single point of failure, as all the messages are going through a common shared bus and slower communication (cannot be used for transfer data). In the second design phase of \acrshort{wdias}, we attempted to use the actor model using the AKKA framework \cite{HewittWhyModel} to overcome above \acrshort{esb} drawbacks. At the same time, we moved away from the \acrshort{soa} architecture design to the microservice architecture design.
 
 Thus, we redesigned the system architecture with decomposing into microservices and used actors to implement each microservice in the system. In that case, we mapped each microservice in \acrshort{wdias} to an actor or an actor with slave actors. \acrshort{soa} focuses on imperative programming, while the microservices architecture focuses on a reactive actor programming style using faster messaging mechanisms.
 When compared to \acrshort{soa}, the microservice architecture has several advantages:
@@ -32,12 +32,12 @@ The \acrshort{wdias} used \acrfull{k8s} as the container orchestration system. \
 
 \cref{fi:k8s_architecture} gives an overall idea on the components of \acrshort{k8s},
 \begin{itemize}
-    \item pods – Cluster of containers that can group other container images in a single unit.
-    \item nodes – The machines (VMs, physical servers, etc) in a cluster that runs your applications and cloud workflows.
-    \item kubelet – An agent that runs on each node in the cluster. It makes sure that containers are running in a pod.
-    \item kube-proxy – A network proxy that runs on each node in the cluster, and maintains network rules on nodes.
-    \item kubernetes master – Responsible for maintaining the desired state for your cluster.
-    \item etcd – Consistent and highly-available key value store used as Kubernetes backing store for all cluster data.
+    \item Pods -- Cluster of containers that can group other container images in a single unit.
+    \item Nodes -- The machines (VMs, physical servers, etc) in a cluster that runs your applications and cloud workflows.
+    \item Kubelet -- An agent that runs on each node in the cluster. It makes sure that containers are running in a pod.
+    \item Kube-proxy -- A network proxy that runs on each node in the cluster, and maintains network rules on nodes.
+    \item Kubernetes master -- Responsible for maintaining the desired state for your cluster.
+    \item etcd -- Consistent and highly-available key value store used as \acrshort{k8s} backing store for all cluster data.
 \end{itemize}
 
-Users can add much as Nodes required into the \acrshort{k8s} cluster, and \acrshort{k8s} manage and deploy applications as pods into cluster nodes. Each microservice can deploy as a pod, which is a group of containerized applications. And \acrshort{k8s} is able to scale as much as the user requirements by deploying multiple copies of the same pod. By separating each microservice as a container, and running them as multiple pods inside the \acrshort{k8s} removes the tight coupling of microservices when compared to the actors. It preserves the independent nature of the microservices and supports the high scalability of the system.
+Users can add nodes much as required into the \acrshort{k8s} cluster, and \acrshort{k8s} manage and deploy applications as pods into cluster nodes. Each microservice can deploy as a pod, which is a group of containerized applications. \acrshort{k8s} is able to scale as much as the user requirements by deploying multiple copies of the same pod. By separating each microservice as a container, and running them as multiple pods inside the \acrshort{k8s} removes the tight coupling of microservices when compared to the actors. It preserves the independent nature of the microservices and supports the high scalability of the system.
