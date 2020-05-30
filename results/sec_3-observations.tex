@@ -1,7 +1,7 @@
 \section{Performance Test Observations}
 \label{se:observations}
 
-This section includes the observations based on the test plans discussed in Section \cref{se:test_plan}, and the experimental system setup explained in \cref{se:workload}. Sections \ref{subse:obs_test_plan_all_60min} to \ref{subse:obs_test_plan_all_auto_15min}, we discuss the observations collected with performing the Load test plans over 60 minutes data (24 data points per request), 30 minutes data (48 data points per request), and 15 minutes data (96 data points per request) by varying the request size. Then we perform another round of 15 minutes data with enabling auto-scaling for the higher resource utilized microservices.
+This section includes the observations based on the test plans discussed in \cref{se:test_plan}, and the experimental system setup explained in \cref{se:workload}. Sections \ref{subse:obs_test_plan_all_60min} to \ref{subse:obs_test_plan_all_auto_15min}, we discuss the observations collected with performing the load test plans over 60 minutes data (24 data points per request), 30 minutes data (48 data points per request), and 15 minutes data (96 data points per request) by varying the request size. Then we perform another round of 15 minutes data with enabling auto-scaling for the higher resource utilized microservices.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Load Testing with hourly resolution data}
@@ -24,8 +24,8 @@ Query: Location & 71804 & 3 & 2 & 109 & 3 & 1.52 & 0.00\% & 40.5 \\ \hline
 \end{tabulary}
 \label{tab:obs_all_60_min_summary}
 \end{table}
-Insert timeseries performed over scalar and vector data types with each request sent with 24 data points. On average, it took 28 milliseconds to insert scalar and vector data into the \acrshort{wdias}, and up to 90\% percentile inserted data within 31ms. Noticeably it has 0\% of errors, which means that all the requests completed successfully. Also, \acrshort{wdias} handled 40.5 \acrshort{rps} of scalar and vector data requests with the given workload. The retrieval of scalar and vector timeseries has lesser delay than the insertion.
-On the other hand, insert grid timeseries data performed within 23ms, and almost all the requests perform within the same amount of time. Hence, the standard deviation is smaller. Delay with inserting grid timeseries smaller because those requests are handled asynchronously. Retrieve grid timeseries data performed with a bit higher value of latency of 68 milliseconds due to performed the retrieve request on-demand. Both insert and retrieve grid timeseries data have 4.5 \acrshort{rps} since it only gets 10\% of the number of requests per given time during the load test.
+Insert timeseries performed over scalar and vector data types with each request sent with 24 data points. On average, it took 28 milliseconds to insert scalar and vector data into the \acrshort{wdias}, and up to 90\% percentile inserted data within 31 milliseconds. Noticeably it has 0\% of errors, which means that all the requests completed successfully. Also, \acrshort{wdias} handled 40.5 \acrshort{rps} of scalar and vector data requests with the given workload. The retrieval of scalar and vector timeseries has lesser delay than the insertion.
+On the other hand, insert grid timeseries data performed within 23 milliseconds, and almost all the requests perform within the same amount of time. Hence, the standard deviation is smaller. Delay with inserting grid timeseries smaller because those requests are handled asynchronously. Retrieve grid timeseries data performed with a bit higher value of latency of 68 milliseconds due to performed the retrieve request on-demand. Both insert and retrieve grid timeseries data have 4.5 \acrshort{rps} since it only gets 10\% of the number of requests per given time during the load test.
 
 \begin{figure}[htp]
     \centering
@@ -49,7 +49,7 @@ On the other hand, insert grid timeseries data performed within 23ms, and almost
 \subsection{Load Testing with 30-min resolution data}
 \label{subse:obs_test_plan_all_30min}
 
-Next, we performed the test plan with 30-minutes resolution data, which means 48 data points per each request for the scalar and vector data types, and 48 ASCII grid files per each insertion request for the grid data type. Also, the test plan performed round up to 311k number of sample requests, which is almost similar to the number of samples processed with hourly resolution data.
+Next, we performed the test plan with 30-minute resolution data, which means 48 data points per each request for the scalar and vector data types, and 48 ASCII grid files per each insertion request for the grid data type. Also, the test plan performed round up to 311k number of sample requests, which is almost similar to the number of samples processed with hourly resolution data.
 
 \begin{table}[ht]
 \caption{Throughput and Latency of load test with 30-min data}
@@ -67,7 +67,7 @@ TOTAL & 310878 & 129 & 0 & 1699 & 503 & 207.10 & 0.00\% & 175.3 \\ \hline
 \label{tab:obs_all_30_min_summary}
 \end{table}
 
-\cref{tab:obs_all_30_min_summary}shows the response latency summary details and \acrshort{rps} with 30-min resolution data. The results are almost similar to the observations in \cref{subse:obs_test_plan_all_60min}. Even though we doubled the request size, \acrshort{wdias} was able to keep the performance almost the same instead of increasing the latency twice.
+\cref{tab:obs_all_30_min_summary} shows the response latency summary details and \acrshort{rps} with 30-minute resolution data. The results are almost similar to the observations in \cref{subse:obs_test_plan_all_60min}. Even though we doubled the request size, \acrshort{wdias} was able to keep the performance almost the same instead of increasing the latency twice.
 
 \begin{figure}[htp]
     \centering
@@ -76,7 +76,7 @@ TOTAL & 310878 & 129 & 0 & 1699 & 503 & 207.10 & 0.00\% & 175.3 \\ \hline
     \label{fi:test_obs_all_30m_response_vs_threads}
 \end{figure}
 
-\cref{fi:test_obs_all_30m_response_vs_threads} shows the latency against the number of active threads for the test plan with 30-min resolution data. As the graph shows, the response time kept almost constant while increasing the number of active threads. Thus, we can say that \acrshort{wdias} is a scalable system since it was able to increase the throughput without a significant change in the latency. When the number of active threads increased, \cref{fi:test_obs_all_30m_response_vs_threads} shows uncertainty in the insertion and retrieval of scalar and vector data. Some of the facts cause this is, those operations are handled on-demand. At the same time, the system is writing timeseries while reading from the timeseries database. The InfluxDB can fine-tune for writes or read based on the requirements, but we used it with default configurations.
+\cref{fi:test_obs_all_30m_response_vs_threads} shows the latency against the number of active threads for the test plan with 30-minute resolution data. As the graph shows, the response time kept almost constant while increasing the number of active threads. Thus, we can say that \acrshort{wdias} is a scalable system since it was able to increase the throughput without a significant change in the latency. When the number of active threads increased, \cref{fi:test_obs_all_30m_response_vs_threads} shows uncertainty in the insertion and retrieval of scalar and vector data. Some of the facts cause this is, those operations are handled on-demand. At the same time, the system is writing timeseries while reading from the timeseries database. The InfluxDB can fine-tune for writes or read based on the requirements, but we used it with default configurations.
 
 \begin{figure}[htp]
     \centering

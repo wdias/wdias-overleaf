@@ -55,7 +55,7 @@ We also used the real water level data for one month period and developed a scri
 \subsection{Experimental Setup}
 \label{subse:experimental_setup}
 
-To create a higher workload, we used JMeter's Distributed Testing capabilities. JMeter uses the master-slave approach for distributed testing and allows us to handle all the test cases via a single master instance. However, it has the limitation of \emph{the same test plan runs by all the servers} rather than distributing the work among slave instances. In other words, JMeter does not distribute the load between servers, and each slave service runs the full test plan. So if we set 1,000 threads per test plan and run the test using six JMeter servers, the distributed test setup ends up injecting 6,000 threads. During JMeter distributed mode, the master server triggers the same copy of the test plan on configured slave nodes in parallel. After successfully running the test plans, the master server gathers results from slave servers.
+To create a higher workload, we used JMeter's distributed testing capabilities. JMeter uses the master-slave approach for distributed testing and allows us to handle all the test cases via a single master instance. However, it has the limitation of \emph{the same test plan runs by all the servers} rather than distributing the work among slave instances. In other words, JMeter does not distribute the load between servers, and each slave service runs the full test plan. So, if we set 1,000 threads per test plan and run the test using six JMeter servers, the distributed test setup ends up injecting 6,000 threads. During JMeter distributed mode, the master server triggers the same copy of the test plan on configured slave nodes in parallel. After successfully running the test plans, the master server gathers results from slave servers.
 
 \begin{figure}[htp]
     \centering
@@ -64,24 +64,24 @@ To create a higher workload, we used JMeter's Distributed Testing capabilities. 
     \label{fi:experimental_setup}
 \end{figure}
 
-While implementing JMeter test plans, it uses threads to simulate the users. The root component of a test plan is the thread group. There are different kinds of thread groups available such as thread group (basic thread group), arrivals thread Group, free form arrivals thread group, stepping thread group, concurrency thread group, and ultimate thread group.
+While implementing JMeter test plans, it uses threads to simulate the users. The root component of a test plan is the thread group. There are different kinds of thread groups available such as thread group (basic thread group), arrivals thread group, free form arrivals thread group, stepping thread group, concurrency thread group, and ultimate thread group.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Closed vs. open workload models}
+\subsubsection{Closed vs. Open Workload Models}
 \label{subse:closed_vs_open_workload}
 
 \begin{itemize}
-    \item \emph{closed system model} \cite{Haggett1998AnWales} -- a new request is only triggered by the completion of a previous request, following by a think time. The system has negative feedback that makes it impossible to bury-out the service, so users wait for the responses before making new requests.
-    \item \emph{open system model} -- new requests arrival independently of completions, e.g., according to a stochastic process or fixed trace. The system has no negative feedback.
+    \item \emph{closed system model} \cite{Haggett1998AnWales} -- A new request is only triggered by the completion of a previous request, following by a think time. The system has negative feedback that makes it impossible to bury-out the service, so users wait for the responses before making new requests.
+    \item \emph{open system model} -- New requests arrival independently of completions, e.g., according to a stochastic process or fixed trace. The system has no negative feedback.
 \end{itemize}
 
-While implementing the test cases for \acrshort{wdias}, we used the concurrency thread group with the throughput shaping timer extension of JMeter because it supports the open workload approach. Using other thread groups, we are required to find the exact number of threads and timer delays that produce the desired number of \acrfull{rps} to the server, which is known as the \emph{closed workload}. By using the \emph{throughput shaping timer}, we only need to configure the \acrshort{rps} throughout the test plan. Then the throughput shaping timer provides a feedback loop to the concurrency thread group via schedule feedback function to dynamically maintain thread count required to achieve target \acrshort{rps} \cite{KarunarathneGihanWdias/wdias-performance-test:JMeter.}.
+While implementing the test cases for \acrshort{wdias}, we used the concurrency thread group with the throughput shaping timer extension of JMeter because it supports the open workload approach. Using other thread groups, we are required to find the exact number of threads and timer delays that produce the desired number of \acrshort{rps} to the server, which is known as the \emph{closed workload}. By using the \emph{throughput shaping timer}, we only need to configure the \acrshort{rps} throughout the test plan. Then the throughput shaping timer provides a feedback loop to the concurrency thread group via schedule feedback function to dynamically maintain thread count required to achieve target \acrshort{rps} \cite{KarunarathneGihanWdias/wdias-performance-test:JMeter.}.
 
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.8\textwidth]{results/work_load/test_prod_throughtput_shaping_timer.png}
-    \caption{\acrshort{wdias} load testing throughput shaping timer \acrshort{rps} configurations}
+    \caption{\acrshort{wdias} load testing throughput shaping timer \acrshort{rps} configurations.}
     \label{fi:test_prod_throughtput_shaping_timer}
 \end{figure}
 
@@ -113,27 +113,27 @@ By creating the timeseries metadata before, we can reduce the overhead during th
 The following list shows the test steps of the JMeter test plan for all modules while performing the load testing.
 
 \begin{itemize}
-    \item HTTP Request Defaults
-    \item HTTP Header Manager
-    \item Timeseries Metadata CSV
-    \item If Scalar or Vector
+    \item HTTP request defaults
+    \item HTTP header manager
+    \item Timeseries metadata CSV
+    \item If scalar or vector
         \begin{itemize}
-            \item Insert Timeseries
+            \item Insert timeseries
         \end{itemize}
-    \item If a Grid
+    \item If a grid
     \begin{itemize}
-        \item Insert Grid Timeseries
+        \item Insert grid timeseries
     \end{itemize}
     \item Wait for extensions timeseries
-    \item Interest Area preprocessor
-    \item Query If Scalar Or Vector
-    \item Retrieve If Scalar or Vector
+    \item Interest area preprocessor
+    \item Query if scalar or vector
+    \item Retrieve if scalar or vector
         \begin{itemize}
-            \item Retrieve Timeseries
+            \item Retrieve timeseries
         \end{itemize}
-    \item Retrieve If a Grid
+    \item Retrieve if a grid
     \begin{itemize}
-        \item Retrieve Grid Timeseries
+        \item Retrieve grid timeseries
     \end{itemize}
     \item Increment date
     \item Throughput shaping timer prod
@@ -142,10 +142,10 @@ The following list shows the test steps of the JMeter test plan for all modules 
 As mentioned in \cref{se:test_plan}, we performed another separate test plan on the query timeseries module. Here, we used the following test steps to cover most of the timeseries metadata search queries and geo-queries supported by the \acrshort{wdias}.
 
 \begin{itemize}
-    \item HTTP Request Defaults
-    \item HTTP Header Manager
+    \item HTTP request defaults
+    \item HTTP header manager
     \item Locations CSV
-    \item Interest Area preprocessor
+    \item Interest area preprocessor
     \begin{itemize}
         \item /Location: * → Locations
     	\item /Location: Area → Locations
@@ -193,7 +193,7 @@ With the above JMeter test plans, we have to enable each test plan separately an
 \begin{itemize}
     \item Use CSV files rather than random number generation
     \item Use JSR223 scripts with Groovy for data processing for test cases
-    \item Using Throughput Shaping Timer to get more accurate \acrshort{rps}
+    \item Using throughput shaping timer to get more accurate \acrshort{rps}
 \end{itemize}
 
 
@@ -219,7 +219,7 @@ test & 4 & 10.5 & 5 & 1 & c5n.xlarge \\ \hline
 \label{tab:aws_eks_nodes}
 \end{table}
 
-The \acrshort{wdias} uses Helm \cite{CNCFHelmDocs} which is a package manager for \acrshort{k8s}. Each Also, we used Helm \cite{CNCFHelmDocs} that is a package manager for \acrshort{k8s}. Each microservice within the system deploys and maintains as a Helm chart and the Helm charts \cite{KarunarathneWdias-helm-charts:Deployments} for each microservice available within the codebase. For the databases, we used the official helm charts. Using Helm, we can configure resources, the number of replicas needed, deploy new changes, and manage credentials, storage, and proxy settings that are needed for each microservice.
+The \acrshort{wdias} uses Helm \cite{CNCFHelmDocs} which is a package manager for \acrshort{k8s}. Each microservice within the system deploys and maintains as a Helm chart and the Helm charts \cite{KarunarathneWdias-helm-charts:Deployments} for each microservice available within the codebase. For the databases, we used the official helm charts. Using Helm, we can configure resources, the number of replicas needed, deploy new changes, and manage credentials, storage, and proxy settings that are needed for each microservice.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
