@@ -12,23 +12,23 @@ Other than the above modules, \emph{adapter modules} act as the core modules and
 
 The test plan is to perform load testing on the whole system and analyze the scalability of the system while measuring the operations performed on each module. Two variables can vary while doing performance testing.
 \begin{enumerate}
-    \item Number of requests made to the system at a given time called as \acrfull{rps}
+    \item Number of requests made to the system at a given time i.e., \acrfull{rps}
     \item Request size
 \end{enumerate}
 
 A timeseries is a series of data points in time order. The system may receive the data points of a timeseries in multiple requests. The request size can vary based on the use case from one data point to multiple data points. For example;
 \begin{itemize}
     \item A weather station may send the current water level in a regular 1 minute intervals. In such a case, it always comes as a request with one data point with a higher frequency.
-    \item Due to resource issues such as batteries, a weather station can collect data points for a given period and send as a batch. An example scenario would be, a weather station can collect the precipitation at each 5 minute period and send all the data after collecting for one hour.
+    \item Due to resource issues such as batteries, a weather station can collect data points for a given period and send as a batch. An example scenario would be, a weather station can collect the precipitation and send all the data as a batch.
     \item The forecast precipitation data from the \acrshort{wrf} model extract for a few days in hourly intervals and store them.
 \end{itemize}
 
-The percentage of number of requests per each data type that comes to the system at a given time can be varied depending on the situation. The Majority of weather data requests come from weather stations and other observation tools. Then we need to validate and modify those timeseries data and store them as new timeseries that can directly feed into the NWMs. These weather stations can send the weather data at different frequencies with different parameters such as precipitation, temperature, humidity, and wind direction. Most of the timeseries mentioned above are scalar timeseries. When compared to scalar data, parameters such as wind direction are vector timeseries with a lesser percentage of requests. On the other hand, most of the grid type data was generated as results of NWMs. But those grid data produce in less frequency due to the cost of the computer resource to produce results. After considering those factors we came up with 70\% scalar, 20\% vector, and 10\% grid percentage values as the expected requests rate ratios.
+The percentage of number of requests per each data type that comes to the system at a given time can be varied depending on the situation. The Majority of weather data requests come from weather stations and other observation tools. Then we need to validate and modify those timeseries data and store them as new timeseries that can directly feed into the NWMs. These weather stations can send the weather data at different frequencies with different parameters such as precipitation, temperature, humidity, and wind direction. Most of the timeseries mentioned above are scalar timeseries. When compared to scalar data, parameters such as wind direction are vector timeseries with a lesser percentage of requests. Alternatively, most of the grid type data was generated as results of NWMs. But those grid data produce in less frequency due to the cost of the computer resource to produce results. After considering those factors we came up with 70\% scalar, 20\% vector, and 10\% grid percentage values as the expected requests rate ratios.
 As an upper limit of such scenarios while designing the performance testing, it uses the following;
 \begin{itemize}
     \item Hourly (24 data points)
     \item Every 30 minutes (48 data points)
-    \item Every 15 minutes (96 data points) - One request is equivalent to a set of data points sent by a weather station in 15 minutes interval for a single day
+    \item Every 15 minutes (96 data points) - One request is equivalent to a set of data points sent by a weather station in 15-minute interval for a single day
 \end{itemize}
 
 \begin{figure}[htp]
@@ -45,7 +45,7 @@ As an upper limit of such scenarios while designing the performance testing, it 
 \label{subse:test_plan_flow}
 Following are the test cases which are planned to performance test cases;
 \begin{enumerate}
-    \item Test setup to create timeseries in 1hr, 30min and 15min intervals, create metadata of the timeseries and create random extension triggers
+    \item Test setup to create timeseries in 1-hour, 30-minute and 15-minute intervals, create metadata of the timeseries and create random extension triggers
     % \item Extensions
     % \begin{itemize}
     %     \item Create Extensions for /Aggregation\_Accumulative, /Interpolation Linear, /Validation Missing Values (OnChange and OnTime)
@@ -54,10 +54,10 @@ Following are the test cases which are planned to performance test cases;
     % \end{itemize}
     \item Import + Extension + Export + Timeseries queries
     \begin{itemize}
-        \item Plan for 30 minutes of the test run with the request size of 1hr (60min) data
-        \item Plan for 30 minutes of the test run with the request size of 30min data
-        \item Plan for 30 minutes of the test run with the request size of 15min data
-        \item Plan for 30 minutes of the test run with the request size of 15min data with auto-scaling
+        \item Plan for 30 minutes of the test run with the request size of 1-hour (60-minute) data
+        \item Plan for 30 minutes of the test run with the request size of 30-minute data
+        \item Plan for 30 minutes of the test run with the request size of 15-minute data
+        \item Plan for 30 minutes of the test run with the request size of 15-minute data with auto-scaling
         % \item Test plan run against 60min, 30min and 15min request size of data. Another test plan runs with enabling the auto-scaling
     \end{itemize}
     \item Query
