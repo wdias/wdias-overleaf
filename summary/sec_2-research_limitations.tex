@@ -1,25 +1,32 @@
-\section{Research Limitations and Future Work}
+\section{Research Limitations}
 \label{se:research_limitations}
 
-During this Section, we discussed the lacking features of the \acrshort{wdias} and the set of improvements that we can add to improve the performance and usability of the system.
+Next, we discussed the lacking features of the \acrshort{wdias} and the set of improvements.
 
 \emph{Lack of data preprocessing modules}:
 We implemented the extension modules as an eco-system of integrating different preprocessing modules as add-ons to the system. Then, users can use these modules for process the data which are inserted into the system in real time or process later based on regular intervals. Also, we provide a more generic open interface approach to create more preprocessing modules and trigger them via the extension API. Since \acrshort{wdias} is an open-source system, we are expecting that the community will create more modules, and provide them as contributions for future users. When compared to other systems like \acrshort{fews}, the current system only has few extensions for the testing purpose. Thus, we can consider that as one of the major areas that need to be improved.
 
-\emph{Supporting Irregular Grids}:
-At the moment, \acrshort{wdias} does not support Irregular Grids, but it has the API endpoints defined for the implementation of such support with following the microservice architecture. We reduced the scope of the research by removing such components from the system, and such level of implementation does not belong to the \acrshort{wdias} scope as well.
-
 \emph{Grid data performance}:
 As mentioned in \cref{se:discussion}, adapter-grid is using a Python wrapper for netCDF FORTRAN implementation with parallel IO enabled. However, it has some performance issues and memory leak issues as well. Since each microservice in the \acrshort{wdias} is independent of technology, we can use a different technology stack to implement the service. As an example, we can use a low-level language such as C or FORTRAN to implement the adapter-grid, which will affect performance improvements and lesser issues. There is some future work that can focus on improving the performance of storing grid data.
-
-\emph{Define infrastructure as code}:
-Physical nodes for the \acrshort{k8s} cluster created using cloud computing providers such as Amazon EKS, Google Cloud, and Microsoft Azure cloud. However, the infrastructure that needs to deploy the \acrshort{wdias} can be defined as code such as using tools like Terraform, which is independent of the cloud computing provider. Using such a tool, users will be able to quickly deploy the \acrshort{wdias} on any cloud provider without much hassle.
 
 \emph{Improvements to test cases}:
 As described in detail with \cref{subse:closed_vs_open_workload}, the \acrshort{wdias} test plans use the time-stepping feedback loop with concurrent threads, which is the best approach support by JMeter at the moment. However, using the above approach, we cannot get the desired \acrshort{rps} for each test case within the test plan.
 Because of the above issue, the \acrshort{wdias} test plans further improved by removing redundant test cases such as create timeseries at the beginning. Having created timeseries at the beginning causes some issues such as most of the thread are working on that test case, rather than running the required test cases. Thus, the test plans need to be further improved with running more test cases with the desired \acrshort{rps}.
 
 \emph{Tune \acrshort{wdias} database structure performance}:
-As further described in \cref{se:discussion}, we can increase the performance of adapter microservices by using InfluxDB commercial cluster support for high availability or horizontal scaling of InfluxDB. With the InfluxDB cluster, it is possible to run multiple pods of adapter-scalar and adapter-vector to support more server hits per second. Other than that, the \acrshort{wdias} performance can improve via partitioning the timeseries keyspace into multiple InfluxDB instances. As an example, based on the key attribute \cref{subse:timeseries_key_attributes} Timeseries Type, the adapter-scalar can connect to four instances of InfluxDB instances such as External Historical, External Forecast, Simulated Historical, and Simulated Forecast.
+As further described in \cref{se:discussion}, we can increase the performance of adapter microservices by using InfluxDB commercial cluster support for high availability or horizontal scaling of InfluxDB. With the InfluxDB cluster, it is possible to run multiple pods of adapter-scalar and adapter-vector to support more server hits per second. Other than that, the \acrshort{wdias} performance can improve via partitioning the timeseries key space into multiple InfluxDB instances. As an example, based on the key attribute \cref{subse:timeseries_key_attributes} Timeseries Type, the adapter-scalar can connect to four instances of InfluxDB instances such as External Historical, External Forecast, Simulated Historical, and Simulated Forecast.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Future Work}
+\label{se:future_work}
+Here, we discussed the enhancements that we can add to improve the performance and usability of the system.
+
+\emph{Supporting Irregular Grids}:
+At the moment, \acrshort{wdias} does not support Irregular Grids, but it has the API endpoints defined for the implementation of such support with following the microservice architecture. We reduced the scope of the research by removing such components from the system, and such level of implementation does not belong to the \acrshort{wdias} scope as well.
+
+\emph{Define infrastructure as code}:
+Physical nodes for the \acrshort{k8s} cluster created using cloud computing providers such as Amazon EKS, Google Cloud, and Microsoft Azure cloud. However, the infrastructure that needs to deploy the \acrshort{wdias} can be defined as code such as using tools like Terraform, which is independent of the cloud computing provider. Using such a tool, users will be able to quickly deploy the \acrshort{wdias} on any cloud provider without much hassle.
+
 \emph{Alerting extension modules}: At the moment, extensions only support OnChange and OnTime events. However, it will be useful to have event trigger support based on the configured alert level or threshold level. 
+
 \emph{Publisher Subscriber extension modules}: The \acrshort{wdias} better to be capable of triggering external systems based on events such as webhooks.
