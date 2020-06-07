@@ -30,7 +30,7 @@ On the other hand, insert grid timeseries data performed within 23 milliseconds,
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1.0\textwidth]{results/obs/all/obs_all_60m_response_times_vs_threads.png}
-    \caption{Load testing with hourly data - Response Time vs Threads}
+    \caption{Load testing with hourly data - Response Time vs Threads.}
     \label{fi:test_obs_all_60m_response_vs_threads}
 \end{figure}
 \cref{fi:test_obs_all_60m_response_vs_threads} shows the response time against the number of active threads for 60-minute data requests. As the graph shows, the response time kept the same while increasing the number of active threads against each test case. The above graph shows the scalability of the \acrshort{wdias} since the system is able to process more requests without a significant change in the latency. When the number of active threads increased more than 122, \cref{fi:test_obs_all_60m_response_vs_threads} shows uncertainty in the inserting and retrieving scalar and vector data. The performance degrades because those data handles on-demand and depends on the timeseries database performance.
@@ -72,7 +72,7 @@ TOTAL & 310878 & 129 & 0 & 1699 & 503 & 207.10 & 0.00\% & 175.3 \\ \hline
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1.0\textwidth]{results/obs/all/obs_all_30m_response_times_vs_threads.png}
-    \caption{Load testing with 30 minutes of data - Response Time vs Threads}
+    \caption{Load testing with 30 minutes of data - Response Time vs Threads.}
     \label{fi:test_obs_all_30m_response_vs_threads}
 \end{figure}
 
@@ -81,7 +81,7 @@ TOTAL & 310878 & 129 & 0 & 1699 & 503 & 207.10 & 0.00\% & 175.3 \\ \hline
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1.0\textwidth]{results/obs/all/obs_all_30m_res_latencies_against_hits.png}
-    \caption{Load testing with 30 minutes of data - Latency against server hits}
+    \caption{Load testing with 30 minutes of data - Latency against server hits.}
     \label{fi:test_obs_all_30m_latency}
 \end{figure}
 \cref{fi:test_obs_all_30m_latency} graph provides a better overview of the variation of latency over the elapsed time of the test plan against the \acrshort{rps}. By referring to the graph, we can see that over time the latency does not change very significantly. However, during the peak load, it shows a minor variation in latency of the insertion and retrieval of grid timeseries. When compared to \cref{fi:test_obs_all_60m_latency}, the latency of insertion grid timeseries data almost doubled. The grid timeseries data was handled asynchronously after successfully storing, thus the latency for storing the data increased by a factor of two since the request data size also increased twice.
@@ -171,7 +171,7 @@ Query: Location & 71704 & 1 & 0 & 203 & 2 & 2.05 & 0.00\% & 40.5 \\ \hline
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1.0\textwidth]{results/obs/all_auto/obs_all_auto_15m_res_latencies_against_hits.png}
-    \caption{Load testing with 15-minute of data with enabled auto-scaling - Latency against server hits}
+    \caption{Load testing with 15-minute of data with enabled auto-scaling - Latency against server hits.}
     \label{fi:test_obs_all_auto_15m_latency}
 \end{figure}
 \cref{fi:test_obs_all_auto_15m_latency} graph provides an overview of the variation of latency over the elapsed time of the test plan against the number of server hits per second for 15-minute data while auto-scaling enabled for K8s. According to the graph, the \acrshort{wdias} was able to keep the latency constant all over the elapsed time.
@@ -180,7 +180,7 @@ When compared to \cref{fi:test_obs_all_15m_latency} without auto-scaling, we can
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1.0\textwidth]{results/obs/all_auto/obs_all_auto_15m_transaction_throughtput_vs_threads.png}
-    \caption{Load testing with 15 minutes of data with enabled auto-scaling - Transaction Throughput vs Threads}
+    \caption{Load testing with 15 minutes of data with enabled auto-scaling - Transaction Throughput vs Threads.}
     \label{fi:test_obs_all_auto_15m_throughtput}
 \end{figure}
 
@@ -245,7 +245,7 @@ Area, Parameter → Timeseries & 11084 & 864 & 1 & 16699 & 1584 & 751.00 & 0.00\
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1.0\textwidth]{results/obs/query/obs_query_5m_latency_over_time.png}
-    \caption{Load testing query test over 5 minutes - Response Latency over Time}
+    \caption{Load testing query test over 5 minutes - Response Latency over Time.}
     \label{fi:test_obs_query_5m_response_latency}
 \end{figure}
 \cref{fi:test_obs_query_5m_response_latency} shows the response latency overtime for the query test plan. When the number of requests gets higher, the latency also gets increased. Further, \cref{fi:test_obs_query_5m_response_times_vs_threads} shows the response latency against the number of active threads for the query test plan. When the number of server hits gets higher, the latency also increases. According to the figures, we can conclude that the performance of the query adapter depends on the database. Even if we increase the number of query adapter pods, the throughput of the microservice is not going to increase until we increase the performance by using the z-axis scaling of scale cube concept.
