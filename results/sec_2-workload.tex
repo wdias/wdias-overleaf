@@ -3,7 +3,7 @@
 
 As explained in the research methodology (in \cref{subse:timeseries_key_attributes}), we selected six primary attributes from the timeseries metadata while implementing the system architecture. Before storing the data in \acrshort{wdias}, we need to register timeseries metadata for the timeseries, and are required to provide values for the six attributes. During the test for location attribute, we selected set of locations all over the world as a generic case to include all the locations without binding to a specific area.
 
-We used 250 locations from Google’s countries public data set \cite{GoogleGoogleCounties}, and considered static throughout the testing. For each location, we created four timeseries metadata by using four different values for the moduleId key attribute. Thus, combining all together first, we created 1000 timeseries metadata during the performance test and then stored the timeseries data against timeseries unique identifiers. We have written automated scripts to generate these data for the performance testing, and scripts are generic enough to create more timeseries metadata by changing the configurations.
+We used 250 locations from Google’s countries public data set \cite{GoogleGoogleCountries}, and considered static throughout the testing. For each location, we created four timeseries metadata by using four different values for the moduleId key attribute. Thus, combining all together first, we created 1000 timeseries metadata during the performance test and then stored the timeseries data against timeseries unique identifiers. We have written automated scripts to generate these data for the performance testing, and scripts are generic enough to create more timeseries metadata by changing the configurations.
 
 For storing grid data, we used static 100 grid locations. Since grid locations have different metadata structures, we had to generate metadata for them separately. However, the locationID of the grid timeseries metadata is similar to scalar timeseries metadata that have the same effect when defining timeseries metadata.
 
@@ -76,7 +76,7 @@ While implementing JMeter test plans, it uses threads to simulate the users. The
     \item \emph{open system model} -- New requests arrival independently of completions, e.g., according to a stochastic process or fixed trace. The system has no negative feedback.
 \end{itemize}
 
-While implementing the test cases for \acrshort{wdias}, we used the concurrency thread group with the throughput shaping timer extension of JMeter because it supports the open workload approach. Using other thread groups, we are required to find the exact number of threads and timer delays that produce the desired number of \acrshort{rps} to the server, which is known as the \emph{closed workload}. By using the \emph{throughput shaping timer}, we only need to configure the \acrshort{rps} throughout the test plan. Then the throughput shaping timer provides a feedback loop to the concurrency thread group via schedule feedback function to dynamically maintain thread count required to achieve target \acrshort{rps} \cite{KarunarathneGihanWdias/wdias-performance-test:JMeter.}.
+While implementing the test cases for \acrshort{wdias}, we used the concurrency thread group with the throughput shaping timer extension of JMeter because it supports the open workload approach. Using other thread groups, we are required to find the exact number of threads and timer delays that produce the desired number of \acrshort{rps} to the server, which is known as the \emph{closed workload}. By using the \emph{throughput shaping timer}, we only need to configure the \acrshort{rps} throughout the test plan. Then the throughput shaping timer provides a feedback loop to the concurrency thread group via schedule feedback function to dynamically maintain thread count required to achieve target \acrshort{rps} \cite{KarunarathneWDIASJMeter}.
 
 \begin{figure}[htp]
     \centering
@@ -161,7 +161,7 @@ As mentioned in \cref{se:test_plan}, we performed another separate test plan on 
 	\end{itemize}
 \end{itemize}
 
-With the above JMeter test plans, we have to enable each test plan separately and before running with JMeter distributed mode. To make the process faster, we implemented a script tool to interact with the JMeter test stored files. The script is available within the code base \cite{KarunarathneWdias-performance-test/TEST_PLAN.md:Plan} as \emph{test-dev} and supports the following features.
+With the above JMeter test plans, we have to enable each test plan separately and before running with JMeter distributed mode. To make the process faster, we implemented a script tool to interact with the JMeter test stored files. The script is available within the code base \cite{KarunarathneWDIASPlan} as \emph{test-dev} and supports the following features.
 
 \begin{lstlisting}[language=sh, caption=Automated performance test plans.]
 -h | --help: Usage
@@ -202,7 +202,7 @@ With the above JMeter test plans, we have to enable each test plan separately an
 \label{subse:test_sys_config}
 As we described in the \cref{se:microservice}, the \acrshort{wdias} is mainly based on microservice architecture and implemented on top of Kubernetes. \acrfull{k8s} is an open-source system that is capable of automating deployment, scaling, and management of containerized applications. During the performance study, we used \acrfull{eks}. There are many \acrshort{k8s} solutions available such as GCP, Azure, and Digital Ocean on the cloud other than Amazon EKS.
 
-We have documented a detailed description of setting up the \acrshort{eks} \cite{KarunarathneWdias/Amazon_EKS.md:EKS}, and it is available in the codebase of the \acrshort{wdias}. \acrshort{k8s} is a planet scaling tool \cite{LinuxFoundationProduction-GradeKubernetes}, and users can tweak the configuration to run the \acrshort{wdias} as per the required level of load on the system. We used a set of physical nodes, as mentioned in \cref{tab:aws_eks_nodes}, to set up the \acrshort{k8s} for the performance testing with a peak of 300 \acrshort{rps}.
+We have documented a detailed description of setting up the \acrshort{eks} \cite{KarunarathneWDIASService}, and it is available in the codebase of the \acrshort{wdias}. \acrshort{k8s} is a planet scaling tool \cite{LinuxFoundationKubernetes:Orchestration}, and users can tweak the configuration to run the \acrshort{wdias} as per the required level of load on the system. We used a set of physical nodes, as mentioned in \cref{tab:aws_eks_nodes}, to set up the \acrshort{k8s} for the performance testing with a peak of 300 \acrshort{rps}.
 
 \begin{table}[ht]
 \centering
@@ -219,7 +219,7 @@ test & 4 & 10.5 & 5 & 1 & c5n.xlarge \\ \hline
 \label{tab:aws_eks_nodes}
 \end{table}
 
-The \acrshort{wdias} uses Helm \cite{CNCFHelmDocs} which is a package manager for \acrshort{k8s}. Each microservice within the system deploys and maintains as a Helm chart and the Helm charts \cite{KarunarathneWdias-helm-charts:Deployments} for each microservice available within the codebase. For the databases, we used the official helm charts. Using Helm, we can configure resources, the number of replicas needed, deploy new changes, and manage credentials, storage, and proxy settings that are needed for each microservice.
+The \acrshort{wdias} uses Helm \cite{CNCFHelmDocumentations} which is a package manager for \acrshort{k8s}. Each microservice within the system deploys and maintains as a Helm chart and the Helm charts \cite{KarunarathneHelmDeployments} for each microservice available within the codebase. For the databases, we used the official helm charts. Using Helm, we can configure resources, the number of replicas needed, deploy new changes, and manage credentials, storage, and proxy settings that are needed for each microservice.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

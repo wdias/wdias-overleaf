@@ -1,20 +1,20 @@
 \section{Linked Environments for Atmospheric Discovery}
 \label{se:lead}
 
-\acrfull{lead} \cite{Droegemeier2005Service-OrientedWeather} addresses the fundamental research challenges needed to create an integrated and scalable framework for adaptive analysis and prediction of the atmosphere. The weather forecasting researchers require many computer resources to predict and analyze weather models in the mesoscale with less time. Rather than each researcher run and handle their computer resources for the weather experiments, LEAD provides a shared pool of resources. Then the researchers can use the resource pool to run their experiment in shorter amounts of time and a more massive scale. At the time, some researchers are developing their experiment forecasting flows, they are not using the resources, and other researchers can run their forecasting flows using available resources. The foundation of the LEAD system is to create a dynamic workflow orchestration and data management in a web services framework \cite{Droegemeier2005Service-OrientedWeather}.
+\acrfull{lead} \cite{Droegemeier2005Service-orientedWeather} addresses the fundamental research challenges needed to create an integrated and scalable framework for adaptive analysis and prediction of the atmosphere. The weather forecasting researchers require many computer resources to predict and analyze weather models in the mesoscale with less time. Rather than each researcher run and handle their computer resources for the weather experiments, LEAD provides a shared pool of resources. Then the researchers can use the resource pool to run their experiment in shorter amounts of time and a more massive scale. At the time, some researchers are developing their experiment forecasting flows, they are not using the resources, and other researchers can run their forecasting flows using available resources. The foundation of the LEAD system is to create a dynamic workflow orchestration and data management in a web services framework \cite{Droegemeier2005Service-orientedWeather}.
 
-LEAD's complex range of services, applications, interfaces, and IT resources, local and external networks, and storage is compiled by users in workflows to study mesoscale incremental manner \cite{Droegemeier2005Service-OrientedWeather}. As it follows the SOA, all the features are implemented as independent services. The above implementation enables LEAD to scale up each service as required and update each service without affecting other services. New models that are required for implementing a new forecast flow also have to be implemented as a service and then integrate into the system.
+LEAD's complex range of services, applications, interfaces, and IT resources, local and external networks, and storage is compiled by users in workflows to study mesoscale incremental manner \cite{Droegemeier2005Service-orientedWeather}. As it follows the SOA, all the features are implemented as independent services. The above implementation enables LEAD to scale up each service as required and update each service without affecting other services. New models that are required for implementing a new forecast flow also have to be implemented as a service and then integrate into the system.
 
 \cref{fi:lead_system} shows the key capabilities of the LEAD system. The top layer of the LEAD enables users to search and acquire information, simulate and predict weather conditions using digital atmospheric models, assimilate, analyze, use and visualize data and output of models.
 
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1.0\textwidth]{lit/lead/LEAD-system-Fundamental-capabilities-familiar-to-meteorologists-are-shown-in-the-top_W640.png}
-    \caption[Layered architecture of LEAD]{Layered architecture of LEAD \cite{Droegemeier2005Service-OrientedWeather}.}
+    \caption[Layered architecture of LEAD]{Layered architecture of LEAD \cite{Droegemeier2005Service-orientedWeather}.}
     \label{fi:lead_system}
 \end{figure}
 
-The second layer contains fundamental tools such as the following to help to link services together \cite{Droegemeier2005Service-OrientedWeather}:
+The second layer contains fundamental tools such as the following to help to link services together \cite{Droegemeier2005Service-orientedWeather}:
 \begin{itemize}
     \item The users interact with LEAD via a web portal
     \item Data quality control and assimilation happens via ARPS Data Assimilation System (ADAS)
@@ -29,7 +29,7 @@ The LEAD follows a concept of the workflow orchestration for on-demand, real-tim
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1.0\textwidth]{lit/lead/LEAD-system-framework-LEAD-is-composed-of-several-interacting-subsystems-with-the-LEAD_W640.png}
-    \caption[LEAD system framework]{LEAD system framework \cite{Droegemeier2005Service-OrientedWeather}.}
+    \caption[LEAD system framework]{LEAD system framework \cite{Droegemeier2005Service-orientedWeather}.}
     \label{fi:lead_framework}
 \end{figure}
 
@@ -44,11 +44,11 @@ As shown in \cref{fi:lead_framework}, LEAD consists of the following sub-compone
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1\textwidth]{lit/lead/LEADs-service-oriented-architecture-A-wide-variety-of-services-and-resources-grouped_W640.png}
-    \caption[LEAD's service-oriented architecture]{LEAD's service-oriented architecture \cite{Droegemeier2005Service-OrientedWeather}.}
+    \caption[LEAD's service-oriented architecture]{LEAD's service-oriented architecture \cite{Droegemeier2005Service-orientedWeather}.}
     \label{fi:lead_soa}
 \end{figure}
 
-As shown in \cref{fi:lead_soa}, \acrshort{lead} \acrshort{soa} has five different but highly interconnected layers. The bottom layer represents the calculation, application, and raw data sources that are distributed in the LEAD grid and elsewhere. The next level supports web services that provide access to raw services \cite{Droegemeier2005Service-OrientedWeather}. These two layers are working together since LEAD system resources are distributed over multiple locations and creating a pool of resources. The upper layer of the raw resources is abstracting the complexity of managing and accessing the resources and provides simplified access. In the upper layers, the underline system is viewed as an unlimited resource pool for storing and handling data.
+As shown in \cref{fi:lead_soa}, \acrshort{lead} \acrshort{soa} has five different but highly interconnected layers. The bottom layer represents the calculation, application, and raw data sources that are distributed in the LEAD grid and elsewhere. The next level supports web services that provide access to raw services \cite{Droegemeier2005Service-orientedWeather}. These two layers are working together since LEAD system resources are distributed over multiple locations and creating a pool of resources. The upper layer of the raw resources is abstracting the complexity of managing and accessing the resources and provides simplified access. In the upper layers, the underline system is viewed as an unlimited resource pool for storing and handling data.
 
 The configuration and execution services of the middle layer, consisting of five elements, represent the services that call LEAD workflows. These are some critical aspects of a weather data management system. Most of the services listed below are required for creating workflows for weather data forecasting. While analyzing the LEAD, we realized that it is essential to understand the following basic needs of a weather data management system.
 

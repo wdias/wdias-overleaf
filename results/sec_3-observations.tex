@@ -136,7 +136,7 @@ Query: Location & 71749 & 3 & 2 & 130 & 4 & 2.32 & 0.00\% & 40.5 \\ \hline
 \end{figure}
 
 \cref{fi:test_obs_all_15m_throughtput} shows the total server's transaction throughput against the number of active threads.
-The formula for total server transaction throughput \cite{JMeterPluginsTransactionPlugin} is;
+The formula for total server transaction throughput \cite{ApacheSoftwareFoundationJMeter:Plugin} is;
 \[
     \displaystyle \frac{<active \quad threads> \times \quad 1 \quad second}{<1 \quad thread \quad response \quad time>}
 \]
@@ -145,10 +145,10 @@ By combining the \cref{fi:test_obs_all_15m_latency}, this graph shows that the t
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Load Testing with 15-min Resolution Data with Auto Pod Scaling}
+\subsection{Load Testing with 15-minute Resolution Data with Auto Pod Scaling}
 \label{subse:obs_test_plan_all_auto_15min}
 
-Here we did the performance test plan with 15-minute resolution data, which is similar to the above section. However, during the test plan, we enabled the K8s auto-scaling only for higher resource utilized microservices, as explained in \cref{subse:test_plan_metrics}. While performing the above test plans, we noticed the import-ascii-grid-upload microservice is using lots of CPU, and the adapter-grid microservice is using lots of memory. Before starting the test plan, we configured auto-scaling for the import-ascii-grid-upload microservices. However, the adapter-grid microservice is a consistent service for storing netCDF files. If we want to enable the auto-scaling for the service, all microservice instances of adapter-grid need to share data via shared storage. Since \acrshort{eks} does not support multiple reads and writes support volumes \cite{LinuxFoundationPersistentKubernetes}, we are unable to enable auto-scaling during the test plan. However, the test plan performed approximately \num{311e3} of almost similar sample requests during the above sections.
+Here we did the performance test plan with 15-minute resolution data, which is similar to the above section. However, during the test plan, we enabled the K8s auto-scaling only for higher resource utilized microservices, as explained in \cref{subse:test_plan_metrics}. While performing the above test plans, we noticed the import-ascii-grid-upload microservice is using lots of CPU, and the adapter-grid microservice is using lots of memory. Before starting the test plan, we configured auto-scaling for the import-ascii-grid-upload microservices. However, the adapter-grid microservice is a consistent service for storing netCDF files. If we want to enable the auto-scaling for the service, all microservice instances of adapter-grid need to share data via shared storage. Since \acrshort{eks} does not support multiple reads and writes support volumes \cite{LinuxFoundationKubernetesVolumes}, we are unable to enable auto-scaling during the test plan. However, the test plan performed approximately \num{311e3} of almost similar sample requests during the above sections.
 
 \begin{table}[ht]
 \caption{Throughput and Latency of load testing with 15-minute data while enabled \acrshort{k8s} auto-scaling}
@@ -193,7 +193,7 @@ When compared to \cref{fi:test_obs_all_15m_latency} without auto-scaling, we can
     \label{fi:obs_all_auto_15m_import_export_res}
 \end{figure}
 
-\cref{fi:obs_all_auto_15m_import_export_res} shows the CPU usage and memory usage for import timeseries modules and export timeseries modules with 1-minute resolution. We show the CPU usage with milli CPUs \cite{LinuxFoundationManagingKubernetes} (1 CPU = 1000m CPUs) and the memory usage shown with Megabytes (Mi) \cite{LinuxFoundationManagingKubernetes} in the graphs. Noticeably, the import-ascii-grid-upload microservice used around 10 CPUs at the peak time while using 3.6 Gigabytes (Gb) of memory. Another important fact is, after the test cases finished, the \acrshort{wdias} cooled down the system via K8s auto-scaling and released the resources. Thus, we can see the elasticity of the \acrshort{wdias} according to the workload.
+\cref{fi:obs_all_auto_15m_import_export_res} shows the CPU usage and memory usage for import timeseries modules and export timeseries modules with 1-minute resolution. We show the CPU usage with milli CPUs \cite{LinuxFoundationKubernetes:Containers} (1 CPU = 1000m CPUs) and the memory usage shown with Megabytes (Mi) \cite{LinuxFoundationKubernetes:Containers} in the graphs. Noticeably, the import-ascii-grid-upload microservice used around 10 CPUs at the peak time while using 3.6 Gigabytes (Gb) of memory. Another important fact is, after the test cases finished, the \acrshort{wdias} cooled down the system via K8s auto-scaling and released the resources. Thus, we can see the elasticity of the \acrshort{wdias} according to the workload.
 
 \begin{figure}[htp]
     \centering

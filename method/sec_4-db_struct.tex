@@ -130,13 +130,13 @@ Since one of \acrshort{wdias} main goals is to use open source tools, it used My
 \subsection{In-memory Database}
 \label{subse:redis}
 
-We used Redis \cite{redisRedisDocumentation} as the in-memory database since it is a widely used database system with excellent support. It also supports Publisher Subscriber capabilities as an inbuilt feature. Redis is an open-source tool, and clustering is also available for scalability. Redis uses in-memory caching for fast access to the frequent access data in adapter-metadata and adapter-extension. Other than that, status adapter uses Redis as a key-value pair store to maintain the status for asynchronous requests handling while storing grid data. The extension adapter uses Redis's Publisher Subscriber capabilities to create a cronjob in extension scheduler service when a new extension creates with a trigger on time during data preprocessing.
+We used Redis \cite{RedisRedisDocumentation} as the in-memory database since it is a widely used database system with excellent support. It also supports Publisher Subscriber capabilities as an inbuilt feature. Redis is an open-source tool, and clustering is also available for scalability. Redis uses in-memory caching for fast access to the frequent access data in adapter-metadata and adapter-extension. Other than that, status adapter uses Redis as a key-value pair store to maintain the status for asynchronous requests handling while storing grid data. The extension adapter uses Redis's Publisher Subscriber capabilities to create a cronjob in extension scheduler service when a new extension creates with a trigger on time during data preprocessing.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Timeseries Database}
 \label{subse:influxdb}
 
-Among several timeseries open source databases, InfluxDB \cite{influxdbInfluxDBDocumentation} uses a unique database indexing algorithm to gain higher performance while storing timeseries data when compared to other modern databases available. Also, it has better support, higher usage, and following supports,
+Among several timeseries open source databases, InfluxDB \cite{InfluxDBInfluxDBDocumentation} uses a unique database indexing algorithm to gain higher performance while storing timeseries data when compared to other modern databases available. Also, it has better support, higher usage, and following supports,
 
 \begin{itemize}
   \item Open timeseries DB with MIT license
@@ -152,16 +152,16 @@ Two individual instances of InfluxDB used for scalar adapter and vector adapter 
 \subsection{Network Common Data Form}
 \label{subse:netcdf}
 
-\acrshort{netCDF} \cite{unidataUnidataNetCDF} is a self-describing, machine-independent data format that supports the creation, access, and sharing of array-oriented scientific data. Moreover, NetCDF also supports parallel file access. NetCDF is widely used in the scientific domain due to the capability of storing multi-dimensions data efficiently and flexibly. Thus, we used NetCDF for storing the grid data due to its capability of storing array-oriented scientific data efficiently when compared to other database systems.
+\acrshort{netCDF} \cite{UnidataNetworkForm} is a self-describing, machine-independent data format that supports the creation, access, and sharing of array-oriented scientific data. Moreover, NetCDF also supports parallel file access. NetCDF is widely used in the scientific domain due to the capability of storing multi-dimensions data efficiently and flexibly. Thus, we used NetCDF for storing the grid data due to its capability of storing array-oriented scientific data efficiently when compared to other database systems.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Document-oriented Database}
 \label{subse:mongodb}
 
-To provide fast geo-search queries, we have to use a database system that supports geo indexing. We used MongoDB, which is a document-oriented database with geo indexing capabilities. Also, MongoDB \cite{mongodbMongoDBManual} is a general-purpose, document-based, distributed database, and supports,
+To provide fast geo-search queries, we have to use a database system that supports geo indexing. We used MongoDB, which is a document-oriented database with geo indexing capabilities. Also, MongoDB \cite{MongoDBMongoDBManual} is a general-purpose, document-based, distributed database, and supports,
 
 \begin{itemize}
-  \item Supports query operations on geospatial data \cite{mongodbMongoDBManual}
+  \item Supports query operations on geospatial data \cite{MongoDBMongoDBManual}
   \item Clustering and Sharding available for scalability and reliability
 \end{itemize}
 

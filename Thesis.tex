@@ -20,7 +20,7 @@
 \usepackage{xcolor}
 \usepackage{dirtytalk}
 \usepackage{tabulary}
-\usepackage{biblatex}
+\usepackage[style=ieee]{biblatex}
 \usepackage[titletoc]{appendix}
 \usepackage{siunitx}
 
@@ -171,7 +171,7 @@ The above candidate has carried out research for the Masters thesis under our su
 
 \chapter*{Abstract}
 
-\acrfull{nwm} utilize data collected via diverse sources such as automated weather stations, radars, air balloons, and satellite images. Before using such multimodal data in a NWM, it is necessary to transcode data into a format that can be ingested by the \acrshort{nwm}. Moreover, the data integration system's response time needs to be relatively low to forecast and monitor time-sensitive weather events like hurricanes, storms, and flash floods that require rapid and frequent execution of \acrshort{nwm}. The resulting weather data also need to be accessed by many researchers and third-party applications such as logistic and agricultural insurance firms.
+\acrfull{nwm} utilize data collected via diverse sources such as automated weather stations, radars, air balloons, and satellite images. Before using such multimodal data in a \acrshort{nwm}, it is necessary to transcode data into a format that can be ingested by the \acrshort{nwm}. Moreover, the data integration system's response time needs to be relatively low to forecast and monitor time-sensitive weather events like hurricanes, storms, and flash floods that require rapid and frequent execution of \acrshort{nwm}. The resulting weather data also need to be accessed by many researchers and third-party applications such as logistic and agricultural insurance firms.
 Existing weather data integration systems are based on monolithic or client-server architectures; hence, unable to benefit from novel computational models such as cloud computing and containerized applications. Moreover, most of these software are proprietary or closed-source, making it difficult to customize them for an island like Sri Lanka with different weather seasons.
 Therefore, in this research, we propose \acrfull{wdias} that utilizes modern architectural patterns such as microservices to achieve scalability, high availability, and low-cost operation based on cloud computing. The use of stateless microservices also enables \acrshort{wdias} to add new features on the fly with rollover capabilities. Moreover, \acrshort{wdias} provides a modular framework to integrate data from different sources, export into different formats, and add new functionality by adding extension modules.
 We demonstrate the utility of \acrshort{wdias} using cloud-based experimental setup and weather-related synthetic workloads.
@@ -289,6 +289,7 @@ Finally, I would like to thank the lectures, the evaluation panel and the collea
 % \addbibresource{mendeley.bib}
 
 \addcontentsline{toc}{chapter}{References}
+\renewcommand*{\UrlFont}{\rmfamily}
 \printbibliography[title={References}]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
