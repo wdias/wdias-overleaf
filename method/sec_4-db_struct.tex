@@ -101,7 +101,7 @@ Given that, a timeseries can uniquely identify by \emph{moduleId, valueType, par
 \end{lstlisting}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Even if a timeseries consists of data points in time ordered, the data for each data point can vary based on the valueType. The scalar data point consists of a single value. And the vector data point consists of two values, such as magnitude and the direction of the vector. But for grid data, a point can consist of multiple values. To store data efficiently, we used a set of different databases based on the advantage of using them for each value type. Other attributes do not have much impact on classifying the timeseries data.
+Even if a timeseries consists of data points in time ordered, the data for each data point can vary based on the valueType. The scalar data point consists of a single value. The vector data point consists of two values, such as magnitude and the direction of the vector. But for grid data, a point can consist of multiple values. To store data efficiently, we used a set of different databases based on the advantage of using them for each value type. Other attributes do not have much impact on classifying the timeseries data.
 
 It is difficult to search for the timeseries data if those are stored over multiple data sources and trying to avoid having duplicates. Thus, it adds low overhead to have a single data source to look into while searching for the timeseries metadata. The efficiency of searching for timeseries metadata can increase by using a caching mechanism. To support search queries with lower latency, we used an index for the fast search for timeseries metadata, and a geo-based index to support geo-based search queries.
 
