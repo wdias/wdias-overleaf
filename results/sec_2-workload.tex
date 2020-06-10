@@ -116,25 +116,11 @@ The following list shows the test steps of the JMeter test plan for all modules 
     \item HTTP request defaults
     \item HTTP header manager
     \item Timeseries metadata CSV
-    \item If scalar or vector
-        \begin{itemize}
-            \item Insert timeseries
-        \end{itemize}
-    \item If a grid
-    \begin{itemize}
-        \item Insert grid timeseries
-    \end{itemize}
+    \item If scalar or vector then insert timeseries, otherwise insert grid timeseries
     \item Wait for extensions timeseries
     \item Interest area preprocessor
     \item Query if scalar or vector
-    \item Retrieve if scalar or vector
-        \begin{itemize}
-            \item Retrieve timeseries
-        \end{itemize}
-    \item Retrieve if a grid
-    \begin{itemize}
-        \item Retrieve grid timeseries
-    \end{itemize}
+    \item If scalar or vector then retrieve timeseries, otherwise retrieve grid timeseries
     \item Increment date
     \item Throughput shaping timer prod
 \end{itemize}
@@ -147,17 +133,17 @@ As mentioned in \cref{se:test_plan}, we performed another separate test plan on 
     \item Locations CSV
     \item Interest area preprocessor
     \begin{itemize}
-        \item /Location: * → Locations
-    	\item /Location: Area → Locations
-    	\item /Parameter: Location → Parameters
-    	\item /Parameter: Locations → Parameters
-    	\item /Timeseries: Location → Timeseries
-    	\item /Timeseries: Locations → Timeseries
-    	\item /Timeseries: Locations, Parameter → Timeseries
-    	\item /Timeseries: Area → Timeseries
-    	\item /Timeseries: Area, Parameter → Timeseries
-    	\item /Timeseries: *, Parameter → Timeseries
-    	\item /Timeseries: * → Timeseries
+        \item /Location: * $\rightarrow$ Locations
+    	\item /Location: Area $\rightarrow$ Locations
+    	\item /Parameter: Location $\rightarrow$ Parameters
+    	\item /Parameter: Locations $\rightarrow$ Parameters
+    	\item /Timeseries: Location $\rightarrow$ Timeseries
+    	\item /Timeseries: Locations $\rightarrow$ Timeseries
+    	\item /Timeseries: Locations, Parameter $\rightarrow$ Timeseries
+    	\item /Timeseries: Area $\rightarrow$ Timeseries
+    	\item /Timeseries: Area, Parameter $\rightarrow$ Timeseries
+    	\item /Timeseries: *, Parameter $\rightarrow$ Timeseries
+    	\item /Timeseries: * $\rightarrow$ Timeseries
 	\end{itemize}
 \end{itemize}
 

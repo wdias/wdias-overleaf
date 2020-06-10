@@ -130,7 +130,7 @@ Since one of \acrshort{wdias} main goals is to use open source tools, it used My
 \subsection{In-memory Database}
 \label{subse:redis}
 
-We used Redis \cite{RedisRedisDocumentation} as the in-memory database since it is a widely used database system with excellent support. It also supports Publisher Subscriber capabilities as an inbuilt feature. Redis is an open-source tool, and clustering is also available for scalability. Redis uses in-memory caching for fast access to the frequent access data in adapter-metadata and adapter-extension. Other than that, status adapter uses Redis as a key-value pair store to maintain the status for asynchronous requests handling while storing grid data. The extension adapter uses Redis's Publisher Subscriber capabilities to create a cronjob in extension scheduler service when a new extension creates with a trigger on time during data preprocessing.
+We used Redis \cite{RedisRedisDocumentation} as the in-memory database since it is a widely used database system with excellent support. It also supports Publisher Subscriber capabilities as an inbuilt feature. Redis is an open-source tool, and clustering is also available for scalability. Redis uses in-memory caching for fast access to the frequent access data in adapter-metadata and adapter-extension. Other than that, status adapter uses Redis as a key-value pair store to maintain the status for asynchronous requests handling while storing grid data. The extension adapter uses Redis's publisher subscriber capabilities to create a cronjob in extension scheduler service when a new extension creates with a trigger on time during data preprocessing.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Timeseries Database}
@@ -139,7 +139,7 @@ We used Redis \cite{RedisRedisDocumentation} as the in-memory database since it 
 Among several timeseries open source databases, InfluxDB \cite{InfluxDBInfluxDBDocumentation} uses a unique database indexing algorithm to gain higher performance while storing timeseries data when compared to other modern databases available. Also, it has better support, higher usage, and following supports,
 
 \begin{itemize}
-  \item Open timeseries DB with MIT license
+  \item Open timeseries database with MIT license
   \item Support SQL-Like query language
   \item Clustering available with a commercial version
 \end{itemize}
@@ -162,7 +162,7 @@ To provide fast geo-search queries, we have to use a database system that suppor
 
 \begin{itemize}
   \item Supports query operations on geospatial data \cite{MongoDBMongoDBManual}
-  \item Clustering and Sharding available for scalability and reliability
+  \item Clustering and sharding available for scalability and reliability
 \end{itemize}
 
 We used MongoDB geospatial features to support geo-queries in the \acrshort{wdias}. Also, we indexed the timeseries metadata with other indexing features to serve external timeseries metadata queries. If particular timeseries metadata not present in the query adapter, then fetch metadata from the metadata adapter and indexed in the MongoDB. Vise a versa; when a new timeseries created in the metadata adapter, it triggers an event to index metadata in the query adapter.

@@ -86,7 +86,7 @@ As shown in \cref{fi:wdias_micro_on_demand}, when a request with a smaller paylo
 \end{figure}
 
 \cref{fi:wdias_micro_separation} shows the clear separation of microservices into the modules of the \acrshort{wdias}. Each adapter has a separate database, and the database is hosted separately for the high performance and to avoid interference.
-Apart from that, as we further discuss in \cref{se:data_preprocess}, the extension modules are running independently, such as Interpolation, Transformation, and Validation, and we will also discuss in \cref{se:data_preprocess}. The Extension Adapter allows users to register new event-based or time-based triggers for the extensions. The extension scheduler triggers the events based on time and the extension handler triggers events based on data change.
+Apart from that, as we further discuss in \cref{se:data_preprocess}, the extension modules are running independently, such as interpolation, transformation, and validation, and we will also discuss in \cref{se:data_preprocess}. The Extension Adapter allows users to register new event-based or time-based triggers for the extensions. The extension scheduler triggers the events based on time and the extension handler triggers events based on data change.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

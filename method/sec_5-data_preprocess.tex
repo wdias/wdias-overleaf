@@ -2,7 +2,7 @@
 \label{se:data_preprocess}
 
 The data imported via import modules may have incorrect data, missing data, and incompatible data which cannot directly feed into simulation modules.
-Thus, we need to preprocess imported data before using them for weather forecasting. The WDIAS supports data preprocessing capabilities via extension modules. The current system has a few inbuilt extensions such as Interpolation, Transformation, and Validation, but users can add more extensions as required.
+Thus, we need to preprocess imported data before using them for weather forecasting. The WDIAS supports data preprocessing capabilities via extension modules. The current system has a few inbuilt extensions such as interpolation, transformation, and validation, but users can add more extensions as required.
 
 \begin{figure}[htp]
     \centering
@@ -21,7 +21,7 @@ During serial interpolation, we use interpolation to fill any gaps in a timeseri
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=0.8\textwidth]{method/data_preprocess/serial_interpolation.pdf}
+    \includegraphics[width=1.0\textwidth]{method/data_preprocess/serial_interpolation.pdf}
     \caption{Serial interpolation.}
     \label{fi:serial_interpolation}
 \end{figure}
@@ -30,7 +30,7 @@ During serial interpolation, we use interpolation to fill any gaps in a timeseri
 During spatial interpolation, we use interpolation to either fill gaps in timeseries or to create a new timeseries for a location using data from other (spatially distributed) locations. Spatial interpolation can also be applied for sampling scalar timeseries from grid timeseries, for re-sampling grids, or for creating grids from timeseries data.
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=0.8\textwidth]{method/data_preprocess/spatial_interpolation.pdf}
+    \includegraphics[width=1.0\textwidth]{method/data_preprocess/spatial_interpolation.pdf}
     \caption{Spatial interpolation.}
     \label{fi:spatial_interpolation}
 \end{figure}
@@ -39,7 +39,7 @@ During spatial interpolation, we use interpolation to either fill gaps in timese
 Simple arithmetic manipulation of time interval transformation and shifting the series in time specific hydro-meteorological transformation such as stage discharge relationships.
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=0.8\textwidth]{method/data_preprocess/transformation.pdf}
+    \includegraphics[width=1.0\textwidth]{method/data_preprocess/transformation.pdf}
     \caption{Time interval aggregration.}
     \label{fi:transformation}
 \end{figure}
@@ -48,7 +48,7 @@ Simple arithmetic manipulation of time interval transformation and shifting the 
 Checks for counting reliable, doubtful, unreliable, and missing values
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=0.8\textwidth]{method/data_preprocess/validation.pdf}
+    \includegraphics[width=1.0\textwidth]{method/data_preprocess/validation.pdf}
     \caption{Timeseries data validation.}
     \label{fi:validation}
 \end{figure}
