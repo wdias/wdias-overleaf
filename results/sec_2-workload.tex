@@ -33,7 +33,7 @@ While preparing the data, we created three sets of timeseries based on the time 
 Similar to the scalar test data prepared, we prepared the test grid data using the real water-level output of the FLO2D 150 meter hydrology model that is used in the \acrshort{curw}. The FLO2D timeseries are produced as ASCII Grid files, and each data point represents a grid file that consists of 120 rows and 139 columns. To represent missing cell values of the ASCII grid file, we used the \texttt{-9} instead of \texttt{-999} as an optimization. Even with that, each file size is around 50,337 Bytes (50 Kilobytes).
 
 \begin{minipage}{\linewidth}
-\begin{lstlisting}[language=sh, caption= Preparation of water-level data.]
+\begin{lstlisting}[language=sh, caption= Preparation of water level data.]
 Set ROOT_DIR=~/wdias/wdias-performance-test
 -h | --help: Usage
   setup_water-level.sh  <COMMAND>
@@ -60,7 +60,7 @@ To create a higher workload, we used JMeter's distributed testing capabilities. 
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.6\textwidth]{results/work_load/experimental_setup_v3.pdf}
-    \caption{Experimental setup with JMeter.}
+    \caption{Experimental setup with Apache JMeter.}
     \label{fi:experimental_setup}
 \end{figure}
 

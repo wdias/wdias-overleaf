@@ -45,7 +45,7 @@ Simple arithmetic manipulation of time interval transformation and shifting the 
 \end{figure}
 
 \subsection{Validation}
-Checks for counting reliable, doubtful, unreliable, and missing values
+Checks for counting reliable, doubtful, unreliable, and missing values.
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1.0\textwidth]{method/data_preprocess/validation.pdf}
@@ -56,7 +56,7 @@ Checks for counting reliable, doubtful, unreliable, and missing values
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Extension API for Data Prepossessing}
 
-We exposed an \acrshort{api} to create new triggers for extensions via /extension endpoint. Following is the accepted payload of the request while creating a new trigger. Later we discussed the \acrshort{api} in detail and how we can use the \acrshort{api} to create new triggers to use extension modules.
+We exposed an \acrshort{api} to create new triggers for extensions via /extension endpoints. Following is the accepted payload of the request while creating a new trigger. Later we discussed the \acrshort{api} in detail and how we can use the \acrshort{api} to create new triggers to use extension modules.
 
 \begin{lstlisting}[language=Python]
 {
@@ -101,7 +101,7 @@ We exposed an \acrshort{api} to create new triggers for extensions via /extensio
 \subsubsection{Extension Handler}
 
 Extension handler is responsible for triggering the correct extension with timeseries metadata when there is any change in the subscribed timeseries which are provided as a list of \emph{OnChange} timeseries while creating an extension trigger.
-When new data is imported into one of the scalar adapter or vector adapter, those microservices notify the extension handler. Then the extension-handler checks whether there is any extension subscribed for imported timeseries. If there is an extension needed to be triggered, then it invokes the given extension with the required data.
+When new data is imported into one of the scalar adapter or vector adapter, those microservices notify the extension handler. Then the extension handler checks whether there is any extension subscribed for imported timeseries. If there is an extension needed to be triggered, then it invokes the given extension with the required data.
 
 To improve the performance of matching triggers against a timeseries, we used two mechanisms as below. First, other than only storing extension metadata in a \acrshort{rdbms} instance of extension adapter, we also store extension data in a reverse lookup table called triggers while creating new extension triggers. Using this reverse lookup table, we can retrieve the extensions against a given timeseries without heavy processing and less delay. Second, we cache the resulting trigger type and timeseries metadata using the Redis database inside the extension handler for fast access and avoid too many queries on the \acrshort{rdbms} database. For the separation of service responsibilities, the extension data stored in the persistence database of the extension adapter and exposed via an endpoint.
 

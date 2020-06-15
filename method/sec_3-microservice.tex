@@ -10,13 +10,13 @@ There are lots of microservice patterns developed and evolved. Through the follo
 \subsection{Smart Endpoints and Dumb Pipes  Microservice Pattern}
 \label{subse:dumb_pipes}
 
-When building communication endpoints, many architectural approaches are adding significant smart by providing different protocol supports and complex logic support through the endpoints. As an example, \acrshort{esb} supports multiple protocols, and endpoints can be used to implement complex logic. But microservice architecture follows an alternative approach called as \emph{Smart endpoints and dumb pipes} \cite{LewisMicroservicesPipes}. Applications built based on microservice architecture are intended to be as disconnected and as coherent as possible. Each microservice has its domain logic and independent of other microservices logic and works more like filters in the classical Unix pipelines. Each microservice provides its functionalities as a \acrshort{rest} \acrshort{api} instead of using complex protocols. After receiving a request for each microservice through its \acrshort{rest} \acrshort{api}, it applies the correct logic and produces a response.
+When building communication endpoints, many architectural approaches are adding significant smart by providing different protocol supports and complex logic support through the endpoints. As an example, \acrshort{esb} supports multiple protocols, and endpoints can be used to implement complex logic. But microservice architecture follows an alternative approach called as \emph{smart endpoints and dumb pipes} \cite{LewisMicroservicesPipes}. Applications built based on microservice architecture are intended to be as disconnected and as coherent as possible. Each microservice has its domain logic and independent of other microservices logic and works more like filters in the classical Unix pipelines. Each microservice provides its functionalities as a \acrshort{rest} \acrshort{api} instead of using complex protocols. After receiving a request for each microservice through its \acrshort{rest} \acrshort{api}, it applies the correct logic and produces a response.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Database per Microservice Pattern}
 \label{subse:database_per_service}
 
-\acrshort{microservice} prefers to have each microservice manages its database, either different instances of the same database technology or entirely different database systems - an approach called \emph{Polyglot Persistence} \cite{LewisMicroservicesManagement}.
+\acrshort{microservice} prefers to have each microservice manages its database, either different instances of the same database technology or entirely different database systems - an approach called \emph{polyglot persistence} \cite{LewisMicroservicesManagement}.
 
 The idea is to keep the persistent data of each microservice private for this service and only to make it accessible through an \acrshort{api}.
 There are different ways to keep the permanent data of a microservice private. But it is not required to set up a database instance for each microservice. For example, when you use a relational database, the following methods can be used to keep the data private \cite{RichardsonMicroservicesService}:
@@ -32,13 +32,13 @@ There are different ways to keep the permanent data of a microservice private. B
 \subsection{Distributed Transactions over Microservices Pattern}
 \label{subse:sagas}
 
-Every microservice can have its database to guarantee a loose couple between microservices. Maintaining data consistency between services is a challenge because two phase-commit/distribution transactions are not an option for many applications. To archive distributed transactions, a service publishes an event when the data changes. Other services use this event and update their data \cite{RichardsonMicroservicesSagas}. The above approach is also called the \emph{Saga pattern}.
+Every microservice can have its database to guarantee a loose couple between microservices. Maintaining data consistency between services is a challenge because two phase-commit/distribution transactions are not an option for many applications. To archive distributed transactions, a service publishes an event when the data changes. Other services use this event and update their data \cite{RichardsonMicroservicesSagas}. The above approach is also called the \emph{saga pattern}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The Scale Cube Concept}
 \label{subse:scale_cube}
 
-The scalability of a system can be explained via a concept called \emph{the Scale Cube}, which talks about the scalability of the application by defining over X, Y, and Z axes.
+The scalability of a system can be explained via a concept called \emph{the scale cube}, which talks about the scalability of the application by defining over X, Y, and Z axes.
 
 \paragraph{X-axis scaling} -- When scaling an application through the x-axis, multiple instances of the application execute behind a load balancer. If there are \textit{n} copies, then each copy handles 1/\textit{n} of the load. The above simple approach is commonly to scale a service.
 
@@ -76,7 +76,7 @@ Export module microservices also follow the concepts of single responsibility an
     \label{fi:wdias_micro_async}
 \end{figure}
 
-As shown in \cref{fi:wdias_micro_on_demand}, when a request with a smaller payload comes to the system, the system handles the request on-demand and response back. However, as shown in \cref{fi:wdias_micro_async}, when a request with a larger payload comes to the system, it stores the data for an asynchronous process and responds with a unique id that can be used to verify whether data processed successfully or not. We used the microservice concept of Saga, as mentioned in \cref{subse:sagas}, while processing the grid data. First, it stores the data and responds with a unique identifier to the user. After successfully storing the data, the microservice publishes an event. Another microservice listens to those events and processes the data and updates the system status.
+As shown in \cref{fi:wdias_micro_on_demand}, when a request with a smaller payload comes to the system, the system handles the request on-demand and response back. However, as shown in \cref{fi:wdias_micro_async}, when a request with a larger payload comes to the system, it stores the data for an asynchronous process and responds with a unique id that can be used to verify whether data processed successfully or not. We used the microservice concept of saga pattern, as mentioned in \cref{subse:sagas}, while processing the grid data. First, it stores the data and responds with a unique identifier to the user. After successfully storing the data, the microservice publishes an event. Another microservice listens to those events and processes the data and updates the system status.
 
 \begin{figure}[htp]
     \centering
@@ -86,7 +86,7 @@ As shown in \cref{fi:wdias_micro_on_demand}, when a request with a smaller paylo
 \end{figure}
 
 \cref{fi:wdias_micro_separation} shows the clear separation of microservices into the modules of the \acrshort{wdias}. Each adapter has a separate database, and the database is hosted separately for the high performance and to avoid interference.
-Apart from that, as we further discuss in \cref{se:data_preprocess}, the extension modules are running independently, such as interpolation, transformation, and validation, and we will also discuss in \cref{se:data_preprocess}. The Extension Adapter allows users to register new event-based or time-based triggers for the extensions. The extension scheduler triggers the events based on time and the extension handler triggers events based on data change.
+Apart from that, as we further discuss in \cref{se:data_preprocess}, the extension modules are running independently, such as interpolation, transformation, and validation, and we will also discuss in \cref{se:data_preprocess}. The extension adapter allows users to register new event-based or time-based triggers for the extensions. The extension scheduler triggers the events based on time and the extension handler triggers events based on data change.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
