@@ -14,6 +14,9 @@ Because of the above issue, the \acrshort{wdias} test plans further improved by 
 \emph{Tune \acrshort{wdias} database structure performance}:
 As further described in \cref{se:discussion}, we can increase the performance of adapter microservices by using InfluxDB commercial cluster support for high availability or horizontal scaling of InfluxDB. With the InfluxDB cluster, it is possible to run multiple pods of scalar adapter and vector adapter to support more server hits per second. The \acrshort{wdias} performance can improve via partitioning the timeseries key space into multiple InfluxDB instances. As an example, based on the key attribute \cref{subse:timeseries_key_attributes} Timeseries Type, the scalar adapter can connect to four instances of InfluxDB instances such as external historical, external forecast, simulated historical, and simulated forecast.
 
+\emph{Explicitly not testing for high availability}:
+\gkc{By default, the container orchestration framework is handling service failures, auto scaling, auto down scaling, and independent service deployments. Also, when considering about modern cloud resources in data centers have better availability as well and failure handling. Combining both of factors will enable high availability for the \acrshort{wdias} system. But in this research, we are not heavily rely on those third party tools. Also, we do not explicitly test for the high availability with performing manually terminating services, and letting crash some of the services to measure how is it affect on the \acrshort{wdias} system high availability.}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Future Work}
 \label{se:future_work}
