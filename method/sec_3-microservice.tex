@@ -16,7 +16,7 @@ When building communication endpoints, many architectural approaches are adding 
 \subsection{Database per Microservice Pattern}
 \label{subse:database_per_service}
 
-\acrshort{microservice} prefers to have each microservice manages its database, either different instances of the same database technology or entirely different database systems - an approach called \emph{polyglot persistence} \cite{LewisMicroservicesManagement}.
+\acrshort{microservice} prefers to have each microservice manages its database, either different instances of the same database technology or entirely different database systems - \emph{polyglot persistence} \cite{LewisMicroservicesManagement}.
 
 The idea is to keep the persistent data of each microservice private for this service and only to make it accessible through an \acrshort{api}.
 There are different ways to keep the permanent data of a microservice private. But it is not required to set up a database instance for each microservice. For example, when you use a relational database, the following methods can be used to keep the data private \cite{RichardsonMicroservicesService}:

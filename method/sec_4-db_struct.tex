@@ -1,7 +1,7 @@
 \section{WDIAS Database Structure}
 \label{se:db_struct}
 
-The foundation of the \acrshort{wdias} is data-centric. We need to look into the weather data timeseries deeply to understand the underline design decisions of the \acrshort{wdias} database structure.
+The architecture and the storage management of the \acrshort{wdias} is designed and developed based on the weather data. We need to look into the weather data timeseries deeply to understand the underline design decisions of the \acrshort{wdias} database structure.
 
 \paragraph{Timeseries}-- \emph{A timeseries is simply a series of data points ordered in time}. In the weather domain, we are interested in observation and forecasting timeseries data. Each timeseries, the data points can be formed in different formats as well. For example, scalar (0D), vector (1D), grid (2D), and polygon (2D).
 
@@ -13,7 +13,7 @@ Based on the above interpretation, a timeseries have data points ordered in time
 \label{subse:timeseries_key_attributes}
 
 \subsubsection{Module ID}
-String field which describe the source of the data generated. e.g., HEC-HMS, FLOW2D, weather-station, etc
+String field which describe the source of the data generate. e.g., HEC-HMS, FLOW2D, weather-station.
 
 \subsubsection{Value Type}
 Scalar, vector, grid are the value types that are interested in the \acrshort{wdias}.
@@ -21,7 +21,7 @@ Scalar, vector, grid are the value types that are interested in the \acrshort{wd
 \subsubsection{Location}
 Location of the timeseries. All locations have a unique String identifier called \emph{locationId}. Further, two types of location types are interested in the \acrshort{wdias}, namely:
 \begin{itemize}
-  \item \emph{Point locations} -- Contains a name that is human readable. latitude(lat) and longitude(lon) of the location on the earth surface.
+  \item \emph{Point locations} -- Contains a name that is human readable. latitude(lat) and longitude(lon) of the location on the earth surface. Following is an example of define a location using \acrfull{json}.
 \begin{lstlisting}[language=Python]
 {
     "locationId": "wdias-hanwella",
@@ -31,7 +31,7 @@ Location of the timeseries. All locations have a unique String identifier called
 }
 \end{lstlisting}
   \item \emph{Regular Grid locations} -- Contains a name that is human readable. The grid presents by dividing into equal size cells. Thus, it needs the number of rows and columns. 
-  And the location of the first cell and the width and height of it.
+  And the location of the first cell and the width and height of it. Below \acrshort{json} format shows an example of the regular grid location. 
 \begin{lstlisting}[language=Python]
 {
     "locationId": "wdias_kelani_basin",
@@ -53,12 +53,7 @@ Location of the timeseries. All locations have a unique String identifier called
 \end{itemize}
 
 \subsubsection{Parameter}
-Parameter describes the variable measuring against a location. All parameters should have a unique string identifier called \emph{parameterId}. A parameter can be used in multiple locations. While defining a parameter, three required fields need to be provided, such as variable, unit, and \emph{parameterType}.
-
-\begin{itemize}  
-  \item \emph{Variable} -- Nature of the variable measuring. Example precipitation, temperature and water level
-  \item \emph{Unit} -- metric unit of measuring
-  \item \emph{Parameter Type} -- Should be one of instantaneous, accumulative, or mean
+Parameter describes the variable measuring against a location. All parameters should have a unique string identifier called \emph{parameterId}. A parameter can be used in multiple locations. While defining a parameter, three required fields need to be provided, such as variable, unit, and \emph{parameterType} as shown in the below example \acrshort{json} format.
 \begin{lstlisting}[language=Python]
 {
   "parameterId": "O.Precipitation",
@@ -67,6 +62,11 @@ Parameter describes the variable measuring against a location. All parameters sh
   "parameterType": "Instantaneous"
 }
 \end{lstlisting}
+
+\begin{itemize}  
+  \item \emph{Variable} -- Nature of the variable measuring. Example precipitation, temperature and water level
+  \item \emph{Unit} -- metric unit of measuring
+  \item \emph{Parameter Type} -- Should be one of instantaneous, accumulative, or mean
 \end{itemize}
 
 \subsubsection{Timeseries Type}
@@ -77,7 +77,7 @@ Users can define timeseries type while setup the system. We determined the follo
 \end{itemize}
 
 \subsubsection{Time Step}
-All time steps has a unique String identifier called timeStepId. The unit should be one of Second, Minute, Hour, Day, Week, Month, Year, or NonEqualDistance. One of multipliers or dividers can be used to define the interval between each measurement.
+All time steps has a unique String identifier called timeStepId. The unit should be one of Second, Minute, Hour, Day, Week, Month, Year, or NonEqualDistance. One of multipliers or dividers can be used to define the interval between each measurement. We can represent each minute time step in following \acrshort{json} format.
 \begin{lstlisting}[language=Python]
 {
     "timeStepId": "each_min",
@@ -88,7 +88,7 @@ All time steps has a unique String identifier called timeStepId. The unit should
 \end{lstlisting}
 
 Among the above key attributes; location, parameter and time step attributes are composite attributes. But each of them has a unique identifier.
-Given that, a timeseries can uniquely identify by \emph{moduleId, valueType, parameterId, locationId, timeseriesType and timeStepId}.
+Given that, a timeseries can uniquely identify by \emph{moduleId, valueType, parameterId, locationId, timeseriesType and timeStepId}. Here is an example of an unique weather data timeseries using \acrshort{json} format.
 \begin{lstlisting}[language=Python]
 {
 	"moduleId": "HEC-HMS",

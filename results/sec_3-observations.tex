@@ -136,10 +136,7 @@ Query: Location & 71749 & 3 & 2 & 130 & 4 & 2.32 & 0.00\% & 40.5 \\ \hline
 \end{figure}
 
 \cref{fi:test_obs_all_15m_throughtput} shows the total server's transaction throughput against the number of active threads.
-The formula for total server transaction throughput \cite{ApacheSoftwareFoundationJMeter:Plugin} is;
-\[
-    \displaystyle \frac{<active \quad threads> \times \quad 1 \quad second}{<1 \quad thread \quad response \quad time>}
-\]
+The formula for total server transaction throughput is \emph{active threads per second / thread response time} \cite{ApacheSoftwareFoundationJMeter:Plugin}.
 It shows the statistical maximum possible number of transactions based on the number of users accessing the application.
 By combining the \cref{fi:test_obs_all_15m_latency}, this graph shows that the throughput of the system gets increased without much change in the latency, thus it proves the scalability of the \acrshort{wdias}.
 

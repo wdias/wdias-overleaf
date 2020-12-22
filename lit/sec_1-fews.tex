@@ -36,9 +36,9 @@ Data preprocessing and manipulation are necessary processes in weather forecasti
 
 Delft-FEWS provides data processing and modeling libraries to access scalar and grid timeseries using the same method. However, the database access only allows through the data access layer, as shown in \cref{fi:fews_data_layer} \cite{Werner2013TheSystem}. The system depends on a single database instance, and all the requests are coming to the database through the data access layer. It is possible to setup and connect to an enterprise-level database with clustering and shading as a paid solution to enhance the throughput. Still, the design itself inherently suffers from a single database bottleneck when accessing a large set of timeseries by the models.
 
-\begin{figure}[htp]
+\begin{figure}[ht]
     \centering
-    \includegraphics[width=0.9\textwidth]{lit/fews/Linking-Delft-FEWS-with-external-models-The-fi-gure-shows-the-fl-ow-of-data-through-XML_W640.png}
+    \includegraphics[width=0.99\textwidth]{lit/fews/Linking-Delft-FEWS-with-external-models-The-fi-gure-shows-the-fl-ow-of-data-through-XML_W640.png}
     \caption[\acrshort{fews} integration with external models]{Integrating \acrshort{fews} with external models \cite{Werner2013TheSystem}.}
     \label{fi:fews_general_adapter}
 \end{figure}

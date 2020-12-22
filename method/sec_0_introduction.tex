@@ -9,15 +9,15 @@ This Chapter presents the design decisions taken while implementing \acrfull{wdi
 \section{High-level Design}
 \label{se:high_level_design}
 
-To get an overall idea of the flow of weather forecast, let us look into one of the weather forecasting flows in the \acrshort{curw} \cite{CUrWSL2017Lanka}.
+To get an overall idea of the weather forecast flows, let us look into one of the weather forecasting flows in the \acrshort{curw} \cite{CUrWSL2017Lanka}.
 
 \begin{enumerate}
-    \item Extract \acrshort{GRIB} \acrshort{wrf} model data to the \acrshort{netCDF} format.
-    \item Extract \acrshort{netCDF} data to \acrshort{csv} format for each location data, then feed to HEC-HMS hydrodynamic model and get the output as a \acrshort{csv} file.
-    \item HEC-HMS's \acrshort{csv} output and precipitation as Grid files feed into the FLO2D hydrologic model and get the water level as ASCII Grid files after the simulation is complete.
-    \item Upload above ASCII files to a geographic information system after convert to a compatible format, then use for the loss estimation.
+    \item First, the researchers fetch the weather forecast data from global model which is in the \acrshort{GRIB} format. After extracting \acrshort{GRIB} data, they run the \acrshort{wrf} with geographical coordinates for a given area, and generates \acrshort{wrf} model forecast in \acrshort{netCDF} format.
+    \item Then they extract forecast precipitation weather data in \acrshort{netCDF} to \acrshort{csv} file format as scalar timeseries for each interested location. Next they feed forecasted precipitation data to HEC-HMS hydrodynamic model and get the water discharge forecast of a water canal as the output in the \acrshort{csv} file format.
+    \item They use a developed 2D FLO2D hydrologic model for a given area to simulate the water level. By feeding HEC-HMS's water discharge forecast and \acrshort{wrf} precipitation forecast as Grid files into the FLO2D hydrologic model, the researchers forecast the water level of the modeled area as ASCII Grid files after the simulation is completed.
+    \item By uploading above water level forecasts in ASCII Grid files into a geographic information system after convert to a compatible format, they calculate the loss estimation.
 \end{enumerate}
-    
+
 In the above weather forecasting steps, we can see that the weather data need to convert to different formats while feeding from one model or step to another. After the models run successfully, the resulting output data may not be accurate or biased based on different factors. In such situations, we need to correct predicted weather data by comparing them with accurate real-time weather data. We are required to collect real-time data from automated weather stations and accumulated weather data over a given period by automatic water level stations.
 
 Most weather data collecting devices use own data formats and different standard protocols to transmit the data. Then we need to validate the data and modify the data to remove errors. Also, these data need to convert into model compatible data format before feeding into models. The models output data in different formats and need to store those bulk data efficiently, and the system should be flexible enough to upgrade to support new data formats easily. Essentially, the system should share the real data, forecasted data, and other created data with relevant parties based on authorization.
