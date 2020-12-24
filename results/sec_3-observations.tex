@@ -1,13 +1,13 @@
 \section{Performance Test Observations}
 \label{se:observations}
 
-This section includes the observations based on the test plans discussed in \cref{se:test_plan}, and the experimental system setup explained in \cref{se:workload}. Sections \ref{subse:obs_test_plan_all_60min} to \ref{subse:obs_test_plan_all_auto_15min}, we discuss the observations collected with performing the load test plans over 60-minute data (24 data points per request), 30-minute data (48 data points per request), and 15-minute data (96 data points per request) by varying the request size. Then we perform another round of 15-minute data with enabling auto-scaling for the higher resource utilized microservices.
+This section includes the observations based on the test plans discussed in \cref{se:test_plan}, and the experimental system setup explained in \cref{se:workload}. Sections \ref{subse:obs_test_plan_all_60min} to \ref{subse:obs_test_plan_all_auto_15min}, we discuss the observations collected with performing the load test plans with 60-minute data (24 data points per request), 30-minute data (48 data points per request), and 15-minute data (96 data points per request) by varying the request size for scalar and vector timeseries. \gkc{For grid timeseries, we performed the load test plans with ASCII grid file as data for each time step which has the size of 52 kilobyte. On average, each sample grid data for 60-minute data requests consist of 1.2 megabyte, 30-minute data requests consist of 2.4 megabyte, and 15-minute data requests consist of 4.9 megabyte}. Then we perform another round of 15-minute data with enabling auto-scaling for the higher resource utilized microservices.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Load Testing with Hourly Resolution Data}
 \label{subse:obs_test_plan_all_60min}
 
-After running the test plan with 60-minute resolution data (24 data points per request), we observed the data summary of \cref{tab:obs_all_60_min_summary}. The test plan performed \num{311e3} of sample requests within 30 minutes of elapsed time.
+After running the test plan with 60-minute resolution data (24 data points per scalar and vector requests, and 24 ASCII grid files per grid requests), we observed the data summary of \cref{tab:obs_all_60_min_summary}. The test plan performed \num{311e3} of sample requests within 30 minutes of elapsed time.
 
 \begin{table}[ht]
 \caption{Throughput and latency of load test with 60-minute data}
@@ -24,8 +24,8 @@ Query: Location & 71804 & 3 & 2 & 109 & 3 & 1.52 & 0.00\% & 40.5 \\ \hline
 \end{tabulary}
 \label{tab:obs_all_60_min_summary}
 \end{table}
-Insert timeseries performed over scalar and vector data types with each request sent with 24 data points. On average, it took 28 milliseconds to insert scalar and vector data into the \acrshort{wdias}, and up to 90\% percentile inserted data within 31 milliseconds. Noticeably it has 0\% of errors, which means that all the requests completed successfully. Also, \acrshort{wdias} handled 40.5 \acrshort{rps} of scalar and vector data requests with the given workload. The retrieval of scalar and vector timeseries has lesser delay than the insertion.
-On the other hand, insert grid timeseries data performed within 23 milliseconds, and almost all the requests perform within the same amount of time. Hence, the standard deviation is smaller. Delay with inserting grid timeseries smaller because those requests are handled asynchronously. Retrieve grid timeseries data performed with a bit higher value of latency of 68 milliseconds due to performed the retrieve request on-demand. Both insert and retrieve grid timeseries data have 4.5 \acrshort{rps} since it only gets 10\% of the number of requests from total number of requests during the load test.
+Insert timeseries performed over scalar and vector data types with each request sent with 24 data points. On average, it took 28 milliseconds to insert scalar and vector data into the \acrshort{wdias}, and up to 90\% percentile inserted data within 31 milliseconds. Noticeably it has 0\% of errors, which means that all the requests completed successfully. Also, \acrshort{wdias} handled 40.5 \acrshort{rps} of scalar and vector data requests on average with the given workload. The retrieval of scalar and vector timeseries has lesser delay than the insertion such that retrieve on average 8 milliseconds, and up to 90\% percentile retrieve data within 10 milliseconds.
+On the other hand, insert grid timeseries data performed within 23 milliseconds on average, and almost all the requests perform within the same amount of time. Hence, the standard deviation is smaller. Delay with inserting grid timeseries smaller because those requests are handled asynchronously. Retrieve grid timeseries data performed with a bit higher value of latency of 68 milliseconds on average due to performed the retrieve request on-demand. Both insert and retrieve grid timeseries data have 4.5 \acrshort{rps} on average since it only gets 10\% of the number of requests from total number of requests during the load test. Location query test case runs for the scalar and vector timeseries metadata, and it was able to fulfill the requests within 3 milliseconds on average.
 
 \begin{figure}[htp]
     \centering
@@ -185,7 +185,7 @@ When compared to \cref{fi:test_obs_all_15m_latency} without auto-scaling, we can
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=1.0\textwidth]{results/obs/all_auto/obs_all_auto_15m_import_export_res.png}
+    \includegraphics[width=1.0\textwidth]{results/obs/all_auto/obs_all_auto_15m_import_export_res.pdf}
     \caption{Load testing with auto-scaling resource usage of import and export modules over time.}
     \label{fi:obs_all_auto_15m_import_export_res}
 \end{figure}
@@ -194,7 +194,7 @@ When compared to \cref{fi:test_obs_all_15m_latency} without auto-scaling, we can
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=1.0\textwidth]{results/obs/all_auto/obs_all_auto_15m_import_export_pods.png}
+    \includegraphics[width=1.0\textwidth]{results/obs/all_auto/obs_all_auto_15m_import_export_pods.pdf}
     \caption{Load testing with auto-scaling number of pods of import and export modules over time.}
     \label{fi:obs_all_auto_15m_import_export_pods}
 \end{figure}
@@ -203,7 +203,7 @@ When compared to \cref{fi:test_obs_all_15m_latency} without auto-scaling, we can
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=1.0\textwidth]{results/obs/all_auto/obs_all_auto_15m_adapter_dbs_res.png}
+    \includegraphics[width=1.0\textwidth]{results/obs/all_auto/obs_all_auto_15m_adapter_dbs_res.pdf}
     \caption{Load testing with auto-scaling resource usage of database adapters over time.}
     \label{fi:obs_all_auto_15m_adapter_dbs_res}
 \end{figure}
