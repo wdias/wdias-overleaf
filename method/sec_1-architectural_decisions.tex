@@ -41,3 +41,14 @@ The \acrshort{wdias} used \acrfull{k8s} as the container orchestration system. \
 \end{itemize}
 
 Users can add nodes much as required into the \acrshort{k8s} cluster, and \acrshort{k8s} manage and deploy applications as pods into cluster nodes. Each microservice can deploy as a pod, which is a group of containerized applications. \acrshort{k8s} is able to scale as much as the user requirements by deploying multiple copies of the same pod. By separating each microservice as a container, and running them as multiple pods inside the \acrshort{k8s} removes the tight coupling of microservices when compared to the actors. It preserves the independent nature of the microservices and supports the high scalability of the system.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Architecture Comparison with Existing Systems
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=1\textwidth]{method/misc/architecture_comparison_pros_cons.pdf}
+    \caption{Architecture comparison with existing systems.}
+    \label{fi:architecture_comparison}
+\end{figure}
+
