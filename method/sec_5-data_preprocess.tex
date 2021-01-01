@@ -11,13 +11,13 @@ Thus, we need to preprocess imported data before using them for weather forecast
     \label{fi:weather_data_preprocessing}
 \end{figure}
 
-The data preprocess functionalities support simple generic mathematical function models. Each extension is considered as a mathematical function that can take \texttt{p} input timeseries variables and output \texttt{n} timeseries variables after applying the given function. Further, the system supports to provide a bind constant as configurations to the extension at the time of preprocessing. Thus, users can change the behavior of an existing function by providing different bind constants at the time of creating new triggers for an extension and produce different behaviors. \gkc{Next, we explain how can we derive interpolation, transformation, and validation by using the generic mathematical function model that we described above.}
+The data preprocess functionalities support simple generic mathematical function models. Each extension is considered as a mathematical function that can take \texttt{p} input timeseries variables and output \texttt{n} timeseries variables after applying the given function. Further, the system supports to provide a bind constant as configurations to the extension at the time of preprocessing. Thus, users can change the behavior of an existing function by providing different bind constants at the time of creating new triggers for an extension and produce different behaviors. Next, we explain how to derive interpolation, transformation, and validation functions using the generic mathematical function model described above.
 
 \subsection{Interpolation}
-\gkc{The interpolation extension generates data at desired locations or desired data points using a serial or spatial interpolation technique. It is used to fill gaps in linear measured data and to derive spatially distributed data for weather timeseries, such as precipitation and temperature, based on information available at nearby locations. Here, we will discuss two types of interpolation such as serial interpolation and spatial interpolation below.}
+The interpolation extension generates data at desired locations or desired data points using a serial or spatial interpolation technique. It is used to fill gaps in linear measured data and to derive spatially distributed data for weather timeseries, such as precipitation and temperature based on information available at nearby locations. Here, we will discuss two types of interpolation, such as serial interpolation and spatial interpolation, below.
 
 \subsubsection{Serial Interpolation}
-\gkc{During serial interpolation, we use interpolation to fill any gaps in a linear timeseries. The interpolation module will only consider a single timeseries, which is itself filling the missing data points. As an example, there can be timeseries which has the data points of temperature which are collected using a weather station. There can be missing data in this timeseries, and we can use a simple linear interpolation algorithm to fill the missing values based on the existing data points.}
+During serial interpolation, we use interpolation to fill any gaps in a linear timeseries. The interpolation module will only consider a single timeseries, which is itself filling the missing data points. For example, as seen in Figure \ref{fi:serial_interpolation}, there can be timeseries that has data points of temperature collected using a weather station. There can be missing data in this timeseries, and we can use a simple linear interpolation algorithm to fill the missing values based on the existing data points.
 
 \begin{figure}[htp]
     \centering
@@ -27,7 +27,8 @@ The data preprocess functionalities support simple generic mathematical function
 \end{figure}
 
 \subsubsection{Spatial Interpolation}
-\gkc{During spatial interpolation, we use interpolation to either fill gaps in timeseries or to create a new timeseries for a location using data from other (spatially distributed) locations' timeseries. Spatial interpolation can also be applied for sampling scalar timeseries from grid timeseries, for re-sampling grids, or for creating grids from timeseries data. As an example, let’s assume that there are precipitation timeseries data available for the location A and location B as shown in Figure x. Then we want to calculate the mean precipitation of nearby location using these two timeseries. We can use the spatial interpolation to get the mean precipitation of nearby location.}
+During spatial interpolation, we use interpolation to either fill gaps in timeseries or create a new timeseries for a location using data from other (spatially distributed) locations' timeseries. Spatial interpolation can also be applied for sampling scalar timeseries from grid timeseries, for re-sampling grids, or for creating grids from timeseries data. For example, let us assume that there are precipitation timeseries data available for location \textit{A} and location \textit{B} as shown in Figure \ref{fi:spatial_interpolation}. Then we want to calculate the mean precipitation of nearby locations using these two timeseries. We can use the spatial interpolation to get the mean precipitation of nearby locations.
+
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1.0\textwidth]{method/data_preprocess/spatial_interpolation.pdf}
@@ -36,7 +37,8 @@ The data preprocess functionalities support simple generic mathematical function
 \end{figure}
 
 \subsection{Transformation}
-\gkc{Simple arithmetic manipulation of time interval transformation and shifting the series in time-specific hydro-meteorological transformation such as stage-discharge relationships. As an example, there can be a timeseries of precipitation with 1-minute sample data. There will be a model requirement that needs hourly data. So, we need to do accumulation data manipulation to create a timeseries of hourly data using 1-minute sample data.}
+Simple arithmetic manipulation of time interval transformation and shifting the series in time-specific hydro-meteorological transformation such as stage-discharge relationships are considered transformation. For example, as seen in Figure \ref{fi:transformation}, there can be a timeseries of precipitation with 1-minute sample data. There will be a model requirement that needs hourly data. Therefore, we need to accumulation data manipulation to create a timeseries of hourly data using 1-minute sample data.
+
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1.0\textwidth]{method/data_preprocess/transformation.pdf}
@@ -45,7 +47,8 @@ The data preprocess functionalities support simple generic mathematical function
 \end{figure}
 
 \subsection{Validation}
-\gkc{Checks for counting reliable, doubtful, unreliable, and missing values. The weather stations can produce invalid observations due to technical errors in the sensors of the devices. If we feed those values directly to the models, the models will produce inaccurate forecasting. To avoid that, we need to modify or flag those values before feeding them to the numerical models. We can use validation extensions to modify or flag invalid data. As an example, a weather station can record temperature above 70 celsius due to sensor error or calibration issues. But in real-world, it is not possible to have such a temperature in nature. Thus we need to flag such temperature issues and need to repair the weather station as soon as possible.}
+Validation functions check for counting reliable, doubtful, unreliable, and missing values. The weather stations can produce invalid observations due to technical errors in the sensors of the devices. If we feed those values directly to the models, the models will produce inaccurate forecasting. To avoid that, we need to modify or flag those values before feeding them to the numerical models. As seen in Figure \ref{fi:validation} We can use validation extensions to modify or flag invalid data. For example, a weather station can record temperature above 70 celsius due to sensor error or calibration issues. However, in the real world, it is not possible to have such a temperature in nature. Thus, we need to flag such temperature issues and repair the weather station as soon as possible.
+
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1.0\textwidth]{method/data_preprocess/validation.pdf}

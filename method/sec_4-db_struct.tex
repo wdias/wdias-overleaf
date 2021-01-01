@@ -1,11 +1,11 @@
 \section{WDIAS Database Structure}
 \label{se:db_struct}
 
-The architecture and the storage management of the \acrshort{wdias} is designed and developed based on the weather data. We need to look into the weather data timeseries deeply to understand the underline design decisions of the \acrshort{wdias} database structure.
+The architecture and the storage management of \acrshort{wdias} is designed and developed based on the weather data. We need to look into the weather data timeseries deeply to understand the underline design decisions of the \acrshort{wdias} database structure.
 
 \paragraph{Timeseries}-- \emph{A timeseries is simply a series of data points ordered in time}. In the weather domain, we are interested in observation and forecasting timeseries data. Each timeseries, the data points can be formed in different formats as well. For example, scalar (0D), vector (1D), grid (2D), and polygon (2D).
 
-Based on the above interpretation, a timeseries have data points ordered in time. Other than that, timeseries have additional information that is known as \emph{timeseries metadata}, which can use to identify one timeseries from another uniquely. As an example, we can place a weather station on a \emph{location}, and it can measure different types of weather data that are called \emph{parameters} such as temperature, precipitation, and wind direction. Each parameter can produce different timeseries. Even we can use the location as metadata to identify the timeseries, but that is not enough to distinctly identify the parameters. Thus, we need to use a set of attributes to identify a timeseries uniquely. Next, we describe key attributes that are used by the \acrshort{wdias} to identify a timeseries uniquely.
+Based on the above interpretation, a timeseries have data points ordered in time. Other than that, timeseries have additional information that is known as \emph{timeseries metadata}, which can use to identify one timeseries from another uniquely. As an example, we can place a weather station on a \emph{location}, and it can measure different types of weather data that are called \emph{parameters} such as temperature, precipitation, and wind direction. Each parameter can produce different timeseries. Even we can use the location as metadata to identify the timeseries, but that is not enough to distinctly identify the parameters. Thus, we need to use a set of attributes to identify a timeseries uniquely. Next, we describe key attributes that are used by \acrshort{wdias} to identify a timeseries uniquely.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -16,10 +16,10 @@ Based on the above interpretation, a timeseries have data points ordered in time
 String field which describe the source of the data generate. e.g., HEC-HMS, FLOW2D, weather-station.
 
 \subsubsection{Value Type}
-Scalar, vector, grid are the value types that are interested in the \acrshort{wdias}.
+Scalar, vector, grid are the value types that are interested in \acrshort{wdias}.
 
 \subsubsection{Location}
-Location of the timeseries. All locations have a unique String identifier called \emph{locationId}. Further, two types of location types are interested in the \acrshort{wdias}, namely:
+Location of the timeseries. All locations have a unique String identifier called \emph{locationId}. Further, two types of location types are interested in \acrshort{wdias}, namely:
 \begin{itemize}
   \item \emph{Point locations} -- Contains a name that is human readable. latitude(lat) and longitude(lon) of the location on the earth surface. Following is an example of define a location using \acrfull{json}.
 \begin{lstlisting}[language=Python]
@@ -119,7 +119,7 @@ Many modern database systems give a higher performance on a specific type of app
 \subsection{Timeseries Metadata Storage}
 \label{subse:mysql}
 
-\cref{fi:database_structure} shows the \acrshort{wdias} database structure.
+\cref{fi:database_structure} shows \acrshort{wdias}'s database structure.
 The following sections describe the database structure of \acrshort{wdias} with compare to the design with more details on how is support the microservice architecture.
 
 To reduce the overhead while searching for timeseries and handling duplicates, we used a timeseries metadata store. Since metadata consists of multiple key attributes, the data can be efficiently stored using a \acrfull{rdbms}. It helps to store data without any duplicates and optimize the data with normalization. As an example, the parameter attribute can only have a dozen possible values. Using an \acrshort{rdbms}, those values can be stored once and reuse with defining timeseries against location via references.
@@ -146,7 +146,7 @@ Among several timeseries open source databases, InfluxDB \cite{InfluxDBInfluxDBD
 
 Other than InfluxDB, the ElasticSearch database can be used, but it mainly uses indexing for searching. InfluxDB allows us to change the read/write behavior and indexing mechanism via database configurations. Further, users can use the commercial version of InfluxDB to gain more performance, like database sharding and replicas.
 
-Two individual instances of InfluxDB used for scalar adapter and vector adapter services in the \acrshort{wdias} system. For the scalability, the system uses \emph{database per service}, as mentioned in \cref{subse:database_per_service}. If users want further performance, the database can split into another set of partitions based on other key attributes based on the z-axis scaling described in \cref{subse:scale_cube}. As an example, scalar and vector adapters can further split into more services based on other key attributes such as timeseries type.
+Two individual instances of InfluxDB used for scalar adapter and vector adapter services in \acrshort{wdias} system. For the scalability, the system uses \emph{database per service}, as mentioned in \cref{subse:database_per_service}. If users want further performance, the database can split into another set of partitions based on other key attributes based on the z-axis scaling described in \cref{subse:scale_cube}. As an example, scalar and vector adapters can further split into more services based on other key attributes such as timeseries type.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Network Common Data Form}
@@ -165,5 +165,5 @@ To provide fast geo-search queries, we have to use a database system that suppor
   \item Clustering and sharding available for scalability and reliability
 \end{itemize}
 
-We used MongoDB geospatial features to support geo-queries in the \acrshort{wdias}. Also, we indexed the timeseries metadata with other indexing features to serve external timeseries metadata queries. If particular timeseries metadata not present in the query adapter, then fetch metadata from the metadata adapter and indexed in the MongoDB. Vise a versa; when a new timeseries created in the metadata adapter, it triggers an event to index metadata in the query adapter.
+We used MongoDB geospatial features to support geo-queries in \acrshort{wdias}. Also, we indexed the timeseries metadata with other indexing features to serve external timeseries metadata queries. If particular timeseries metadata not present in the query adapter, then fetch metadata from the metadata adapter and indexed in the MongoDB. Vise a versa; when a new timeseries created in the metadata adapter, it triggers an event to index metadata in the query adapter.
 Here we used the \emph{y-axis scaling} concept by splitting metadata search into multiple services. Within the system, it uses in-memory database cache to support internal metadata access, and external search queries fulfill by the query adapter with using MongoDB.
