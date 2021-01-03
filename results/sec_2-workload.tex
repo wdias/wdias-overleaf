@@ -85,27 +85,23 @@ While implementing the test cases for \acrshort{wdias}, we used the concurrency 
     \label{fi:test_prod_throughtput_shaping_timer}
 \end{figure}
 
-\cref{fi:test_prod_throughtput_shaping_timer} shows the throughput shaping timer configurations that we used for the load testing, and it is similar to the load test plan described in \cref{se:test_plan}. The maximum peak load that can be had during the load test is 300 \acrshort{rps} (equivalent to 18,000 requests per minute). The following the test plans that we used during the performance testing:
+\cref{fi:test_prod_throughtput_shaping_timer} shows the throughput shaping timer configurations that we used for the load testing, and it is similar to the load test plan described in \cref{se:test_plan}. The maximum peak load that can be had during the load test is 300 \acrshort{rps} (equivalent to 18,000 requests per minute). The followings are the test plans that we used during the performance testing:
 
 \begin{itemize}
-    \item User-defined variables
-    \item Setup thread group
-    \item Create timeseries thread group
-    \item Create extensions thread group
-    \item Load test timeseries concurrency thread group
-    \item Load test timeseries concurrency thread group
-    \item Test flow thread group
+    \item User-defined variables such as for change variable size 
+    \item Setup thread group for test setup before load testing
+    \item Create timeseries thread group for create timeseries metadata before import and export timeseries data
+    \item Create extensions thread group for create triggers for basic extensions
+    \item Load test timeseries with concurrency thread group
 \end{itemize}
 
 The first step of the test plan consists of setting up the timeseries metadata. At the same time, we create the timeseries metadata in the \acrshort{wdias} system. Even with the real use case, users only have to register timeseries metadata once and reuse the generated timeseries identifier to insert the data. The following list of test steps shows the test plan for setting up the timeseries metadata.
 
 \begin{itemize}
-    \item HTTP request defaults
-    \item HTTP header manager
-    \item Timeseries metadata CSV
+    \item Load the timeseries metadata CSV
     \item Create timeseries
-    \item Get timeseries
-    \item Query timeseries
+    \item Check with get timeseries
+    \item Query for timeseries
 \end{itemize}
 
 By creating the timeseries metadata before, we can reduce the overhead during the performance testing with only focus on essential data storing, and cause more accurate \acrshort{rps} at the run time. Otherwise, JMeter needs to allocate another set of threads for registering timeseries metadata. Further, when we consider real use cases, most of the time, the users want to search for timeseries metadata and retrieve relevant metadata, rather than registering new timeseries metadata in the system.
@@ -113,25 +109,19 @@ By creating the timeseries metadata before, we can reduce the overhead during th
 The following list shows the test steps of the JMeter test plan for all modules while performing the load testing.
 
 \begin{itemize}
-    \item HTTP request defaults
-    \item HTTP header manager
-    \item Timeseries metadata CSV
-    \item If scalar or vector then insert timeseries, otherwise insert grid timeseries
+    \item Load the timeseries metadata CSV
+    \item If scalar or vector then insert relevant timeseries data, otherwise insert grid timeseries data
     \item Wait for extensions timeseries
-    \item Interest area preprocessor
-    \item Query if scalar or vector
-    \item If scalar or vector then retrieve timeseries, otherwise retrieve grid timeseries
+    \item Query for timeseries metadata
+    \item If scalar or vector then retrieve timeseries data, otherwise retrieve grid timeseries data
     \item Increment date
-    \item Throughput shaping timer prod
 \end{itemize}
 
 As mentioned in \cref{se:test_plan}, we performed another separate test plan on the query timeseries module. Here, we used the following test steps to cover most of the timeseries metadata search queries and geo-queries supported by the \acrshort{wdias}.
 
 \begin{itemize}
-    \item HTTP request defaults
-    \item HTTP header manager
-    \item Locations CSV
-    \item Interest area preprocessor
+    \item Load the locations CSV
+    \item Prepare interest area for search for the timeseries
     \begin{itemize}
         \item /Location: * $\rightarrow$ Locations
     	\item /Location: Area $\rightarrow$ Locations
