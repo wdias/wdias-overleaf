@@ -201,7 +201,7 @@ When compared to \cref{fi:test_obs_all_15m_latency} without auto-scaling, we can
     \label{fi:obs_all_auto_15m_import_export_pods}
 \end{figure}
 
-\cref{fi:obs_all_auto_15m_import_export_pods} shows the number of import-ascii-grid-upload pods scheduled overtime during the test plan. As mentioned in the previous paragraph, we enabled the auto-scaling with a maximum of 10 pods and 80\% recommended CPU usage. As the graph shows, we scheduled three pods before initialing the test plan. When the workload increased, K8s spawned new pods while keeping the total CPU utilization up to 80\%, as we configured above. After K8s spawned ten maximum pods, it stopped spawning new pods. However, each pod was able to vertical scale up to the limit of 2 CPUs. Even we saw the resources released after the peak load, but the number of pods did not decrease according to the graph. K8s has a threshold of reducing the number of pods, and it waits for 5 minutes before terminating a pod after a resource is released. \cref{fi:obs_all_auto_15m_adapter_dbs_res} shows the resource utilization of database adapters in the \acrshort{wdias}. The scalar adapter and vector adapter are not getting heavy load since they only process a scalar array of data points. However, we can see the CPU usage over time increased according to the test plan workload and cool down after the peak. For the grid adapter, the CPU resource utilization increased and cooled down similarly to other adapters. However, the memory resources are not released due to the caching of netCDF files by the application.
+\cref{fi:obs_all_auto_15m_import_export_pods} shows the number of import-ascii-grid-upload pods scheduled overtime during the test plan. As mentioned in the previous paragraph, we enabled the auto-scaling with a maximum of 10 pods and 80\% recommended CPU usage. As the graph shows, we scheduled three pods before initialing the test plan. When the workload increased, K8s spawned new pods while keeping the total CPU utilization up to 80\%, as we configured above. After K8s spawned ten maximum pods, it stopped spawning new pods. However, each pod was able to vertical scale up to the limit of 2 CPUs. Even we saw the resources released after the peak load, but the number of pods did not decrease according to the graph. K8s has a threshold of reducing the number of pods, and it waits for 5 minutes before terminating a pod after a resource is released.
 
 \begin{figure}[htp]
     \centering
@@ -210,6 +210,7 @@ When compared to \cref{fi:test_obs_all_15m_latency} without auto-scaling, we can
     \label{fi:obs_all_auto_15m_adapter_dbs_res}
 \end{figure}
 
+\cref{fi:obs_all_auto_15m_adapter_dbs_res} shows the resource utilization of database adapters in the \acrshort{wdias}. The scalar adapter and vector adapter are not getting heavy load since they only process a scalar array of data points. However, we can see the CPU usage over time increased according to the test plan workload and cool down after the peak. For the grid adapter, the CPU resource utilization increased and cooled down similarly to other adapters. However, the memory resources are not released due to the caching of netCDF files by the application.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Query Module Load Test}
